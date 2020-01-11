@@ -1,2 +1,5 @@
 PySide2
 pyembroidery
+pytest
+numpy
+scipy
