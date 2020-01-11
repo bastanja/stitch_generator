@@ -3,3 +3,4 @@ pyembroidery
 pytest
 numpy
 scipy
+noise
