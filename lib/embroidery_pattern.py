@@ -9,7 +9,7 @@ class EmbroideryPattern:
 
     def add_stitches(self, coordinates, color=0x808080):
         assert len(coordinates) > 0, "Stitch coordinates are empty"
-        self.stitch_blocks.append(coordinates)
+        self.stitch_blocks.append(np.array(coordinates))
         self.colors.append(color)
         self.block_offsets = np.add.accumulate([len(b) for b in self.stitch_blocks])
 
@@ -21,7 +21,9 @@ class EmbroideryPattern:
         block_index = np.searchsorted(self.block_offsets, stitch_index + 1)
         if block_index > 0:
             stitch_index -= self.block_offsets[block_index - 1]
-        return self.stitch_blocks[block_index][stitch_index]
+        block = self.stitch_blocks[block_index]
+        stitch = block[stitch_index]
+        return tuple(stitch)
 
     @property
     def number_of_stitches(self):

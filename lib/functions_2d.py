@@ -1,9 +1,11 @@
+import numpy as np
+
 from lib.functions_1d import cosinus, sinus, constant, linear_interpolation
 from lib.function_modifiers import scale, add
 
 
 def function_2d(fx, fy):
-    return lambda t: (fx(t), fy(t))
+    return lambda t: np.array([fx(t), fy(t)])
 
 
 def circle(radius=1, center=(0, 0)):

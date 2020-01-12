@@ -7,6 +7,7 @@ def zigzag(function):
     def f(v):
         val = 1 - (math.fabs(1 - (v % 2)))
         return function(val)
+
     return f
 
 
@@ -19,6 +20,7 @@ def clamp1(function):
         if v < 0: v = 0
         if v > 1: v = 1
         return function(v)
+
     return f
 
 
@@ -33,7 +35,7 @@ def repeat(r, function, mode=''):
 
 
 def scale(s, function):
-    return lambda v: np.array(function(v)) * s
+    return lambda v: function(v) * s
 
 
 def shift(amount, function):
@@ -45,4 +47,8 @@ def combine(f1, f2):
 
 
 def add(f1, f2):
-    return lambda v: np.array(f1(v)) + np.array(f2(v))
+    return lambda v: f1(v) + f2(v)
+
+
+def multiply(f1, f2):
+    return lambda v: f1(v) * f2(v)
