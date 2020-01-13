@@ -18,6 +18,10 @@ def linear_interpolation(target_low, target_high, source_low=0, source_high=1):
     return f
 
 
+def square():
+    return lambda v: v * v
+
+
 def sinus():
     return lambda v: math.sin(v * math.pi * 2)
 
