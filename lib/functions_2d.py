@@ -1,7 +1,7 @@
 import numpy as np
 
 from lib.functions_1d import cosinus, sinus, constant, linear_interpolation
-from lib.function_modifiers import scale, add
+from lib.function_modifiers import scale, add, repeat, multiply
 
 
 def function_2d(fx, fy):
@@ -22,3 +22,12 @@ def circle(radius=1, center=(0, 0)):
 
 def line(x, y):
     return function_2d(linear_interpolation(0, x), linear_interpolation(0, y))
+
+
+def spiral(inner_radius, outer_radius, turns, center=(0, 0)):
+    spiral = repeat(turns, circle(inner_radius, center))
+    direction = repeat(turns, circle())
+    increase = linear_interpolation(0, outer_radius - inner_radius)
+    direction = multiply(direction, increase)
+    spiral = add(spiral, direction)
+    return spiral

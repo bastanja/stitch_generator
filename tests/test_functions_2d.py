@@ -1,6 +1,7 @@
 import numpy as np
+
 from lib.functions_1d import linear_interpolation
-from lib.functions_2d import function_2d, circle, line
+from lib.functions_2d import function_2d, circle, line, spiral
 
 
 def test_function_2d():
@@ -33,6 +34,26 @@ def test_circle():
 
 def test_line():
     f = line(100, 20)
-    assert np.allclose(f(0), (0,0))
+    assert np.allclose(f(0), (0, 0))
     assert np.allclose(f(0.5), (50, 10))
     assert np.allclose(f(1), (100, 20))
+
+
+def test_spiral():
+    # spiral with one turn
+    f = spiral(1, 2, 1)
+    assert np.allclose(f(0), (1, 0))
+    assert np.allclose(f(0.5), (-1.5, 0))
+    assert np.allclose(f(1), (2, 0))
+
+    # spiral with four turns
+    f = spiral(20, 40, 4)
+    assert np.allclose(f(0), (20, 0))
+    assert np.allclose(f(0.5), (30, 0))
+    assert np.allclose(f(1), (40, 0))
+
+    # spiral with center parameter
+    f = spiral(20, 40, 4, (50, 50))
+    assert np.allclose(f(0), (20 + 50, 0 + 50))
+    assert np.allclose(f(0.5), (30 + 50, 0 + 50))
+    assert np.allclose(f(1), (40 + 50, 0 + 50))
