@@ -1,5 +1,8 @@
 import math
+
+import numpy as np
 from noise import pnoise1
+from scipy.interpolate import interp1d
 
 
 def constant(v):
@@ -36,3 +39,16 @@ def noise():
 
 def positive_noise():
     return lambda v: (noise()(v) + 1) * 0.5
+
+
+def cubic_interpolation_evenly_spaced(values):
+    assert len(values) > 1, "Interpolation function needs at least two values"
+    samples = np.linspace(0, 1, num=len(values), endpoint=True)
+
+    # Use cubic interpolation (3) if there are enough samples,
+    # otherwise reduce to len(samples) - 1, i.e. quadratic (2) or linear (1)
+    interpolation = min(len(samples) - 1, 3)
+
+    f = interp1d(samples, values, kind=interpolation)
+    return f
+

@@ -1,4 +1,6 @@
-from lib.functions_1d import linear_interpolation, constant, sinus, cosinus, noise
+import pytest
+
+from lib.functions_1d import linear_interpolation, constant, sinus, cosinus, noise, cubic_interpolation_evenly_spaced
 from pytest import approx
 
 
@@ -55,22 +57,49 @@ def test_linear_interpolation():
 
 
 def test_sinus():
-    s = sinus()
+    f = sinus()
     # check that full sinus curve is mapped to range [0;1]
-    assert s(0) == approx(0)
-    assert s(0.25) == approx(1)
-    assert s(0.5) == approx(0)
-    assert s(0.75) == approx(-1)
-    assert s(1) == approx(0)
+    assert f(0) == approx(0)
+    assert f(0.25) == approx(1)
+    assert f(0.5) == approx(0)
+    assert f(0.75) == approx(-1)
+    assert f(1) == approx(0)
+
+    # test outside the range [0;1]
+    assert f(2) == approx(f(1))
+    assert f(-1) == approx(f(1))
 
 
 def test_cosinus():
-    c = cosinus()
+    f = cosinus()
     # check that full cosinus curve is mapped to range [0;1]
-    assert c(0) == approx(1)
-    assert c(0.25) == approx(0)
-    assert c(0.5) == approx(-1)
-    assert c(0.75) == approx(0)
-    assert c(1) == approx(1)
+    assert f(0) == approx(1)
+    assert f(0.25) == approx(0)
+    assert f(0.5) == approx(-1)
+    assert f(0.75) == approx(0)
+    assert f(1) == approx(1)
 
+    # test outside the range [0;1]
+    assert f(2) == approx(f(1))
+    assert f(-1) == approx(f(1))
 
+def test_cubic_interpolation_evenly_spaced():
+    f = cubic_interpolation_evenly_spaced([1, 2, 0, 3, 5])
+    assert f(0) == approx(1)
+    assert f(0.25) == approx(2)
+    assert f(0.5) == approx(0)
+    assert f(0.75) == approx(3)
+    assert f(1) == approx(5)
+
+    f = cubic_interpolation_evenly_spaced([1, 2])
+    assert f(0) == approx(1)
+    assert f(0.5) == approx(1.5)
+    assert f(1) == approx(2)
+
+    # expect that the interpolation is not defined outside the range [0;1]
+    with pytest.raises(Exception):
+        f(2)
+
+    # expect that interpolation is not possible with only one value
+    with pytest.raises(Exception):
+        f = cubic_interpolation_evenly_spaced([2])
