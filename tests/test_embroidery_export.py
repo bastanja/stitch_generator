@@ -8,8 +8,8 @@ from lib.sample import sample
 def test_to_pyembroidery():
     # create embroidery pattern with two blocks
     pattern = EmbroideryPattern()
-    pattern.add_stitches(sample(line(100, 0)))
-    pattern.add_stitches(sample(line(100, 100)))
+    pattern.add_stitches(sample(line(100, 0), 50))
+    pattern.add_stitches(sample(line(100, 100), 50))
 
     # convert to pyembroidery format
     export_pattern = to_pyembroidery(pattern)
