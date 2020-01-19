@@ -1,4 +1,5 @@
-from pyembroidery import EmbPattern, write_vp3, CONTINGENCY_TIE_ON_THREE_SMALL, CONTINGENCY_TIE_OFF_THREE_SMALL
+from pyembroidery import EmbPattern, write_vp3, write_svg, \
+    CONTINGENCY_TIE_ON_THREE_SMALL, CONTINGENCY_TIE_OFF_THREE_SMALL
 from lib.embroidery_pattern import EmbroideryPattern
 
 
@@ -18,3 +19,7 @@ export_parameters = {"tie_on": CONTINGENCY_TIE_ON_THREE_SMALL, "tie_off": CONTIN
 
 def export_vp3(pattern: EmbroideryPattern, file_path: str):
     write_vp3(to_pyembroidery(pattern), file_path, export_parameters)
+
+
+def export_svg(pattern: EmbroideryPattern, file_path: str):
+    write_svg(to_pyembroidery(pattern), file_path)
