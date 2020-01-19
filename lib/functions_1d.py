@@ -52,3 +52,24 @@ def cubic_interpolation_evenly_spaced(values):
     f = interp1d(samples, values, kind=interpolation)
     return f
 
+
+def stairs(steps, ascend_ratio):
+    ascend_ratio /= steps
+    vx = []
+    x_step_size = 1 / steps
+    for i in range(steps + 1):
+        vx.append(i * x_step_size - ascend_ratio)
+        vx.append(i * x_step_size + ascend_ratio)
+
+    vx = vx[1:-1]
+    vx[0] = 0
+    vx[-1] = 1
+
+    vy = []
+    y_step_size = 1 / (steps - 1)
+    for i in range(steps):
+        step_y = (i * y_step_size)
+        vy.append(step_y)
+        vy.append(step_y)
+
+    return interp1d(vx, vy, kind='linear')

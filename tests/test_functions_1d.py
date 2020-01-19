@@ -1,6 +1,7 @@
 import pytest
 
-from lib.functions_1d import linear_interpolation, constant, sinus, cosinus, noise, cubic_interpolation_evenly_spaced
+from lib.functions_1d import linear_interpolation, constant, sinus, cosinus, noise, cubic_interpolation_evenly_spaced, \
+    stairs
 from pytest import approx
 
 
@@ -83,6 +84,7 @@ def test_cosinus():
     assert f(2) == approx(f(1))
     assert f(-1) == approx(f(1))
 
+
 def test_cubic_interpolation_evenly_spaced():
     f = cubic_interpolation_evenly_spaced([1, 2, 0, 3, 5])
     assert f(0) == approx(1)
@@ -103,3 +105,40 @@ def test_cubic_interpolation_evenly_spaced():
     # expect that interpolation is not possible with only one value
     with pytest.raises(Exception):
         f = cubic_interpolation_evenly_spaced([2])
+
+
+def test_stairs():
+    steps = 2
+    ratio = 0.1
+    f = stairs(steps, ratio)
+    assert f(0) == approx(0)
+    assert f(0.5) == approx(0.5)
+    assert f(1) == approx(1)
+
+    step_increase_size = ratio/steps
+    assert f(0.5 - step_increase_size) == approx(0)
+    assert f(0.5 + step_increase_size) == approx(1)
+
+    steps = 2
+    ratio = 0.1
+    f = stairs(steps, ratio)
+    assert f(0) == approx(0)
+    assert f(0.5) == approx(0.5)
+    assert f(1) == approx(1)
+
+    step_increase_size = ratio/steps
+    assert f(0.5 - step_increase_size) == approx(0)
+    assert f(0.5 + step_increase_size) == approx(1)
+
+    steps = 3
+    ratio = 0.1
+    f = stairs(steps, ratio)
+    assert f(0) == approx(0)
+    assert f(1/3) == approx(0.25)
+    assert f(0.5) == approx(0.5)
+    assert f(2/3) == approx(0.75)
+    assert f(1) == approx(1)
+
+    step_increase_size = ratio/steps
+    assert f((1/3) - step_increase_size) == approx(0)
+    assert f((1/3) + step_increase_size) == approx(0.5)
