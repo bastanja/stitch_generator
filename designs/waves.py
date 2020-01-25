@@ -3,7 +3,7 @@ from designs.parameter import FloatParameter, IntParameter
 from lib.embroidery_pattern import EmbroideryPattern
 from lib.sample import sample
 from designs.embroidery_design import EmbroideryDesign
-from lib.function_modifiers import shift, scale, repeat, add, combine
+from lib.function_modifiers import shift, scale, repeat, add, combine, inverse
 from lib.functions_1d import cosinus, linear_interpolation, constant
 from lib.functions_2d import function_2d
 
@@ -36,8 +36,7 @@ class Waves(EmbroideryDesign):
             f = function_2d(f_x, f_y)
 
             if i % 2 == 1:
-                inverse = linear_interpolation(1, 0)
-                f = combine(f, inverse)
+                f = inverse(f)
 
             additional_stitches = sample(f, self.points_per_row)
             stitches = np.concatenate((stitches, additional_stitches))

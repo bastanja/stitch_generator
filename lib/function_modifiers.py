@@ -1,7 +1,5 @@
 import math
 
-import numpy as np
-
 
 def zigzag(function):
     def f(v):
@@ -52,3 +50,7 @@ def add(f1, f2):
 
 def multiply(f1, f2):
     return lambda v: f1(v) * f2(v)
+
+
+def inverse(f):
+    return lambda v: f(1 - v)
