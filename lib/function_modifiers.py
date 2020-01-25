@@ -54,3 +54,11 @@ def multiply(f1, f2):
 
 def inverse(f):
     return lambda v: f(1 - v)
+
+
+def mix(f1, f2, factor):
+    def f(v):
+        fv = factor(v)
+        return f1(v) * (1 - fv) + f2(v) * fv
+
+    return f
