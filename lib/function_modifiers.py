@@ -41,7 +41,7 @@ def shift(amount, function):
 
 
 def combine(f1, f2):
-    return lambda v: f1(f2(v))
+    return lambda v: f2(f1(v))
 
 
 def add(f1, f2):
