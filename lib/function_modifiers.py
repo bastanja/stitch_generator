@@ -1,6 +1,5 @@
 import math
 
-
 def zigzag(function):
     def f(v):
         val = 1 - (math.fabs(1 - (v % 2)))
@@ -28,7 +27,7 @@ def repeat(r, function, mode=''):
     if mode == 'mod1':
         function = mod1(function)
     if mode == 'clamp1':
-        function = clamp1(function, 0, 1)
+        function = clamp1(function)
     return lambda v: function(v * r)
 
 
