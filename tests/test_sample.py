@@ -1,7 +1,7 @@
 import numpy as np
 from lib.functions_1d import linear_interpolation, sinus, noise
 from lib.functions_2d import line, circle
-from lib.sample import sample, sample_generator
+from lib.sample import sample, sample_generator, middle_sample_generator
 
 functions = [linear_interpolation(1, 2), sinus(), noise(), circle(), line(10, 20)]
 
@@ -42,3 +42,11 @@ def test_sample_generator():
         v2 = sample(f, samples, with_endpoint)
 
         assert np.allclose(v1, v2)
+
+
+def test_middle_sample_generator():
+    samples = 10
+    mid = middle_sample_generator(samples)
+
+    f = linear_interpolation(0, 20)
+    assert np.allclose(list(mid(f)), (1, 3, 5, 7, 9, 11, 13, 15, 17, 19))

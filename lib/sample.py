@@ -9,6 +9,14 @@ def sample(function, number_of_samples: int, include_endpoint: bool = True):
     return np.array([function(t) for t in v])
 
 
+def sample_generator(number_of_samples: int, include_endpoint: bool = True):
+    return partial(_generator, number_of_samples=number_of_samples, include_endpoint=include_endpoint)
+
+
+def middle_sample_generator(number_of_samples: int):
+    return partial(_generator_middle, number_of_samples=number_of_samples)
+
+
 def _generator(function, number_of_samples: int, include_endpoint: bool = True):
     step = 1 / number_of_samples
 
@@ -19,5 +27,8 @@ def _generator(function, number_of_samples: int, include_endpoint: bool = True):
         yield function(1)
 
 
-def sample_generator(number_of_samples: int, include_endpoint: bool = True):
-    return partial(_generator, number_of_samples=number_of_samples, include_endpoint=include_endpoint)
+def _generator_middle(function, number_of_samples: int):
+    step = 1 / number_of_samples
+
+    for i in range(number_of_samples):
+        yield function(step * (i + 0.5))
