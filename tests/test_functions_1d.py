@@ -1,7 +1,7 @@
 import pytest
 
 from lib.functions_1d import linear_interpolation, constant, sinus, cosinus, noise, cubic_interpolation_evenly_spaced, \
-    stairs
+    stairs, square, arc
 from pytest import approx
 
 
@@ -115,7 +115,7 @@ def test_stairs():
     assert f(0.5) == approx(0.5)
     assert f(1) == approx(1)
 
-    step_increase_size = ratio/steps
+    step_increase_size = ratio / steps
     assert f(0.5 - step_increase_size) == approx(0)
     assert f(0.5 + step_increase_size) == approx(1)
 
@@ -126,7 +126,7 @@ def test_stairs():
     assert f(0.5) == approx(0.5)
     assert f(1) == approx(1)
 
-    step_increase_size = ratio/steps
+    step_increase_size = ratio / steps
     assert f(0.5 - step_increase_size) == approx(0)
     assert f(0.5 + step_increase_size) == approx(1)
 
@@ -134,11 +134,25 @@ def test_stairs():
     ratio = 0.1
     f = stairs(steps, ratio)
     assert f(0) == approx(0)
-    assert f(1/3) == approx(0.25)
+    assert f(1 / 3) == approx(0.25)
     assert f(0.5) == approx(0.5)
-    assert f(2/3) == approx(0.75)
+    assert f(2 / 3) == approx(0.75)
     assert f(1) == approx(1)
 
-    step_increase_size = ratio/steps
-    assert f((1/3) - step_increase_size) == approx(0)
-    assert f((1/3) + step_increase_size) == approx(0.5)
+    step_increase_size = ratio / steps
+    assert f((1 / 3) - step_increase_size) == approx(0)
+    assert f((1 / 3) + step_increase_size) == approx(0.5)
+
+
+def test_square():
+    f = square()
+    assert f(0) == approx(0)
+    assert f(0.5) == approx(0.25)
+    assert f(1) == approx(1)
+
+
+def test_arc():
+    f = arc()
+    assert f(0) == approx(0)
+    assert f(0.5) == approx(1)
+    assert f(1) == approx(0)

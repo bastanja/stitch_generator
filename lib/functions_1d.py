@@ -4,6 +4,8 @@ import numpy as np
 from noise import pnoise1
 from scipy.interpolate import interp1d
 
+from lib.function_modifiers import add, repeat, shift, multiply
+
 
 def constant(v):
     return lambda _: v
@@ -73,3 +75,11 @@ def stairs(steps, ascend_ratio):
         vy.append(step_y)
 
     return interp1d(vx, vy, kind='linear')
+
+
+def arc():
+    f = add(square(), constant(-1))
+    f = repeat(2, f, 'zigzag')
+    f = shift(0.5, f)
+    f = multiply(f, constant(-1))
+    return f
