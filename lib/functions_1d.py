@@ -12,9 +12,10 @@ def constant(v):
 
 
 def linear_interpolation(target_low, target_high, source_low=0, source_high=1):
+    if np.allclose(target_low, target_high) or source_low == source_high:
+        return lambda v: target_low
+
     def f(v):
-        if target_low == target_high or source_high == source_low:
-            return target_low
         source_range = source_high - source_low
         over_low = v - source_low
         ratio = over_low / source_range
