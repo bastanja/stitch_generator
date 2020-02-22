@@ -1,7 +1,7 @@
 import numpy as np
 from lib.functions_1d import linear_interpolation, sinus, noise
 from lib.functions_2d import line, circle
-from lib.sample import sample, sample_generator, middle_sample_generator
+from lib.sample import sample, sample_generator, middle_sample_generator, resample
 
 functions = [linear_interpolation(1, 2), sinus(), noise(), circle(), line(10, 20)]
 
@@ -50,3 +50,16 @@ def test_middle_sample_generator():
 
     f = linear_interpolation(0, 20)
     assert np.allclose(list(mid(f)), (1, 3, 5, 7, 9, 11, 13, 15, 17, 19))
+
+
+def test_resample():
+    f = line(10, 0)
+    stitches = sample(f, 10, True)
+
+    resampled = resample(stitches, 2)
+    assert len(resampled) == 6
+    assert np.allclose(resampled, sample(f, 5, True))
+
+    resampled = resample(stitches, 0.2)
+    assert len(resampled) == 51
+    assert np.allclose(resampled, sample(f, 50, True))
