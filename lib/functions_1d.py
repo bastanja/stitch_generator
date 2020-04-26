@@ -39,7 +39,7 @@ def cosinus():
 def noise(octaves=4):
     def f(v):
         try:
-            result = [pnoise1(t, octaves=octaves) for t in v]
+            result = np.array([pnoise1(t, octaves=octaves) for t in v])
         except TypeError:
             return pnoise1(v, octaves=octaves)
         return result
