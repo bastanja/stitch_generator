@@ -4,10 +4,10 @@ from lib.function_modifiers import repeat, multiply, add
 
 def repeat_with_offset(position, direction, width, repetitions, stair_ratio, circular=False):
     if circular:
-        mode = 'mod1'
+        mode = 'wrap'
         offset = linear_interpolation(-0.5, 0.5)
     else:
-        mode = 'zigzag'
+        mode = 'reflect'
         offset = add(stairs(repetitions, stair_ratio), constant(-0.5))
 
     f = repeat(repetitions, position, mode)

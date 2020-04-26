@@ -3,7 +3,7 @@ import math
 import numpy as np
 
 
-def zigzag(function):
+def reflect(function):
     def f(v):
         val = 1 - (np.absolute(1 - (v % 2)))
         return function(val)
@@ -11,11 +11,11 @@ def zigzag(function):
     return f
 
 
-def mod1(function):
+def wrap(function):
     return lambda v: function(v % 1)
 
 
-def clamp1(function):
+def nearest(function):
     def f(v):
         if v < 0: v = 0
         if v > 1: v = 1
@@ -25,12 +25,12 @@ def clamp1(function):
 
 
 def repeat(r, function, mode=''):
-    if mode == 'zigzag':
-        function = zigzag(function)
-    if mode == 'mod1':
-        function = mod1(function)
-    if mode == 'clamp1':
-        function = clamp1(function)
+    if mode == 'reflect':
+        function = reflect(function)
+    if mode == 'wrap':
+        function = wrap(function)
+    if mode == 'nearest':
+        function = nearest(function)
     return lambda v: function(v * r)
 
 

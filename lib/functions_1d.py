@@ -83,7 +83,7 @@ def stairs(steps, ascend_ratio):
 
 def arc():
     f = add(square(), constant(-1))
-    f = repeat(2, f, 'zigzag')
+    f = repeat(2, f, 'reflect')
     f = shift(0.5, f)
     f = multiply(f, constant(-1))
     return f

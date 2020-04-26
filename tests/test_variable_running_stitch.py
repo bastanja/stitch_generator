@@ -40,7 +40,7 @@ def with_generators():
     mid = middle_sample_generator(3)
     f = line(3, 0)
     d = function_2d(constant(0), constant(1))
-    w = repeat(2, linear_interpolation(0, 1), 'zigzag')
+    w = repeat(2, linear_interpolation(0, 1), 'reflect')
     min_strokes = 1
     max_strokes = 3
 
