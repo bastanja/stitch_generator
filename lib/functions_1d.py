@@ -7,8 +7,8 @@ from scipy.interpolate import interp1d
 from lib.function_modifiers import add, repeat, shift, multiply
 
 
-def constant(v):
-    return lambda _: v
+def constant(c):
+    return lambda v: np.full_like(np.array(v), c, dtype=float)
 
 
 def linear_interpolation(target_low, target_high, source_low=0, source_high=1):
@@ -29,15 +29,22 @@ def square():
 
 
 def sinus():
-    return lambda v: math.sin(v * math.pi * 2)
+    return lambda v: np.sin(v * np.pi * 2)
 
 
 def cosinus():
-    return lambda v: math.cos(v * math.pi * 2)
+    return lambda v: np.cos(v * np.pi * 2)
 
 
-def noise():
-    return lambda v: pnoise1(v, octaves=4)
+def noise(octaves=4):
+    def f(v):
+        try:
+            result = [pnoise1(t, octaves=octaves) for t in v]
+        except TypeError:
+            return pnoise1(v, octaves=octaves)
+        return result
+
+    return f
 
 
 def positive_noise():
