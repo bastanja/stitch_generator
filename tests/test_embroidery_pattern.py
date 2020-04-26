@@ -42,6 +42,7 @@ def test_get_stitch():
 
 def test_number_of_stitches():
     p = EmbroideryPattern()
+    assert p.number_of_stitches == 0
     stitches = [(0, 0), (2, 2), (4, 4)]
     p.add_stitches(stitches, 0x0080FF)
     assert p.number_of_stitches == len(stitches)
