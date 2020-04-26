@@ -91,3 +91,15 @@ def arc():
     f = shift(0.5, f)
     f = multiply(f, constant(-1))
     return f
+
+
+def smoothstep():
+    return lambda v: 3 * v ** 2 - 2 * v ** 3
+
+
+def smootherstep():
+    return lambda v: 6 * v ** 5 - 15 * v ** 4 + 10 * v ** 3
+
+
+def circular_arc():
+    return lambda v: np.sqrt(1 - v ** 2)

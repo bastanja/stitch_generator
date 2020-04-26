@@ -2,7 +2,7 @@ import numpy as np
 import pytest
 
 from lib.functions_1d import linear_interpolation, constant, sinus, cosinus, noise, cubic_interpolation_evenly_spaced, \
-    stairs, square, arc
+    stairs, square, arc, smoothstep, smootherstep, circular_arc
 from pytest import approx
 
 
@@ -159,8 +159,23 @@ def test_arc():
     assert f(1) == approx(0)
 
 
+def test_smoothstep():
+    f = smoothstep()
+    assert (f(0) == approx(0))
+    assert (f(0.5) == approx(0.5))
+    assert (f(1) == approx(1))
+
+
+def test_smootherstep():
+    f = smoothstep()
+    assert (f(0) == approx(0))
+    assert (f(0.5) == approx(0.5))
+    assert (f(1) == approx(1))
+
+
 all_1d_functions = [linear_interpolation(0, 1), constant(0), sinus(), cosinus(), noise(),
-                    cubic_interpolation_evenly_spaced([0, 1, 0]), stairs(5, 0.1), square(), arc()]
+                    cubic_interpolation_evenly_spaced([0, 1, 0]), stairs(5, 0.1), square(), arc(),
+                    smoothstep(), smootherstep(), circular_arc()]
 
 
 def test_with_float_value():
@@ -177,4 +192,3 @@ def test_with_np_aray():
 
         plain_result = [f(v) for v in [0, 0.5, 1]]
         assert np.allclose(result, plain_result)
-
