@@ -167,7 +167,7 @@ def test_smoothstep():
 
 
 def test_smootherstep():
-    f = smoothstep()
+    f = smootherstep()
     assert (f(0) == approx(0))
     assert (f(0.5) == approx(0.5))
     assert (f(1) == approx(1))
