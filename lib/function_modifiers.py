@@ -1,8 +1,11 @@
 import math
 
+import numpy as np
+
+
 def zigzag(function):
     def f(v):
-        val = 1 - (math.fabs(1 - (v % 2)))
+        val = 1 - (np.absolute(1 - (v % 2)))
         return function(val)
 
     return f
