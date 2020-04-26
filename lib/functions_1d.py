@@ -47,10 +47,6 @@ def noise(octaves=4):
     return f
 
 
-def positive_noise():
-    return lambda v: (noise()(v) + 1) * 0.5
-
-
 def cubic_interpolation_evenly_spaced(values):
     assert len(values) > 1, "Interpolation function needs at least two values"
     samples = np.linspace(0, 1, num=len(values), endpoint=True)
