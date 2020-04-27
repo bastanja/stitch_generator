@@ -1,10 +1,10 @@
 import numpy as np
 import pytest
 
-from lib.functions_1d import linear_interpolation, constant, sinus, cosinus, noise, cubic_interpolation_evenly_spaced, \
-    stairs, square, arc, smoothstep, smootherstep, circular_arc
+from lib.functions_1d import linear_interpolation, constant, sinus, cosinus, cubic_interpolation_evenly_spaced, \
+    stairs, square, arc, smoothstep, smootherstep
 from pytest import approx
-
+from tests.functions import functions_1d
 
 def test_constant():
     c = 0.123
@@ -173,20 +173,15 @@ def test_smootherstep():
     assert (f(1) == approx(1))
 
 
-all_1d_functions = [linear_interpolation(0, 1), constant(0), sinus(), cosinus(), noise(),
-                    cubic_interpolation_evenly_spaced([0, 1, 0]), stairs(5, 0.1), square(), arc(),
-                    smoothstep(), smootherstep(), circular_arc()]
-
-
 def test_with_float_value():
-    for f in all_1d_functions:
+    for f in functions_1d:
         result = f(0.5)
         assert -1 <= result <= 1
 
 
 def test_with_np_aray():
     values = np.array([0, 0.5, 1])
-    for f in all_1d_functions:
+    for f in functions_1d:
         result = f(values)
         assert len(result) == len(values)
 

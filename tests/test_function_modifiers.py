@@ -1,12 +1,10 @@
 from pytest import approx
 
 from lib.function_modifiers import repeat, reflect, wrap, nearest
-from lib.functions_1d import linear_interpolation, sinus, noise
-from lib.functions_2d import circle, line
+from tests.functions import functions_1d, functions_2d
 
-functions = [linear_interpolation(1, 2), sinus(), noise(), circle(), line(10, 20)]
 offsets = [t / 10 for t in range(10)]
-
+functions = functions_1d + functions_2d
 
 def test_repeat():
     times = 2
