@@ -5,7 +5,7 @@ from scipy.interpolate import interp1d
 
 def sample(function, number_of_samples: int, include_endpoint: bool = True):
     v = _linspace(1, number_of_samples=number_of_samples, include_endpoint=include_endpoint)
-    return np.array([function(t) for t in v])
+    return function(v)
 
 
 def sample_by_length(function, stitch_length, include_endpoint: bool = True):
