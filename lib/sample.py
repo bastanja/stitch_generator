@@ -10,7 +10,8 @@ def sample(function, number_of_samples: int, include_endpoint: bool = True):
 
 def sample_by_length(function, stitch_length, include_endpoint: bool = True):
     mapping, total_length = get_length_to_parameter_mapping(function)
-    num_samples = int(total_length / stitch_length)
+    num_samples = int(round(total_length / stitch_length))
+    num_samples = max(1, num_samples)
     lengths = _linspace(total_length, num_samples, include_endpoint)
     parameters = mapping(lengths)
     return function(parameters)
