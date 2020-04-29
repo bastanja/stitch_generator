@@ -22,21 +22,19 @@ def sample_by_length(function, stitch_length, include_endpoint: bool = True):
 
 
 def get_length_to_parameter_mapping(function, approximation_samples=1000):
-    parameters, accumulated = _accumulate_lengths(function, approximation_samples)
+    parameters = np.linspace(0, 1, approximation_samples)
+    accumulated = _accumulate_lengths(function(parameters))
     length_to_parameter = interp1d(accumulated, parameters)
     return length_to_parameter, accumulated[-1]
 
 
-def _accumulate_lengths(function, approximation_samples):
-    parameters = np.linspace(0, 1, approximation_samples)
-    points = function(parameters)
-
+def _accumulate_lengths(points):
     # calculate and accumulate point distances
     to_previous = points - np.roll(points, 1, 0)
     distance_to_previous = np.linalg.norm(to_previous, axis=1)
     distance_to_previous[0] = 0  # first point has no predecessor, set distance to 0
     accumulated = np.add.accumulate(distance_to_previous)
-    return parameters, accumulated
+    return accumulated
 
 
 def sample_generator(number_of_samples: int, include_endpoint: bool = True):
@@ -47,26 +45,18 @@ def middle_sample_generator(number_of_samples: int):
     return partial(_generator_middle, number_of_samples=number_of_samples)
 
 
-def resample(stitches, stitch_length):
+def resample(points, stitch_length):
     """
     Returns stitches which lie the polyline defined by the parameter stitches. The newly calculated stitches have
     approximately the distance stitch_length. This function can be used to increase or decrease the stitch density.
     """
-    # calculate and accumulate stitch distances
-    to_previous = stitches - np.roll(stitches, 1, 0)
-    distance_to_previous = np.linalg.norm(to_previous, axis=1)
-    distance_to_previous[0] = 0  # first stitch has no predecessor, set distance to 0
-    accumulated = np.add.accumulate(distance_to_previous)
+    accumulated = _accumulate_lengths(points)
+    accumulated /= accumulated[-1]
 
     # create interpolation function between stitches
-    interpolation = interp1d(accumulated, stitches, kind='linear', axis=0)
+    interpolation = interp1d(accumulated, points, kind='linear', axis=0)
 
-    # calculate length values for the new stitches
-    total_length = accumulated[-1]
-    number_of_stitches = int(round(total_length / stitch_length)) + 1  # + 1: always include the endpoint
-    length_values = np.linspace(0, total_length, number_of_stitches, endpoint=True)
-
-    return interpolation(length_values)
+    return sample_by_length(interpolation, stitch_length)
 
 
 def _generator(function, number_of_samples: int, include_endpoint: bool = True):
