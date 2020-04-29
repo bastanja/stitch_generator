@@ -20,8 +20,8 @@ def circle(radius=1, center=(0, 0)):
     return f
 
 
-def line(x, y):
-    return function_2d(linear_interpolation(0, x), linear_interpolation(0, y))
+def line(x, y, x0=0, y0=0):
+    return function_2d(linear_interpolation(x0, x), linear_interpolation(y0, y))
 
 
 def spiral(inner_radius, outer_radius, turns, center=(0, 0)):
