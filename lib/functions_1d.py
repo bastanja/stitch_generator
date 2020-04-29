@@ -12,16 +12,8 @@ def constant(c):
 
 
 def linear_interpolation(target_low, target_high, source_low=0, source_high=1):
-    if np.allclose(target_low, target_high) or source_low == source_high:
-        return lambda v: target_low
-
-    def f(v):
-        source_range = source_high - source_low
-        over_low = v - source_low
-        ratio = over_low / source_range
-        return target_low + (target_high - target_low) * ratio
-
-    return f
+    assert source_low != source_high, "source_low and source_high are equal. No interpolation interval defined"
+    return interp1d([source_low, source_high], [target_low, target_high], fill_value="extrapolate")
 
 
 def square():
