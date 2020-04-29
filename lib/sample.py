@@ -10,6 +10,35 @@ def sample(function, number_of_samples: int, include_endpoint: bool = True):
     return np.array([function(t) for t in v])
 
 
+def sample_by_length(function, stitch_length, include_endpoint: bool = True):
+    mapping, total_length = get_length_to_parameter_mapping(function)
+    num_samples = int(total_length / stitch_length)
+    num_samples = max(num_samples, 1) + 1
+    lengths = np.linspace(0, total_length, num_samples)
+    parameters = mapping(lengths)
+    if not include_endpoint:
+        parameters = parameters[0:-1]
+    return function(parameters)
+
+
+def get_length_to_parameter_mapping(function, approximation_samples=1000):
+    parameters, accumulated = _accumulate_lengths(function, approximation_samples)
+    length_to_parameter = interp1d(accumulated, parameters)
+    return length_to_parameter, accumulated[-1]
+
+
+def _accumulate_lengths(function, approximation_samples):
+    parameters = np.linspace(0, 1, approximation_samples)
+    points = function(parameters)
+
+    # calculate and accumulate point distances
+    to_previous = points - np.roll(points, 1, 0)
+    distance_to_previous = np.linalg.norm(to_previous, axis=1)
+    distance_to_previous[0] = 0  # first point has no predecessor, set distance to 0
+    accumulated = np.add.accumulate(distance_to_previous)
+    return parameters, accumulated
+
+
 def sample_generator(number_of_samples: int, include_endpoint: bool = True):
     return partial(_generator, number_of_samples=number_of_samples, include_endpoint=include_endpoint)
 
