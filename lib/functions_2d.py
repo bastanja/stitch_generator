@@ -1,7 +1,6 @@
 import numpy as np
 from lib.functions_1d import cosinus, sinus, constant, linear_interpolation
 from lib.function_modifiers import scale, add, repeat, multiply
-from svgpathtools import parse_path, CubicBezier
 
 
 def function_2d(fx, fy):
@@ -31,25 +30,3 @@ def spiral(inner_radius, outer_radius, turns, center=(0, 0)):
     direction = multiply(direction, increase)
     spiral = add(spiral, direction)
     return spiral
-
-
-def path(path_string):
-    parsed_path = parse_path(path_string)
-
-    def f(v):
-        pos = parsed_path.point(v)
-        return [pos.real, pos.imag]
-
-    return f
-
-
-def cubic_bezier(points):
-    assert len(points) == 4
-    converted = [complex(p[0], p[1]) for p in points]
-    bezier = CubicBezier(*converted)
-
-    def f(v):
-        pos = bezier.point(v)
-        return np.array((pos.real, pos.imag))
-
-    return f
