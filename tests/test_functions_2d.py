@@ -1,6 +1,8 @@
 import numpy as np
+import pytest
 from lib.functions_1d import linear_interpolation
-from lib.functions_2d import function_2d, circle, line, spiral
+from lib.functions_2d import function_2d, circle, line, spiral, bezier
+from lib.sample import sample
 
 
 def test_function_2d():
@@ -57,3 +59,18 @@ def test_spiral():
     assert np.allclose(f(0.5), (30 + 50, 0 + 50))
     assert np.allclose(f(1), (40 + 50, 0 + 50))
 
+
+def test_bezier():
+    control_points = np.array(((0, 0), (20, 20), (40, -20), (60, 0), (80, 0)))
+
+    functions = [
+        bezier(control_points[0:3, :]),
+        bezier(control_points[0:4, :]),
+        bezier(control_points)
+    ]
+
+    for f in functions:
+        samples = sample(f, 10)
+        # no specific check for coordinates, just check that we get a ndarray
+        assert isinstance(samples, np.ndarray)
+        assert len(samples) == 11

@@ -1,6 +1,7 @@
 import numpy as np
 from lib.functions_1d import cosinus, sinus, constant, linear_interpolation
 from lib.function_modifiers import scale, add, repeat, multiply
+from lib.bezier import de_casteljau
 
 
 def function_2d(fx, fy):
@@ -30,3 +31,17 @@ def spiral(inner_radius, outer_radius, turns, center=(0, 0)):
     direction = multiply(direction, increase)
     spiral = add(spiral, direction)
     return spiral
+
+
+def bezier(control_points):
+    def f(v):
+        points, tangents = de_casteljau(control_points, np.array(v, ndmin=1))
+        return points
+    return f
+
+
+def bezier_with_tangents(control_points):
+    def f(v):
+        points, tangents = de_casteljau(control_points, np.array(v, ndmin=1))
+        return points, tangents
+    return f
