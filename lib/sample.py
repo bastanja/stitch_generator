@@ -28,13 +28,18 @@ def get_length_to_parameter_mapping(function, approximation_samples=1000):
     return length_to_parameter, accumulated[-1]
 
 
-def _accumulate_lengths(points):
-    # calculate and accumulate point distances
-    to_previous = points - np.roll(points, 1, 0)
-    distance_to_previous = np.linalg.norm(to_previous, axis=1)
-    distance_to_previous[0] = 0  # first point has no predecessor, set distance to 0
-    accumulated = np.add.accumulate(distance_to_previous)
-    return accumulated
+def resample(stitches, stitch_length):
+    """
+    Returns stitches which lie the polyline defined by the parameter stitches. The newly calculated stitches have
+    approximately the distance stitch_length. This function can be used to increase or decrease the stitch density.
+    """
+    accumulated = _accumulate_lengths(stitches)
+    accumulated /= accumulated[-1]
+
+    # create interpolation function between stitches
+    interpolation = interp1d(accumulated, stitches, kind='linear', axis=0)
+
+    return sample_by_length(interpolation, stitch_length)
 
 
 def sample_generator(number_of_samples: int, include_endpoint: bool = True):
@@ -45,18 +50,13 @@ def middle_sample_generator(number_of_samples: int):
     return partial(_generator_middle, number_of_samples=number_of_samples)
 
 
-def resample(points, stitch_length):
-    """
-    Returns stitches which lie the polyline defined by the parameter stitches. The newly calculated stitches have
-    approximately the distance stitch_length. This function can be used to increase or decrease the stitch density.
-    """
-    accumulated = _accumulate_lengths(points)
-    accumulated /= accumulated[-1]
-
-    # create interpolation function between stitches
-    interpolation = interp1d(accumulated, points, kind='linear', axis=0)
-
-    return sample_by_length(interpolation, stitch_length)
+def _accumulate_lengths(points):
+    # calculate and accumulate point distances
+    to_previous = points - np.roll(points, 1, 0)
+    distance_to_previous = np.linalg.norm(to_previous, axis=1)
+    distance_to_previous[0] = 0  # first point has no predecessor, set distance to 0
+    accumulated = np.add.accumulate(distance_to_previous)
+    return accumulated
 
 
 def _generator(function, number_of_samples: int, include_endpoint: bool = True):
