@@ -5,7 +5,7 @@ from lib.bezier import de_casteljau
 
 
 def function_2d(fx, fy):
-    return lambda t: np.array([fx(t), fy(t)])
+    return lambda t: np.array([fx(t), fy(t)]).T
 
 
 def circle(radius=1, center=(0, 0)):
