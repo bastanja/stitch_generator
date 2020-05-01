@@ -171,14 +171,14 @@ def test_smootherstep():
 
 
 def test_with_float_value():
-    for f in functions_1d:
+    for name, f in functions_1d.items():
         result = f(0.5)
         assert -1 <= result <= 1
 
 
 def test_with_np_aray():
     values = np.array([0, 0.5, 1])
-    for f in functions_1d:
+    for name, f in functions_1d.items():
         result = f(values)
         assert len(result) == len(values)
 

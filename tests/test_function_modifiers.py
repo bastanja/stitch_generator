@@ -3,10 +3,10 @@ from pytest import approx
 from itertools import permutations
 
 from lib.function_modifiers import repeat, reflect, wrap, nearest, combine, inverse, mix
-from tests.functions import functions_1d, functions_2d, functions_1d_positive
+from tests.functions import all_functions, functions_1d, functions_1d_positive
 
 offsets = [t / 10 for t in range(10)]
-functions = functions_1d + functions_2d
+functions = all_functions
 
 
 def test_repeat():
@@ -14,7 +14,7 @@ def test_repeat():
 
     modes = ['reflect', 'wrap', 'nearest']
 
-    for f in functions:
+    for name, f in functions.items():
         for m in modes:
             r = repeat(times, f, mode=m)
             for t in offsets:
@@ -22,7 +22,7 @@ def test_repeat():
 
 
 def test_wrap():
-    for f in functions:
+    for name, f in functions.items():
         z = wrap(f)
         for t in offsets:
             assert f(t) == approx(z(t))
@@ -32,7 +32,7 @@ def test_wrap():
 
 
 def test_reflect():
-    for f in functions:
+    for name, f in functions.items():
         z = reflect(f)
         for t in offsets:
             assert f(t) == approx(z(t))
@@ -45,7 +45,7 @@ def test_reflect():
 
 
 def test_nearest():
-    for f in functions:
+    for name, f in functions.items():
         z = nearest(f)
         for t in offsets:
             assert f(t) == approx(z(t))
@@ -56,7 +56,7 @@ def test_nearest():
 
 
 def test_combine():
-    pairs = permutations(functions_1d_positive, 2)
+    pairs = permutations(functions_1d_positive.values(), 2)
     v = np.linspace(0, 1, 10)
     for f1, f2 in pairs:
         f_combined = combine(f1, f2)
@@ -73,14 +73,14 @@ def test_inverse():
     v = np.linspace(0, 1, 10)
     inv_v = 1 - v
 
-    for f in functions_1d:
+    for name, f in functions_1d.items():
         inv_f = inverse(f)
 
         assert np.allclose(inv_f(v), f(inv_v))
 
 
 def test_mix():
-    combinations = permutations(functions_1d_positive, 3)
+    combinations = permutations(functions_1d_positive.values(), 3)
     v = np.linspace(0, 1, 10)
     for f1, f2, factor in combinations:
         factors = factor(v)
