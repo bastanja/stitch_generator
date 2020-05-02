@@ -176,7 +176,7 @@ def test_with_float_value():
         assert -1 <= result <= 1
 
 
-def test_with_np_aray():
+def test_with_np_array():
     values = np.array([0, 0.5, 1])
     for name, f in functions_1d.items():
         result = f(values)

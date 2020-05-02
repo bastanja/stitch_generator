@@ -47,11 +47,11 @@ def combine(f1, f2):
 
 
 def add(f1, f2):
-    return lambda v: f1(v) + f2(v)
+    return _binary_operation(lambda a, b: a + b, f1, f2)
 
 
 def multiply(f1, f2):
-    return lambda v: f1(v) * f2(v)
+    return _binary_operation(lambda a, b: a * b, f1, f2)
 
 
 def inverse(f):
@@ -62,5 +62,19 @@ def mix(f1, f2, factor):
     def f(v):
         fv = factor(v)
         return f1(v) * (1 - fv) + f2(v) * fv
+
+    return f
+
+
+def _binary_operation(operation, f1, f2):
+    def f(v):
+        v1 = f1(v)
+        v2 = f2(v)
+        try:
+            result = operation(v1, v2)
+        except ValueError:
+            # Transpose operands, apply operation and transpose result back
+            result = operation(v1.T, v2.T).T
+        return result
 
     return f

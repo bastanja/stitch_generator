@@ -2,8 +2,8 @@ import numpy as np
 from pytest import approx
 from itertools import permutations
 
-from lib.function_modifiers import repeat, reflect, wrap, nearest, combine, inverse, mix
-from tests.functions import all_functions, functions_1d, functions_1d_positive
+from lib.function_modifiers import repeat, reflect, wrap, nearest, combine, inverse, mix, add, multiply
+from tests.functions import all_functions, functions_1d, functions_2d, functions_1d_positive
 
 offsets = [t / 10 for t in range(10)]
 functions = all_functions
@@ -92,3 +92,25 @@ def test_mix():
         v_mixed = v1 * (1 - factors) + v2 * factors
 
         assert np.allclose(v_mixed, mixed(v))
+
+
+def test_add():
+    pairs = permutations(all_functions.values(), 2)
+    float_values = (0.0, 0.3, 0.5, 1.0)
+    for f1, f2 in pairs:
+        added = add(f1, f2)
+        for v in float_values:
+            assert np.allclose(added(v), f1(v) + f2(v))
+        values = np.linspace(0, 1, 11)
+        assert np.allclose(added(values), (f1(values).T + f2(values).T).T)
+
+
+def test_multiply():
+    pairs = permutations(all_functions.values(), 2)
+    float_values = (0.0, 0.3, 0.5, 1.0)
+    for f1, f2 in pairs:
+        multiplied = multiply(f1, f2)
+        for v in float_values:
+            assert np.allclose(multiplied(v), f1(v) * f2(v))
+        values = np.linspace(0, 1, 11)
+        assert np.allclose(multiplied(values), (f1(values).T * f2(values).T).T)
