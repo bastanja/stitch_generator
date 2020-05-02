@@ -1,10 +1,22 @@
 import math
+from functools import partial
 
 import numpy as np
 from noise import pnoise1
 from scipy.interpolate import interp1d
 
 from lib.function_modifiers import add, repeat, shift, multiply
+
+
+def function_1d(f):
+    def wrapper(v):
+        try:
+            result = f(v)
+        except TypeError:
+            result = np.array([f(t) for t in v])
+        return result
+
+    return wrapper
 
 
 def constant(c):
@@ -29,15 +41,8 @@ def cosinus():
 
 
 def noise(octaves=4):
-    def f(v):
-        try:
-            result = np.array([pnoise1(t, octaves=octaves) for t in v])
-        except TypeError:
-            return pnoise1(v, octaves=octaves)
-        return result
-
-    return f
-
+    n = partial(pnoise1, octaves=octaves)
+    return function_1d(n)
 
 def cubic_interpolation_evenly_spaced(values):
     assert len(values) > 1, "Interpolation function needs at least two values"
