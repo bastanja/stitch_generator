@@ -2,6 +2,7 @@ import numpy as np
 from lib.functions_1d import cosinus, sinus, constant, linear_interpolation
 from lib.function_modifiers import scale, add, repeat, multiply
 from lib.bezier import de_casteljau
+from stitch_effects.rotate import rotate_deg
 
 
 def function_2d(fx, fy):
@@ -34,14 +35,30 @@ def spiral(inner_radius, outer_radius, turns, center=(0, 0)):
 
 
 def bezier(control_points):
+    control_points = np.asarray(control_points, dtype=float)
+
     def f(v):
         points, tangents = de_casteljau(control_points, np.array(v, ndmin=1))
         return points
+
+    return f
+
+
+def bezier_normals(control_points):
+    control_points = np.asarray(control_points, dtype=float)
+
+    def f(v):
+        points, tangents = de_casteljau(control_points, np.array(v, ndmin=1, dtype=float))
+        return rotate_deg(tangents, -90)
+
     return f
 
 
 def bezier_with_tangents(control_points):
+    control_points = np.asarray(control_points, dtype=float)
+
     def f(v):
         points, tangents = de_casteljau(control_points, np.array(v, ndmin=1))
         return points, tangents
+
     return f
