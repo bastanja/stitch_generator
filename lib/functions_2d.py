@@ -38,7 +38,7 @@ def bezier(control_points):
     control_points = np.asarray(control_points, dtype=float)
 
     def f(v):
-        points, tangents = de_casteljau(control_points, np.array(v, ndmin=1))
+        points, tangents = de_casteljau(control_points, np.array(v, ndmin=1, dtype=float))
         return points
 
     return f
