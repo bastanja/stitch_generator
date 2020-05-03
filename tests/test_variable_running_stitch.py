@@ -1,10 +1,10 @@
 import numpy as np
 
-from lib.function_modifiers import repeat
-from lib.functions_1d import constant, linear_interpolation
-from lib.functions_2d import line, function_2d
-from stitch_effects.variable_running_stitch import variable_running_stitch
-from lib.linspace import samples, mid_samples
+from stitch_generator.functions.function_modifiers import repeat
+from stitch_generator.functions.functions_1d import constant, linear_interpolation
+from stitch_generator.functions.functions_2d import line, function_2d
+from stitch_generator.stitch_effects.variable_running_stitch import variable_running_stitch
+from stitch_generator.functions.linspace import samples, mid_samples
 
 
 def test_variable_running_stitch():

@@ -1,8 +1,8 @@
 import numpy as np
 
-from lib.functions_1d import linear_interpolation, sinus, noise
-from lib.functions_2d import circle, line
-from stitch_effects.smooth import smooth
+from stitch_generator.functions.functions_1d import linear_interpolation, sinus, noise
+from stitch_generator.functions.functions_2d import circle, line
+from stitch_generator.stitch_effects.smooth import smooth
 
 def test_smooth():
     # apply smoothing on samples of 1d and 2d functions

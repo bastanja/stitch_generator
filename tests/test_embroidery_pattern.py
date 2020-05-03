@@ -1,6 +1,6 @@
 import pytest
 
-from lib.embroidery_pattern import EmbroideryPattern
+from stitch_generator.functions.embroidery_pattern import EmbroideryPattern
 
 
 def test_add_stitches():

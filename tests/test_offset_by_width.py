@@ -1,8 +1,8 @@
 import numpy as np
 
-from lib.functions_1d import constant, linear_interpolation
-from lib.functions_2d import line, function_2d
-from lib.offset_by_width import offset_by_width, offset_half_width
+from stitch_generator.functions.functions_1d import constant, linear_interpolation
+from stitch_generator.functions.functions_2d import line, function_2d
+from stitch_generator.functions.offset_by_width import offset_by_width, offset_half_width
 
 
 def test_offset_by_width():

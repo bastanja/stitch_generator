@@ -1,5 +1,5 @@
 import numpy as np
-from stitch_effects.rotate import rotate
+from stitch_generator.stitch_effects.rotate import rotate
 
 
 def calculate_direction(stitches):

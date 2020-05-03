@@ -1,5 +1,5 @@
-from lib.function_modifiers import multiply, add
-from lib.functions_1d import constant
+from stitch_generator.functions.function_modifiers import multiply, add
+from stitch_generator.functions.functions_1d import constant
 
 
 def offset_by_width(position, direction, width, negative_direction: bool, factor: float):

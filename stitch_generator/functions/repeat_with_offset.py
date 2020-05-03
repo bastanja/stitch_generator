@@ -1,5 +1,5 @@
-from lib.functions_1d import constant, linear_interpolation, stairs
-from lib.function_modifiers import repeat, multiply, add
+from stitch_generator.functions.functions_1d import constant, linear_interpolation, stairs
+from stitch_generator.functions.function_modifiers import repeat, multiply, add
 
 
 def repeat_with_offset(position, direction, width, repetitions, stair_ratio, circular=False):

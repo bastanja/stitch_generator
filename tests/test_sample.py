@@ -1,7 +1,7 @@
 import numpy as np
-from lib.functions_1d import linear_interpolation, sinus, noise
-from lib.functions_2d import line, circle
-from lib.sample import sample, resample
+from stitch_generator.functions.functions_1d import linear_interpolation, sinus, noise
+from stitch_generator.functions.functions_2d import line, circle
+from stitch_generator.functions.sample import sample, resample
 
 functions = [linear_interpolation(1, 2), sinus(), noise(), circle(), line(10, 20)]
 

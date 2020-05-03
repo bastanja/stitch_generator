@@ -1,6 +1,6 @@
 import numpy as np
-from lib.functions_1d import linear_interpolation
-from lib.sample import sample
+from stitch_generator.functions.functions_1d import linear_interpolation
+from stitch_generator.functions.sample import sample
 from typing import Iterable, Tuple
 
 

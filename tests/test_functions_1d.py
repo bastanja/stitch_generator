@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from lib.functions_1d import linear_interpolation, constant, sinus, cosinus, cubic_interpolation_evenly_spaced, \
+from stitch_generator.functions.functions_1d import linear_interpolation, constant, sinus, cosinus, cubic_interpolation_evenly_spaced, \
     stairs, square, arc, smoothstep, smootherstep
 from pytest import approx
 from tests.functions import functions_1d

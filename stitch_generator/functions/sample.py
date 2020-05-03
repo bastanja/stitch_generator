@@ -1,7 +1,7 @@
 from functools import partial
 import numpy as np
 from scipy.interpolate import interp1d
-from lib.linspace import linspace
+from stitch_generator.functions.linspace import linspace
 
 
 def sample(function, number_of_samples: int, include_endpoint: bool = True):

@@ -1,8 +1,8 @@
 from pyembroidery import COMMAND_MASK, COLOR_BREAK
-from file_io.embroidery_export import to_pyembroidery
-from lib.embroidery_pattern import EmbroideryPattern
-from lib.functions_2d import line
-from lib.sample import sample
+from stitch_generator.file_io.embroidery_export import to_pyembroidery
+from stitch_generator.functions.embroidery_pattern import EmbroideryPattern
+from stitch_generator.functions.functions_2d import line
+from stitch_generator.functions.sample import sample
 
 
 def test_to_pyembroidery():

@@ -1,5 +1,5 @@
-from lib.functions_1d import *
-from lib.inverse_cdf import inverse_cdf
+from stitch_generator.functions.functions_1d import *
+from stitch_generator.functions.inverse_cdf import inverse_cdf
 from tests.functions import functions_1d_positive
 
 def test_inverse_cdf():

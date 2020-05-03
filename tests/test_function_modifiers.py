@@ -2,7 +2,8 @@ import numpy as np
 from pytest import approx
 from itertools import permutations
 
-from lib.function_modifiers import repeat, reflect, wrap, nearest, combine, inverse, mix, add, multiply
+from stitch_generator.functions.function_modifiers import repeat, reflect, wrap, nearest, combine, inverse, mix, add, \
+    multiply
 from tests.functions import all_functions, functions_1d, functions_2d, functions_1d_positive
 
 offsets = [t / 10 for t in range(10)]

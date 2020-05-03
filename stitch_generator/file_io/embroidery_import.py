@@ -1,6 +1,6 @@
 import numpy as np
 from pyembroidery import EmbPattern, read_vp3
-from lib.embroidery_pattern import EmbroideryPattern
+from stitch_generator.functions.embroidery_pattern import EmbroideryPattern
 
 
 def from_pyembroidery(pyembroidery_pattern: EmbPattern):

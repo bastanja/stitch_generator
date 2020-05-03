@@ -1,6 +1,6 @@
 import numpy as np
 
-from lib.pattern_generator import constant_pattern, cycle_patterns
+from stitch_generator.functions.pattern_generator import constant_pattern, cycle_patterns
 
 
 def test_constant_pattern():

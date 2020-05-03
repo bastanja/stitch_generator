@@ -1,8 +1,8 @@
 from pyembroidery import EmbPattern, COLOR_CHANGE, write_vp3
 
-from file_io.embroidery_import import from_pyembroidery
-from lib.functions_2d import line
-from lib.sample import sample
+from stitch_generator.file_io.embroidery_import import from_pyembroidery
+from stitch_generator.functions.functions_2d import line
+from stitch_generator.functions.sample import sample
 
 
 def test_from_pyembroidery():

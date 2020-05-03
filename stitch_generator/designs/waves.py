@@ -1,11 +1,11 @@
 import numpy as np
-from designs.parameter import FloatParameter, IntParameter
-from lib.embroidery_pattern import EmbroideryPattern
-from lib.sample import sample
-from designs.embroidery_design import EmbroideryDesign
-from lib.function_modifiers import shift, scale, repeat, add, combine, inverse
-from lib.functions_1d import cosinus, linear_interpolation, constant
-from lib.functions_2d import function_2d
+from stitch_generator.designs.parameter import FloatParameter, IntParameter
+from stitch_generator.functions.embroidery_pattern import EmbroideryPattern
+from stitch_generator.functions.sample import sample
+from stitch_generator.designs.embroidery_design import EmbroideryDesign
+from stitch_generator.functions.function_modifiers import shift, scale, repeat, add, combine, inverse
+from stitch_generator.functions.functions_1d import cosinus, linear_interpolation, constant
+from stitch_generator.functions.functions_2d import function_2d
 
 
 class Waves(EmbroideryDesign):

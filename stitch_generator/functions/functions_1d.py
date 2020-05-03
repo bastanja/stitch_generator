@@ -5,7 +5,7 @@ import numpy as np
 from noise import pnoise1
 from scipy.interpolate import interp1d
 
-from lib.function_modifiers import add, repeat, shift, multiply
+from stitch_generator.functions.function_modifiers import add, repeat, shift, multiply
 
 
 def function_1d(f):

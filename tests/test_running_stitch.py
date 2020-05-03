@@ -3,7 +3,7 @@ import itertools
 import numpy as np
 import pytest
 
-from stitch_effects.running_stitch import running_stitch_line
+from stitch_generator.stitch_effects.running_stitch import running_stitch_line
 
 
 def test_running_stitch_line():

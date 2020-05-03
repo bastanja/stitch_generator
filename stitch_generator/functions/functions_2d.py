@@ -1,8 +1,8 @@
 import numpy as np
-from lib.functions_1d import cosinus, sinus, constant, linear_interpolation
-from lib.function_modifiers import scale, add, repeat, multiply
-from lib.bezier import de_casteljau
-from stitch_effects.rotate import rotate_deg
+from stitch_generator.functions.functions_1d import cosinus, sinus, constant, linear_interpolation
+from stitch_generator.functions.function_modifiers import scale, add, repeat, multiply
+from stitch_generator.functions.bezier import de_casteljau
+from stitch_generator.stitch_effects.rotate import rotate_deg
 
 
 def function_2d(fx, fy):

@@ -1,5 +1,5 @@
-from lib.functions_1d import *
-from lib.functions_2d import circle, line, spiral, bezier, function_2d
+from stitch_generator.functions.functions_1d import *
+from stitch_generator.functions.functions_2d import circle, line, spiral, bezier, function_2d
 
 functions_1d_positive = {
     'lin01': linear_interpolation(0, 1),

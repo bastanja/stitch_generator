@@ -1,6 +1,6 @@
 from pyembroidery import EmbPattern, write_vp3, write_svg, \
     CONTINGENCY_TIE_ON_THREE_SMALL, CONTINGENCY_TIE_OFF_THREE_SMALL
-from lib.embroidery_pattern import EmbroideryPattern
+from stitch_generator.functions.embroidery_pattern import EmbroideryPattern
 
 
 def to_pyembroidery(embroidery_pattern: EmbroideryPattern):

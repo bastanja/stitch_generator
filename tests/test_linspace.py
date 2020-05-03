@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from lib.linspace import linspace, divide_equally, divide_exact, linspace_mid
+from stitch_generator.functions.linspace import linspace, divide_equally, divide_exact, linspace_mid
 
 
 def test_linspace():

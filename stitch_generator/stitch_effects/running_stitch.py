@@ -1,5 +1,5 @@
-from lib.functions_2d import line
-from lib.sample import sample_by_length
+from stitch_generator.functions.functions_2d import line
+from stitch_generator.functions.sample import sample_by_length
 
 
 def running_stitch(function, stitch_length: float, include_last: bool):

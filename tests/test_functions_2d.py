@@ -1,8 +1,8 @@
 import numpy as np
 import pytest
-from lib.functions_1d import linear_interpolation
-from lib.functions_2d import function_2d, circle, line, spiral, bezier
-from lib.sample import sample
+from stitch_generator.functions.functions_1d import linear_interpolation
+from stitch_generator.functions.functions_2d import function_2d, circle, line, spiral, bezier
+from stitch_generator.functions.sample import sample
 
 
 def test_function_2d():
