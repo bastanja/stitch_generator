@@ -52,13 +52,3 @@ def bezier_normals(control_points):
         return rotate_deg(tangents, -90)
 
     return f
-
-
-def bezier_with_tangents(control_points):
-    control_points = np.asarray(control_points, dtype=float)
-
-    def f(v):
-        points, tangents = de_casteljau(control_points, np.array(v, ndmin=1))
-        return points, tangents
-
-    return f
