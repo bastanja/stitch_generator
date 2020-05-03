@@ -39,14 +39,6 @@ def resample(stitches, stitch_length):
     return sample_by_length(interpolation, stitch_length)
 
 
-def sample_generator(number_of_samples: int, include_endpoint: bool = True):
-    return partial(_generator, number_of_samples=number_of_samples, include_endpoint=include_endpoint)
-
-
-def middle_sample_generator(number_of_samples: int):
-    return partial(_generator_middle, number_of_samples=number_of_samples)
-
-
 def _accumulate_lengths(points):
     # calculate and accumulate point distances
     to_previous = points - np.roll(points, 1, 0)
@@ -54,20 +46,3 @@ def _accumulate_lengths(points):
     distance_to_previous[0] = 0  # first point has no predecessor, set distance to 0
     accumulated = np.add.accumulate(distance_to_previous)
     return accumulated
-
-
-def _generator(function, number_of_samples: int, include_endpoint: bool = True):
-    step = 1 / number_of_samples
-
-    for i in range(number_of_samples):
-        yield function(step * i)
-
-    if include_endpoint:
-        yield function(1)
-
-
-def _generator_middle(function, number_of_samples: int):
-    step = 1 / number_of_samples
-
-    for i in range(number_of_samples):
-        yield function(step * (i + 0.5))

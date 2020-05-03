@@ -1,6 +1,14 @@
 import numpy as np
 
 
+def samples(number_of_segments: int, include_endpoint: bool = False):
+    return linspace(start=0, stop=1, number_of_segments=number_of_segments, include_endpoint=include_endpoint)
+
+
+def mid_samples(number_of_segments: int):
+    return linspace_mid(start=0, stop=1, number_of_segments=number_of_segments)
+
+
 def linspace(start: float, stop: float, number_of_segments: int, include_endpoint: bool = True):
     number_of_samples = number_of_segments + 1 if include_endpoint else number_of_segments
     return np.linspace(start, stop, num=number_of_samples, endpoint=include_endpoint)
