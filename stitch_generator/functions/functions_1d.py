@@ -24,7 +24,8 @@ def constant(c):
 
 
 def linear_interpolation(target_low, target_high, source_low=0, source_high=1):
-    assert source_low != source_high, "source_low and source_high are equal. No interpolation interval defined"
+    if source_low == source_high:
+        return constant(target_low)
     return interp1d([source_low, source_high], [target_low, target_high], fill_value="extrapolate")
 
 

@@ -51,9 +51,12 @@ def test_linear_interpolation():
     assert f(0.5) == approx(1)
     assert f(1) == approx(1)
 
-    # test with invalid source range
-    with pytest.raises(Exception):
-        f = linear_interpolation(0, 2, 1, 1)
+    # test with equal values for source
+    f = linear_interpolation(0, 2, 1, 1)
+    assert f(0) == approx(0)
+    assert f(0.5) == approx(0)
+    assert f(1) == approx(0)
+
 
 def test_sinus():
     f = sinus()
