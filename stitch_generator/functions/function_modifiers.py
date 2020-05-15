@@ -50,6 +50,10 @@ def add(f1, f2):
     return _binary_operation(lambda a, b: a + b, f1, f2)
 
 
+def subtract(f1, f2):
+    return _binary_operation(lambda a, b: a - b, f1, f2)
+
+
 def multiply(f1, f2):
     return _binary_operation(lambda a, b: a * b, f1, f2)
 
