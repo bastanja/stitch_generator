@@ -3,9 +3,9 @@ import numpy as np
 
 
 def rotate_deg(stitches, angle):
-    angle *= math.pi / 180
-    c = math.cos(angle)
-    s = math.sin(angle)
+    rad = angle * math.pi / 180
+    c = math.cos(rad)
+    s = math.sin(rad)
     return rotate(stitches, c, s)
 
 
