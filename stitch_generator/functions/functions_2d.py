@@ -1,3 +1,5 @@
+import math
+
 import numpy as np
 from stitch_generator.functions.functions_1d import cosinus, sinus, constant, linear_interpolation
 from stitch_generator.functions.function_modifiers import scale, add, repeat, multiply
@@ -52,3 +54,10 @@ def bezier_normals(control_points):
         return rotate_deg(tangents, -90)
 
     return f
+
+def constant_direction(x: float, y: float, normalized: bool = False):
+    if normalized:
+        length = math.sqrt(x * x + y * y)
+        x /= length
+        y /= length
+    return function_2d(constant(x), constant(y))
