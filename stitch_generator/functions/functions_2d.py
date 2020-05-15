@@ -55,6 +55,7 @@ def bezier_normals(control_points):
 
     return f
 
+
 def constant_direction(x: float, y: float, normalized: bool = False):
     if normalized:
         length = math.sqrt(x * x + y * y)
