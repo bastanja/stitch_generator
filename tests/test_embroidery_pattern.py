@@ -49,4 +49,3 @@ def test_number_of_stitches():
 
     p.add_stitches(stitches, 0x0080FF)
     assert p.number_of_stitches == len(stitches) * 2
-

@@ -1,4 +1,5 @@
 from pyembroidery import COMMAND_MASK, COLOR_BREAK
+
 from stitch_generator.file_io.embroidery_export import to_pyembroidery
 from stitch_generator.functions.embroidery_pattern import EmbroideryPattern
 from stitch_generator.functions.functions_2d import line

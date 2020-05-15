@@ -1,4 +1,5 @@
 import numpy as np
+
 from stitch_generator.functions.functions_1d import linear_interpolation, sinus, noise
 from stitch_generator.functions.functions_2d import line, circle
 from stitch_generator.functions.sample import sample, resample

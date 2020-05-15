@@ -2,9 +2,9 @@ from stitch_generator.functions.functions_1d import *
 from stitch_generator.functions.inverse_cdf import inverse_cdf
 from tests.functions import functions_1d_positive
 
+
 def test_inverse_cdf():
     for name, f in functions_1d_positive.items():
-
         icdf, area = inverse_cdf(f)
         # Area should be between 0 and 1
         assert 0 < area <= 1

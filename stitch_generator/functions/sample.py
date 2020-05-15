@@ -1,7 +1,7 @@
-from functools import partial
 from scipy.interpolate import interp1d
-from stitch_generator.functions.linspace import linspace
+
 from stitch_generator.functions.estimate_length import accumulate_lengths
+from stitch_generator.functions.linspace import linspace
 
 
 def sample(function, number_of_samples: int, include_endpoint: bool = True):
@@ -35,7 +35,7 @@ def arc_length_mapping_with_length(function, approximation_samples=1000):
     length = accumulated[-1]
     accumulated /= length
     length_to_parameter = interp1d(accumulated, parameters)
-    return length_to_parameter,length
+    return length_to_parameter, length
 
 
 def resample(stitches, stitch_length):

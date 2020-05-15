@@ -1,10 +1,11 @@
 import numpy as np
 from pyembroidery import EmbPattern, read_vp3
+
 from stitch_generator.functions.embroidery_pattern import EmbroideryPattern
 
 
 def from_pyembroidery(pyembroidery_pattern: EmbPattern):
-    scale_factor = 1/10  # convert from to embroidery file scale 1/10 mm to millimeters
+    scale_factor = 1 / 10  # convert from to embroidery file scale 1/10 mm to millimeters
     result = EmbroideryPattern()
 
     if not pyembroidery_pattern.stitches:
@@ -24,7 +25,7 @@ def from_pyembroidery(pyembroidery_pattern: EmbPattern):
         regular_stitches = stitches[is_regular_stitch]
 
         # Slice to select only the x and y coordinates of the stitches
-        regular_stitches = regular_stitches[:,0:2]
+        regular_stitches = regular_stitches[:, 0:2]
 
         # Apply the scale factor
         scaled_stitches = regular_stitches * scale_factor

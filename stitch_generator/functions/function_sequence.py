@@ -46,6 +46,6 @@ if __name__ == "__main__":
     print(seq(p))
 
     print("--- 1D ---")
-    seq2 = function_sequence((constant(0), linear_interpolation(0,1), constant(1)), (1, 1, 1))
+    seq2 = function_sequence((constant(0), linear_interpolation(0, 1), constant(1)), (1, 1, 1))
     print(seq2(0.0))
     print(seq2(p))

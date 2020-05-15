@@ -1,10 +1,12 @@
 import numpy as np
 import pytest
-
-from stitch_generator.functions.functions_1d import linear_interpolation, constant, sinus, cosinus, cubic_interpolation_evenly_spaced, \
-    stairs, square, arc, smoothstep, smootherstep
 from pytest import approx
+
+from stitch_generator.functions.functions_1d import linear_interpolation, constant, sinus, cosinus, \
+    cubic_interpolation_evenly_spaced, \
+    stairs, square, arc, smoothstep, smootherstep
 from tests.functions import functions_1d
+
 
 def test_constant():
     c = 0.123

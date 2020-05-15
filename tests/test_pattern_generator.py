@@ -37,5 +37,5 @@ def test_cycle_patterns():
     # check that a copy was returned by modifying the generated
     # pattern and expecting that the original remains unchanged
     p2_copy = next(pattern_generator)
-    p2_copy[0] = (100,100)
+    p2_copy[0] = (100, 100)
     assert np.allclose(p2[0], (2, 0))

@@ -1,4 +1,5 @@
 import numpy as np
+
 from stitch_generator.stitch_effects.rotate import rotate
 
 

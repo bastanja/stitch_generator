@@ -1,4 +1,3 @@
-import math
 from functools import partial
 
 import numpy as np
@@ -44,6 +43,7 @@ def cosinus():
 def noise(octaves=4):
     n = partial(pnoise1, octaves=octaves)
     return function_1d(n)
+
 
 def cubic_interpolation_evenly_spaced(values):
     assert len(values) > 1, "Interpolation function needs at least two values"

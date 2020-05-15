@@ -4,12 +4,12 @@ from stitch_generator.functions.functions_1d import linear_interpolation, sinus,
 from stitch_generator.functions.functions_2d import circle, line
 from stitch_generator.stitch_effects.smooth import smooth
 
+
 def test_smooth():
     # apply smoothing on samples of 1d and 2d functions
     for f in [linear_interpolation(1, 2), sinus(), noise(), circle(), line(10, 20)]:
-
         n = 10
-        v = [f(t/n) for t in range(n+1)]
+        v = [f(t / n) for t in range(n + 1)]
         s = smooth(v, 0.5, 5)
 
         # check that smoothing preserves the start and end stitch

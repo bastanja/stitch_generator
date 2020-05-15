@@ -1,7 +1,9 @@
+from typing import Iterable, Tuple
+
 import numpy as np
+
 from stitch_generator.functions.functions_1d import linear_interpolation
 from stitch_generator.functions.sample import sample
-from typing import Iterable, Tuple
 
 
 def variable_running_stitch(positions: Iterable[Tuple[float]],

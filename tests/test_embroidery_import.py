@@ -1,4 +1,4 @@
-from pyembroidery import EmbPattern, COLOR_CHANGE, write_vp3
+from pyembroidery import EmbPattern
 
 from stitch_generator.file_io.embroidery_import import from_pyembroidery
 from stitch_generator.functions.functions_2d import line
@@ -23,4 +23,3 @@ def test_from_pyembroidery():
     # expect one stitch for each stitch plus one COLOR_BREAK for each block
     # plus one for the manual color change
     assert len(pattern.stitches) == import_pattern.number_of_stitches + len(import_pattern.stitch_blocks)
-
