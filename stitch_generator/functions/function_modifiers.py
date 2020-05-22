@@ -80,3 +80,11 @@ def _binary_operation(operation, f1, f2):
         return result
 
     return f
+
+
+def maximum(f1, f2):
+    return lambda v: np.maximum(f1(v), f2(v))
+
+
+def minimum(f1, f2):
+    return lambda v: np.minimum(f1(v), f2(v))
