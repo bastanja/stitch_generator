@@ -1,5 +1,3 @@
-from types import SimpleNamespace
-
 import numpy as np
 
 from stitch_generator.designs.embroidery_design import parameter_evaluation, EmbroideryDesign
@@ -8,6 +6,7 @@ from stitch_generator.functions.embroidery_pattern import EmbroideryPattern
 from stitch_generator.functions.function_modifiers import shift, scale, repeat, add, inverse
 from stitch_generator.functions.functions_1d import cosinus, linear_interpolation, constant
 from stitch_generator.functions.functions_2d import function_2d
+from stitch_generator.functions.linspace import samples
 from stitch_generator.functions.sample import sample
 from stitch_generator.stitch_effects.running_stitch import running_stitch_line
 
@@ -16,8 +15,8 @@ class Design(EmbroideryDesign):
     def __init__(self):
         EmbroideryDesign.__init__(self)
         self.parameters = {
-            'width': FloatParameter("Width", 100, 200, 500),
-            'points_per_row': IntParameter("Points per Row", 30, 70, 160),
+            'width': FloatParameter("Width", 50, 120, 240),
+            'stitch_length': FloatParameter("Stitch Length", 1, 3, 6),
             'wave_length': FloatParameter("Wave Length", 10, 70, 100),
             'wave_height': FloatParameter("Wave Height", 0, 4, 20),
             'initial_offset': FloatParameter("Initial Offset", -0.5, 0, 0.5),
@@ -32,10 +31,9 @@ class Design(EmbroideryDesign):
 
         repetitions = parameters.width / parameters.wave_length
 
-        stitches = np.empty([0, 2])
+        stitches = []
 
         last_point = None
-        stitch_length = parameters.width / parameters.points_per_row
 
         for i in range(0, parameters.number_of_lines):
             initial_offset = parameters.initial_offset + i * parameters.offset_per_line
@@ -49,16 +47,18 @@ class Design(EmbroideryDesign):
                 f = inverse(f)
 
             if last_point is not None:
-                fill_stitches = running_stitch_line(last_point, f(0), stitch_length, False)
+                fill_stitches = running_stitch_line(last_point, f(0), parameters.stitch_length, False)
                 if len(fill_stitches):
-                    stitches = np.concatenate((stitches, fill_stitches))
+                    stitches.append(fill_stitches)
 
-            current_line = sample(f, parameters.points_per_row, False)
-            stitches = np.concatenate((stitches, current_line))
+            p = samples(int(parameters.width / parameters.stitch_length))
+            current_line = f(p)
+            stitches.append(current_line)
 
             last_point = f(1)
 
-        stitches = np.vstack((stitches, last_point))
+        stitches.append([last_point])
+        stitches = np.concatenate(stitches)
         pattern = EmbroideryPattern()
         pattern.add_stitches(stitches)
 
