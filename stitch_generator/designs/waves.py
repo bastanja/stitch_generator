@@ -1,13 +1,12 @@
 import numpy as np
 
-from stitch_generator.designs.embroidery_design import parameter_evaluation, EmbroideryDesign
-from stitch_generator.designs.parameter import FloatParameter, IntParameter
+from stitch_generator.design_utilities.embroidery_design import parameter_evaluation, EmbroideryDesign
+from stitch_generator.design_utilities.parameter import FloatParameter, IntParameter
 from stitch_generator.functions.embroidery_pattern import EmbroideryPattern
 from stitch_generator.functions.function_modifiers import shift, scale, repeat, add, inverse
 from stitch_generator.functions.functions_1d import cosinus, linear_interpolation, constant
 from stitch_generator.functions.functions_2d import function_2d
 from stitch_generator.functions.linspace import samples
-from stitch_generator.functions.sample import sample
 from stitch_generator.stitch_effects.running_stitch import running_stitch_line
 
 
