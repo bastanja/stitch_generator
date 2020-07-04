@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.spatial.ckdtree import cKDTree
 
-from stitch_generator.design_utilities.embroidery_design import EmbroideryDesign, parameter_evaluation
+from stitch_generator.design_utilities.embroidery_design import EmbroideryDesign
 from stitch_generator.design_utilities.parameter import FloatParameter, IntParameter, BoolParameter
 from stitch_generator.functions.embroidery_pattern import EmbroideryPattern
 from stitch_generator.functions.function_modifiers import multiply, add, combine, inverse
@@ -11,7 +11,7 @@ from stitch_generator.functions.linspace import samples
 from stitch_generator.functions.sample import resample
 
 
-def _make_stitchpath(stitch_coordinates):
+def _make_stitch_path(stitch_coordinates):
     # alternate direction of every second line
     odd = stitch_coordinates[:, 1::2, :]
     odd[:] = np.flipud(odd)
@@ -37,7 +37,7 @@ def _make_stitches(width, height, stitches_per_column, stitches_per_row):
     return stitch_coordinates
 
 
-def _get_elevation_poins(width, height):
+def _get_elevation_points(width, height):
     f = spiral(0, 50, turns=2.5)
     f = multiply(f, constant_direction(1.5, 1))
     f = add(f, constant_direction(width / 2, height / 2))
@@ -47,19 +47,17 @@ def _get_elevation_poins(width, height):
 
 class Design(EmbroideryDesign):
     def __init__(self):
-        EmbroideryDesign.__init__(self)
-        self.parameters = {'stitch_length': FloatParameter("Stitch_length", 1, 3, 6),
-                           'line_distance': FloatParameter("Line_distance", 1, 3, 10),
-                           'line_repetition': IntParameter("Line Repetition", 1, 2, 3),
-                           'elevation': FloatParameter("Elevation", -20, 10, 20),
-                           'max_distance': FloatParameter("Maximum distance", 5, 20, 50),
-                           'width': FloatParameter("Width", 20, 180, 200),
-                           'height': FloatParameter("Height", 20, 130, 200),
-                           'show_path': BoolParameter("Show path", False),
-                           # 'profile': RampParameter("Profile", [[0, 0], [1, 1]]),
-                           }
-
-        self.validate = parameter_evaluation(self.parameters)
+        EmbroideryDesign.__init__(self, parameters={
+            'stitch_length': FloatParameter("Stitch_length", 1, 3, 6),
+            'line_distance': FloatParameter("Line_distance", 1, 3, 10),
+            'line_repetition': IntParameter("Line Repetition", 1, 2, 3),
+            'elevation': FloatParameter("Elevation", -20, 10, 20),
+            'max_distance': FloatParameter("Maximum distance", 5, 20, 50),
+            'width': FloatParameter("Width", 20, 180, 200),
+            'height': FloatParameter("Height", 20, 130, 200),
+            'show_path': BoolParameter("Show path", False),
+            # 'profile': RampParameter("Profile", [[0, 0], [1, 1]]),
+        })
 
     def get_pattern(self, parameters):
         parameters = self.validate(parameters)
@@ -69,7 +67,7 @@ class Design(EmbroideryDesign):
         stitch_coordinates = _make_stitches(parameters.width, parameters.height, stitches_per_column, stitches_per_row)
 
         # adapt grid-y coordinate by distance to the elevation points
-        ep = _get_elevation_poins(parameters.width, parameters.height)
+        ep = _get_elevation_points(parameters.width, parameters.height)
         tree = cKDTree(ep)
 
         dist, _ = tree.query(stitch_coordinates)
@@ -88,7 +86,7 @@ class Design(EmbroideryDesign):
         # repeat stitch lines
         stitch_coordinates = np.repeat(stitch_coordinates, parameters.line_repetition, axis=1)
 
-        stitches = _make_stitchpath(stitch_coordinates)
+        stitches = _make_stitch_path(stitch_coordinates)
 
         pattern = EmbroideryPattern()
         pattern.add_stitches(stitches)
