@@ -18,6 +18,9 @@ class FloatParameter:
     def evaluate(self, value: float):
         return _clamp(self.min, self.max, value)
 
+    def get_description(self):
+        return f"{self.label}: Float between {self.min} and {self.max}, default is {self.value}"
+
 
 class IntParameter:
     def __init__(self, label, minimum: int, default: int, maximum: int):
@@ -29,6 +32,9 @@ class IntParameter:
     def evaluate(self, value: int):
         return _clamp(self.min, self.max, value)
 
+    def get_description(self):
+        return f"{self.label}: Integer between {self.min} and {self.max}, default is {self.value}"
+
 
 class BoolParameter:
     def __init__(self, label, default: bool):
@@ -39,6 +45,9 @@ class BoolParameter:
         if value:
             return True
         return False
+
+    def get_description(self):
+        return f"{self.label}: Bool, default is {self.value}"
 
 
 class RampParameter:
