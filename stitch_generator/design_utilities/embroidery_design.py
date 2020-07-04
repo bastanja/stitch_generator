@@ -1,5 +1,7 @@
 from types import SimpleNamespace
 
+from stitch_generator.design_utilities.cli import get_parser, write_pattern_to_file
+
 
 class EmbroideryDesign:
     def __init__(self, name: str, parameters: dict):
@@ -14,3 +16,8 @@ class EmbroideryDesign:
                                  k in self.parameters}
             default_parameters.update(update_parameters)
         return SimpleNamespace(**default_parameters)
+
+    def cli(self):
+        parser = get_parser(self.parameters)
+        args = parser.parse_args()
+        write_pattern_to_file(self, args, self.name)

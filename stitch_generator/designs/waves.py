@@ -60,3 +60,7 @@ class Design(EmbroideryDesign):
         pattern.add_stitches(stitches)
 
         return pattern
+
+
+if __name__ == "__main__":
+    Design().cli()

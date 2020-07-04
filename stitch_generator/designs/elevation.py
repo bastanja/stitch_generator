@@ -96,3 +96,7 @@ class Design(EmbroideryDesign):
             pattern.add_stitches(resample(ep, parameters.stitch_length), 0x0044FF)
 
         return pattern
+
+
+if __name__ == "__main__":
+    Design().cli()
