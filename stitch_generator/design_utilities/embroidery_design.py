@@ -20,4 +20,4 @@ class EmbroideryDesign:
     def cli(self):
         parser = get_parser(self.parameters)
         args = parser.parse_args()
-        write_pattern_to_file(self, args, self.name)
+        write_pattern_to_file(self, vars(args))

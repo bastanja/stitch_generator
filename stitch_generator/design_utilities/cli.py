@@ -17,10 +17,10 @@ def get_parser(design_parameters: dict):
     return parser
 
 
-def write_pattern_to_file(design, parameters, filename_base):
+def write_pattern_to_file(design, parameters):
     file_type = "vp3"
-    pattern = design.get_pattern(vars(parameters))
-    export_vp3(pattern, f"{filename_base}.{file_type}")
+    pattern = design.get_pattern(parameters=parameters)
+    export_vp3(pattern, f"{design.name}.{file_type}")
 
 
 def _parameter_type_supported(parameter):
