@@ -11,40 +11,6 @@ from stitch_generator.functions.linspace import samples
 from stitch_generator.functions.sample import resample
 
 
-def _make_stitch_path(stitch_coordinates):
-    # alternate direction of every second line
-    odd = stitch_coordinates[:, 1::2, :]
-    odd[:] = np.flipud(odd)
-
-    # turn grid columns and rows into a single row
-    stitches = stitch_coordinates.reshape((-1, 1, 2), order='F')
-    stitches = stitches[:, 0]
-    return stitches
-
-
-def _make_stitches(width, height, stitches_per_column, stitches_per_row):
-    # index 0: x-coordinate in grid
-    # index 1: y-coordinate in grid
-    # index 3: x and y of grid point
-    stitch_coordinates = np.zeros((stitches_per_row, stitches_per_column, 2), dtype=float)
-    x_coords = linear_interpolation(0, width)
-    y_coords = linear_interpolation(0, height)
-    x_samples = x_coords(samples(stitches_per_row - 1, include_endpoint=True))[:, None]
-    y_samples = y_coords(samples(stitches_per_column - 1, include_endpoint=True))[None, :]
-    # set x and y coordinates
-    stitch_coordinates[:, :, 0] = x_samples
-    stitch_coordinates[:, :, 1] = y_samples
-    return stitch_coordinates
-
-
-def _get_elevation_points(width, height):
-    f = spiral(0, 50, turns=2.5)
-    f = multiply(f, constant_direction(1.5, 1))
-    f = add(f, constant_direction(width / 2, height / 2))
-    sp = f(samples(1000))
-    return sp
-
-
 class Design(EmbroideryDesign):
     def __init__(self):
         EmbroideryDesign.__init__(self, name="elevation", parameters={
@@ -56,7 +22,6 @@ class Design(EmbroideryDesign):
             'width': FloatParameter("Width", 20, 180, 200),
             'height': FloatParameter("Height", 20, 130, 200),
             'show_path': BoolParameter("Show path", False),
-            # 'profile': RampParameter("Profile", [[0, 0], [1, 1]]),
         })
 
     def get_pattern(self, parameters):
@@ -96,6 +61,40 @@ class Design(EmbroideryDesign):
             pattern.add_stitches(resample(ep, parameters.stitch_length), 0x0044FF)
 
         return pattern
+
+
+def _make_stitch_path(stitch_coordinates):
+    # alternate direction of every second line
+    odd = stitch_coordinates[:, 1::2, :]
+    odd[:] = np.flipud(odd)
+
+    # turn grid columns and rows into a single row
+    stitches = stitch_coordinates.reshape((-1, 1, 2), order='F')
+    stitches = stitches[:, 0]
+    return stitches
+
+
+def _make_stitches(width, height, stitches_per_column, stitches_per_row):
+    # index 0: x-coordinate in grid
+    # index 1: y-coordinate in grid
+    # index 3: x and y of grid point
+    stitch_coordinates = np.zeros((stitches_per_row, stitches_per_column, 2), dtype=float)
+    x_coords = linear_interpolation(0, width)
+    y_coords = linear_interpolation(0, height)
+    x_samples = x_coords(samples(stitches_per_row - 1, include_endpoint=True))[:, None]
+    y_samples = y_coords(samples(stitches_per_column - 1, include_endpoint=True))[None, :]
+    # set x and y coordinates
+    stitch_coordinates[:, :, 0] = x_samples
+    stitch_coordinates[:, :, 1] = y_samples
+    return stitch_coordinates
+
+
+def _get_elevation_points(width, height):
+    f = spiral(0, 50, turns=2.5)
+    f = multiply(f, constant_direction(1.5, 1))
+    f = add(f, constant_direction(width / 2, height / 2))
+    sp = f(samples(1000))
+    return sp
 
 
 if __name__ == "__main__":
