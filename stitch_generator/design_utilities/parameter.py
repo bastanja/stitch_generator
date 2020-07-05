@@ -21,6 +21,10 @@ class FloatParameter:
     def get_description(self):
         return f"{self.label}: Float between {self.min} and {self.max}, default is {self.value}"
 
+    @staticmethod
+    def expected_type():
+        return float
+
 
 class IntParameter:
     def __init__(self, label, minimum: int, default: int, maximum: int):
@@ -35,6 +39,10 @@ class IntParameter:
     def get_description(self):
         return f"{self.label}: Integer between {self.min} and {self.max}, default is {self.value}"
 
+    @staticmethod
+    def expected_type():
+        return int
+
 
 class BoolParameter:
     def __init__(self, label, default: bool):
@@ -48,6 +56,10 @@ class BoolParameter:
 
     def get_description(self):
         return f"{self.label}: Bool, default is {self.value}"
+
+    @staticmethod
+    def expected_type():
+        return bool
 
 
 class RampParameter:
