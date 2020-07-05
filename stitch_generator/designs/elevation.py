@@ -47,7 +47,7 @@ def _get_elevation_points(width, height):
 
 class Design(EmbroideryDesign):
     def __init__(self):
-        EmbroideryDesign.__init__(self, parameters={
+        EmbroideryDesign.__init__(self, name="elevation", parameters={
             'stitch_length': FloatParameter("Stitch_length", 1, 3, 6),
             'line_distance': FloatParameter("Line_distance", 1, 3, 10),
             'line_repetition': IntParameter("Line Repetition", 1, 2, 3),

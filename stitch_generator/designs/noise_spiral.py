@@ -10,7 +10,7 @@ from stitch_generator.functions.sample import arc_length_mapping_with_length
 
 class Design(EmbroideryDesign):
     def __init__(self):
-        EmbroideryDesign.__init__(self, parameters={
+        EmbroideryDesign.__init__(self, name="noise_spiral", parameters={
             'stitch_length': FloatParameter("Stitch length", 1, 3, 6),
             'turns': IntParameter("Number of Turns", 1, 10, 15),
             'inner_radius': FloatParameter("Inner radius", 0, 5, 100),

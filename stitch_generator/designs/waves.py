@@ -12,7 +12,7 @@ from stitch_generator.stitch_effects.running_stitch import running_stitch_line
 
 class Design(EmbroideryDesign):
     def __init__(self):
-        EmbroideryDesign.__init__(self, parameters={
+        EmbroideryDesign.__init__(self, name="waves", parameters={
             'width': FloatParameter("Width", 50, 120, 240),
             'stitch_length': FloatParameter("Stitch Length", 1, 3, 6),
             'wave_length': FloatParameter("Wave Length", 10, 70, 100),

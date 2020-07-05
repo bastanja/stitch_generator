@@ -2,8 +2,9 @@ from types import SimpleNamespace
 
 
 class EmbroideryDesign:
-    def __init__(self, parameters: dict):
+    def __init__(self, name: str, parameters: dict):
         self.parameters = parameters
+        self.name = name
 
     def validate(self, parameters):
         default_parameters = {k: v.value for k, v in self.parameters.items()}

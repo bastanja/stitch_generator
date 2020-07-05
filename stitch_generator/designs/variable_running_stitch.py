@@ -12,7 +12,7 @@ from stitch_generator.stitch_effects.variable_running_stitch import variable_run
 
 class Design(EmbroideryDesign):
     def __init__(self):
-        EmbroideryDesign.__init__(self, parameters={
+        EmbroideryDesign.__init__(self, name="variable_running_stitch", parameters={
             'loops': IntParameter("Number of Loops", 1, 5, 10),
             'min_strokes': IntParameter("Minimal Strokes", 1, 1, 20),
             'max_strokes': IntParameter("Maximal Strokes", 1, 9, 20),
