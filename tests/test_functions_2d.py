@@ -36,7 +36,7 @@ def test_circle():
 
 
 def test_line():
-    f = line(100, 20)
+    f = line((0, 0), (100, 20))
     assert np.allclose(f(0), (0, 0))
     assert np.allclose(f(0.5), (50, 10))
     assert np.allclose(f(1), (100, 20))

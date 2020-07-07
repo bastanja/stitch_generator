@@ -38,7 +38,7 @@ def with_lists():
 def with_generators():
     params = samples(3, include_endpoint=True)
     mid = mid_samples(3)
-    f = line(3, 0)
+    f = line((0, 0), (3, 0))
     d = function_2d(constant(0), constant(1))
     w = repeat(2, linear_interpolation(0, 1), 'reflect')
     min_strokes = 1
@@ -52,7 +52,7 @@ def with_generators():
 
 def with_multiple_strokes():
     params = samples(3, include_endpoint=True)
-    f = line(3, 0)
+    f = line((0, 0), (3, 0))
     d = function_2d(constant(0), constant(1))
     widths = (0, 1, 0)
     min_strokes = 1
@@ -64,7 +64,7 @@ def with_multiple_strokes():
 
 
 def with_inner_gap():
-    f = line(5, 0)
+    f = line((0, 0), (5, 0))
     d = function_2d(constant(0), constant(1))
     widths = (0, 1, 0, 1, 0)
     params = samples(5, include_endpoint=True)
@@ -77,7 +77,7 @@ def with_inner_gap():
 
 
 def with_double_width_values():
-    f = line(4, 0)
+    f = line((0, 0), (4, 0))
     d = function_2d(constant(0), constant(1))
     widths = (0, 1, 1, 0)
     params = samples(4, include_endpoint=True)

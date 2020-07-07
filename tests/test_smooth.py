@@ -7,7 +7,7 @@ from stitch_generator.stitch_effects.smooth import smooth
 
 def test_smooth():
     # apply smoothing on samples of 1d and 2d functions
-    for f in [linear_interpolation(1, 2), sinus(), noise(), circle(), line(10, 20)]:
+    for f in [linear_interpolation(1, 2), sinus(), noise(), circle(), line((0, 0), (10, 20))]:
         n = 10
         v = [f(t / n) for t in range(n + 1)]
         s = smooth(v, 0.5, 5)
@@ -16,5 +16,5 @@ def test_smooth():
         assert np.allclose(v[0], s[0])
         assert np.allclose(v[-1], s[-1])
 
-        # check that smoothing keeps the numer of stitches unchanged.
+        # check that smoothing keeps the number of stitches unchanged.
         assert len(v) == len(s)

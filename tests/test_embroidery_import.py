@@ -9,11 +9,11 @@ def test_from_pyembroidery():
     # create embroidery pattern with two blocks
     pattern = EmbPattern()
 
-    stitches1 = sample(line(100, 0), 10)
+    stitches1 = sample(line((0, 0), (100, 0)), 10)
     stitches1 = stitches1.tolist()
     pattern.add_block(stitches1, 0x808080)
 
-    stitches2 = sample(line(0, 100), 10)
+    stitches2 = sample(line((0, 0), (0, 100)), 10)
     stitches2 = stitches2.tolist()
     pattern.add_block(stitches2, 0x000000)
 

@@ -6,7 +6,7 @@ from stitch_generator.functions.offset_by_width import offset_by_width, offset_h
 
 
 def test_offset_by_width():
-    position = line(100, 0)
+    position = line((0, 0), (100, 0))
     direction = function_2d(constant(0), constant(1))
     width = linear_interpolation(10, 20)
 
@@ -27,7 +27,7 @@ def test_offset_by_width():
 
 
 def test_offset_half_width():
-    position = line(100, 0)
+    position = line((0, 0), (100, 0))
     direction = function_2d(constant(0), constant(1))
     width = linear_interpolation(10, 20)
 

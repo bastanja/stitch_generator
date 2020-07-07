@@ -9,8 +9,8 @@ from stitch_generator.functions.sample import sample
 def test_to_pyembroidery():
     # create embroidery pattern with two blocks
     pattern = EmbroideryPattern()
-    pattern.add_stitches(sample(line(100, 0), 50))
-    pattern.add_stitches(sample(line(100, 100), 50))
+    pattern.add_stitches(sample(line((0, 0), (100, 0)), 50))
+    pattern.add_stitches(sample(line((0, 0), (100, 100)), 50))
 
     # convert to pyembroidery format
     export_pattern = to_pyembroidery(pattern)

@@ -26,7 +26,7 @@ class Design(EmbroideryDesign):
 
     def get_pattern(self, parameters):
         parameters = self.validate(parameters)
-        f = line(parameters.width, 0)
+        f = line((0, 0), (parameters.width, 0))
         direction = repeat(parameters.loops, shift(0.75, inverse(circle())))
         direction_scale = function_2d(constant(parameters.loop_scale_x), constant(parameters.loop_scale_y))
         direction = multiply(direction, direction_scale)

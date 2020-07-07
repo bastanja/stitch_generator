@@ -26,7 +26,7 @@ functions_1d = {**functions_1d_positive, **functions_1d_negative}
 
 functions_2d = {
     'circle': circle(),
-    'line': line(10, 0),
+    'line': line((0, 0), (10, 0)),
     'spiral': spiral(10, 20, 2),
     'bezier': bezier(((0, 0), (10, -10), (20, 0))),
     '2dconst': function_2d(constant(1), constant(0))

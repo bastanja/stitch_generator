@@ -4,7 +4,7 @@ from stitch_generator.functions.functions_1d import linear_interpolation, sinus,
 from stitch_generator.functions.functions_2d import line, circle
 from stitch_generator.functions.sample import sample, resample
 
-functions = [linear_interpolation(1, 2), sinus(), noise(), circle(), line(10, 20)]
+functions = [linear_interpolation(1, 2), sinus(), noise(), circle(), line((0, 0), (10, 20))]
 
 
 def test_sample():
@@ -23,7 +23,7 @@ def test_sample():
 
 
 def test_resample():
-    f = line(10, 0)
+    f = line((0, 0), (10, 0))
     stitches = sample(f, 10, True)
 
     resampled = resample(stitches, 2)

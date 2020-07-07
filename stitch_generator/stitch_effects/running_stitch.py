@@ -8,5 +8,5 @@ def running_stitch(function, stitch_length: float, include_last: bool):
 
 
 def running_stitch_line(p1, p2, stitch_length: float, include_last: bool):
-    function = line(p2[0], p2[1], x0=p1[0], y0=p1[1])
+    function = line(p1, p2)
     return running_stitch(function=function, stitch_length=stitch_length, include_last=include_last)
