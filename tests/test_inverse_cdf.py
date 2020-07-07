@@ -1,4 +1,5 @@
-from stitch_generator.functions.functions_1d import *
+import numpy as np
+
 from stitch_generator.functions.inverse_cdf import inverse_cdf
 from tests.functions import functions_1d_positive
 

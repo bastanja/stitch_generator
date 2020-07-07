@@ -1,15 +1,13 @@
 import numpy as np
 
-from stitch_generator.functions.functions_1d import linear_interpolation, sinus, noise
-from stitch_generator.functions.functions_2d import line, circle
+from stitch_generator.functions.functions_2d import line
 from stitch_generator.functions.sample import sample, resample
-
-functions = [linear_interpolation(1, 2), sinus(), noise(), circle(), line((0, 0), (10, 20))]
+from tests.functions import all_functions
 
 
 def test_sample():
     samples = 10
-    for f in functions:
+    for name, f in all_functions.items():
         points_with_endpoint = sample(f, samples)
         assert len(points_with_endpoint) == samples + 1
         assert np.allclose(points_with_endpoint[0], f(0))

@@ -1,4 +1,5 @@
-from stitch_generator.functions.functions_1d import *
+from stitch_generator.functions.functions_1d import linear_interpolation, constant, cubic_interpolation_evenly_spaced, \
+    stairs, square, arc, smoothstep, smootherstep, circular_arc, sinus, cosinus, noise
 from stitch_generator.functions.functions_2d import circle, line, spiral, bezier, function_2d
 
 functions_1d_positive = {
