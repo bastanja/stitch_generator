@@ -91,4 +91,4 @@ def smootherstep():
 
 
 def circular_arc():
-    return lambda v: np.asarray(np.sqrt(1 - np.asarray(v) ** 2))
+    return lambda v: np.asarray(np.sqrt(1 - np.asarray(1-v) ** 2))
