@@ -4,15 +4,14 @@ import numpy as np
 from noise import pnoise1
 from scipy.interpolate import interp1d
 
-from stitch_generator.functions.function_modifiers import add, repeat, shift, multiply
-
 
 def function_1d(f):
     def wrapper(v):
+        v = np.asarray(v)
         try:
-            result = f(v)
+            result = np.asarray(f(v)).reshape(v.shape)
         except TypeError:
-            result = np.array([f(t) for t in v])
+            result = np.array([f(t) for t in v.squeeze()]).reshape(v.shape)
         return result
 
     return wrapper
@@ -29,15 +28,15 @@ def linear_interpolation(target_low, target_high, source_low=0, source_high=1):
 
 
 def square():
-    return lambda v: v * v
+    return lambda v: np.asarray(np.asarray(v) * np.asarray(v))
 
 
 def sinus():
-    return lambda v: np.sin(v * np.pi * 2)
+    return lambda v: np.asarray(np.sin(np.asarray(v) * np.pi * 2))
 
 
 def cosinus():
-    return lambda v: np.cos(v * np.pi * 2)
+    return lambda v: np.asarray(np.cos(np.asarray(v) * np.pi * 2))
 
 
 def noise(octaves=4):
@@ -80,20 +79,16 @@ def stairs(steps, ascend_ratio):
 
 
 def arc():
-    f = add(square(), constant(-1))
-    f = repeat(2, f, 'reflect')
-    f = shift(0.5, f)
-    f = multiply(f, constant(-1))
-    return f
+    return lambda v: np.asarray(1 - ((np.asarray(v) * 2) - 1) ** 2)
 
 
 def smoothstep():
-    return lambda v: 3 * v ** 2 - 2 * v ** 3
+    return lambda v: np.asarray(3 * np.asarray(v) ** 2 - 2 * np.asarray(v) ** 3)
 
 
 def smootherstep():
-    return lambda v: 6 * v ** 5 - 15 * v ** 4 + 10 * v ** 3
+    return lambda v: np.asarray(6 * np.asarray(v) ** 5 - 15 * np.asarray(v) ** 4 + 10 * np.asarray(v) ** 3)
 
 
 def circular_arc():
-    return lambda v: np.sqrt(1 - v ** 2)
+    return lambda v: np.asarray(np.sqrt(1 - np.asarray(v) ** 2))

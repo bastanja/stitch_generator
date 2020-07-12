@@ -44,7 +44,7 @@ class Design(EmbroideryDesign):
                 f = inverse(f)
 
             if last_point is not None:
-                fill_stitches = running_stitch_line(last_point, f(0), parameters.stitch_length, False)
+                fill_stitches = running_stitch_line(last_point, f(0)[0], parameters.stitch_length, False)
                 if len(fill_stitches):
                     stitches.append(fill_stitches)
 
@@ -52,7 +52,7 @@ class Design(EmbroideryDesign):
             current_line = f(p)
             stitches.append(current_line)
 
-            last_point = f(1)
+            last_point = f(1)[0]
 
         stitches.append([last_point])
         stitches = np.concatenate(stitches)

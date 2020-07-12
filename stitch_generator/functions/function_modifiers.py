@@ -1,5 +1,7 @@
 import numpy as np
 
+from stitch_generator.functions.ensure_shape import ensure_1d_shape
+
 
 def reflect(function):
     def f(v):
@@ -29,7 +31,7 @@ def repeat(r, function, mode=''):
         function = wrap(function)
     if mode == 'nearest':
         function = nearest(function)
-    return lambda v: function(v * r)
+    return lambda v: function(np.asarray(v) * r)
 
 
 def scale(s, function):
@@ -70,6 +72,7 @@ def mix(f1, f2, factor):
 
 def _binary_operation(operation, f1, f2):
     def f(v):
+        v = ensure_1d_shape(v)
         v1 = f1(v)
         v2 = f2(v)
         try:

@@ -5,11 +5,16 @@ import numpy as np
 from stitch_generator.functions.bezier import de_casteljau
 from stitch_generator.functions.function_modifiers import scale, add, repeat, multiply
 from stitch_generator.functions.functions_1d import cosinus, sinus, constant, linear_interpolation
+from stitch_generator.functions.ensure_shape import ensure_1d_shape
 from stitch_generator.stitch_effects.rotate import rotate_deg
 
 
 def function_2d(fx, fy):
-    return lambda t: np.array([fx(t), fy(t)]).T
+    def f(t):
+        t = ensure_1d_shape(t)
+        return np.array([fx(t), fy(t)]).T
+
+    return f
 
 
 def circle(radius=1, center=(0, 0)):
