@@ -3,6 +3,7 @@ import numpy as np
 from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.function_modifiers import combine
 from stitch_generator.functions.functions_1d import linear_interpolation
+from stitch_generator.functions.ensure_shape import ensure_1d_shape
 
 
 def function_sequence(functions, lengths=None):
@@ -27,9 +28,10 @@ def _get_mapped_functions(functions, lengths):
 
 def _get_sequence(mapped_functions, lengths, dimension):
     def sequence(v):
-        function_indices, v = _get_function_indices(v, lengths)
-        result = np.zeros((len(v), dimension))
-        _evaluate_functions(mapped_functions, function_indices, result, v)
+        v_1d = ensure_1d_shape(np.asarray(v))
+        function_indices = _get_function_indices(v_1d, ensure_1d_shape(lengths))
+        result = np.zeros((len(v_1d), dimension))
+        _evaluate_functions(mapped_functions, function_indices, result, v_1d)
         return result
 
     return sequence
@@ -37,23 +39,28 @@ def _get_sequence(mapped_functions, lengths, dimension):
 
 def _get_sequence_1d(mapped_functions, lengths):
     def sequence(v):
-        function_indices, v = _get_function_indices(v, lengths)
-        result = np.zeros_like(v)
-        _evaluate_functions(mapped_functions, function_indices, result, v)
-        return result.T[0]
+        v = np.asarray(v)
+        v_1d = ensure_1d_shape(v)
+        function_indices = _get_function_indices(v_1d, ensure_1d_shape(lengths))
+        result = np.zeros_like(v_1d)
+        _evaluate_functions(mapped_functions, function_indices, result, v_1d)
+        return result.reshape(v.shape)
 
     return sequence
 
 
 def _evaluate_functions(mapped_functions, function_indices, result, v):
     for j in range(len(mapped_functions)):
-        result[function_indices == j] = mapped_functions[j](v[function_indices == j])
+        destination = result[function_indices == j]
+        if len(destination) > 0:
+            function_to_call = mapped_functions[j]
+            parameter_to_use = v[function_indices == j]
+            value = function_to_call(parameter_to_use)
+            result[function_indices == j] = value
 
 
 def _get_function_indices(v, lengths):
-    v = np.asarray(v, dtype=float).reshape(-1, 1)
-    function_indices = np.argmax(lengths[None, :] >= v, axis=1)
-    return function_indices, v
+    return np.argmax(np.atleast_2d(lengths) >= np.atleast_2d(v).T, axis=1)
 
 
 def _get_dimension(function):
@@ -72,20 +79,3 @@ def _get_lengths(functions, lengths):
     lengths /= lengths[-1]
     return lengths
 
-
-if __name__ == "__main__":
-    from stitch_generator.functions.functions_2d import line
-    from stitch_generator.functions.linspace import samples
-    from stitch_generator.functions.functions_1d import constant
-
-    seq = function_sequence((line(0, 10), line(10, 10, 0, 10), line(20, 10, 10, 10)))
-
-    p = samples(30, True)
-    print("--- 2D ---")
-    print(seq(0.0))
-    print(seq(p))
-
-    print("--- 1D ---")
-    seq2 = function_sequence((constant(0), linear_interpolation(0, 1), constant(1)), (1, 1, 1))
-    print(seq2(0.0))
-    print(seq2(p))
