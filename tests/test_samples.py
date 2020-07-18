@@ -49,9 +49,8 @@ def test_samples_by_length():
     # test with total length of zero
     _test_samples_by_length(total_length=0, segment_length=10, expected_segments=1)
 
-    # check that segment length of zero raises an exception
-    with pytest.raises(Exception):
-        _test_samples_by_length(total_length=5, segment_length=0, expected_segments=1)
+    # test with segment length of zero
+    _test_samples_by_length(total_length=5, segment_length=0, expected_segments=1)
 
 
 def _test_samples_by_fixed_length(total_length, segment_length, expected_segments):
@@ -83,9 +82,8 @@ def test_samples_by_fixed_length():
     # test with total length of zero
     _test_samples_by_fixed_length(total_length=0, segment_length=10, expected_segments=0)
 
-    # check that segment length of zero raises an exception
-    with pytest.raises(Exception):
-        _test_samples_by_fixed_length(total_length=5, segment_length=0, expected_segments=0)
+    # test with segment length of zero
+    _test_samples_by_fixed_length(total_length=5, segment_length=0, expected_segments=0)
 
 
 def test_linspace_mid():

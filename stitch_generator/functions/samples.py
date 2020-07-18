@@ -6,28 +6,33 @@ def samples_by_segments(number_of_segments: int, include_endpoint: bool):
 
 
 def samples_by_length(total_length: float, segment_length: float, include_endpoint: bool):
-    assert segment_length > 0, "segment_length must be > 0"
+    if np.isclose(total_length, 0) or np.isclose(segment_length, 0) or segment_length > total_length:
+        return _default_samples(include_endpoint=include_endpoint)
+
     number_of_segments = int(round(total_length / segment_length))
-    number_of_segments = max(1, number_of_segments)
     return linspace(start=0, stop=1, number_of_segments=number_of_segments, include_endpoint=include_endpoint)
 
 
 def samples_by_fixed_length(total_length: float, segment_length: float):
-    assert segment_length > 0, "segment_length must be > 0"
+    if np.isclose(total_length, 0) or np.isclose(segment_length, 0) or segment_length > total_length:
+        return _default_samples(include_endpoint=False)
+
     number_of_segments = int(total_length / segment_length)
-    if total_length > 0:
-        segment_length = segment_length / total_length
+    segment_length = segment_length / total_length
     segment_borders = [i * segment_length for i in range(number_of_segments + 1)]
     return np.array(segment_borders)
 
 
 def samples_by_fixed_length_with_offset(total_length: float, segment_length: float, offset: float):
-    assert segment_length > 0, "segment_length must be > 0"
-    start_segment_length = segment_length * offset
+    if np.isclose(total_length, 0) or np.isclose(segment_length, 0) or segment_length > total_length:
+        return _default_samples(include_endpoint=False)
+
+    relative_segment_length = segment_length / total_length
+    segment_offset = (total_length * offset) % segment_length
+    relative_segent_offset = segment_offset / total_length
+
     number_of_segments = int((total_length - start_segment_length) / segment_length)
-    if total_length > 0:
-        segment_length = segment_length / total_length
-    segment_borders = [i * segment_length for i in range(number_of_segments + 1)]
+    segment_borders = [relative_segent_offset + (i * relative_segment_length) for i in range(number_of_segments + 1)]
     return np.array(segment_borders)
 
 
@@ -45,3 +50,7 @@ def linspace_mid(start: float, stop: float, number_of_segments):
     offset = (l[1] - l[0]) / 2
     l += offset
     return l[0:-1]
+
+
+def _default_samples(include_endpoint: bool):
+    return linspace(0, 1, 1, include_endpoint=include_endpoint)
