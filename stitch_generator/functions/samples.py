@@ -1,11 +1,11 @@
 import numpy as np
 
 
-def samples(number_of_segments: int, include_endpoint: bool = False):
+def samples_by_segments(number_of_segments: int, include_endpoint: bool = False):
     return linspace(start=0, stop=1, number_of_segments=number_of_segments, include_endpoint=include_endpoint)
 
 
-def mid_samples(number_of_segments: int):
+def mid_samples_by_segments(number_of_segments: int):
     return linspace_mid(start=0, stop=1, number_of_segments=number_of_segments)
 
 

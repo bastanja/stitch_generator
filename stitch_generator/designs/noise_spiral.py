@@ -4,7 +4,7 @@ from stitch_generator.functions.embroidery_pattern import EmbroideryPattern
 from stitch_generator.functions.function_modifiers import combine, add, multiply, repeat, scale, shift
 from stitch_generator.functions.functions_1d import noise
 from stitch_generator.functions.functions_2d import spiral, circle
-from stitch_generator.functions.samples import samples
+from stitch_generator.functions.samples import samples_by_segments
 from stitch_generator.functions.sample import arc_length_mapping_with_length
 
 
@@ -37,7 +37,7 @@ class Design(EmbroideryDesign):
 
         f = add(f, multiply(direction, offset))
 
-        p = samples(int(round(length / parameters.stitch_length)))
+        p = samples_by_segments(int(round(length / parameters.stitch_length)))
 
         stitches = f(p)
 

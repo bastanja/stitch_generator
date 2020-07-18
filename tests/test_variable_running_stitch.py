@@ -3,7 +3,7 @@ import numpy as np
 from stitch_generator.functions.function_modifiers import repeat
 from stitch_generator.functions.functions_1d import constant, linear_interpolation
 from stitch_generator.functions.functions_2d import line, function_2d
-from stitch_generator.functions.samples import samples, mid_samples
+from stitch_generator.functions.samples import samples_by_segments, mid_samples_by_segments
 from stitch_generator.stitch_effects.variable_running_stitch import variable_running_stitch
 
 
@@ -36,8 +36,8 @@ def with_lists():
 
 
 def with_generators():
-    params = samples(3, include_endpoint=True)
-    mid = mid_samples(3)
+    params = samples_by_segments(3, include_endpoint=True)
+    mid = mid_samples_by_segments(3)
     f = line((0, 0), (3, 0))
     d = function_2d(constant(0), constant(1))
     w = repeat(2, linear_interpolation(0, 1), 'reflect')
@@ -51,7 +51,7 @@ def with_generators():
 
 
 def with_multiple_strokes():
-    params = samples(3, include_endpoint=True)
+    params = samples_by_segments(3, include_endpoint=True)
     f = line((0, 0), (3, 0))
     d = function_2d(constant(0), constant(1))
     widths = (0, 1, 0)
@@ -67,7 +67,7 @@ def with_inner_gap():
     f = line((0, 0), (5, 0))
     d = function_2d(constant(0), constant(1))
     widths = (0, 1, 0, 1, 0)
-    params = samples(5, include_endpoint=True)
+    params = samples_by_segments(5, include_endpoint=True)
     min_strokes = 1
     max_strokes = 3
 
@@ -80,7 +80,7 @@ def with_double_width_values():
     f = line((0, 0), (4, 0))
     d = function_2d(constant(0), constant(1))
     widths = (0, 1, 1, 0)
-    params = samples(4, include_endpoint=True)
+    params = samples_by_segments(4, include_endpoint=True)
     min_strokes = 1
     max_strokes = 3
 
