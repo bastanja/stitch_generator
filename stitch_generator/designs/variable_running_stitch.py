@@ -5,7 +5,7 @@ from stitch_generator.functions.embroidery_pattern import EmbroideryPattern
 from stitch_generator.functions.function_modifiers import scale, add, inverse, repeat, shift, multiply
 from stitch_generator.functions.functions_1d import constant, sinus
 from stitch_generator.functions.functions_2d import line, function_2d, circle
-from stitch_generator.functions.linspace import mid_samples
+from stitch_generator.functions.samples import mid_samples
 from stitch_generator.functions.sample import sample_by_length
 from stitch_generator.stitch_effects.variable_running_stitch import variable_running_stitch
 

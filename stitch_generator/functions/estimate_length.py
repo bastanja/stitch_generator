@@ -1,6 +1,6 @@
 import numpy as np
 
-from stitch_generator.functions.linspace import linspace
+from stitch_generator.functions.samples import linspace
 
 
 def accumulate_lengths(points):

@@ -3,7 +3,7 @@ import numpy as np
 from stitch_generator.functions.function_modifiers import repeat
 from stitch_generator.functions.functions_1d import constant, linear_interpolation
 from stitch_generator.functions.functions_2d import line, function_2d
-from stitch_generator.functions.linspace import samples, mid_samples
+from stitch_generator.functions.samples import samples, mid_samples
 from stitch_generator.stitch_effects.variable_running_stitch import variable_running_stitch
 
 

@@ -1,7 +1,7 @@
 from scipy.interpolate import interp1d
 
 from stitch_generator.functions.estimate_length import accumulate_lengths
-from stitch_generator.functions.linspace import linspace
+from stitch_generator.functions.samples import linspace
 
 
 def sample(function, number_of_samples: int, include_endpoint: bool = True):
