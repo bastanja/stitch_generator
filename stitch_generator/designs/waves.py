@@ -6,7 +6,7 @@ from stitch_generator.functions.embroidery_pattern import EmbroideryPattern
 from stitch_generator.functions.function_modifiers import shift, scale, repeat, add, inverse
 from stitch_generator.functions.functions_1d import cosinus, linear_interpolation, constant
 from stitch_generator.functions.functions_2d import function_2d
-from stitch_generator.functions.samples import samples_by_segments
+from stitch_generator.functions.samples import samples_by_length
 from stitch_generator.stitch_effects.running_stitch import running_stitch_line
 
 
@@ -48,8 +48,7 @@ class Design(EmbroideryDesign):
                 if len(fill_stitches):
                     stitches.append(fill_stitches)
 
-            # todo: samples_by_length
-            p = samples_by_segments(int(parameters.width / parameters.stitch_length), include_endpoint=False)
+            p = samples_by_length(parameters.width, parameters.stitch_length, include_endpoint=False)
             current_line = f(p)
             stitches.append(current_line)
 
