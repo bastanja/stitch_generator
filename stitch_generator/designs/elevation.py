@@ -93,7 +93,7 @@ def _get_elevation_points(width, height):
     f = spiral(0, 50, turns=2.5)
     f = multiply(f, constant_direction(1.5, 1))
     f = add(f, constant_direction(width / 2, height / 2))
-    sp = f(samples_by_segments(1000))
+    sp = f(samples_by_segments(1000, include_endpoint=True))
     return sp
 
 

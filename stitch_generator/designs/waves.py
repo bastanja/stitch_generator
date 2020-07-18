@@ -48,7 +48,8 @@ class Design(EmbroideryDesign):
                 if len(fill_stitches):
                     stitches.append(fill_stitches)
 
-            p = samples_by_segments(int(parameters.width / parameters.stitch_length))
+            # todo: samples_by_length
+            p = samples_by_segments(int(parameters.width / parameters.stitch_length), include_endpoint=False)
             current_line = f(p)
             stitches.append(current_line)
 

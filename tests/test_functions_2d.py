@@ -84,7 +84,7 @@ def test_bezier_normals():
     f = bezier(control_points)
     direction = bezier_normals(control_points)
 
-    samples = linspace(0, 1, 10)
+    samples = linspace(0, 1, 10, include_endpoint=True)
     points = f(samples)
     directions = direction(samples)
 
