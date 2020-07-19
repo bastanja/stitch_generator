@@ -23,13 +23,16 @@ def samples_by_fixed_length(total_length: float, segment_length: float):
     return np.array(segment_borders)
 
 
-def samples_by_fixed_length_with_offset(total_length: float, segment_length: float, offset: float):
+def samples_by_fixed_length_with_alignment(total_length: float,
+                                           segment_length: float,
+                                           alignment: float,
+                                           minimal_segment_size: float = 0.5):
     if np.isclose(total_length, 0) or np.isclose(segment_length, 0) or segment_length > total_length:
         return _default_samples(include_endpoint=True)
 
     relative_segment_length = segment_length / total_length
-    minimal_segment_length = relative_segment_length * 0.5
-    relative_segment_offset = (offset - minimal_segment_length) % relative_segment_length + minimal_segment_length
+    minimal_segment_length = relative_segment_length * minimal_segment_size
+    relative_segment_offset = (alignment - minimal_segment_length) % relative_segment_length + minimal_segment_length
 
     available_length = 1 - (relative_segment_offset + minimal_segment_length)
     if available_length > 0:
