@@ -3,8 +3,7 @@ import pytest
 from pytest import approx
 
 from stitch_generator.functions.functions_1d import linear_interpolation, constant, sinus, cosinus, \
-    cubic_interpolation_evenly_spaced, \
-    stairs, square, arc, smoothstep, smootherstep
+    cubic_interpolation_evenly_spaced, stairs, square, arc, smoothstep, smootherstep, circular_arc
 from tests.functions import functions_1d
 
 
@@ -172,6 +171,14 @@ def test_smootherstep():
     f = smootherstep()
     assert (f(0) == approx(0))
     assert (f(0.5) == approx(0.5))
+    assert (f(1) == approx(1))
+
+
+def test_circular_arc():
+    f = circular_arc()
+    assert (f(0) == approx(0))
+    assert (f(0.2) == approx(0.6))
+    assert (f(0.4) == approx(0.8))
     assert (f(1) == approx(1))
 
 
