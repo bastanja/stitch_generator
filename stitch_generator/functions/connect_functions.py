@@ -16,7 +16,7 @@ def line_fixed_stitch_length(stitch_length, alignment):
 
 
 def alternate_direction(stitch_length, alignment):
-    forward = itertools.cycle((False, True))
+    forward = itertools.cycle((True, False))
 
     def f(p1, p2):
         length = np.linalg.norm(p2 - p1)
