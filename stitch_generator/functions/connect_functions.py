@@ -15,14 +15,15 @@ def line_fixed_stitch_length(stitch_length, alignment):
     return partial(_line_fixed_stitch_length(stitch_length=stitch_length, alignment=alignment))
 
 
-def alternate_direction(stitch_length, alignment):
+def alternate_direction(stitch_length, alignment, include_endpoint):
     forward = itertools.cycle((True, False))
 
     def f(p1, p2):
         length = np.linalg.norm(p2 - p1)
         p = line(p1, p2)
         alignment_to_use = alignment if next(forward) else 1 - alignment
-        return p(samples_by_fixed_length_with_alignment(length, stitch_length, alignment_to_use))
+        return p(samples_by_fixed_length_with_alignment(length, stitch_length, alignment_to_use,
+                                                        include_endpoint=include_endpoint))
 
     return f
 

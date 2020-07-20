@@ -15,7 +15,7 @@ def satin_between(f1, f2, stitch_spacing, connect_function, length):
 
 
 def _satin(f1, f2, stitch_spacing, length):
-    p = samples_by_fixed_length(length, stitch_spacing)
+    p = samples_by_fixed_length(length, stitch_spacing, include_endpoint=False)
     if len(p) < 2:
         p = np.array([0, 1], dtype=float)
     stitches = np.zeros((len(p), 2))

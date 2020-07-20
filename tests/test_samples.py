@@ -53,8 +53,8 @@ def test_samples_by_length():
     _test_samples_by_length(total_length=5, segment_length=0, expected_segments=1)
 
 
-def _test_samples_by_fixed_length(total_length, segment_length, expected_segments):
-    samples = samples_by_fixed_length(total_length, segment_length)
+def _test_samples_by_fixed_length(total_length, segment_length, expected_segments, include_endpoint):
+    samples = samples_by_fixed_length(total_length, segment_length, include_endpoint=include_endpoint)
 
     segment_length_relative = 0
     if total_length > 0:
@@ -68,22 +68,25 @@ def _test_samples_by_fixed_length(total_length, segment_length, expected_segment
 
 def test_samples_by_fixed_length():
     # test where segments fit into length exactly
-    _test_samples_by_fixed_length(total_length=10, segment_length=2, expected_segments=5)
-    _test_samples_by_fixed_length(total_length=12, segment_length=2, expected_segments=6)
+    _test_samples_by_fixed_length(total_length=10, segment_length=2, expected_segments=5, include_endpoint=True)
+    _test_samples_by_fixed_length(total_length=10, segment_length=2, expected_segments=4, include_endpoint=False)
+
+    _test_samples_by_fixed_length(total_length=12, segment_length=2, expected_segments=6, include_endpoint=True)
+    _test_samples_by_fixed_length(total_length=12, segment_length=2, expected_segments=5, include_endpoint=False)
 
     # test with partial segment
-    _test_samples_by_fixed_length(total_length=9.99, segment_length=2, expected_segments=4)
-    _test_samples_by_fixed_length(total_length=10.01, segment_length=2, expected_segments=5)
-    _test_samples_by_fixed_length(total_length=11.99, segment_length=2, expected_segments=5)
+    _test_samples_by_fixed_length(total_length=9.99, segment_length=2, expected_segments=4, include_endpoint=False)
+    _test_samples_by_fixed_length(total_length=10.01, segment_length=2, expected_segments=5, include_endpoint=False)
+    _test_samples_by_fixed_length(total_length=11.99, segment_length=2, expected_segments=5, include_endpoint=False)
 
     # test with segment length which is larger than the total length
-    _test_samples_by_fixed_length(total_length=5, segment_length=10, expected_segments=0)
+    _test_samples_by_fixed_length(total_length=5, segment_length=10, expected_segments=0, include_endpoint=False)
 
     # test with total length of zero
-    _test_samples_by_fixed_length(total_length=0, segment_length=10, expected_segments=0)
+    _test_samples_by_fixed_length(total_length=0, segment_length=10, expected_segments=0, include_endpoint=False)
 
     # test with segment length of zero
-    _test_samples_by_fixed_length(total_length=5, segment_length=0, expected_segments=0)
+    _test_samples_by_fixed_length(total_length=5, segment_length=0, expected_segments=0, include_endpoint=False)
 
 
 def test_linspace_mid():
