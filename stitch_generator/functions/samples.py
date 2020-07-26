@@ -65,16 +65,15 @@ def linspace_mid(start: float, stop: float, number_of_segments):
     return l[0:-1]
 
 
-def alternate_direction(sampling_function):
+def alternate_direction(sampling_function, include_endpoint):
     forward = itertools.cycle((True, False))
 
     def f(**kwargs):
-        s = sampling_function(**kwargs)
+        s = sampling_function(**kwargs, include_endpoint=True)
 
         if not next(forward):
             s = np.flip(1 - s, axis=0)
-
-        return s
+        return s if include_endpoint else s[0:-1]
 
     return f
 

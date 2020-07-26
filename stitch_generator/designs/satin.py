@@ -1,14 +1,18 @@
+from functools import partial
+
 import numpy as np
 
 from stitch_generator.design_utilities.embroidery_design import EmbroideryDesign
 from stitch_generator.design_utilities.palette import palette
 from stitch_generator.design_utilities.parameter import FloatParameter
-from stitch_generator.functions.connect_functions import alternate_direction, combine_start_end
+from stitch_generator.functions.connect_functions import line_with_sampling_function, combine_start_end, \
+    line_constant_stitch_length, line_fixed_stitch_length
 from stitch_generator.functions.embroidery_pattern import EmbroideryPattern
 from stitch_generator.functions.function_modifiers import combine, multiply, subtract
 from stitch_generator.functions.function_sequence import function_sequence
 from stitch_generator.functions.functions_1d import linear_interpolation, constant, arc
 from stitch_generator.functions.functions_2d import line, constant_direction
+from stitch_generator.functions.samples import alternate_direction, samples_by_fixed_length_with_alignment
 from stitch_generator.stitch_effects.meander import meander_along
 from stitch_generator.stitch_effects.satin import satin_along
 
@@ -32,13 +36,34 @@ class Design(EmbroideryDesign):
 
         width = self._get_width_function(parameters)
 
+        sampling = partial(samples_by_fixed_length_with_alignment,
+                           segment_length=parameters.stitch_length,
+                           alignment=parameters.pattern_alignment)
+
+        connect_function_1 = line_with_sampling_function(alternate_direction(sampling, include_endpoint=False))
+
+        connect_function_2 = combine_start_end(
+            line_with_sampling_function(alternate_direction(sampling, include_endpoint=True)))
+
+        connect_function_3 = line_constant_stitch_length(parameters.stitch_length, include_endpoint=False)
+
+        connect_function_4 = combine_start_end(
+            line_constant_stitch_length(parameters.stitch_length, include_endpoint=True))
+
+        connect_function_5 = line_fixed_stitch_length(parameters.stitch_length, alignment=0,
+                                                      include_endpoint=False)
+
         stitches = [
             satin_along(f, direction, width, constant(parameters.alignment), parameters.stitch_spacing,
-                        alternate_direction(parameters.stitch_length, parameters.pattern_alignment,
-                                            include_endpoint=False), parameters.length),
+                        connect_function_1, parameters.length),
             meander_along(f, direction, width, constant(parameters.alignment), parameters.stitch_spacing,
-                          combine_start_end(alternate_direction(parameters.stitch_length, parameters.pattern_alignment,
-                                                                include_endpoint=True)), parameters.length)
+                          connect_function_2, parameters.length),
+            satin_along(f, direction, width, constant(parameters.alignment), parameters.stitch_spacing,
+                        connect_function_3, parameters.length),
+            meander_along(f, direction, width, constant(parameters.alignment), parameters.stitch_spacing,
+                          connect_function_4, parameters.length),
+            meander_along(f, direction, width, constant(parameters.alignment), parameters.stitch_spacing,
+                          connect_function_5, parameters.length)
         ]
 
         pattern = EmbroideryPattern()

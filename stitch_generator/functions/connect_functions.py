@@ -1,4 +1,3 @@
-import itertools
 from functools import partial
 
 import numpy as np
@@ -7,25 +6,19 @@ from stitch_generator.functions.functions_2d import line
 from stitch_generator.functions.samples import samples_by_fixed_length_with_alignment, samples_by_length
 
 
-def line_constant_stitch_length(stitch_length):
-    return partial(_line_constant_stitch_length, stitch_length=stitch_length)
+def line_with_sampling_function(sampling_function):
+    return partial(_line_with_sampling_function, sampling_function=sampling_function)
 
 
-def line_fixed_stitch_length(stitch_length, alignment):
-    return partial(_line_fixed_stitch_length(stitch_length=stitch_length, alignment=alignment))
+def line_constant_stitch_length(stitch_length, include_endpoint: bool):
+    sampling_function = partial(samples_by_length, segment_length=stitch_length, include_endpoint=include_endpoint)
+    return partial(_line_with_sampling_function, sampling_function=sampling_function)
 
 
-def alternate_direction(stitch_length, alignment, include_endpoint):
-    forward = itertools.cycle((True, False))
-
-    def f(p1, p2):
-        length = np.linalg.norm(p2 - p1)
-        p = line(p1, p2)
-        alignment_to_use = alignment if next(forward) else 1 - alignment
-        return p(samples_by_fixed_length_with_alignment(length, stitch_length, alignment_to_use,
-                                                        include_endpoint=include_endpoint))
-
-    return f
+def line_fixed_stitch_length(stitch_length, alignment, include_endpoint: bool):
+    sampling_function = partial(samples_by_fixed_length_with_alignment, segment_length=stitch_length,
+                                alignment=alignment, include_endpoint=include_endpoint)
+    return partial(_line_with_sampling_function, sampling_function=sampling_function)
 
 
 def combine_start_end(connect_function):
@@ -47,13 +40,7 @@ def combine_start_end(connect_function):
     return f
 
 
-def _line_constant_stitch_length(p1, p2, stitch_length):
+def _line_with_sampling_function(p1, p2, sampling_function):
     length = np.linalg.norm(p2 - p1)
-    t = samples_by_length(length, stitch_length, include_endpoint=True)
-    return line(p1, p2)(t)
-
-
-def _line_fixed_stitch_length(p1, p2, stitch_length, alignment):
-    length = np.linalg.norm(p2 - p1)
-    t = samples_by_fixed_length_with_alignment(length, stitch_length, alignment)
+    t = sampling_function(total_length=length)
     return line(p1, p2)(t)
