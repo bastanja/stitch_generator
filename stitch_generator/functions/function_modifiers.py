@@ -63,11 +63,8 @@ def inverse(f):
 
 
 def mix(f1, f2, factor):
-    def f(v):
-        fv = factor(v)
-        return f1(v) * (1 - fv) + f2(v) * fv
-
-    return f
+    one_minus_factor = subtract(lambda v: np.ones_like(np.array(v), dtype=float), factor)
+    return add(multiply(f1, one_minus_factor), multiply(f2, factor))
 
 
 def _binary_operation(operation, f1, f2):
