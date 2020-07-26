@@ -2,8 +2,9 @@ import numpy as np
 import pytest
 from pytest import approx
 
+from stitch_generator.functions.function_1d_stairs import stairs
 from stitch_generator.functions.functions_1d import linear_interpolation, constant, sinus, cosinus, \
-    cubic_interpolation_evenly_spaced, stairs, square, arc, smoothstep, smootherstep, circular_arc
+    cubic_interpolation_evenly_spaced, square, arc, smoothstep, smootherstep, circular_arc
 from tests.functions import functions_1d
 
 
@@ -110,29 +111,29 @@ def test_cubic_interpolation_evenly_spaced():
 
 
 def test_stairs():
-    steps = 2
+    steps = np.linspace(0, 1, 2)
     ratio = 0.1
     f = stairs(steps, ratio)
     assert f(0) == approx(0)
     assert f(0.5) == approx(0.5)
     assert f(1) == approx(1)
 
-    step_increase_size = ratio / steps
+    step_increase_size = ratio / len(steps)
     assert f(0.5 - step_increase_size) == approx(0)
     assert f(0.5 + step_increase_size) == approx(1)
 
-    steps = 2
+    steps = np.linspace(0, 1, 2)
     ratio = 0.1
     f = stairs(steps, ratio)
     assert f(0) == approx(0)
     assert f(0.5) == approx(0.5)
     assert f(1) == approx(1)
 
-    step_increase_size = ratio / steps
+    step_increase_size = ratio / len(steps)
     assert f(0.5 - step_increase_size) == approx(0)
     assert f(0.5 + step_increase_size) == approx(1)
 
-    steps = 3
+    steps = np.linspace(0, 1, 3)
     ratio = 0.1
     f = stairs(steps, ratio)
     assert f(0) == approx(0)
@@ -141,7 +142,7 @@ def test_stairs():
     assert f(2 / 3) == approx(0.75)
     assert f(1) == approx(1)
 
-    step_increase_size = ratio / steps
+    step_increase_size = ratio / len(steps)
     assert f((1 / 3) - step_increase_size) == approx(0)
     assert f((1 / 3) + step_increase_size) == approx(0.5)
 
