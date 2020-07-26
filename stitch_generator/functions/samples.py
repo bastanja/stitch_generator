@@ -16,36 +16,6 @@ def samples_by_length(total_length: float, segment_length: float, include_endpoi
     return linspace(start=0, stop=1, number_of_segments=number_of_segments, include_endpoint=include_endpoint)
 
 
-def samples_by_fixed_length_with_alignment(total_length: float,
-                                           segment_length: float,
-                                           alignment: float,
-                                           include_endpoint: bool,
-                                           minimal_segment_size: float = 0.5):
-    if np.isclose(total_length, 0) or np.isclose(segment_length, 0) or segment_length > total_length:
-        return _default_samples(include_endpoint=include_endpoint)
-
-    relative_segment_length = segment_length / total_length
-    minimal_segment_length = relative_segment_length * minimal_segment_size
-    relative_segment_offset = (alignment - minimal_segment_length) % relative_segment_length + minimal_segment_length
-
-    available_length = 1 - (relative_segment_offset + minimal_segment_length)
-
-    if available_length > 0:
-        number_of_segments = int(available_length / relative_segment_length)
-
-        result = [relative_segment_offset + (i * relative_segment_length) for i in range(number_of_segments + 1)]
-        if result[0] > 0:
-            result.insert(0, 0.0)
-        if np.isclose(result[-1], 1.0) and not include_endpoint:
-            result.pop(-1)
-        if result[-1] < 1 and include_endpoint:
-            result.append(1.0)
-
-        return np.array(result)
-
-    return _default_samples(include_endpoint=include_endpoint)
-
-
 def samples_by_fixed_length_with_alignment_and_offset(total_length: float,
                                                       segment_length: float,
                                                       alignment: float,
@@ -80,7 +50,10 @@ def samples_by_fixed_length_with_alignment_and_offset(total_length: float,
     return _default_samples(include_endpoint=include_endpoint)
 
 
-samples_by_fixed_length = partial(samples_by_fixed_length_with_alignment, alignment=0.0, minimal_segment_size=0.0)
+samples_by_fixed_length_with_alignment = partial(samples_by_fixed_length_with_alignment_and_offset, offset=0)
+
+samples_by_fixed_length = partial(samples_by_fixed_length_with_alignment_and_offset, offset=0, alignment=0.0,
+                                  minimal_segment_size=0.0)
 
 
 def mid_samples_by_segments(number_of_segments: int):
@@ -99,19 +72,6 @@ def linspace_mid(start: float, stop: float, number_of_segments):
     return l[0:-1]
 
 
-def alternate_direction(sampling_function, include_endpoint: bool):
-    forward = itertools.cycle((True, False))
-
-    def f(**kwargs):
-        s = sampling_function(**kwargs, include_endpoint=True)
-
-        if not next(forward):
-            s = np.flip(1 - s, axis=0)
-        return s if include_endpoint else s[0:-1]
-
-    return f
-
-
 def alternate_and_cycle_offset(sampling_function, offsets, include_endpoint: bool):
     forward = itertools.cycle((True, False))
     offset_gen = itertools.cycle(offsets)
@@ -125,6 +85,8 @@ def alternate_and_cycle_offset(sampling_function, offsets, include_endpoint: boo
 
     return f
 
+
+alternate_direction = partial(alternate_and_cycle_offset, offsets=[0])
 
 def _default_samples(include_endpoint: bool):
     return linspace(0, 1, 1, include_endpoint=include_endpoint)
