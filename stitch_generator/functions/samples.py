@@ -1,3 +1,4 @@
+import itertools
 from functools import partial
 
 import numpy as np
@@ -62,6 +63,20 @@ def linspace_mid(start: float, stop: float, number_of_segments):
     offset = (l[1] - l[0]) / 2
     l += offset
     return l[0:-1]
+
+
+def alternate_direction(sampling_function):
+    forward = itertools.cycle((True, False))
+
+    def f(**kwargs):
+        s = sampling_function(**kwargs)
+
+        if not next(forward):
+            s = np.flip(1 - s, axis=0)
+
+        return s
+
+    return f
 
 
 def _default_samples(include_endpoint: bool):
