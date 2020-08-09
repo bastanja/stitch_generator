@@ -16,12 +16,12 @@ def samples_by_length(total_length: float, segment_length: float, include_endpoi
     return linspace(start=0, stop=1, number_of_segments=number_of_segments, include_endpoint=include_endpoint)
 
 
-def samples_by_fixed_length_with_alignment_and_offset(total_length: float,
-                                                      segment_length: float,
-                                                      alignment: float,
-                                                      include_endpoint: bool,
-                                                      offset: float,
-                                                      minimal_segment_size: float = 0.5):
+def samples(total_length: float,
+            segment_length: float,
+            alignment: float,
+            include_endpoint: bool,
+            offset: float,
+            minimal_segment_size: float = 0.5):
     if np.isclose(total_length, 0) or np.isclose(segment_length, 0) or segment_length > total_length:
         return _default_samples(include_endpoint=include_endpoint)
 
@@ -50,9 +50,9 @@ def samples_by_fixed_length_with_alignment_and_offset(total_length: float,
     return _default_samples(include_endpoint=include_endpoint)
 
 
-samples_by_fixed_length_with_alignment = partial(samples_by_fixed_length_with_alignment_and_offset, offset=0)
+samples_by_fixed_length_with_alignment = partial(samples, offset=0)
 
-samples_by_fixed_length = partial(samples_by_fixed_length_with_alignment_and_offset, offset=0, alignment=0.0,
+samples_by_fixed_length = partial(samples, offset=0, alignment=0.0,
                                   minimal_segment_size=0.0)
 
 
