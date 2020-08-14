@@ -1,15 +1,17 @@
 import math
+from typing import Sequence
 
 import numpy as np
 
 from stitch_generator.functions.bezier import de_casteljau
+from stitch_generator.functions.ensure_shape import ensure_1d_shape
 from stitch_generator.functions.function_modifiers import scale, add, repeat, multiply
 from stitch_generator.functions.functions_1d import cosinus, sinus, constant, linear_interpolation
-from stitch_generator.functions.ensure_shape import ensure_1d_shape
+from stitch_generator.functions.types import Function2D, Function1D
 from stitch_generator.stitch_effects.rotate import rotate_deg
 
 
-def function_2d(fx, fy):
+def function_2d(fx: Function1D, fy: Function1D) -> Function2D:
     def f(t):
         t = ensure_1d_shape(t)
         return np.array([fx(t), fy(t)]).T
@@ -17,7 +19,7 @@ def function_2d(fx, fy):
     return f
 
 
-def circle(radius=1, center=(0, 0)):
+def circle(radius: float = 1, center: Sequence[float] = (0, 0)) -> Function2D:
     fx = cosinus()
     fy = sinus()
     f = function_2d(fx, fy)
@@ -29,11 +31,11 @@ def circle(radius=1, center=(0, 0)):
     return f
 
 
-def line(origin=(0, 0), to=(100, 0)):
+def line(origin: Sequence[float] = (0, 0), to: Sequence[float] = (100, 0)) -> Function2D:
     return function_2d(linear_interpolation(origin[0], to[0]), linear_interpolation(origin[1], to[1]))
 
 
-def spiral(inner_radius, outer_radius, turns, center=(0, 0)):
+def spiral(inner_radius: float, outer_radius: float, turns: float, center: Sequence[float] = (0, 0)) -> Function2D:
     spiral = repeat(turns, circle(inner_radius, center))
     direction = repeat(turns, circle())
     increase = linear_interpolation(0, outer_radius - inner_radius)
@@ -42,7 +44,7 @@ def spiral(inner_radius, outer_radius, turns, center=(0, 0)):
     return spiral
 
 
-def bezier(control_points):
+def bezier(control_points: Sequence) -> Function2D:
     control_points = np.asarray(control_points, dtype=float)
 
     def f(v):
@@ -52,7 +54,7 @@ def bezier(control_points):
     return f
 
 
-def bezier_normals(control_points):
+def bezier_normals(control_points: Sequence) -> Function2D:
     control_points = np.asarray(control_points, dtype=float)
 
     def f(v):
@@ -62,7 +64,7 @@ def bezier_normals(control_points):
     return f
 
 
-def constant_direction(x: float, y: float, normalized: bool = False):
+def constant_direction(x: float, y: float, normalized: bool = False) -> Function2D:
     if normalized:
         length = math.sqrt(x * x + y * y)
         x /= length

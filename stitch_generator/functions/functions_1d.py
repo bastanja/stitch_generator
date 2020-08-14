@@ -1,11 +1,14 @@
 from functools import partial
+from typing import Callable
 
 import numpy as np
 from noise import pnoise1
 from scipy.interpolate import interp1d
 
+from stitch_generator.functions.types import Function1D
 
-def function_1d(f):
+
+def function_1d(f: Callable[..., float]) -> Function1D:
     def wrapper(v):
         v = np.asarray(v)
         try:
@@ -17,34 +20,34 @@ def function_1d(f):
     return wrapper
 
 
-def constant(c):
+def constant(c: float) -> Function1D:
     return lambda v: np.full_like(np.array(v), c, dtype=float)
 
 
-def linear_interpolation(target_low, target_high, source_low=0, source_high=1):
+def linear_interpolation(target_low, target_high, source_low=0, source_high=1) -> Callable:
     if source_low == source_high:
         return constant(target_low)
     return interp1d([source_low, source_high], [target_low, target_high], fill_value="extrapolate")
 
 
-def square():
+def square() -> Function1D:
     return lambda v: np.asarray(np.asarray(v) * np.asarray(v))
 
 
-def sinus():
+def sinus() -> Function1D:
     return lambda v: np.asarray(np.sin(np.asarray(v) * np.pi * 2))
 
 
-def cosinus():
+def cosinus() -> Function1D:
     return lambda v: np.asarray(np.cos(np.asarray(v) * np.pi * 2))
 
 
-def noise(octaves=4):
+def noise(octaves: int = 4) -> Function1D:
     n = partial(pnoise1, octaves=octaves)
     return function_1d(n)
 
 
-def cubic_interpolation_evenly_spaced(values):
+def cubic_interpolation_evenly_spaced(values) -> Function1D:
     assert len(values) > 1, "Interpolation function needs at least two values"
     samples = np.linspace(0, 1, num=len(values), endpoint=True)
 
@@ -56,17 +59,17 @@ def cubic_interpolation_evenly_spaced(values):
     return f
 
 
-def arc():
+def arc() -> Function1D:
     return lambda v: np.asarray(1 - ((np.asarray(v) * 2) - 1) ** 2)
 
 
-def smoothstep():
+def smoothstep() -> Function1D:
     return lambda v: np.asarray(3 * np.asarray(v) ** 2 - 2 * np.asarray(v) ** 3)
 
 
-def smootherstep():
+def smootherstep() -> Function1D:
     return lambda v: np.asarray(6 * np.asarray(v) ** 5 - 15 * np.asarray(v) ** 4 + 10 * np.asarray(v) ** 3)
 
 
-def circular_arc():
+def circular_arc() -> Function1D:
     return lambda v: np.asarray(np.sqrt(1 - (1 - np.asarray(v)) ** 2))
