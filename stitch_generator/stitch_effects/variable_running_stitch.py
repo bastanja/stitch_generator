@@ -2,80 +2,41 @@ from typing import Iterable, Tuple
 
 import numpy as np
 
+from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.functions_1d import linear_interpolation
+from stitch_generator.functions.path import Path
 from stitch_generator.functions.sample import sample
+from stitch_generator.functions.samples import samples_by_segments, mid_samples_by_segments
 
 
-def variable_running_stitch(positions: Iterable[Tuple[float]],
-                            directions: Iterable[Tuple[float]],
-                            widths: Iterable[float],
-                            min_strokes: int,
-                            max_strokes: int,
-                            width_scale: float):
-    """
-    Creates a running stitch with variable width. Width is achieved by stitching back and forth with a slight offset
-    to the side until the desired line width is reached. The width can vary along the course of the stitch line. This
-    means that a part of the stitch line can stitched only once and appear very thin while another part is stitched
-    multiple times and therefore appear wider.
+def variable_running_stitch(path: Path, stroke_spacing: float, stitch_length: float):
+    segments = int(round(estimate_length(path.position) / stitch_length))
+    t = samples_by_segments(number_of_segments=segments, include_endpoint=True)
+    c = mid_samples_by_segments(number_of_segments=segments)
 
-    Parameters:
-        positions: defines the positions of the stitches
+    widths = path.width(c)
+    levels = width_to_level(widths, stroke_spacing)
 
-        directions: defines in which direction the stitches are moved for the repetitions. There should be a
-            direction for each stitch. The direction should usually be perpendicular to the stitch line at that position
-            and be a normalized vector.
-
-        widths: defines for each segment between two positions how wide the stitch line should be at this segment. When
-            n positions are provided, widths should have length n-1. width values should be between 0 and 1. Where the
-            width is 0, the resulting stitch line will be repeated `min_strokes` times. Where width is 1, the resulting
-            stitch line will be repeated `max_strokes` times.
-
-        min_strokes: defines how often the stitch line is repeated at its thinnest locations. Should be an odd number.
-            If it is an even number, the line will be repeated at least min_strokes + 1 times.
-
-        max_strokes: defines how often the stitch line is repeated at its widest locations. Should be an odd number.
-            If it is an even number, the line will be repeated at most max_strokes - 1 times.
-
-        width_scale: defines how wide the variable running stitch is at its widest location. If it is 0, the repeating
-            stitches will be exactly at the locations defined by `positions`. If it is not 0, width_scale defines how
-            far the stitches will be moved into the `direction` at the widest location.
-    """
-
-    width_to_level = _get_width_to_level_function(min_strokes, max_strokes)
-    levels = [width_to_level(w) for w in widths]
     width_level_tree = _make_range_tree(levels)
     indices, offsets = _tree_to_indices_and_offsets(width_level_tree)
 
-    # make sure we have lists (not generators), because we need to access them with index
-    positions = list(positions)
-    directions = list(directions)
+    positions = path.position(t)
+    directions = path.direction(t)
 
     positions = np.array([positions[i] for i in indices])
     directions = np.array([directions[i] for i in indices])
 
     offsets = np.array(offsets, dtype=float)[:, None]
-    offsets *= width_scale / width_to_level(1)
+    offsets *= stroke_spacing
 
     directions = directions * offsets
     return positions + directions
 
 
-def _get_width_to_level_function(min_strokes, max_strokes):
-    """
-    Returns a function that converts width values in the range between 0 and 1 to integer values representing width
-    levels. A level of 0 means that the stroke is repeated one time, level 1 means it is repeated three times, level 2
-    means the stroke is repeated five times etc.
-    """
-    to_level = linear_interpolation(_to_min(min_strokes), _to_max(max_strokes) + 1)
-
-    def f(w):
-        val = 0 if w < 0 else 1 if w > 1 else w
-        level = to_level(val) - 0.5
-        level = int(round(level))
-        level = min(level, _to_max(max_strokes))
-        return level
-
-    return f
+def width_to_level(widths: np.ndarray, level_spacing: float):
+    widths = np.round(widths / level_spacing)
+    widths = np.maximum(widths, 0)  # avoid negative values
+    return widths.astype(int)
 
 
 def _to_min(strokes: int):
