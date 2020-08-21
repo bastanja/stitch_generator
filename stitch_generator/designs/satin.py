@@ -12,6 +12,7 @@ from stitch_generator.functions.function_modifiers import combine, multiply, sub
 from stitch_generator.functions.function_sequence import function_sequence
 from stitch_generator.functions.functions_1d import linear_interpolation, constant, arc
 from stitch_generator.functions.functions_2d import line, constant_direction
+from stitch_generator.functions.path import Path
 from stitch_generator.functions.samples import alternate_direction, samples_by_fixed_length_with_alignment
 from stitch_generator.stitch_effects.meander import meander_along
 from stitch_generator.stitch_effects.satin import satin_along
@@ -31,10 +32,11 @@ class Design(EmbroideryDesign):
 
     def get_pattern(self, parameters):
         parameters = self.validate(parameters)
-        f = line((0, 0), (parameters.length, 0))
-        direction = constant_direction(0, -1)
 
-        width = self._get_width_function(parameters)
+        path = Path(position=line((0, 0), (parameters.length, 0)),
+                    direction=constant_direction(0, -1),
+                    width=self._get_width_function(parameters),
+                    stroke_alignment=constant(parameters.alignment))
 
         sampling = partial(samples_by_fixed_length_with_alignment,
                            segment_length=parameters.stitch_length,
@@ -54,16 +56,11 @@ class Design(EmbroideryDesign):
                                                       include_endpoint=False)
 
         stitches = [
-            satin_along(f, direction, width, constant(parameters.alignment), parameters.stitch_spacing,
-                        connect_function_1, parameters.length),
-            meander_along(f, direction, width, constant(parameters.alignment), parameters.stitch_spacing,
-                          connect_function_2, parameters.length),
-            satin_along(f, direction, width, constant(parameters.alignment), parameters.stitch_spacing,
-                        connect_function_3, parameters.length),
-            meander_along(f, direction, width, constant(parameters.alignment), parameters.stitch_spacing,
-                          connect_function_4, parameters.length),
-            meander_along(f, direction, width, constant(parameters.alignment), parameters.stitch_spacing,
-                          connect_function_5, parameters.length)
+            satin_along(path, parameters.stitch_spacing, connect_function_1, parameters.length),
+            meander_along(path, parameters.stitch_spacing, connect_function_2, parameters.length),
+            satin_along(path, parameters.stitch_spacing, connect_function_3, parameters.length),
+            meander_along(path, parameters.stitch_spacing, connect_function_4, parameters.length),
+            meander_along(path, parameters.stitch_spacing, connect_function_5, parameters.length)
         ]
 
         pattern = EmbroideryPattern()

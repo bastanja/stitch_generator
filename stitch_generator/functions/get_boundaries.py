@@ -1,12 +1,13 @@
 from stitch_generator.functions.function_modifiers import multiply, subtract, add
 from stitch_generator.functions.functions_1d import constant
+from stitch_generator.functions.path import Path
 
 
-def get_boundaries(f, direction, width, offset):
-    pos_width = multiply(width, offset)
-    neg_width = multiply(width, subtract(constant(1), offset))
+def get_boundaries(path: Path):
+    pos_width = multiply(path.width, path.stroke_alignment)
+    neg_width = multiply(path.width, subtract(constant(1), path.stroke_alignment))
 
-    f1 = add(f, multiply(direction, pos_width))
-    f2 = subtract(f, multiply(direction, neg_width))
+    left = add(path.position, multiply(path.direction, pos_width))
+    right = subtract(path.position, multiply(path.direction, neg_width))
 
-    return f1, f2
+    return left, right
