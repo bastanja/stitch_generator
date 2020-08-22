@@ -88,3 +88,14 @@ def maximum(f1, f2):
 
 def minimum(f1, f2):
     return lambda v: np.minimum(f1(v), f2(v))
+
+
+def split(function, offsets):
+    try:
+        offsets = offsets.tolist()  # convert np.ndarray to list
+    except AttributeError:
+        offsets = list(offsets)  # make sure we have a list
+
+    combined = [0] + offsets + [1]
+
+    return [repeat(o2 - o1, shift(o1, function)) for o1, o2 in zip(combined, combined[1:])]

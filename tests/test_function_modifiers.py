@@ -4,7 +4,7 @@ import numpy as np
 from pytest import approx
 
 from stitch_generator.functions.function_modifiers import repeat, reflect, wrap, nearest, combine, inverse, mix, add, \
-    multiply
+    multiply, split
 from tests.functions import all_functions, functions_1d, functions_1d_positive
 
 offsets = [t / 10 for t in range(10)]
@@ -116,3 +116,27 @@ def test_multiply():
             assert np.allclose(multiplied(v), f1(v) * f2(v))
         values = np.linspace(0, 1, 11)
         assert np.allclose(multiplied(values), (f1(values).T * f2(values).T).T)
+
+
+def test_split():
+    for f in all_functions.values():
+        split_positions = [0, 0.25, 0.5, 1]
+        for offset in split_positions:
+            parts = split(f, [offset])
+            # verify that the end of the first part is the same as the start of the second part
+            assert np.allclose(parts[0](1), parts[1](0))
+
+            # verify that the last value of the split part is the same
+            # as the function value at the position of the split
+            assert np.allclose(parts[0](1), f(offset))
+
+        parts = split(f, split_positions)
+        # verify that the function was split into the right amount of parts
+        assert len(parts) == len(split_positions) + 1
+
+        # verify that splitting with non-ascending offsets results in an inverse function
+        parts_forward = split(f, [0.25, 0.75])
+        parts_inverse = split(f, [0.75, 0.25])
+
+        t = np.linspace(0, 1, 11)
+        assert np.allclose(parts_forward[1](t), np.flipud(parts_inverse[1](t)))
