@@ -2,7 +2,8 @@ from functools import partial
 
 from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.function_modifiers import scale, add, repeat, multiply, subtract
-from stitch_generator.functions.functions_1d import constant, cosinus, linear_interpolation, arc
+from stitch_generator.functions.functions_1d import constant, cosinus, linear_interpolation, arc, smoothstep
+from stitch_generator.functions.get_boundaries import get_boundaries
 from stitch_generator.functions.path import Path
 from stitch_generator.functions.sample import sample
 
@@ -19,7 +20,9 @@ def _lattice(path: Path, strands, length, pattern_f, pattern_length, stitch_leng
 
     pattern_f = repeat(times, pattern_f, mode='reflect')
     pattern_f = multiply(pattern_f, repeat(strands, path.width, mode='reflect'))
-    f = add(repeat(strands, path.position, mode='reflect'),
+
+    left, right = get_boundaries(path)
+    f = add(repeat(strands, right, mode='reflect'),
             multiply(repeat(strands, path.direction, mode='reflect'), pattern_f))
 
     stitches = int(round(pattern_length / stitch_length))
@@ -29,15 +32,19 @@ def _lattice(path: Path, strands, length, pattern_f, pattern_length, stitch_leng
 
 def _calculate_stitch_length(pattern_length, strands, desired_length=2):
     stitch_length = pattern_length / strands
-    times = int(round(stitch_length / desired_length))
+    times = max(1, int(round(stitch_length / desired_length)))
     stitch_length = stitch_length / times
     return stitch_length
 
 
-_cosine_pattern = scale(0.5, repeat(0.5, cosinus()))
-_linear_pattern = linear_interpolation(0.5, -0.5)
-_peaks = subtract(constant(0.5), repeat(0.5, arc()))
+_cosine_pattern = add(constant(0.5), scale(0.5, repeat(0.5, cosinus())))
+_linear_pattern = linear_interpolation(0, 1)
+_peaks = subtract(constant(1), repeat(0.5, arc()))
 
-braid = partial(lattice, strands=3, pattern_f=scale(5, _cosine_pattern))
-grid = partial(lattice, strands=7, pattern_f=scale(5, _linear_pattern))
-peaks = partial(lattice, strands=5, pattern_f=scale(5, _peaks))
+presets = [
+    partial(lattice, strands=3, pattern_f=_cosine_pattern, pattern_length=10),
+    partial(lattice, strands=7, pattern_f=_linear_pattern, pattern_length=20),
+    partial(lattice, strands=3, pattern_f=_linear_pattern, pattern_length=3),
+    partial(lattice, strands=5, pattern_f=_peaks, pattern_length=25),
+    partial(lattice, strands=5, pattern_f=smoothstep(), pattern_length=25)
+]
