@@ -12,12 +12,12 @@ class Design(EmbroideryDesign):
     def __init__(self):
         EmbroideryDesign.__init__(self, name="noise_spiral", parameters={
             'stitch_length': FloatParameter("Stitch length", 1, 3, 6),
-            'turns': IntParameter("Number of Turns", 1, 10, 15),
+            'turns': IntParameter("Number of Turns", 1, 6, 15),
             'inner_radius': FloatParameter("Inner radius", 0, 5, 100),
             'outer_radius': FloatParameter("Outer radius", 0, 80, 100),
-            'noise_length': FloatParameter("Noise length", 10, 120, 200),
-            'noise_offset': FloatParameter("Noise offset", 0, 25, 50),
-            'noise_width': FloatParameter("Noise width", 0, 8, 30),
+            'noise_length': FloatParameter("Noise length", 10, 170, 300),
+            'noise_offset': FloatParameter("Noise offset", 0, 25, 150),
+            'noise_width': FloatParameter("Noise width", 0, 14, 30),
         })
 
     def get_pattern(self, parameters):
