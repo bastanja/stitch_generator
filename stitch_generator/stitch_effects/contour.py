@@ -9,7 +9,7 @@ from stitch_generator.functions.samples import samples_by_length
 
 
 def contour(path: Path, stitch_length: float):
-    left, right = get_boundaries(path.position, path.direction, path.width, path.stroke_alignment)
+    left, right = get_boundaries(path)
     right = inverse(right)
 
     length = estimate_length(path.position)
