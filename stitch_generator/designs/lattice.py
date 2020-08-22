@@ -34,7 +34,7 @@ class Design(EmbroideryDesign):
                       width=scale(3, arc()),
                       stroke_alignment=constant(0.5))]
 
-        parts = [path.split(parameters.length)[0] for path in paths]
+        parts = [path.split([parameters.length])[0] for path in paths]
 
         stitch_effects = [partial(braid, pattern_length=10),
                           partial(peaks, pattern_length=20),
