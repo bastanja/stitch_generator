@@ -18,7 +18,7 @@ class Design(EmbroideryDesign):
         color = palette()
 
         f = line((0, 0), (parameters.length, 0))
-        t = samples_by_length(parameters.length)
+        t = samples_by_length(parameters.length, segment_length=parameters.stitch_length, include_endpoint=True)
         stitches = f(t)
 
         pattern = EmbroideryPattern()
