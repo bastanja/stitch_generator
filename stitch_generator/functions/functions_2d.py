@@ -20,11 +20,15 @@ def function_2d(fx: Function1D, fy: Function1D) -> Function2D:
 
 
 def circle(radius: float = 1, center: Sequence[float] = (0, 0)) -> Function2D:
+    return ellipse(rx=radius, ry=radius, center=center)
+
+
+def ellipse(rx: float, ry: float, center: Sequence[float] = (0, 0)) -> Function2D:
     fx = cosinus()
     fy = sinus()
+    fx = scale(rx, fx)
+    fy = scale(ry, fy)
     f = function_2d(fx, fy)
-    if radius != 1:
-        f = scale(radius, f)
     if center != (0, 0):
         c = function_2d(constant(center[0]), constant(center[1]))
         f = add(f, c)
