@@ -1,4 +1,4 @@
-from stitch_generator.functions.function_modifiers import split
+from stitch_generator.functions.function_modifiers import split, inverse
 from stitch_generator.functions.types import Function1D, Function2D
 
 
@@ -15,4 +15,11 @@ class Path:
         widths = split(self.width, offsets)
         stroke_alignments = split(self.stroke_alignment, offsets)
         return [Path(*params) for params in zip(positions, directions, widths, stroke_alignments)]
+
+    def inverse(self):
+        position = inverse(self.position)
+        direction = inverse(self.direction)
+        width = inverse(self.width)
+        stroke_alignment = inverse(self.stroke_alignment)
+        return [Path(position, direction, width, stroke_alignment)]
 
