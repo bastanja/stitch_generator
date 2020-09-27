@@ -4,8 +4,10 @@ from stitch_generator.designs import satin
 from stitch_generator.designs import variable_running_stitch
 from stitch_generator.designs import waves
 from stitch_generator.designs import lattice
+from stitch_generator.designs import stitch_effects
 
 designs = [
+    stitch_effects.Design,
     lattice.Design,
     satin.Design,
     waves.Design,
