@@ -17,9 +17,11 @@ class Path:
         return [Path(*params) for params in zip(positions, directions, widths, stroke_alignments)]
 
     def inverse(self):
-        position = inverse(self.position)
-        direction = inverse(self.direction)
-        width = inverse(self.width)
-        stroke_alignment = inverse(self.stroke_alignment)
-        return [Path(position, direction, width, stroke_alignment)]
+        return self.apply_modifier(inverse)
 
+    def apply_modifier(self, function_modifier):
+        position = function_modifier(function=self.position)
+        direction = function_modifier(function=self.direction)
+        width = function_modifier(function=self.width)
+        stroke_alignment = function_modifier(function=self.stroke_alignment)
+        return Path(position, direction, width, stroke_alignment)
