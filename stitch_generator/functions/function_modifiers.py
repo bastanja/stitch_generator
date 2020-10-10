@@ -58,8 +58,8 @@ def multiply(f1, f2):
     return _binary_operation(lambda a, b: a * b, f1, f2)
 
 
-def inverse(f):
-    return lambda v: f(1 - v)
+def inverse(function):
+    return lambda v: function(1 - v)
 
 
 def mix(f1, f2, factor):
