@@ -1,6 +1,7 @@
 import numpy as np
 
-from stitch_generator.functions.samples import linspace, linspace_mid, samples_by_length, samples_by_fixed_length
+from stitch_generator.functions.samples import linspace, linspace_mid, samples_by_length
+from stitch_generator.functions.sampling import fixed_sampling
 
 
 def test_linspace():
@@ -54,7 +55,8 @@ def test_samples_by_length():
 
 
 def _test_samples_by_fixed_length(total_length, segment_length, expected_segments, include_endpoint):
-    samples = samples_by_fixed_length(total_length, segment_length, include_endpoint=include_endpoint)
+    sampling = fixed_sampling(stitch_length=segment_length,include_endpoint=include_endpoint, minimal_segment_size=0)
+    samples = sampling(total_length)
 
     segment_length_relative = 0
     if total_length > 0:

@@ -1,6 +1,3 @@
-import itertools
-from functools import partial
-
 import numpy as np
 
 
@@ -50,12 +47,6 @@ def samples(total_length: float,
     return _default_samples(include_endpoint=include_endpoint)
 
 
-samples_by_fixed_length_with_alignment = partial(samples, offset=0)
-
-samples_by_fixed_length = partial(samples, offset=0, alignment=0.0,
-                                  minimal_segment_size=0.0)
-
-
 def mid_samples_by_segments(number_of_segments: int):
     return linspace_mid(start=0, stop=1, number_of_segments=number_of_segments)
 
@@ -71,22 +62,6 @@ def linspace_mid(start: float, stop: float, number_of_segments):
     l += offset
     return l[0:-1]
 
-
-def alternate_and_cycle_offset(sampling_function, offsets, include_endpoint: bool):
-    forward = itertools.cycle((True, False))
-    offset_gen = itertools.cycle(offsets)
-
-    def f(**kwargs):
-        s = sampling_function(**kwargs, include_endpoint=True, offset=next(offset_gen))
-
-        if not next(forward):
-            s = np.flip(1 - s, axis=0)
-        return s if include_endpoint else s[0:-1]
-
-    return f
-
-
-alternate_direction = partial(alternate_and_cycle_offset, offsets=[0])
 
 def _default_samples(include_endpoint: bool):
     return linspace(0, 1, 1, include_endpoint=include_endpoint)

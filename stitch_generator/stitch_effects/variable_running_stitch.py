@@ -1,12 +1,10 @@
-from typing import Iterable, Tuple
-
 import numpy as np
 
 from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.functions_1d import linear_interpolation
 from stitch_generator.functions.path import Path
-from stitch_generator.functions.sample import sample
 from stitch_generator.functions.samples import samples_by_segments, mid_samples_by_segments
+from stitch_generator.functions.sampling import segment_sampling
 
 
 def variable_running_stitch(path: Path, stroke_spacing: float, stitch_length: float):
@@ -126,7 +124,8 @@ def _tree_to_indices_and_offsets(tree, level=0):
     # start to end, level up
     if level > 0:
         indices.extend(list(level_indices[0:-1]))
-        offsets.extend(sample(linear_interpolation(level - 1, level), len(level_indices) - 1, False))
+        samples = samples_by_segments(number_of_segments=len(level_indices) - 1, include_endpoint=False)
+        offsets.extend(linear_interpolation(level - 1, level)(samples))
 
     children = tree.children
 
@@ -166,7 +165,8 @@ def _tree_to_indices_and_offsets(tree, level=0):
         offsets.append(level)
     else:
         indices.extend(level_indices[0:-1])
-        offsets.extend(sample(linear_interpolation(level, level - 1), len(level_indices) - 1, False))
+        samples = samples_by_segments(number_of_segments=len(level_indices) - 1, include_endpoint=False)
+        offsets.extend(linear_interpolation(level, level - 1)(samples))
 
     assert len(indices) == len(offsets)
     return indices, offsets

@@ -2,12 +2,12 @@ import numpy as np
 
 from stitch_generator.design_utilities.embroidery_design import EmbroideryDesign
 from stitch_generator.design_utilities.parameter import FloatParameter, IntParameter
+from stitch_generator.functions.connect_functions import running_stitch_line
 from stitch_generator.functions.embroidery_pattern import EmbroideryPattern
 from stitch_generator.functions.function_modifiers import shift, scale, repeat, add, inverse
 from stitch_generator.functions.functions_1d import cosinus, linear_interpolation, constant
 from stitch_generator.functions.functions_2d import function_2d
 from stitch_generator.functions.samples import samples_by_length
-from stitch_generator.stitch_effects.running_stitch import running_stitch_line
 
 
 class Design(EmbroideryDesign):
@@ -32,6 +32,8 @@ class Design(EmbroideryDesign):
 
         last_point = None
 
+        connect = running_stitch_line(parameters.stitch_length, include_endpoint=False)
+
         for i in range(0, parameters.number_of_lines):
             initial_offset = parameters.initial_offset + i * parameters.offset_per_line
             fx = linear_interpolation(0, parameters.width)
@@ -44,7 +46,7 @@ class Design(EmbroideryDesign):
                 f = inverse(f)
 
             if last_point is not None:
-                fill_stitches = running_stitch_line(last_point, f(0)[0], parameters.stitch_length, False)
+                fill_stitches = connect(last_point, f(0)[0])
                 if len(fill_stitches):
                     stitches.append(fill_stitches)
 

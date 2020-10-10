@@ -1,23 +1,12 @@
 import numpy as np
 
 from stitch_generator.functions.functions_2d import line
-from stitch_generator.functions.sample import sample, resample
-from tests.functions import all_functions
+from stitch_generator.functions.resample import resample
+from stitch_generator.functions.samples import samples_by_segments
 
 
-def test_sample():
-    samples = 10
-    for name, f in all_functions.items():
-        points_with_endpoint = sample(f, samples)
-        assert len(points_with_endpoint) == samples + 1
-        assert np.allclose(points_with_endpoint[0], f(0))
-        assert np.allclose(points_with_endpoint[-1], f(1))
-
-        points_without_endpoint = sample(f, samples, False)
-        assert len(points_without_endpoint) == samples
-        assert np.allclose(points_without_endpoint[-1], points_with_endpoint[-2])
-
-        assert isinstance(points_with_endpoint, np.ndarray)
+def sample(f, num_segments, include_endpoint):
+    return f(samples_by_segments(number_of_segments=num_segments, include_endpoint=include_endpoint))
 
 
 def test_resample():

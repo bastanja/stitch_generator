@@ -3,7 +3,7 @@ import itertools
 import numpy as np
 import pytest
 
-from stitch_generator.stitch_effects.running_stitch import running_stitch_line
+from stitch_generator.functions.connect_functions import running_stitch_line
 
 
 def test_running_stitch_line():
@@ -13,22 +13,27 @@ def test_running_stitch_line():
 
     # Calculate a running stitch for various start and end points with various stitch lengths
     for stitch_length in stitch_lengths:
+        stitch_effect = running_stitch_line(stitch_length=stitch_length, include_endpoint=True)
         point_pairs = itertools.product(start_points, end_points)
         for p in point_pairs:
             expected_length = np.linalg.norm(np.array(p[1]) - np.array(p[0]))
             expected_length = int(round(expected_length / stitch_length)) + 1
 
-            s = running_stitch_line(p[0], p[1], stitch_length, True)
+            s = stitch_effect(p[0], p[1])
             assert len(s) == expected_length
 
-    # Check that a stitch length of zero raises an exception
-    with pytest.raises(Exception):
-        running_stitch_line((0, 0), (10, 10), 0, True)
+    # Check that a stitch length of zero results in a stitch at the start and one at the end
+    stitch_effect = running_stitch_line(stitch_length=0, include_endpoint=True)
+    s = stitch_effect((0, 0), (10, 10))
+    assert len(s) == 2
+    assert np.allclose(s, ((0, 0), (10, 10)))
 
     # check that running stitch line has at least start and end point
-    s = running_stitch_line((0, 0), (0, 0), 1, True)
+    stitch_effect = running_stitch_line(stitch_length=1, include_endpoint=True)
+    s = stitch_effect((0, 0), (0, 0))
     assert len(s) == 2
 
     # check that running stitch line has at least a start point
-    s = running_stitch_line((0, 0), (0, 0), 1, False)
+    stitch_effect = running_stitch_line(stitch_length=1, include_endpoint=False)
+    s = stitch_effect((0, 0), (0, 0))
     assert len(s) == 1

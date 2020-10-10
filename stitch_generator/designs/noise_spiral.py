@@ -4,7 +4,7 @@ from stitch_generator.functions.embroidery_pattern import EmbroideryPattern
 from stitch_generator.functions.function_modifiers import combine, add, multiply, repeat, scale, shift
 from stitch_generator.functions.functions_1d import noise
 from stitch_generator.functions.functions_2d import spiral, circle
-from stitch_generator.functions.sample import arc_length_mapping_with_length
+from stitch_generator.functions.arc_length_mapping import arc_length_mapping_with_length
 from stitch_generator.functions.samples import samples_by_length
 
 

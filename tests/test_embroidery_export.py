@@ -1,16 +1,16 @@
 from pyembroidery import COMMAND_MASK, COLOR_BREAK
 
 from stitch_generator.file_io.embroidery_export import to_pyembroidery
+from stitch_generator.functions.connect_functions import running_stitch_line
 from stitch_generator.functions.embroidery_pattern import EmbroideryPattern
-from stitch_generator.functions.functions_2d import line
-from stitch_generator.functions.sample import sample
 
 
 def test_to_pyembroidery():
     # create embroidery pattern with two blocks
     pattern = EmbroideryPattern()
-    pattern.add_stitches(sample(line((0, 0), (100, 0)), 50))
-    pattern.add_stitches(sample(line((0, 0), (100, 100)), 50))
+    stitch_effect = running_stitch_line(stitch_length=3, include_endpoint=True)
+    pattern.add_stitches(stitch_effect((0, 0), (100, 0)))
+    pattern.add_stitches(stitch_effect((0, 0), (100, 100)))
 
     # convert to pyembroidery format
     export_pattern = to_pyembroidery(pattern)

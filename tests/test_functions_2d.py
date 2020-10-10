@@ -4,7 +4,6 @@ from stitch_generator.functions.calculate_direction import calculate_direction
 from stitch_generator.functions.functions_1d import linear_interpolation
 from stitch_generator.functions.functions_2d import function_2d, circle, line, spiral, bezier, bezier_normals
 from stitch_generator.functions.samples import linspace
-from stitch_generator.functions.sample import sample
 
 
 def test_function_2d():
@@ -72,7 +71,7 @@ def test_bezier():
     ]
 
     for f in functions:
-        samples = sample(f, 10)
+        samples = f(linspace(0,1,10, include_endpoint=True))
         # no specific check for coordinates, just check that we get a ndarray
         assert isinstance(samples, np.ndarray)
         assert len(samples) == 11
