@@ -52,7 +52,7 @@ def calculate_direction(stitches):
 
 
 def _get_perpendicular(directions):
-    return _normalize(rotate(directions, 0, 1))
+    return _normalize(rotate(np.array(directions, ndmin=2), 1, 0))
 
 
 def _normalize(directions: np.ndarray):
