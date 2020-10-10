@@ -28,7 +28,7 @@ class Design(EmbroideryDesign):
 
         pattern = EmbroideryPattern()
 
-        effects = list(iter(stitch_effects()))
+        effects = list(iter(stitch_effects(parameters.length)))
         offsets = [np.array((0, 30 + i * 15)) for i in range(len(effects))]
 
         for effect, offset in zip(effects, offsets):
