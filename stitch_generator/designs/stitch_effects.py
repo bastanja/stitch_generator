@@ -28,9 +28,10 @@ class Design(EmbroideryDesign):
 
         pattern = EmbroideryPattern()
 
-        offsets = [np.array((0, 30 + i * 15)) for i in range(len(stitch_effects))]
+        effects = list(iter(stitch_effects()))
+        offsets = [np.array((0, 30 + i * 15)) for i in range(len(effects))]
 
-        for effect, offset in zip(stitch_effects, offsets):
+        for effect, offset in zip(effects, offsets):
             pattern.add_stitches(effect(path) + offset, next(color))
 
         return pattern
