@@ -72,11 +72,7 @@ def _binary_operation(operation, f1, f2):
         v = ensure_1d_shape(v)
         v1 = f1(v)
         v2 = f2(v)
-        try:
-            result = operation(v1, v2)
-        except ValueError:
-            # Transpose operands, apply operation and transpose result back
-            result = operation(v1.T, v2.T).T
+        result = operation(v1.T, v2.T).T
         return result
 
     return f
