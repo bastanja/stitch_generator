@@ -1,10 +1,11 @@
 from functools import partial
+from typing import Iterable
 
 import numpy as np
 
 from stitch_generator.functions import sampling
 from stitch_generator.functions.functions_2d import line
-from stitch_generator.functions.sampling import regular_sampling
+from stitch_generator.functions.sampling import regular_sampling, alternating_tatami_sampling
 from stitch_generator.functions.types import ConnectFunction
 
 
@@ -40,6 +41,14 @@ def combine_start_end(connect_function: ConnectFunction) -> ConnectFunction:
 
 def running_stitch_line(stitch_length: float, include_endpoint: bool):  # -> ConnectFunction
     return line_with_sampling_function(regular_sampling(stitch_length=stitch_length, include_endpoint=include_endpoint))
+
+
+def tatami_line(stitch_length: float, include_endpoint: bool = True, offsets: Iterable[float] = (0, 1 / 3, 2 / 3),
+                alignment: float = 0.5, minimal_segment_size: float = 0.25):  # -> ConnectFunction
+    return line_with_sampling_function(
+        sampling_function=alternating_tatami_sampling(stitch_length=stitch_length, include_endpoint=include_endpoint,
+                                                      offsets=offsets, alignment=alignment,
+                                                      minimal_segment_size=minimal_segment_size))
 
 
 def presets(include_endpoint: bool, alignment: float):
