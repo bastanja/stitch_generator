@@ -1,8 +1,14 @@
 import numpy as np
 
+from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.get_boundaries import get_boundaries
 from stitch_generator.functions.path import Path
 from stitch_generator.functions.samples import linspace
+
+
+def meander(stitch_spacing, connect_function):
+    return lambda path: meander_along(path=path, stitch_spacing=stitch_spacing, connect_function=connect_function,
+                                      length=estimate_length(path.position))
 
 
 def meander_along(path: Path, stitch_spacing, connect_function, length):

@@ -1,8 +1,14 @@
 import numpy as np
 
+from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.get_boundaries import get_boundaries
 from stitch_generator.functions.path import Path
-from stitch_generator.functions.samples import samples_by_fixed_length
+from stitch_generator.functions.samples import samples
+
+
+def satin(stitch_spacing, connect_function):
+    return lambda path: satin_along(path=path, stitch_spacing=stitch_spacing, connect_function=connect_function,
+                                    length=estimate_length(path.position))
 
 
 def satin_along(path: Path, stitch_spacing, connect_function, length):
@@ -16,7 +22,7 @@ def satin_between(boundary_left, boundary_right, stitch_spacing, connect_functio
 
 
 def _satin(boundary_left, boundary_right, stitch_spacing, length):
-    p = samples_by_fixed_length(length, stitch_spacing, include_endpoint=False)
+    p = samples(total_length=length, segment_length=stitch_spacing, alignment=0, offset=0, include_endpoint=False)
     if len(p) < 2:
         p = np.array([0, 1], dtype=float)
     stitches = np.zeros((len(p), 2))
