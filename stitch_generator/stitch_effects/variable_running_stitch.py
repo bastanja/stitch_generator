@@ -1,12 +1,13 @@
 import numpy as np
 
 from stitch_generator.functions.estimate_length import estimate_length
-from stitch_generator.functions.function_modifiers import add, multiply, subtract, inverse
-from stitch_generator.functions.functions_1d import linear_interpolation, constant
+from stitch_generator.functions.function_modifiers import add, multiply, subtract, inverse, scale
+from stitch_generator.functions.functions_1d import linear_interpolation, constant, smootherstep
 from stitch_generator.functions.get_boundaries import get_boundaries
 from stitch_generator.functions.path import Path
 from stitch_generator.functions.samples import samples_by_segments
 from stitch_generator.functions.sampling import tatami_sampling
+from stitch_generator.functions.types import Function1D
 
 
 def variable_running_stitch(path: Path, stroke_spacing: float, stitch_length: float):
@@ -47,11 +48,13 @@ def variable_underlay(path: Path, stroke_spacing: float, stitch_length: float):
     dir2 = inverse(multiply(path.direction, constant(-1)))
     path2 = Path(position=pos2, direction=dir2, width=width2, stroke_alignment=constant(0))
 
-    return np.concatenate((_variable_underlay(path1, stroke_spacing, stitch_length),
-                           _variable_underlay(path2, stroke_spacing, stitch_length)))
+    step_function = smootherstep()
+
+    return np.concatenate((_variable_underlay(path1, stroke_spacing, stitch_length, step_function),
+                           _variable_underlay(path2, stroke_spacing, stitch_length, step_function)))
 
 
-def _variable_underlay(path: Path, stroke_spacing: float, stitch_length: float):
+def _variable_underlay(path: Path, stroke_spacing: float, stitch_length: float, step_function: Function1D):
     precision = 10
     segments = int(round(estimate_length(path.position) * precision))
     t = samples_by_segments(number_of_segments=segments, include_endpoint=True)
@@ -77,7 +80,7 @@ def _variable_underlay(path: Path, stroke_spacing: float, stitch_length: float):
         t1, t2 = t[i1], t[i2]
         path_part = path.split([t1, t2])[1]
         _, baseline = get_boundaries(path_part)
-        level_step = linear_interpolation(o1 * stroke_spacing, o2 * stroke_spacing)
+        level_step = add(constant(o1 * stroke_spacing), scale((o2 - o1) * stroke_spacing, step_function))
         direction = multiply(path_part.direction, level_step)
         baseline = add(baseline, direction)
         part_length = estimate_length(baseline)
