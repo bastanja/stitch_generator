@@ -1,25 +1,30 @@
 import numpy as np
 
 from stitch_generator.functions.estimate_length import estimate_length
-from stitch_generator.functions.functions_1d import linear_interpolation
+from stitch_generator.functions.function_modifiers import add, multiply, subtract, inverse
+from stitch_generator.functions.functions_1d import linear_interpolation, constant
+from stitch_generator.functions.get_boundaries import get_boundaries
 from stitch_generator.functions.path import Path
-from stitch_generator.functions.samples import samples_by_segments, mid_samples_by_segments
-from stitch_generator.functions.sampling import segment_sampling
+from stitch_generator.functions.samples import samples_by_segments
+from stitch_generator.functions.sampling import tatami_sampling
 
 
 def variable_running_stitch(path: Path, stroke_spacing: float, stitch_length: float):
     segments = int(round(estimate_length(path.position) / stitch_length))
     t = samples_by_segments(number_of_segments=segments, include_endpoint=True)
-    c = mid_samples_by_segments(number_of_segments=segments)
 
-    widths = path.width(c)
-    levels = width_to_level(widths, stroke_spacing)
+    widths = path.width(t)
+    widths = np.minimum(widths[0:-1], widths[1:])
+
+    levels = _width_to_level(widths, stroke_spacing)
 
     width_level_tree = _make_range_tree(levels)
     indices, offsets = _tree_to_indices_and_offsets(width_level_tree)
 
     positions = path.position(t)
     directions = path.direction(t)
+    alignment = (1 - path.stroke_alignment(t)) * path.width(t)
+    positions = positions - (directions * alignment[:, None])
 
     positions = np.array([positions[i] for i in indices])
     directions = np.array([directions[i] for i in indices])
@@ -31,8 +36,60 @@ def variable_running_stitch(path: Path, stroke_spacing: float, stitch_length: fl
     return positions + directions
 
 
-def width_to_level(widths: np.ndarray, level_spacing: float):
-    widths = np.round(widths / level_spacing)
+def variable_underlay(path: Path, stroke_spacing: float, stitch_length: float):
+    pos1 = add(path.position, multiply(path.direction, multiply(path.width, path.stroke_alignment)))
+    width1 = multiply(path.width, path.stroke_alignment)
+    path1 = Path(position=pos1, direction=path.direction, width=width1, stroke_alignment=constant(0))
+
+    pos2 = inverse(add(path.position,
+                       multiply(path.direction, multiply(path.width, subtract(path.stroke_alignment, constant(1))))))
+    width2 = inverse(multiply(path.width, subtract(constant(1), path.stroke_alignment)))
+    dir2 = inverse(multiply(path.direction, constant(-1)))
+    path2 = Path(position=pos2, direction=dir2, width=width2, stroke_alignment=constant(0))
+
+    return np.concatenate((_variable_underlay(path1, stroke_spacing, stitch_length),
+                           _variable_underlay(path2, stroke_spacing, stitch_length)))
+
+
+def _variable_underlay(path: Path, stroke_spacing: float, stitch_length: float):
+    precision = 10
+    segments = int(round(estimate_length(path.position) * precision))
+    t = samples_by_segments(number_of_segments=segments, include_endpoint=True)
+
+    widths = path.width(t)
+    widths = np.minimum(widths[0:-1], widths[1:])
+
+    levels = _width_to_level(widths, stroke_spacing)
+
+    width_level_tree = _make_range_tree(levels)
+    indices, offsets = _tree_to_indices_and_offsets_basic(width_level_tree)
+
+    sampling_function = tatami_sampling(stitch_length=stitch_length, include_endpoint=False, offsets=(0, 1 / 3, 2 / 3),
+                                        alignment=0.5, minimal_segment_size=0.25)
+
+    stitches = []
+    iopairs = list(zip(indices, offsets))
+    baseline = path.position
+    for p1, p2 in zip(iopairs, iopairs[1:]):
+        i1, o1 = p1
+        i2, o2 = p2
+
+        t1, t2 = t[i1], t[i2]
+        path_part = path.split([t1, t2])[1]
+        _, baseline = get_boundaries(path_part)
+        level_step = linear_interpolation(o1 * stroke_spacing, o2 * stroke_spacing)
+        direction = multiply(path_part.direction, level_step)
+        baseline = add(baseline, direction)
+        part_length = estimate_length(baseline)
+        stitches.append(baseline(sampling_function(part_length)))
+
+    stitches.append(baseline(1))
+    stitches = np.concatenate(stitches)
+    return stitches
+
+
+def _width_to_level(widths: np.ndarray, level_spacing: float):
+    widths = widths / level_spacing
     widths = np.maximum(widths, 0)  # avoid negative values
     return widths.astype(int)
 
@@ -167,6 +224,54 @@ def _tree_to_indices_and_offsets(tree, level=0):
         indices.extend(level_indices[0:-1])
         samples = samples_by_segments(number_of_segments=len(level_indices) - 1, include_endpoint=False)
         offsets.extend(linear_interpolation(level, level - 1)(samples))
+
+    assert len(indices) == len(offsets)
+    return indices, offsets
+
+
+def _tree_to_indices_and_offsets_basic(tree, level=0):
+    indices = []
+    offsets = []
+
+    # indices between which we fill the current level
+    level_indices = tree.get_range(not _is_reverse(level))
+
+    # remember start index in order to fill gaps later
+    start_index = level_indices[-1]
+
+    children = tree.children
+
+    indices.append(level_indices[-1])
+    offsets.append(level)
+
+    first = True
+    for i in tree.get_children_range(_is_reverse(level)):
+        child_indices = children[i].get_range(_is_reverse(level))
+
+        # fill the gap before this range
+        direction = 1
+        if _is_reverse(level):
+            direction = -1
+        gap_indices = range(start_index, child_indices[0], direction)
+
+        if len(gap_indices) > 1 and not first:
+            indices.append(gap_indices[0])
+            indices.append(gap_indices[-1])
+            offsets.append(level)
+            offsets.append(level)
+
+        # add the child range
+        ind, off = _tree_to_indices_and_offsets_basic(children[i], level + 1)
+        indices.extend(ind)
+        offsets.extend(off)
+
+        # update start index for gap in next loop iteration
+        start_index = child_indices[-1]
+
+        first = False
+
+    indices.append(level_indices[0])
+    offsets.append(level)
 
     assert len(indices) == len(offsets)
     return indices, offsets
