@@ -1,3 +1,5 @@
+from functools import partial
+
 import numpy as np
 
 from stitch_generator.functions.estimate_length import estimate_length
@@ -8,7 +10,11 @@ from stitch_generator.functions.path import Path
 from stitch_generator.functions.samples import samples_by_length
 
 
-def contour(path: Path, stitch_length: float):
+def contour(stitch_length: float):
+    return partial(contour_along, stitch_length=stitch_length)
+
+
+def contour_along(path: Path, stitch_length: float):
     left, right = get_boundaries(path)
     return contour_between(left, right, stitch_length=stitch_length, length=estimate_length(path.position))
 
