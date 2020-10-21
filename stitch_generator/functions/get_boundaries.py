@@ -26,7 +26,8 @@ def get_underlay_boundaries(path: Path, inset: float):
     right = add(path.position, multiply(path.direction, negative_width))
 
     cut = inset / estimate_length(path.position)
-    left = shift(cut, repeat(1 - 2 * cut, left))
-    right = shift(cut, repeat(1 - 2 * cut, right))
+
+    left = repeat(1 - 2 * cut, shift(cut, left))
+    right = repeat(1 - 2 * cut, shift(cut, right))
 
     return left, right
