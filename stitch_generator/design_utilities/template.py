@@ -22,7 +22,8 @@ class Design(EmbroideryDesign):
         path = Path(position=line((0, 0), (parameters.length, 0)), direction=constant_direction(0, -1),
                     width=constant(1), stroke_alignment=constant(0.5))
 
-        stitches = contour(path=path, stitch_length=parameters.stitch_length)
+        stitch_effect = contour(stitch_length=parameters.stitch_length)
+        stitches = stitch_effect(path)
 
         pattern = EmbroideryPattern()
         pattern.add_stitches(stitches, next(color))
