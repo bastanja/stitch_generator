@@ -8,12 +8,18 @@ def underlay_path(path: Path, inset: float) -> Path:
     cut = inset / estimate_length(path.position)
     underlay = path.apply_modifier(lambda function: repeat(1 - 2 * cut, (shift(cut, function))))
 
-    middle_alignment = add(underlay.stroke_alignment, constant(-0.5))
-    with_width = multiply(middle_alignment, underlay.width)
-    with_direction = multiply(underlay.direction, with_width)
-    position = add(underlay.position, with_direction)
+    # calculate the middle of the stroke, relative to the center line 'underlay.position'
+    to_middle = add(underlay.stroke_alignment, constant(-0.5))
+    middle_relative_to_old_width = multiply(to_middle, underlay.width)
 
-    width = maximum(subtract(underlay.width, constant(inset * 2)), constant(0))
+    # subtract inset * 2 from the width and make sure it stays positive
+    new_width = maximum(subtract(underlay.width, constant(inset * 2)), constant(0))
 
-    return Path(position=position, direction=underlay.direction, width=width,
-                stroke_alignment=constant(0.5))
+    # calculate offset of the new center line relative to middle of the stroke
+    offset = multiply(to_middle, multiply(constant(-1), new_width))
+    new_pos_offset = add(middle_relative_to_old_width, offset)
+
+    new_position = add(underlay.position, multiply(underlay.direction, new_pos_offset))
+
+    return Path(position=new_position, direction=underlay.direction, width=new_width,
+                stroke_alignment=underlay.stroke_alignment)
