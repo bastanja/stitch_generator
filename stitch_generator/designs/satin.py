@@ -1,8 +1,6 @@
-import numpy as np
-
 from stitch_generator.design_utilities.embroidery_design import EmbroideryDesign
 from stitch_generator.design_utilities.palette import palette
-from stitch_generator.design_utilities.parameter import FloatParameter
+from stitch_generator.design_utilities.parameter import FloatParameter, BoolParameter
 from stitch_generator.functions.connect_functions import presets, combine_start_end
 from stitch_generator.functions.embroidery_pattern import EmbroideryPattern
 from stitch_generator.functions.function_modifiers import combine, multiply, subtract
@@ -11,6 +9,7 @@ from stitch_generator.functions.functions_1d import linear_interpolation, consta
 from stitch_generator.functions.functions_2d import line, constant_direction
 from stitch_generator.functions.path import Path
 from stitch_generator.stitch_effects.meander import meander_along
+from stitch_generator.stitch_effects.underlay import contour_zigzag_underlay
 
 
 class Design(EmbroideryDesign):
@@ -23,6 +22,9 @@ class Design(EmbroideryDesign):
             'max_width': FloatParameter("Max Width", 0, 10, 40),
             'alignment': FloatParameter("Alignment", 0, 0.5, 1),
             'pattern_alignment': FloatParameter("Pattern Alignment", 0, 0.5, 1),
+            'hide_underlay': BoolParameter("Hide underlay", False),
+            'underlay_inset': FloatParameter("Underlay inset", 0, 0.5, 2),
+            'underlay_spacing': FloatParameter("Underlay spacing", 1, 2, 5),
         })
 
     def get_pattern(self, parameters):
@@ -40,11 +42,17 @@ class Design(EmbroideryDesign):
         pattern = EmbroideryPattern()
         col = palette()
 
-        offset = 0
-        for s in stitches:
-            s += np.array((0, offset))
-            pattern.add_stitches(s, next(col))
-            offset += parameters.max_width + 5
+        underlay_stitch_effect = contour_zigzag_underlay(inset=parameters.underlay_inset,
+                                                         stitch_length=parameters.stitch_length,
+                                                         zigzag_spacing=parameters.underlay_spacing)
+
+        underlay_stitches = underlay_stitch_effect(path)
+
+        offsets = [(0, i * (parameters.max_width + 5)) for i in range(len(stitches))]
+        for stitch, offset, color in zip(stitches, offsets, col):
+            if not parameters.hide_underlay:
+                pattern.add_stitches(underlay_stitches + offset, color)
+            pattern.add_stitches(stitch + offset, color)
         return pattern
 
     @staticmethod
