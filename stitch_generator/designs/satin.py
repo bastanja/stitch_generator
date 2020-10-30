@@ -9,7 +9,7 @@ from stitch_generator.functions.functions_1d import linear_interpolation, consta
 from stitch_generator.functions.functions_2d import line, constant_direction
 from stitch_generator.functions.path import Path
 from stitch_generator.stitch_effects.meander import meander_along
-from stitch_generator.stitch_effects.underlay import contour_zigzag_underlay
+from stitch_generator.stitch_effects.underlay import contour_zigzag_underlay, dense_underlay
 
 
 class Design(EmbroideryDesign):
@@ -23,8 +23,9 @@ class Design(EmbroideryDesign):
             'alignment': FloatParameter("Alignment", 0, 0.5, 1),
             'pattern_alignment': FloatParameter("Pattern Alignment", 0, 0.5, 1),
             'hide_underlay': BoolParameter("Hide underlay", False),
+            'dense_underlay': BoolParameter("Dense underlay", False),
             'underlay_inset': FloatParameter("Underlay inset", 0, 0.5, 2),
-            'underlay_spacing': FloatParameter("Underlay spacing", 1, 2, 5),
+            'underlay_spacing': FloatParameter("Underlay spacing", 0.5, 1.5, 5),
         })
 
     def get_pattern(self, parameters):
@@ -44,7 +45,11 @@ class Design(EmbroideryDesign):
 
         underlay_stitch_effect = contour_zigzag_underlay(inset=parameters.underlay_inset,
                                                          stitch_length=parameters.stitch_length,
-                                                         zigzag_spacing=parameters.underlay_spacing)
+                                                         spacing=parameters.underlay_spacing)
+        if parameters.dense_underlay:
+            underlay_stitch_effect = dense_underlay(inset=parameters.underlay_inset,
+                                                             stitch_length=parameters.stitch_length,
+                                                             spacing=parameters.underlay_spacing)
 
         underlay_stitches = underlay_stitch_effect(path)
 
