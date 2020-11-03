@@ -5,7 +5,7 @@ from stitch_generator.functions.get_boundaries import get_boundaries
 from stitch_generator.functions.path import Path
 from stitch_generator.functions.sampling import fixed_sampling_with_offset, regular_sampling
 from stitch_generator.functions.types import ConnectFunction, Function2D
-from stitch_generator.stitch_effects.zigzag import zigzag
+from stitch_generator.stitch_effects.zigzag import zigzag, double_zigzag
 
 
 def satin(stitch_spacing, connect_function: ConnectFunction):
@@ -42,14 +42,6 @@ def double_satin_between(boundary_left: Function2D, boundary_right: Function2D, 
                          connect_function: ConnectFunction, length: float):
     sampling_function = regular_sampling(stitch_length=stitch_spacing, include_endpoint=True)
 
-    points_forward = zigzag(boundary_left, boundary_right, sampling_function, length)
-    points_backward = zigzag(boundary_right, boundary_left, sampling_function, length)
-    points_backward = np.flipud(points_backward)
-
-    if np.allclose(points_forward[-1], points_backward[0]):
-        points_backward = points_backward[1:]
-
-    all_points = np.concatenate((points_forward, points_backward, [points_forward[0]]))
-    connection = [connect_function(*p) for p in zip(all_points, all_points[1:])]
-
+    points = double_zigzag(boundary_left, boundary_right, sampling_function, length)
+    connection = [connect_function(*p) for p in zip(points, points[1:])]
     return np.concatenate(connection)
