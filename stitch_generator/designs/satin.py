@@ -8,6 +8,7 @@ from stitch_generator.functions.function_sequence import function_sequence
 from stitch_generator.functions.functions_1d import linear_interpolation, constant, arc
 from stitch_generator.functions.functions_2d import line, constant_direction
 from stitch_generator.functions.path import Path
+from stitch_generator.functions.sampling import regular
 from stitch_generator.stitch_effects.meander import meander_along
 from stitch_generator.stitch_effects.underlay import contour_zigzag_underlay, dense_underlay
 
@@ -37,7 +38,8 @@ class Design(EmbroideryDesign):
                     stroke_alignment=constant(parameters.alignment))
 
         stitches = [
-            meander_along(path, parameters.stitch_spacing, combine_start_end(connect_function), parameters.length) for
+            meander_along(path=path, sampling_function=regular(parameters.stitch_spacing),
+                          connect_function=combine_start_end(connect_function), length=parameters.length) for
             connect_function in presets(include_endpoint=True, alignment=parameters.pattern_alignment)]
 
         pattern = EmbroideryPattern()
@@ -48,8 +50,8 @@ class Design(EmbroideryDesign):
                                                          spacing=parameters.underlay_spacing)
         if parameters.dense_underlay:
             underlay_stitch_effect = dense_underlay(inset=parameters.underlay_inset,
-                                                             stitch_length=parameters.stitch_length,
-                                                             spacing=parameters.underlay_spacing)
+                                                    stitch_length=parameters.stitch_length,
+                                                    spacing=parameters.underlay_spacing)
 
         underlay_stitches = underlay_stitch_effect(path)
 
