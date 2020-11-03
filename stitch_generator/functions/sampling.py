@@ -9,6 +9,10 @@ from stitch_generator.functions.samples import samples, samples_by_length, linsp
 from stitch_generator.functions.types import SamplingFunction
 
 
+def regular(stitch_length: float):
+    return partial(samples_by_length, segment_length=stitch_length, include_endpoint=True)
+
+
 def regular_sampling(stitch_length: float, include_endpoint: bool):  # -> SamplingFunction
     return partial(samples_by_length, segment_length=stitch_length, include_endpoint=include_endpoint)
 
