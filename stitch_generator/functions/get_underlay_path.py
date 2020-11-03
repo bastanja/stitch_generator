@@ -4,7 +4,7 @@ from stitch_generator.functions.functions_1d import constant
 from stitch_generator.functions.path import Path
 
 
-def underlay_path(path: Path, inset: float) -> Path:
+def get_underlay_path(path: Path, inset: float) -> Path:
     cut = inset / estimate_length(path.position)
     underlay = path.apply_modifier(lambda function: repeat(1 - 2 * cut, (shift(cut, function))))
 
