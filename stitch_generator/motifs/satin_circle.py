@@ -9,12 +9,12 @@ from stitch_generator.functions.path import Path
 from stitch_generator.functions.samples import samples_by_length
 from stitch_generator.functions.sampling import mid_regular
 from stitch_generator.stitch_effects.satin import satin
-from stitch_generator.stitch_effects.underlay import contour_zigzag_underlay
+from stitch_generator.stitch_effects.underlay import contour_zigzag_underlay, dense_underlay
 
 
 def satin_circle(diameter: float, stitch_length: float, pull_compensation: float = 0, underlay_inset: float = 0.5,
                  underlay_spacing: float = 1.5, satin_spacing: float = 0.2, return_to_start: bool = True):
-    underlay_effect = contour_zigzag_underlay(inset=underlay_inset, stitch_length=stitch_length,
+    underlay_effect = dense_underlay(inset=underlay_inset, stitch_length=stitch_length,
                                               spacing=underlay_spacing)
 
     satin_effect = satin(
@@ -30,8 +30,9 @@ def satin_circle(diameter: float, stitch_length: float, pull_compensation: float
 
     stitches = []
     if return_to_start:
-        stitches.append(
-            path.position(samples_by_length(estimate_length(path.position), stitch_length, include_endpoint=False)))
+        middle_run = lambda path: path.position(
+            samples_by_length(estimate_length(path.position), stitch_length, include_endpoint=False))
+        stitches.append(middle_run(path))
         path = path.inverse()
     else:
         stitches.append(path.position(0))
