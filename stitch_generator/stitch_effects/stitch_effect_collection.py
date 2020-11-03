@@ -3,7 +3,7 @@ from functools import partial
 from stitch_generator.designs import lattice
 from stitch_generator.functions.connect_functions import line_with_sampling_function, combine_start_end, \
     running_stitch_line
-from stitch_generator.functions.sampling import alternating_tatami_sampling
+from stitch_generator.functions.sampling import alternating_tatami_sampling, regular
 from stitch_generator.stitch_effects.meander import meander_along
 from stitch_generator.stitch_effects.repeat_along import repeat_along
 
@@ -16,10 +16,10 @@ def get_tatami():
 def stitch_effects(length: float):
     yield lattice.presets[0]
 
-    yield partial(meander_along, stitch_spacing=1, connect_function=combine_start_end(
+    yield partial(meander_along, sampling_function=regular(1), connect_function=combine_start_end(
         line_with_sampling_function(get_tatami())), length=length)
 
-    yield partial(meander_along, stitch_spacing=3, connect_function=running_stitch_line(3, True), length=length)
+    yield partial(meander_along, sampling_function=regular(3), connect_function=running_stitch_line(3, True), length=length)
 
     yield lattice.presets[1]
 
