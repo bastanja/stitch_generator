@@ -3,15 +3,19 @@ from functools import partial
 
 import numpy as np
 
+from stitch_generator.functions.path import Path
 from stitch_generator.functions.place_motif import place_motif_at
+from stitch_generator.functions.types import SamplingFunction
 
 
-def motif_to_points(motif_position_sampling, line_sampling, motif_generator, length):
+def motif_to_points(motif_position_sampling: SamplingFunction, line_sampling: SamplingFunction, motif_generator,
+                    length: float):
     return partial(_motif_to_points, motif_position_sampling=motif_position_sampling, line_sampling=line_sampling,
                    motif_generator=motif_generator, length=length)
 
 
-def _motif_to_points(path, motif_position_sampling, line_sampling, motif_generator, length):
+def _motif_to_points(path: Path, motif_position_sampling: SamplingFunction, line_sampling: SamplingFunction,
+                     motif_generator, length):
     motif_locations = motif_position_sampling(length)
 
     motifs = [place_motif_at(path.position(t), path.direction(t)[0], path.width(t), next(motif_generator)) for
