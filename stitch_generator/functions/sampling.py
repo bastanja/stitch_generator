@@ -5,12 +5,17 @@ from typing import Iterable
 import numpy as np
 
 from stitch_generator.functions.functions_1d import arc, linear_interpolation
-from stitch_generator.functions.samples import samples, samples_by_length, linspace, samples_by_segments
+from stitch_generator.functions.samples import samples, samples_by_length, linspace, samples_by_segments, linspace_mid, \
+    mid_samples_by_length
 from stitch_generator.functions.types import SamplingFunction
 
 
 def regular(stitch_length: float):
     return partial(samples_by_length, segment_length=stitch_length, include_endpoint=True)
+
+
+def mid_regular(stitch_length: float):
+    return partial(mid_samples_by_length, segment_length=stitch_length)
 
 
 def regular_sampling(stitch_length: float, include_endpoint: bool):  # -> SamplingFunction

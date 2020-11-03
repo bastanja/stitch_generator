@@ -13,6 +13,14 @@ def samples_by_length(total_length: float, segment_length: float, include_endpoi
     return linspace(start=0, stop=1, number_of_segments=number_of_segments, include_endpoint=include_endpoint)
 
 
+def mid_samples_by_length(total_length: float, segment_length: float):
+    if np.isclose(total_length, 0) or np.isclose(segment_length, 0) or segment_length > total_length:
+        return _default_samples(include_endpoint=False)
+
+    number_of_segments = int(round(total_length / segment_length))
+    return linspace_mid(start=0, stop=1, number_of_segments=number_of_segments)
+
+
 def samples(total_length: float,
             segment_length: float,
             alignment: float,
