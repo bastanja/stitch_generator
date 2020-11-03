@@ -5,7 +5,7 @@ from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.path import Path
 from stitch_generator.functions.underlay_path import underlay_path
 from stitch_generator.stitch_effects.contour import contour_along
-from stitch_generator.stitch_effects.satin import double_satin_along
+from stitch_generator.stitch_effects.double_satin import double_satin_along
 from stitch_generator.stitch_effects.variable_running_stitch import variable_underlay
 
 
