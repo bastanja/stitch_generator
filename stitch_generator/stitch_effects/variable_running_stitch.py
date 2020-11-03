@@ -50,7 +50,7 @@ def variable_underlay(path: Path, stroke_spacing: float, stitch_length: float):
 
     step_function = smootherstep()
 
-    return np.concatenate((_variable_underlay(path1, stroke_spacing, stitch_length, step_function),
+    return np.concatenate((_variable_underlay(path1, stroke_spacing, stitch_length, step_function)[:-1],
                            _variable_underlay(path2, stroke_spacing, stitch_length, step_function)))
 
 
