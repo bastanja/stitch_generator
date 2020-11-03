@@ -5,7 +5,7 @@ import numpy as np
 
 from stitch_generator.functions.bezier import de_casteljau
 from stitch_generator.functions.ensure_shape import ensure_1d_shape
-from stitch_generator.functions.function_modifiers import scale, add, repeat, multiply
+from stitch_generator.functions.function_modifiers import scale, add, repeat, mix
 from stitch_generator.functions.functions_1d import cosinus, sinus, constant, linear_interpolation
 from stitch_generator.functions.types import Function2D, Function1D
 from stitch_generator.stitch_effects.rotate import rotate_deg
@@ -40,12 +40,9 @@ def line(origin: Sequence[float] = (0, 0), to: Sequence[float] = (100, 0)) -> Fu
 
 
 def spiral(inner_radius: float, outer_radius: float, turns: float, center: Sequence[float] = (0, 0)) -> Function2D:
-    spiral = repeat(turns, circle(inner_radius, center))
-    direction = repeat(turns, circle())
-    increase = linear_interpolation(0, outer_radius - inner_radius)
-    direction = multiply(direction, increase)
-    spiral = add(spiral, direction)
-    return spiral
+    inner_circle = repeat(turns, circle(inner_radius, center=center))
+    outer_circle = repeat(turns, circle(outer_radius, center=center))
+    return mix(inner_circle, outer_circle, linear_interpolation(0, 1))
 
 
 def bezier(control_points: Sequence) -> Function2D:
