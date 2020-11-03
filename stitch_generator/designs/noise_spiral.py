@@ -1,4 +1,5 @@
 from stitch_generator.design_utilities.embroidery_design import EmbroideryDesign
+from stitch_generator.design_utilities.palette import palette
 from stitch_generator.design_utilities.parameter import FloatParameter, IntParameter
 from stitch_generator.functions.arc_length_mapping import arc_length_mapping_with_length
 from stitch_generator.functions.embroidery_pattern import EmbroideryPattern
@@ -23,11 +24,12 @@ class Design(EmbroideryDesign):
             'noise_offset': FloatParameter("Noise offset", 0, 30, 150),
             'noise_width': FloatParameter("Noise width", 0, 14, 30),
             'dot_spacing': FloatParameter("Dot spacing", 5, 50, 100),
-            'dot_diameter': FloatParameter("Dot diameter", 2, 4, 20),
+            'dot_diameter': FloatParameter("Dot diameter", 2, 4, 12),
         })
 
     def get_pattern(self, parameters):
         parameters = self.validate(parameters)
+        color = palette()
         f = spiral(parameters.inner_radius, parameters.outer_radius, parameters.turns)
         direction = repeat(parameters.turns, circle())
 
@@ -56,7 +58,7 @@ class Design(EmbroideryDesign):
         stitches = effect(path)
 
         pattern = EmbroideryPattern()
-        pattern.add_stitches(stitches)
+        pattern.add_stitches(stitches, next(color))
 
         return pattern
 
