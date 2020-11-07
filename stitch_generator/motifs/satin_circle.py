@@ -38,4 +38,5 @@ def satin_circle(diameter: float, stitch_length: float, pull_compensation: float
         stitches.append(path.position(0))
 
     stitches += [underlay_effect(path), satin_effect(path)]
+    stitches.append(path.position(1))
     return np.concatenate(stitches)
