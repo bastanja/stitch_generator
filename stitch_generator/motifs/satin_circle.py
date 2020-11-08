@@ -14,7 +14,7 @@ from stitch_generator.stitch_effects.underlay import contour_zigzag_underlay, de
 
 def satin_circle(diameter: float, stitch_length: float, pull_compensation: float = 0, underlay_inset: float = 0.5,
                  underlay_spacing: float = 1.5, satin_spacing: float = 0.2, return_to_start: bool = True):
-    underlay_effect = dense_underlay(inset=underlay_inset, stitch_length=stitch_length,
+    underlay_effect = contour_zigzag_underlay(inset=underlay_inset, stitch_length=stitch_length,
                                               spacing=underlay_spacing)
 
     satin_effect = satin(
