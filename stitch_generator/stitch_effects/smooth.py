@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def smooth(stitches: np.ndarray, neighbor_weight: float, iterations: int, circular=False):
+def smooth(stitches: np.ndarray, iterations: int, neighbor_weight: float = 0.5, circular=False):
     """
     Applies Laplacian smoothing to the stitches, i.e. moves each one closer to the
     center between its predecessor and successor.
