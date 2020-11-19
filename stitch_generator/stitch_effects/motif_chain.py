@@ -7,12 +7,12 @@ from stitch_generator.functions.place_motif import place_motif_between
 from stitch_generator.functions.types import SamplingFunction
 
 
-def motif_to_segments(motif_position_sampling: SamplingFunction, motif_generator, length: float):
-    return partial(_motif_to_segments, motif_position_sampling=motif_position_sampling, motif_generator=motif_generator,
+def motif_chain(motif_position_sampling: SamplingFunction, motif_generator, length: float):
+    return partial(_motif_chain, motif_position_sampling=motif_position_sampling, motif_generator=motif_generator,
                    length=length)
 
 
-def _motif_to_segments(path: Path, motif_position_sampling: SamplingFunction, motif_generator, length):
+def _motif_chain(path: Path, motif_position_sampling: SamplingFunction, motif_generator, length):
     motif_boundaries = motif_position_sampling(length)
     motif_points = path.position(motif_boundaries)
 
