@@ -8,8 +8,8 @@ def test_smooth():
     # apply smoothing on samples of 1d and 2d functions
     for name, f in all_functions.items():
         n = 10
-        v = [f(t / n) for t in range(n + 1)]
-        s = smooth(v, 0.5, 5)
+        v = np.array([f(t / n) for t in range(n + 1)])
+        s = smooth(stitches=v, iterations=5, neighbor_weight=0.5)
 
         # check that smoothing preserves the start and end stitch
         assert np.allclose(v[0], s[0])
