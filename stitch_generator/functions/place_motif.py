@@ -18,6 +18,9 @@ def place_motif_between(p1, p2, motif, include_endpoint=False, width_scale=None)
     if len(motif) == 0:
         return p1
 
+    if np.allclose(p1,p2):
+        return p1
+
     motif = _normalize_motif(motif)
     delta = p2 - p1
     scale_x = np.linalg.norm(delta)
