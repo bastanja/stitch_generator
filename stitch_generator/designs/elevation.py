@@ -7,7 +7,7 @@ from stitch_generator.functions.embroidery_pattern import EmbroideryPattern
 from stitch_generator.functions.function_modifiers import multiply, add, combine, inverse
 from stitch_generator.functions.functions_1d import linear_interpolation, smoothstep
 from stitch_generator.functions.functions_2d import spiral, constant_direction
-from stitch_generator.sampling.samples import samples_by_segments
+from stitch_generator.sampling.sample_by_number import sample_by_number
 from stitch_generator.functions.resample import resample
 
 
@@ -81,8 +81,8 @@ def _make_stitches(width, height, stitches_per_column, stitches_per_row):
     stitch_coordinates = np.zeros((stitches_per_row, stitches_per_column, 2), dtype=float)
     x_coords = linear_interpolation(0, width)
     y_coords = linear_interpolation(0, height)
-    x_samples = x_coords(samples_by_segments(stitches_per_row - 1, include_endpoint=True))[:, None]
-    y_samples = y_coords(samples_by_segments(stitches_per_column - 1, include_endpoint=True))[None, :]
+    x_samples = x_coords(sample_by_number(stitches_per_row - 1, include_endpoint=True))[:, None]
+    y_samples = y_coords(sample_by_number(stitches_per_column - 1, include_endpoint=True))[None, :]
     # set x and y coordinates
     stitch_coordinates[:, :, 0] = x_samples
     stitch_coordinates[:, :, 1] = y_samples
@@ -93,7 +93,7 @@ def _get_elevation_points(width, height):
     f = spiral(0, 50, turns=2.5)
     f = multiply(f, constant_direction(1.5, 1))
     f = add(f, constant_direction(width / 2, height / 2))
-    sp = f(samples_by_segments(1000, include_endpoint=True))
+    sp = f(sample_by_number(1000, include_endpoint=True))
     return sp
 
 

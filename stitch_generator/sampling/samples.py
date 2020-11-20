@@ -1,8 +1,6 @@
 import numpy as np
 
-
-def samples_by_segments(number_of_segments: int, include_endpoint: bool):
-    return linspace(start=0, stop=1, number_of_segments=number_of_segments, include_endpoint=include_endpoint)
+from stitch_generator.sampling.sample_by_number import sample_by_number
 
 
 def samples_by_length(total_length: float, segment_length: float, include_endpoint: bool):
@@ -10,7 +8,7 @@ def samples_by_length(total_length: float, segment_length: float, include_endpoi
         return _default_samples(include_endpoint=include_endpoint)
 
     number_of_segments = int(round(total_length / segment_length))
-    return linspace(start=0, stop=1, number_of_segments=number_of_segments, include_endpoint=include_endpoint)
+    return sample_by_number(number_of_segments=number_of_segments, include_endpoint=include_endpoint)
 
 
 def mid_samples_by_length(total_length: float, segment_length: float):
@@ -18,7 +16,7 @@ def mid_samples_by_length(total_length: float, segment_length: float):
         return _default_samples(include_endpoint=False)
 
     number_of_segments = int(round(total_length / segment_length))
-    return linspace_mid(start=0, stop=1, number_of_segments=number_of_segments)
+    return linspace_mid(number_of_segments=number_of_segments)
 
 
 def samples(total_length: float,
@@ -56,20 +54,15 @@ def samples(total_length: float,
 
 
 def mid_samples_by_segments(number_of_segments: int):
-    return linspace_mid(start=0, stop=1, number_of_segments=number_of_segments)
+    return linspace_mid(number_of_segments=number_of_segments)
 
 
-def linspace(start: float, stop: float, number_of_segments: int, include_endpoint: bool):
-    number_of_samples = number_of_segments + 1 if include_endpoint else number_of_segments
-    return np.linspace(start, stop, num=number_of_samples, endpoint=include_endpoint)
-
-
-def linspace_mid(start: float, stop: float, number_of_segments):
-    l = linspace(start, stop, number_of_segments, include_endpoint=True)
+def linspace_mid(number_of_segments):
+    l = sample_by_number(number_of_segments, include_endpoint=True)
     offset = (l[1] - l[0]) / 2
     l += offset
     return l[0:-1]
 
 
 def _default_samples(include_endpoint: bool):
-    return linspace(0, 1, 1, include_endpoint=include_endpoint)
+    return sample_by_number(1, include_endpoint=include_endpoint)

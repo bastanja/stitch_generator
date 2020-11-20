@@ -5,14 +5,14 @@ from stitch_generator.functions.function_modifiers import add, multiply, subtrac
 from stitch_generator.functions.functions_1d import linear_interpolation, constant, smootherstep
 from stitch_generator.functions.get_boundaries import get_boundaries
 from stitch_generator.functions.path import Path
-from stitch_generator.sampling.samples import samples_by_segments
+from stitch_generator.sampling.sample_by_number import sample_by_number
 from stitch_generator.sampling.sampling import tatami_sampling
 from stitch_generator.functions.types import Function1D
 
 
 def variable_running_stitch(path: Path, stroke_spacing: float, stitch_length: float):
     segments = int(round(estimate_length(path.position) / stitch_length))
-    t = samples_by_segments(number_of_segments=segments, include_endpoint=True)
+    t = sample_by_number(number_of_segments=segments, include_endpoint=True)
 
     widths = path.width(t)
     widths = np.minimum(widths[0:-1], widths[1:])
@@ -57,7 +57,7 @@ def variable_underlay(path: Path, stroke_spacing: float, stitch_length: float):
 def _variable_underlay(path: Path, stroke_spacing: float, stitch_length: float, step_function: Function1D):
     precision = 10
     segments = int(round(estimate_length(path.position) * precision))
-    t = samples_by_segments(number_of_segments=segments, include_endpoint=True)
+    t = sample_by_number(number_of_segments=segments, include_endpoint=True)
 
     widths = path.width(t)
     widths = np.minimum(widths[0:-1], widths[1:])
@@ -184,7 +184,7 @@ def _tree_to_indices_and_offsets(tree, level=0):
     # start to end, level up
     if level > 0:
         indices.extend(list(level_indices[0:-1]))
-        samples = samples_by_segments(number_of_segments=len(level_indices) - 1, include_endpoint=False)
+        samples = sample_by_number(number_of_segments=len(level_indices) - 1, include_endpoint=False)
         offsets.extend(linear_interpolation(level - 1, level)(samples))
 
     children = tree.children
@@ -225,7 +225,7 @@ def _tree_to_indices_and_offsets(tree, level=0):
         offsets.append(level)
     else:
         indices.extend(level_indices[0:-1])
-        samples = samples_by_segments(number_of_segments=len(level_indices) - 1, include_endpoint=False)
+        samples = sample_by_number(number_of_segments=len(level_indices) - 1, include_endpoint=False)
         offsets.extend(linear_interpolation(level, level - 1)(samples))
 
     assert len(indices) == len(offsets)

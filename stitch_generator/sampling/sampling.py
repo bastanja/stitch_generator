@@ -5,9 +5,9 @@ from typing import Iterable
 import numpy as np
 
 from stitch_generator.functions.functions_1d import arc, linear_interpolation
-from stitch_generator.sampling.samples import samples, samples_by_length, linspace, samples_by_segments, \
-    mid_samples_by_length
 from stitch_generator.functions.types import SamplingFunction
+from stitch_generator.sampling.sample_by_number import sample_by_number
+from stitch_generator.sampling.samples import samples, samples_by_length, mid_samples_by_length
 
 
 def regular(stitch_length: float):
@@ -24,7 +24,7 @@ def regular_sampling(stitch_length: float, include_endpoint: bool):  # -> Sampli
 
 def segment_sampling(number_of_segments: int, include_endpoint: bool) -> SamplingFunction:
     def f(total_length: float):  # total_length is ignored
-        return samples_by_segments(number_of_segments, include_endpoint)
+        return sample_by_number(number_of_segments, include_endpoint)
 
     return f
 
@@ -99,9 +99,10 @@ def presets(include_endpoint: bool, alignment: float):
                                       alignment=alignment, minimal_segment_size=0.25)
 
     yield alternating_tatami_sampling(stitch_length=3, include_endpoint=include_endpoint,
-                                      offsets=arc()(linspace(0, 1, 30, include_endpoint=False)) * 0.5,
+                                      offsets=arc()(sample_by_number(30, include_endpoint=False)) * 0.5,
                                       alignment=alignment, minimal_segment_size=0.1)
 
     yield alternating_tatami_sampling(stitch_length=3, include_endpoint=include_endpoint,
-                                      offsets=linear_interpolation(0, 0.7)(linspace(0, 1, 10, include_endpoint=False)),
+                                      offsets=linear_interpolation(0, 0.7)(
+                                          sample_by_number(10, include_endpoint=False)),
                                       alignment=alignment, minimal_segment_size=0.1)

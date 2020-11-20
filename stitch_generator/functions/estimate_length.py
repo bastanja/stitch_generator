@@ -1,6 +1,6 @@
 import numpy as np
 
-from stitch_generator.sampling.samples import linspace
+from stitch_generator.sampling.sample_by_number import sample_by_number
 
 
 def accumulate_lengths(points):
@@ -13,6 +13,6 @@ def accumulate_lengths(points):
 
 
 def estimate_length(function, number_of_samples=100):
-    samples = linspace(0, 1, number_of_samples, include_endpoint=True)
+    samples = sample_by_number(number_of_samples, include_endpoint=True)
     lengths = accumulate_lengths(function(samples))
     return lengths[-1]

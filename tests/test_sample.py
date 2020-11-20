@@ -2,11 +2,11 @@ import numpy as np
 
 from stitch_generator.functions.functions_2d import line
 from stitch_generator.functions.resample import resample
-from stitch_generator.sampling.samples import samples_by_segments
+from stitch_generator.sampling.sample_by_number import sample_by_number
 
 
 def sample(f, num_segments, include_endpoint):
-    return f(samples_by_segments(number_of_segments=num_segments, include_endpoint=include_endpoint))
+    return f(sample_by_number(number_of_segments=num_segments, include_endpoint=include_endpoint))
 
 
 def test_resample():
