@@ -5,7 +5,7 @@ from typing import Iterable
 import numpy as np
 
 from stitch_generator.functions.functions_1d import arc, linear_interpolation
-from stitch_generator.functions.samples import samples, samples_by_length, linspace, samples_by_segments, linspace_mid, \
+from stitch_generator.functions.samples import samples, samples_by_length, linspace, samples_by_segments, \
     mid_samples_by_length
 from stitch_generator.functions.types import SamplingFunction
 
@@ -66,6 +66,21 @@ def alternating_tatami_sampling(stitch_length: float, include_endpoint: bool, of
             s = np.flip(1 - s, axis=0)
 
         return s if include_endpoint else s[0:-1]
+
+    return f
+
+
+def free_start_end(start_length: float, end_length: float, sampling_function: SamplingFunction):
+    def f(total_length: float):
+        cut_length = start_length + end_length
+        if total_length > cut_length:
+            start_offset = linear_interpolation(0, 1, 0, total_length)(start_length)
+            sampled_part = total_length - cut_length
+            scale = sampled_part / total_length
+            samples = sampling_function(total_length - cut_length) * scale
+            return samples + start_offset
+        else:
+            return np.array((), ndmin=2)
 
     return f
 
