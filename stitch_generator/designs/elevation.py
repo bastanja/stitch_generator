@@ -7,7 +7,7 @@ from stitch_generator.functions.embroidery_pattern import EmbroideryPattern
 from stitch_generator.functions.function_modifiers import multiply, add, combine, inverse
 from stitch_generator.functions.functions_1d import linear_interpolation, smoothstep
 from stitch_generator.functions.functions_2d import spiral, constant_direction
-from stitch_generator.functions.samples import samples_by_segments
+from stitch_generator.sampling.samples import samples_by_segments
 from stitch_generator.functions.resample import resample
 
 

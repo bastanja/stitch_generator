@@ -5,8 +5,8 @@ from stitch_generator.functions.function_modifiers import add, multiply, subtrac
 from stitch_generator.functions.functions_1d import linear_interpolation, constant, smootherstep
 from stitch_generator.functions.get_boundaries import get_boundaries
 from stitch_generator.functions.path import Path
-from stitch_generator.functions.samples import samples_by_segments
-from stitch_generator.functions.sampling import tatami_sampling
+from stitch_generator.sampling.samples import samples_by_segments
+from stitch_generator.sampling.sampling import tatami_sampling
 from stitch_generator.functions.types import Function1D
 
 

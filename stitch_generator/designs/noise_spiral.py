@@ -8,7 +8,7 @@ from stitch_generator.functions.functions_1d import noise, constant
 from stitch_generator.functions.functions_2d import spiral, circle
 from stitch_generator.functions.motif_generators import repeat_motif_mirrored
 from stitch_generator.functions.path import Path
-from stitch_generator.functions.sampling import regular, regular_sampling
+from stitch_generator.sampling.sampling import regular, regular_sampling
 from stitch_generator.motifs.satin_circle import satin_circle
 from stitch_generator.stitch_effects.motif_to_points import motif_to_points
 

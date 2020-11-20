@@ -1,7 +1,7 @@
 from scipy.interpolate import interp1d
 
 from stitch_generator.functions.estimate_length import accumulate_lengths
-from stitch_generator.functions.samples import linspace
+from stitch_generator.sampling.samples import linspace
 
 
 def length_to_parameter_mapping(function, approximation_samples=1000):

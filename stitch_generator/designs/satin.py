@@ -8,7 +8,7 @@ from stitch_generator.functions.function_sequence import function_sequence
 from stitch_generator.functions.functions_1d import linear_interpolation, constant, arc
 from stitch_generator.functions.functions_2d import line, constant_direction
 from stitch_generator.functions.path import Path
-from stitch_generator.functions.sampling import regular
+from stitch_generator.sampling.sampling import regular
 from stitch_generator.stitch_effects.meander import meander_along
 from stitch_generator.stitch_effects.underlay import contour_zigzag_underlay, dense_underlay
 

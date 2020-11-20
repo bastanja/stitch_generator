@@ -6,10 +6,10 @@ from stitch_generator.functions.function_modifiers import repeat, scale
 from stitch_generator.functions.functions_1d import circular_arc, constant
 from stitch_generator.functions.functions_2d import line, constant_direction
 from stitch_generator.functions.path import Path
-from stitch_generator.functions.samples import samples_by_length
-from stitch_generator.functions.sampling import mid_regular
+from stitch_generator.sampling.samples import samples_by_length
+from stitch_generator.sampling.sampling import mid_regular
 from stitch_generator.stitch_effects.satin import satin
-from stitch_generator.stitch_effects.underlay import contour_zigzag_underlay, dense_underlay
+from stitch_generator.stitch_effects.underlay import contour_zigzag_underlay
 
 
 def satin_circle(diameter: float, stitch_length: float, pull_compensation: float = 0, underlay_inset: float = 0.5,

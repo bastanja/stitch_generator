@@ -3,9 +3,9 @@ from typing import Iterable
 
 import numpy as np
 
-from stitch_generator.functions import sampling
+from stitch_generator.sampling import sampling
 from stitch_generator.functions.functions_2d import line
-from stitch_generator.functions.sampling import regular_sampling, alternating_tatami_sampling
+from stitch_generator.sampling.sampling import regular_sampling, alternating_tatami_sampling
 from stitch_generator.functions.types import ConnectFunction
 
 

@@ -4,7 +4,7 @@ from stitch_generator.functions.arc_length_mapping import arc_length_mapping_wit
 from stitch_generator.functions.function_modifiers import combine
 from stitch_generator.functions.functions_2d import line, bezier
 from stitch_generator.functions.place_motif import place_motif_at
-from stitch_generator.functions.samples import samples_by_length
+from stitch_generator.sampling.samples import samples_by_length
 from stitch_generator.stitch_effects.rotate import rotate_deg
 
 

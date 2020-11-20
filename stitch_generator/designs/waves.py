@@ -7,7 +7,7 @@ from stitch_generator.functions.embroidery_pattern import EmbroideryPattern
 from stitch_generator.functions.function_modifiers import shift, scale, repeat, add, inverse
 from stitch_generator.functions.functions_1d import cosinus, linear_interpolation, constant
 from stitch_generator.functions.functions_2d import function_2d
-from stitch_generator.functions.samples import samples_by_length
+from stitch_generator.sampling.samples import samples_by_length
 
 
 class Design(EmbroideryDesign):

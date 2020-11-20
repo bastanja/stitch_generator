@@ -1,7 +1,7 @@
 import numpy as np
 
-from stitch_generator.functions.samples import linspace, linspace_mid, samples_by_length
-from stitch_generator.functions.sampling import fixed_sampling
+from stitch_generator.sampling.samples import linspace, linspace_mid, samples_by_length
+from stitch_generator.sampling.sampling import fixed_sampling
 
 
 def test_linspace():

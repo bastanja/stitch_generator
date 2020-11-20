@@ -5,7 +5,7 @@ from typing import Iterable
 import numpy as np
 
 from stitch_generator.functions.functions_1d import arc, linear_interpolation
-from stitch_generator.functions.samples import samples, samples_by_length, linspace, samples_by_segments, \
+from stitch_generator.sampling.samples import samples, samples_by_length, linspace, samples_by_segments, \
     mid_samples_by_length
 from stitch_generator.functions.types import SamplingFunction
 

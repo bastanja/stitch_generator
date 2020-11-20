@@ -1,7 +1,7 @@
 from scipy.interpolate import interp1d
 
 from stitch_generator.functions.estimate_length import accumulate_lengths
-from stitch_generator.functions.sampling import regular_sampling
+from stitch_generator.sampling.sampling import regular_sampling
 
 
 def resample(stitches, stitch_length):

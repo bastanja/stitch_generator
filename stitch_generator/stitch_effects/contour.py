@@ -7,7 +7,7 @@ from stitch_generator.functions.function_modifiers import inverse
 from stitch_generator.functions.functions_2d import line
 from stitch_generator.functions.get_boundaries import get_boundaries
 from stitch_generator.functions.path import Path
-from stitch_generator.functions.samples import samples_by_length
+from stitch_generator.sampling.samples import samples_by_length
 
 
 def contour(stitch_length: float):

@@ -3,7 +3,7 @@ import numpy as np
 from stitch_generator.functions.function_sequence import function_sequence
 from stitch_generator.functions.functions_1d import constant, linear_interpolation
 from stitch_generator.functions.functions_2d import line, bezier
-from stitch_generator.functions.samples import samples_by_segments
+from stitch_generator.sampling.samples import samples_by_segments
 
 
 def test_function_sequence_1d():
