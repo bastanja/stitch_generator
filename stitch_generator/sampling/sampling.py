@@ -6,12 +6,13 @@ import numpy as np
 
 from stitch_generator.functions.functions_1d import arc, linear_interpolation
 from stitch_generator.functions.types import SamplingFunction
-from stitch_generator.sampling.sample_by_number import sample_by_number
-from stitch_generator.sampling.samples import samples, samples_by_length, mid_samples_by_length
+from stitch_generator.sampling.sample_by_length import sample_by_length
+from stitch_generator.sampling.sample_by_number import sample_by_number, sampling_by_number
+from stitch_generator.sampling.samples import samples, mid_samples_by_length
 
 
 def regular(stitch_length: float):
-    return partial(samples_by_length, segment_length=stitch_length, include_endpoint=True)
+    return partial(sample_by_length, segment_length=stitch_length, include_endpoint=True)
 
 
 def mid_regular(stitch_length: float):
@@ -19,14 +20,7 @@ def mid_regular(stitch_length: float):
 
 
 def regular_sampling(stitch_length: float, include_endpoint: bool):  # -> SamplingFunction
-    return partial(samples_by_length, segment_length=stitch_length, include_endpoint=include_endpoint)
-
-
-def segment_sampling(number_of_segments: int, include_endpoint: bool) -> SamplingFunction:
-    def f(total_length: float):  # total_length is ignored
-        return sample_by_number(number_of_segments, include_endpoint)
-
-    return f
+    return partial(sample_by_length, segment_length=stitch_length, include_endpoint=include_endpoint)
 
 
 def fixed_sampling(stitch_length: float, include_endpoint: bool, alignment: float = 0,
@@ -88,7 +82,7 @@ def free_start_end(start_length: float, end_length: float, sampling_function: Sa
 def presets(include_endpoint: bool, alignment: float):
     yield regular_sampling(stitch_length=3, include_endpoint=include_endpoint)
 
-    yield segment_sampling(number_of_segments=3, include_endpoint=include_endpoint)
+    yield sampling_by_number(number_of_segments=3, include_endpoint=include_endpoint)
 
     yield fixed_sampling(stitch_length=3, include_endpoint=include_endpoint, alignment=alignment)
 

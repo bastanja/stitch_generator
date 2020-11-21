@@ -6,7 +6,7 @@ from stitch_generator.functions.function_modifiers import repeat, scale
 from stitch_generator.functions.functions_1d import circular_arc, constant
 from stitch_generator.functions.functions_2d import line, constant_direction
 from stitch_generator.functions.path import Path
-from stitch_generator.sampling.samples import samples_by_length
+from stitch_generator.sampling.sample_by_length import sample_by_length
 from stitch_generator.sampling.sampling import mid_regular
 from stitch_generator.stitch_effects.satin import satin
 from stitch_generator.stitch_effects.underlay import contour_zigzag_underlay
@@ -31,7 +31,7 @@ def satin_circle(diameter: float, stitch_length: float, pull_compensation: float
     stitches = []
     if return_to_start:
         middle_run = lambda path: path.position(
-            samples_by_length(estimate_length(path.position), stitch_length, include_endpoint=False))
+            sample_by_length(estimate_length(path.position), stitch_length, include_endpoint=False))
         stitches.append(middle_run(path))
         path = path.inverse()
     else:

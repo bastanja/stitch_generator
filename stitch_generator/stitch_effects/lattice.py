@@ -5,7 +5,7 @@ from stitch_generator.functions.function_modifiers import scale, add, repeat, mu
 from stitch_generator.functions.functions_1d import constant, cosinus, linear_interpolation, arc, smoothstep
 from stitch_generator.functions.get_boundaries import get_boundaries
 from stitch_generator.functions.path import Path
-from stitch_generator.sampling.sampling import segment_sampling
+from stitch_generator.sampling.sample_by_number import sampling_by_number
 
 
 def lattice(path: Path, strands, pattern_f, pattern_length):
@@ -26,7 +26,7 @@ def _lattice(path: Path, strands, length, pattern_f, pattern_length, stitch_leng
             multiply(repeat(strands, path.direction, mode='reflect'), pattern_f))
 
     stitches = int(round(pattern_length / stitch_length))
-    points = f(segment_sampling(stitches * times, include_endpoint=True)(1))
+    points = f(sampling_by_number(stitches * times, include_endpoint=True)(1))
     return points
 
 
