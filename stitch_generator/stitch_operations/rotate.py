@@ -1,7 +1,7 @@
 import numpy as np
 
 from stitch_generator.functions.ensure_shape import ensure_1d_shape
-from stitch_generator.functions.types import Function2D, Function1D, Array2D
+from stitch_generator.utilities.types import Function2D, Function1D, Array2D
 
 
 def rotate_by_degrees(stitches: Array2D, angle_deg) -> Array2D:

@@ -7,7 +7,7 @@ from stitch_generator.functions.bezier import de_casteljau
 from stitch_generator.functions.ensure_shape import ensure_1d_shape
 from stitch_generator.functions.function_modifiers import scale, add, repeat, mix
 from stitch_generator.functions.functions_1d import cosinus, sinus, constant, linear_interpolation
-from stitch_generator.functions.types import Function2D, Function1D
+from stitch_generator.utilities.types import Function2D, Function1D
 from stitch_generator.stitch_operations.rotate import rotate_by_degrees
 
 

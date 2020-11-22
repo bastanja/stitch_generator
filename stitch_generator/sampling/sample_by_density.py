@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.interpolate import interp1d
 
-from stitch_generator.functions.types import SamplingFunction, Array1D, Function1D
+from stitch_generator.utilities.types import SamplingFunction, Array1D, Function1D
 from stitch_generator.sampling.sample_by_length import sample_by_length
 
 

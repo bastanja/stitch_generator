@@ -1,6 +1,6 @@
 import numpy as np
 
-from stitch_generator.functions.types import Array1D
+from stitch_generator.utilities.types import Array1D
 from stitch_generator.stitch_operations.rotate import rotate_by_sin_cos
 
 

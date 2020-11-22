@@ -2,7 +2,7 @@ from scipy.interpolate import interp1d
 
 from stitch_generator.functions.estimate_length import accumulate_lengths
 from stitch_generator.functions.function_modifiers import combine
-from stitch_generator.functions.types import Function2D, Function1D
+from stitch_generator.utilities.types import Function2D, Function1D
 from stitch_generator.sampling.sample_by_number import sample_by_number
 
 

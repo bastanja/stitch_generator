@@ -2,7 +2,7 @@ import itertools
 from functools import partial
 from typing import Iterable
 
-from stitch_generator.functions.types import SamplingFunction
+from stitch_generator.utilities.types import SamplingFunction
 from stitch_generator.sampling.sample import sample
 from stitch_generator.sampling.sampling_modifiers import alternate_direction
 

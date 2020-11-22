@@ -5,7 +5,7 @@ import numpy as np
 from noise import pnoise1
 from scipy.interpolate import interp1d
 
-from stitch_generator.functions.types import Function1D
+from stitch_generator.utilities.types import Function1D
 
 
 def function_1d(f: Callable[..., float]) -> Function1D:

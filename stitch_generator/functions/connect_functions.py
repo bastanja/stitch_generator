@@ -4,7 +4,7 @@ from typing import Iterable
 import numpy as np
 
 from stitch_generator.functions.functions_2d import line
-from stitch_generator.functions.types import ConnectFunction
+from stitch_generator.utilities.types import ConnectFunction
 from stitch_generator.sampling.sample_by_length import sampling_by_length
 from stitch_generator.sampling.tatami_sampling import alternating_tatami_sampling
 from stitch_generator.sampling.sampling_presets import sampling_presets

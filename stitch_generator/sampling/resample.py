@@ -1,7 +1,7 @@
 from scipy.interpolate import interp1d
 
 from stitch_generator.functions.estimate_length import accumulate_lengths
-from stitch_generator.functions.types import SamplingFunction
+from stitch_generator.utilities.types import SamplingFunction
 from stitch_generator.sampling.sample_by_length import sample_by_length
 
 

@@ -7,7 +7,7 @@ from stitch_generator.functions.get_boundaries import get_boundaries
 from stitch_generator.functions.path import Path
 from stitch_generator.sampling.sample_by_number import sample_by_number
 from stitch_generator.sampling.tatami_sampling import tatami_sampling
-from stitch_generator.functions.types import Function1D
+from stitch_generator.utilities.types import Function1D
 
 
 def variable_running_stitch(path: Path, stroke_spacing: float, stitch_length: float):

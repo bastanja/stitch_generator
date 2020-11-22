@@ -3,7 +3,7 @@ import itertools
 import numpy as np
 
 from stitch_generator.functions.functions_1d import linear_interpolation
-from stitch_generator.functions.types import SamplingFunction
+from stitch_generator.utilities.types import SamplingFunction
 
 
 def free_start_end(start_length: float, end_length: float, sampling_function: SamplingFunction):

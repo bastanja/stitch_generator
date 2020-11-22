@@ -5,7 +5,7 @@ import numpy as np
 
 from stitch_generator.functions.path import Path
 from stitch_generator.functions.place_motif import place_motif_at
-from stitch_generator.functions.types import SamplingFunction
+from stitch_generator.utilities.types import SamplingFunction
 
 
 def motif_to_points(motif_position_sampling: SamplingFunction, line_sampling: SamplingFunction, motif_generator,

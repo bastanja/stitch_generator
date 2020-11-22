@@ -1,5 +1,5 @@
 from stitch_generator.functions.function_modifiers import split, inverse
-from stitch_generator.functions.types import Function1D, Function2D
+from stitch_generator.utilities.types import Function1D, Function2D
 
 
 class Path:

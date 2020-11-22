@@ -3,7 +3,7 @@ import numpy as np
 from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.get_boundaries import get_boundaries
 from stitch_generator.functions.path import Path
-from stitch_generator.functions.types import ConnectFunction, Function2D, SamplingFunction
+from stitch_generator.utilities.types import ConnectFunction, Function2D, SamplingFunction
 from stitch_generator.stitch_effects.zigzag import zigzag
 
 

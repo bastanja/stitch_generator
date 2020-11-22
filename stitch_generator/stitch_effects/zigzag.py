@@ -1,6 +1,6 @@
 import numpy as np
 
-from stitch_generator.functions.types import Function2D, SamplingFunction
+from stitch_generator.utilities.types import Function2D, SamplingFunction
 
 
 def zigzag(boundary_left: Function2D, boundary_right: Function2D, sampling_function: SamplingFunction, length: float):

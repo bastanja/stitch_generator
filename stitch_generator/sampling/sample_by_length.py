@@ -1,6 +1,6 @@
 import numpy as np
 
-from stitch_generator.functions.types import SamplingFunction, Array1D
+from stitch_generator.utilities.types import SamplingFunction, Array1D
 from stitch_generator.sampling.sample_by_number import sample_by_number
 
 

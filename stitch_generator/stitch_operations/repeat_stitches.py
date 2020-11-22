@@ -1,6 +1,6 @@
 import numpy as np
 
-from stitch_generator.functions.types import Array2D
+from stitch_generator.utilities.types import Array2D
 
 
 def repeat_stitches(stitches: Array2D, times: int, reflect: bool = True) -> Array2D:

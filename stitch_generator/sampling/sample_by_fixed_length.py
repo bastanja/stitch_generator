@@ -1,4 +1,4 @@
-from stitch_generator.functions.types import Array1D, SamplingFunction
+from stitch_generator.utilities.types import Array1D, SamplingFunction
 from stitch_generator.sampling.sample import sample
 
 

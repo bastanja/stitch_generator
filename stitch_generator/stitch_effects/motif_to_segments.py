@@ -6,7 +6,7 @@ import numpy as np
 from stitch_generator.functions.functions_1d import linear_interpolation
 from stitch_generator.functions.path import Path
 from stitch_generator.functions.place_motif import place_motif_between
-from stitch_generator.functions.types import SamplingFunction
+from stitch_generator.utilities.types import SamplingFunction
 
 
 def motif_to_segments(motif_position_sampling: SamplingFunction, line_sampling: SamplingFunction, motif_generator,
