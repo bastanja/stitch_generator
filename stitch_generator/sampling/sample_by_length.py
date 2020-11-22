@@ -38,8 +38,3 @@ def sampling_by_length_with_offset(segment_length: float, offset: float) -> Samp
 
 def regular(segment_length: float) -> SamplingFunction:
     return sampling_by_length(segment_length, include_endpoint=True)
-
-
-if __name__ == "__main__":
-    test = sample_by_length_with_offset(2, 2, 0.25)
-    print(test)
