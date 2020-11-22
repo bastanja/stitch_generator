@@ -1,9 +1,10 @@
 import numpy as np
 
-from stitch_generator.utilities.types import Function2D, SamplingFunction
+from stitch_generator.utilities.types import Function2D, SamplingFunction, Array2D
 
 
-def zigzag(boundary_left: Function2D, boundary_right: Function2D, sampling_function: SamplingFunction, length: float):
+def zigzag_between(boundary_left: Function2D, boundary_right: Function2D, sampling_function: SamplingFunction,
+                   length: float) -> Array2D:
     p = sampling_function(length)
     if len(p) < 2:
         p = np.array([0, 1], dtype=float)
@@ -13,10 +14,10 @@ def zigzag(boundary_left: Function2D, boundary_right: Function2D, sampling_funct
     return stitches
 
 
-def double_zigzag(boundary_left: Function2D, boundary_right: Function2D, sampling_function: SamplingFunction,
-                  length: float):
-    points_forward = zigzag(boundary_left, boundary_right, sampling_function, length)
-    points_backward = zigzag(boundary_right, boundary_left, sampling_function, length)
+def double_zigzag_between(boundary_left: Function2D, boundary_right: Function2D, sampling_function: SamplingFunction,
+                          length: float) -> Array2D:
+    points_forward = zigzag_between(boundary_left, boundary_right, sampling_function, length)
+    points_backward = zigzag_between(boundary_right, boundary_left, sampling_function, length)
     points_backward = np.flipud(points_backward)
 
     if np.allclose(points_forward[-1], points_backward[0]):

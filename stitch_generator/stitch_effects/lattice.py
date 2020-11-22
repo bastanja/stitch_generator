@@ -1,20 +1,24 @@
-from functools import partial
-
 from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.function_modifiers import scale, add, repeat, multiply, subtract
 from stitch_generator.functions.functions_1d import constant, cosinus, linear_interpolation, arc, smoothstep
 from stitch_generator.path.get_boundaries import get_boundaries
 from stitch_generator.path.path import Path
 from stitch_generator.sampling.sample_by_number import sampling_by_number
+from stitch_generator.stitch_effects.stitch_effect import StitchEffect
+from stitch_generator.utilities.types import Array2D
 
 
-def lattice(path: Path, strands, pattern_f, pattern_length):
+def lattice(strands, pattern_f, pattern_length) -> StitchEffect:
+    return lambda path: lattice_along(path, strands=strands, pattern_f=pattern_f, pattern_length=pattern_length)
+
+
+def lattice_along(path: Path, strands, pattern_f, pattern_length) -> Array2D:
     stitch_length = _calculate_stitch_length(pattern_length, strands)
     return _lattice(path=path, strands=strands, length=estimate_length(path.position), pattern_f=pattern_f,
                     pattern_length=pattern_length, stitch_length=stitch_length)
 
 
-def _lattice(path: Path, strands, length, pattern_f, pattern_length, stitch_length):
+def _lattice(path: Path, strands, length, pattern_f, pattern_length, stitch_length) -> Array2D:
     pattern_repetition = int(round(length / pattern_length))
     times = pattern_repetition * strands + 1
 
@@ -30,7 +34,7 @@ def _lattice(path: Path, strands, length, pattern_f, pattern_length, stitch_leng
     return points
 
 
-def _calculate_stitch_length(pattern_length, strands, desired_length=2):
+def _calculate_stitch_length(pattern_length, strands, desired_length=2) -> float:
     stitch_length = pattern_length / strands
     times = max(1, int(round(stitch_length / desired_length)))
     stitch_length = stitch_length / times
@@ -42,9 +46,9 @@ _linear_pattern = linear_interpolation(0, 1)
 _peaks = subtract(constant(1), repeat(0.5, arc()))
 
 presets = [
-    partial(lattice, strands=3, pattern_f=_cosine_pattern, pattern_length=10),
-    partial(lattice, strands=7, pattern_f=_linear_pattern, pattern_length=20),
-    partial(lattice, strands=3, pattern_f=_linear_pattern, pattern_length=3),
-    partial(lattice, strands=5, pattern_f=_peaks, pattern_length=25),
-    partial(lattice, strands=5, pattern_f=smoothstep(), pattern_length=25)
+    lattice(strands=3, pattern_f=_cosine_pattern, pattern_length=10),
+    lattice(strands=7, pattern_f=_linear_pattern, pattern_length=20),
+    lattice(strands=3, pattern_f=_linear_pattern, pattern_length=3),
+    lattice(strands=5, pattern_f=_peaks, pattern_length=25),
+    lattice(strands=5, pattern_f=smoothstep(), pattern_length=25)
 ]
