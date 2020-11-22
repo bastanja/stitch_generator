@@ -1,8 +1,30 @@
 import numpy as np
 from scipy.interpolate import interp1d
 
+from stitch_generator.functions.types import SamplingFunction, Array1D, Function1D
+from stitch_generator.sampling.sample_by_length import sample_by_length
 
-def inverse_cdf(f, num_approximation_samples: int = 200):
+
+def sample_by_density(total_length: float, segment_length: float, density_distribution: Function1D,
+                      include_endpoint: bool) -> Array1D:
+    density_function, sample_ratio = _inverse_cdf(density_distribution)
+
+    samples = sample_by_length(total_length=total_length * sample_ratio, segment_length=segment_length,
+                               include_endpoint=include_endpoint)
+
+    return density_function(samples)
+
+
+def sampling_by_density(segment_length: float, density_distribution: Function1D,
+                        include_endpoint: bool) -> SamplingFunction:
+    def f(total_length: float):
+        return sample_by_density(total_length=total_length, segment_length=segment_length,
+                                 density_distribution=density_distribution, include_endpoint=include_endpoint)
+
+    return f
+
+
+def _inverse_cdf(f, num_approximation_samples: int = 200):
     """
     Returns the approximation of a inverse cumulative distribution function for a given function f.
     f must map a scalar x to a scalar y. f must be defined in the range [0,1], the resulting y values may be in the
