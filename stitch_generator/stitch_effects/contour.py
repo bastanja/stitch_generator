@@ -5,8 +5,8 @@ import numpy as np
 from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.function_modifiers import inverse
 from stitch_generator.functions.functions_2d import line
-from stitch_generator.functions.get_boundaries import get_boundaries
-from stitch_generator.functions.path import Path
+from stitch_generator.path.get_boundaries import get_boundaries
+from stitch_generator.path.path import Path
 from stitch_generator.sampling.sample_by_length import sample_by_length
 
 

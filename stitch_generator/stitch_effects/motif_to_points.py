@@ -3,7 +3,7 @@ from functools import partial
 
 import numpy as np
 
-from stitch_generator.functions.path import Path
+from stitch_generator.path.path import Path
 from stitch_generator.functions.place_motif import place_motif_at
 from stitch_generator.utilities.types import SamplingFunction
 

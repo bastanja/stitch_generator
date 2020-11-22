@@ -6,8 +6,8 @@ from stitch_generator.design_utilities.parameter import FloatParameter, RampPara
 from stitch_generator.functions.embroidery_pattern import EmbroideryPattern
 from stitch_generator.functions.function_modifiers import multiply
 from stitch_generator.functions.functions_1d import constant
-from stitch_generator.functions.functions_2d import line, constant_direction, bezier_normals, bezier
-from stitch_generator.functions.path import Path
+from stitch_generator.functions.functions_2d import bezier_normals, bezier
+from stitch_generator.path.path import Path
 from stitch_generator.stitch_effects.contour import contour_along
 from stitch_generator.stitch_effects.variable_running_stitch import variable_underlay, variable_running_stitch
 

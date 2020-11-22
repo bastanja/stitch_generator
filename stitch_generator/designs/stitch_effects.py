@@ -6,7 +6,7 @@ from stitch_generator.design_utilities.parameter import FloatParameter
 from stitch_generator.functions.embroidery_pattern import EmbroideryPattern
 from stitch_generator.functions.functions_1d import constant
 from stitch_generator.functions.functions_2d import line, constant_direction
-from stitch_generator.functions.path import Path
+from stitch_generator.path.path import Path
 from stitch_generator.stitch_effects.stitch_effect_collection import stitch_effects
 
 

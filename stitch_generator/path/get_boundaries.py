@@ -1,7 +1,7 @@
 from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.function_modifiers import multiply, subtract, add, maximum, minimum, repeat, shift
 from stitch_generator.functions.functions_1d import constant
-from stitch_generator.functions.path import Path
+from stitch_generator.path.path import Path
 
 
 def get_boundaries(path: Path):

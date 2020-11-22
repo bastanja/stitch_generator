@@ -3,8 +3,8 @@ from functools import partial
 from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.function_modifiers import scale, add, repeat, multiply, subtract
 from stitch_generator.functions.functions_1d import constant, cosinus, linear_interpolation, arc, smoothstep
-from stitch_generator.functions.get_boundaries import get_boundaries
-from stitch_generator.functions.path import Path
+from stitch_generator.path.get_boundaries import get_boundaries
+from stitch_generator.path.path import Path
 from stitch_generator.sampling.sample_by_number import sampling_by_number
 
 

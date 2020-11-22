@@ -2,8 +2,8 @@ import numpy as np
 
 from stitch_generator.functions.connect_functions import running_stitch_line
 from stitch_generator.functions.estimate_length import estimate_length
-from stitch_generator.functions.path import Path
-from stitch_generator.functions.get_underlay_path import get_underlay_path
+from stitch_generator.path.path import Path
+from stitch_generator.path.get_underlay_path import get_underlay_path
 from stitch_generator.sampling.sample_by_length import regular
 from stitch_generator.stitch_effects.contour import contour_along
 from stitch_generator.stitch_effects.double_satin import double_satin_along

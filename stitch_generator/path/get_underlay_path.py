@@ -1,7 +1,7 @@
 from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.function_modifiers import shift, repeat, subtract, maximum, multiply, add
 from stitch_generator.functions.functions_1d import constant
-from stitch_generator.functions.path import Path
+from stitch_generator.path.path import Path
 
 
 def get_underlay_path(path: Path, inset: float) -> Path:

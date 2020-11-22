@@ -7,10 +7,9 @@ from stitch_generator.design_utilities.palette import palette
 from stitch_generator.design_utilities.parameter import FloatParameter
 from stitch_generator.functions.embroidery_pattern import EmbroideryPattern
 from stitch_generator.functions.function_modifiers import scale
-from stitch_generator.functions.function_sequence import function_sequence
 from stitch_generator.functions.functions_1d import constant, arc
-from stitch_generator.functions.functions_2d import bezier, bezier_normals, line, constant_direction
-from stitch_generator.functions.path import Path
+from stitch_generator.functions.functions_2d import bezier, bezier_normals
+from stitch_generator.path.path import Path
 from stitch_generator.stitch_effects.lattice import presets
 
 
