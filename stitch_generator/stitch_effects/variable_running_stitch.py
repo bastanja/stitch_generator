@@ -6,7 +6,7 @@ from stitch_generator.functions.functions_1d import linear_interpolation, consta
 from stitch_generator.functions.get_boundaries import get_boundaries
 from stitch_generator.functions.path import Path
 from stitch_generator.sampling.sample_by_number import sample_by_number
-from stitch_generator.sampling.sampling import tatami_sampling
+from stitch_generator.sampling.tatami_sampling import tatami_sampling
 from stitch_generator.functions.types import Function1D
 
 

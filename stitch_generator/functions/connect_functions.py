@@ -3,10 +3,11 @@ from typing import Iterable
 
 import numpy as np
 
-from stitch_generator.sampling import sampling
 from stitch_generator.functions.functions_2d import line
-from stitch_generator.sampling.sampling import regular_sampling, alternating_tatami_sampling
 from stitch_generator.functions.types import ConnectFunction
+from stitch_generator.sampling.sample_by_length import sampling_by_length
+from stitch_generator.sampling.tatami_sampling import alternating_tatami_sampling
+from stitch_generator.sampling.sampling_presets import sampling_presets
 
 
 def line_with_sampling_function(sampling_function):  # -> ConnectFunction
@@ -40,7 +41,8 @@ def combine_start_end(connect_function: ConnectFunction) -> ConnectFunction:
 
 
 def running_stitch_line(stitch_length: float, include_endpoint: bool):  # -> ConnectFunction
-    return line_with_sampling_function(regular_sampling(stitch_length=stitch_length, include_endpoint=include_endpoint))
+    return line_with_sampling_function(
+        sampling_by_length(segment_length=stitch_length, include_endpoint=include_endpoint))
 
 
 def tatami_line(stitch_length: float, include_endpoint: bool = True, offsets: Iterable[float] = (0, 1 / 3, 2 / 3),
@@ -52,5 +54,5 @@ def tatami_line(stitch_length: float, include_endpoint: bool = True, offsets: It
 
 
 def presets(include_endpoint: bool, alignment: float):
-    for s in iter(sampling.presets(include_endpoint, alignment)):
+    for s in iter(sampling_presets(include_endpoint, alignment)):
         yield line_with_sampling_function(s)

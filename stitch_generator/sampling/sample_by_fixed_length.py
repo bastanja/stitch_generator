@@ -2,14 +2,17 @@ from stitch_generator.functions.types import Array1D, SamplingFunction
 from stitch_generator.sampling.sample import sample
 
 
-def sample_by_fixed_length(total_length: float, segment_length: float, include_endpoint: bool) -> Array1D:
-    return sample(total_length=total_length, segment_length=segment_length, alignment=0,
-                  include_endpoint=include_endpoint, offset=0, minimal_segment_size=0)
+def sample_by_fixed_length(total_length: float, segment_length: float, include_endpoint: bool, alignment: float = 0,
+                           offset: float = 0, minimal_segment_size: float = 0) -> Array1D:
+    return sample(total_length=total_length, segment_length=segment_length, alignment=alignment,
+                  include_endpoint=include_endpoint, offset=offset, minimal_segment_size=minimal_segment_size)
 
 
-def sampling_by_fixed_length(segment_length: float, include_endpoint: bool) -> SamplingFunction:
+def sampling_by_fixed_length(segment_length: float, include_endpoint: bool, alignment: float = 0,
+                             offset: float = 0, minimal_segment_size: float = 0) -> SamplingFunction:
     def f(total_length: float):
         return sample_by_fixed_length(total_length=total_length, segment_length=segment_length,
-                                include_endpoint=include_endpoint)
+                                      include_endpoint=include_endpoint, alignment=alignment,
+                                      offset=offset, minimal_segment_size=minimal_segment_size)
 
     return f

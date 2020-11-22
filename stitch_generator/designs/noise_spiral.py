@@ -8,7 +8,7 @@ from stitch_generator.functions.functions_1d import noise, constant
 from stitch_generator.functions.functions_2d import spiral, circle
 from stitch_generator.functions.motif_generators import repeat_motif_mirrored
 from stitch_generator.functions.path import Path
-from stitch_generator.sampling.sampling import regular, regular_sampling
+from stitch_generator.sampling.sample_by_length import regular, sampling_by_length
 from stitch_generator.motifs.satin_circle import satin_circle
 from stitch_generator.stitch_effects.motif_to_points import motif_to_points
 
@@ -52,7 +52,7 @@ class Design(EmbroideryDesign):
                          pull_compensation=0.1 * parameters.dot_diameter))
 
         effect = motif_to_points(motif_position_sampling=regular(parameters.dot_spacing),
-                                 line_sampling=regular_sampling(parameters.stitch_length, include_endpoint=False),
+                                 line_sampling=sampling_by_length(parameters.stitch_length, include_endpoint=False),
                                  motif_generator=motif_gen, length=length)
 
         stitches = effect(path)

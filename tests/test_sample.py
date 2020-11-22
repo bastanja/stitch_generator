@@ -1,7 +1,7 @@
 import numpy as np
 
 from stitch_generator.functions.functions_2d import line
-from stitch_generator.functions.resample import resample
+from stitch_generator.sampling.resample import resample
 from stitch_generator.sampling.sample_by_number import sample_by_number
 
 

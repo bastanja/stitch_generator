@@ -8,7 +8,7 @@ from stitch_generator.functions.function_modifiers import multiply, add, combine
 from stitch_generator.functions.functions_1d import linear_interpolation, smoothstep
 from stitch_generator.functions.functions_2d import spiral, constant_direction
 from stitch_generator.sampling.sample_by_number import sample_by_number
-from stitch_generator.functions.resample import resample
+from stitch_generator.sampling.resample import resample
 
 
 class Design(EmbroideryDesign):

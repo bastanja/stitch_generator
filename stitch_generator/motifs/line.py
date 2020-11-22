@@ -4,7 +4,7 @@ from stitch_generator.functions.arc_length_mapping import arc_length_mapping_wit
 from stitch_generator.functions.function_modifiers import combine
 from stitch_generator.functions.functions_2d import line, bezier
 from stitch_generator.functions.place_motif import place_motif_at
-from stitch_generator.sampling.samples import samples_by_length
+from stitch_generator.sampling.sample_by_length import sample_by_length
 from stitch_generator.stitch_effects.rotate import rotate_deg
 
 
@@ -46,7 +46,7 @@ def _bent_line_f(length: float, angle_deg):
 
 
 def _sample(f, length: float, stitch_length: float):
-    samples = samples_by_length(total_length=length, segment_length=stitch_length, include_endpoint=True)
+    samples = sample_by_length(total_length=length, segment_length=stitch_length, include_endpoint=True)
     stitches = f(samples)
     back = stitches[::-1][1:]
     return stitches, back

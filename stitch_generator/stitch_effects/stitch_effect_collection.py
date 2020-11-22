@@ -3,7 +3,8 @@ from functools import partial
 from stitch_generator.designs import lattice
 from stitch_generator.functions.connect_functions import line_with_sampling_function, combine_start_end, \
     running_stitch_line
-from stitch_generator.sampling.sampling import alternating_tatami_sampling, regular
+from stitch_generator.sampling.sample_by_length import regular
+from stitch_generator.sampling.tatami_sampling import alternating_tatami_sampling
 from stitch_generator.stitch_effects.meander import meander_along
 from stitch_generator.stitch_effects.repeat_along import repeat_along
 
