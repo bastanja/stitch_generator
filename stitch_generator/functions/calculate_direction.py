@@ -1,6 +1,6 @@
 import numpy as np
 
-from stitch_generator.stitch_effects.rotate import rotate
+from stitch_generator.stitch_operations.rotate import rotate_by_sin_cos
 
 
 def calculate_direction(stitches):
@@ -52,7 +52,7 @@ def calculate_direction(stitches):
 
 
 def _get_perpendicular(directions):
-    return _normalize(rotate(np.array(directions, ndmin=2), 1, 0))
+    return _normalize(rotate_by_sin_cos(np.array(directions, ndmin=2), 1, 0))
 
 
 def _normalize(directions: np.ndarray):

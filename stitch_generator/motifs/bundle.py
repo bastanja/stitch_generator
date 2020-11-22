@@ -9,7 +9,7 @@ from stitch_generator.sampling.sample_by_number import sample_by_number, samplin
 from stitch_generator.functions.types import Function1D
 from stitch_generator.motifs.line import bent_line_with_motif
 from stitch_generator.stitch_effects.motif_to_points import motif_to_points
-from stitch_generator.stitch_effects.rotate import rotate_f_deg
+from stitch_generator.stitch_operations.rotate import rotation_by_degrees
 
 
 def bundle(start_angle, end_angle, bend_angle_start, bend_angle_end, min_length, max_length, number_of_lines,
@@ -41,6 +41,6 @@ def _motif_generator(number, stitch_length, bend_f, length_f, motif):
 
 def _zero_path(angle_f: Function1D):
     return Path(position=constant_direction(0, 0),
-                direction=rotate_f_deg(constant_direction(1, 0), angle_f),
+                direction=rotation_by_degrees(constant_direction(1, 0), angle_f),
                 width=constant(1),
                 stroke_alignment=constant(0.5))

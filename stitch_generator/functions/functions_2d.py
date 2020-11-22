@@ -8,7 +8,7 @@ from stitch_generator.functions.ensure_shape import ensure_1d_shape
 from stitch_generator.functions.function_modifiers import scale, add, repeat, mix
 from stitch_generator.functions.functions_1d import cosinus, sinus, constant, linear_interpolation
 from stitch_generator.functions.types import Function2D, Function1D
-from stitch_generator.stitch_effects.rotate import rotate_deg
+from stitch_generator.stitch_operations.rotate import rotate_by_degrees
 
 
 def function_2d(fx: Function1D, fy: Function1D) -> Function2D:
@@ -60,7 +60,7 @@ def bezier_normals(control_points: Sequence) -> Function2D:
 
     def f(v):
         points, tangents = de_casteljau(control_points, np.array(v, ndmin=1, dtype=float))
-        return rotate_deg(tangents, -90)
+        return rotate_by_degrees(tangents, -90)
 
     return f
 

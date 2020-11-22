@@ -5,7 +5,7 @@ from stitch_generator.functions.function_modifiers import combine
 from stitch_generator.functions.functions_2d import line, bezier
 from stitch_generator.functions.place_motif import place_motif_at
 from stitch_generator.sampling.sample_by_length import sample_by_length
-from stitch_generator.stitch_effects.rotate import rotate_deg
+from stitch_generator.stitch_operations.rotate import rotate_by_degrees
 
 
 def straight_line(length: float, stitch_length: float):
@@ -35,7 +35,7 @@ def bent_line_with_motif(length: float, stitch_length: float, angle_deg, motif):
 
 def _bent_line_f(length: float, angle_deg):
     factor = 0.4
-    last_point = rotate_deg(np.array([length, 0], ndmin=2), angle_deg)
+    last_point = rotate_by_degrees(np.array([length, 0], ndmin=2), angle_deg)
     control_points = np.array(((0, 0), (factor * length, 0), last_point[0]))
     direction = (control_points[2] - control_points[1])
     direction /= np.linalg.norm(direction)

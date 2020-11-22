@@ -1,6 +1,6 @@
 import numpy as np
 
-from stitch_generator.stitch_effects.rotate import rotate
+from stitch_generator.stitch_operations.rotate import rotate_by_sin_cos
 
 
 def place_motif_at(position, direction, scale, motif, include_endpoint=False):
@@ -8,7 +8,7 @@ def place_motif_at(position, direction, scale, motif, include_endpoint=False):
         return position
     motif = motif.copy()
     motif *= scale
-    motif = rotate(stitches=motif, sin=direction[1], cos=direction[0])
+    motif = rotate_by_sin_cos(stitches=motif, sin=direction[1], cos=direction[0])
     motif += position
     last = None if include_endpoint else -1
     return motif[0:last]
@@ -32,7 +32,7 @@ def place_motif_between(p1, p2, motif, include_endpoint=False, width_scale=None)
     delta /= scale_x
 
     motif *= (scale_x, scale_y)
-    motif = rotate(motif, delta[1], delta[0])
+    motif = rotate_by_sin_cos(motif, delta[1], delta[0])
     motif += p1
 
     last = None if include_endpoint else -1
@@ -47,4 +47,4 @@ def _normalize_motif(motif):
     motif -= p1
     motif /= size
     d /= size
-    return rotate(motif, -d[1], d[0])
+    return rotate_by_sin_cos(motif, -d[1], d[0])
