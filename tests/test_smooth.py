@@ -1,7 +1,7 @@
 import numpy as np
 
 from tests.functions import all_functions
-from stitch_generator.stitch_effects.smooth import smooth
+from stitch_generator.stitch_operations.smooth import smooth
 
 
 def test_smooth():
