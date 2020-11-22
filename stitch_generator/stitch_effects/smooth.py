@@ -3,16 +3,17 @@ import numpy as np
 
 def smooth(stitches: np.ndarray, iterations: int, neighbor_weight: float = 0.5, circular=False):
     """
-    Applies Laplacian smoothing to the stitches, i.e. moves each one closer to the
-    center between its predecessor and successor.
+    Applies Laplacian smoothing to the stitches, i.e. moves each one closer to the center between its predecessor and
+    successor
 
-    Parameters:
-        stitches: The stitches to smooth
-        neighbor_weight: Defines how much each stitch is moved to the target in one step.
-                         Should be in Range [0;1]
-        iterations: Defines how often the smoothing is repeated
-        circular: Set to True if the start and end stitch should participate
-                  in the smoothing
+    Args:
+        stitches:        The stitches to smooth
+        iterations:      Defines how often the smoothing is repeated
+        neighbor_weight: Defines how much each stitch is moved to the target in one step. Should be in Range [0;1]
+        circular:        Set to True if the start and end stitch should participate in the smoothing
+
+    Returns:
+        The smoothed stitches
     """
     assert len(stitches) > 2, "smooth requires at least three stitches"
 
