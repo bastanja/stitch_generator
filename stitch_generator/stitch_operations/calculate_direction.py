@@ -1,9 +1,10 @@
 import numpy as np
 
+from stitch_generator.functions.types import Array1D
 from stitch_generator.stitch_operations.rotate import rotate_by_sin_cos
 
 
-def calculate_direction(stitches):
+def calculate_direction(stitches: Array1D):
     """
     Calculates the normal direction for stitches. This is the direction perpendicular to the stitching line at this
     stitch point. From start to end the calculated direction vector points to the left side of the stitch line. The

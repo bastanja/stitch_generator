@@ -1,6 +1,6 @@
 import numpy as np
 
-from stitch_generator.functions.calculate_direction import calculate_direction
+from stitch_generator.stitch_operations.calculate_direction import calculate_direction
 from stitch_generator.functions.functions_1d import linear_interpolation
 from stitch_generator.functions.functions_2d import function_2d, circle, line, spiral, bezier, bezier_normals
 from stitch_generator.sampling.sample_by_number import sample_by_number

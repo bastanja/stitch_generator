@@ -3,7 +3,7 @@ import math
 import numpy as np
 import pytest
 
-from stitch_generator.functions.calculate_direction import calculate_direction
+from stitch_generator.stitch_operations.calculate_direction import calculate_direction
 
 
 def test_calculate_direction():
