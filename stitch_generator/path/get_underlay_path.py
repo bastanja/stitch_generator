@@ -5,6 +5,19 @@ from stitch_generator.path.path import Path
 
 
 def get_underlay_path(path: Path, inset: float) -> Path:
+    """
+    Calculates a path that is smaller than the original path by the size of 'inset'. Such a path lies completely inside
+    the original path and can therefore be used for underlays.
+
+    Args:
+        path:  The path for which the underlay path is calculated
+        inset: The amount by which the resulting path is smaller. inset is subtracted from the width and from the total
+               length of the path. Inset should be a positive value. Negative values are only supported if all members
+               of the original path support being evaluated outside the range [0, 1]
+
+    Returns:
+        The underlay path
+    """
     cut = inset / estimate_length(path.position)
     underlay = path.apply_modifier(lambda function: repeat(1 - 2 * cut, (shift(cut, function))))
 
