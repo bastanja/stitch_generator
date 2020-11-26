@@ -9,6 +9,7 @@ from stitch_generator.functions.functions_1d import linear_interpolation, smooth
 from stitch_generator.functions.functions_2d import spiral, constant_direction
 from stitch_generator.sampling.resample import resample
 from stitch_generator.sampling.sample_by_number import sample_by_number
+from stitch_generator.stitch_operations.remove_duplicates import remove_duplicates
 
 
 class Design(EmbroideryDesign):
@@ -51,7 +52,7 @@ class Design(EmbroideryDesign):
         # repeat stitch lines
         stitch_coordinates = np.repeat(stitch_coordinates, parameters.line_repetition, axis=1)
 
-        stitches = _make_stitch_path(stitch_coordinates)
+        stitches = remove_duplicates(_make_stitch_path(stitch_coordinates))
 
         pattern = EmbroideryPattern()
         pattern.add_stitches(stitches)
