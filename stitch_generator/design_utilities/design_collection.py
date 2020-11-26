@@ -7,8 +7,8 @@ from stitch_generator.designs import lattice
 from stitch_generator.designs import stitch_effects
 
 designs = [
-    variable_running_stitch.Design,
     stitch_effects.Design,
+    variable_running_stitch.Design,
     lattice.Design,
     satin.Design,
     waves.Design,
