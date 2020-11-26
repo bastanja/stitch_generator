@@ -1,5 +1,6 @@
 import numpy as np
 
+from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.function_1d_stairs import stairs
 from stitch_generator.functions.function_modifiers import repeat, mix
 from stitch_generator.path.get_boundaries import get_boundaries
@@ -8,10 +9,9 @@ from stitch_generator.stitch_effects.stitch_effect import StitchEffect
 from stitch_generator.utilities.types import SamplingFunction
 
 
-def repeat_effect(repetitions: int, sampling_function: SamplingFunction, length: float,
-                  step_ratio: float) -> StitchEffect:
+def repeat_effect(repetitions: int, sampling_function: SamplingFunction, step_ratio: float) -> StitchEffect:
     return lambda path: repeat_along(path, repetitions=repetitions, sampling_function=sampling_function,
-                                     length=length, step_ratio=step_ratio)
+                                     length=estimate_length(path.position), step_ratio=step_ratio)
 
 
 def repeat_along(path: Path, repetitions: int, sampling_function: SamplingFunction, length: float, step_ratio: float):

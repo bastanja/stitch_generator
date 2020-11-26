@@ -7,7 +7,7 @@ from stitch_generator.functions.embroidery_pattern import EmbroideryPattern
 from stitch_generator.functions.functions_1d import constant
 from stitch_generator.functions.functions_2d import line, constant_direction
 from stitch_generator.path.path import Path
-from stitch_generator.stitch_effects.stitch_effect_collection import stitch_effects
+from stitch_generator.stitch_effects.collection import stitch_effects
 
 
 class Design(EmbroideryDesign):
@@ -28,7 +28,7 @@ class Design(EmbroideryDesign):
 
         pattern = EmbroideryPattern()
 
-        effects = list(iter(stitch_effects(parameters.length)))
+        effects = list(iter(stitch_effects(parameters.stitch_length)))
         offsets = [np.array((0, 30 + i * 15)) for i in range(len(effects))]
 
         for effect, offset in zip(effects, offsets):
