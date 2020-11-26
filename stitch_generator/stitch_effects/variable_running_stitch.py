@@ -97,14 +97,6 @@ def _width_to_level(widths: np.ndarray, level_spacing: float):
     return widths.astype(int)
 
 
-def _to_min(strokes: int):
-    return int(strokes / 2)
-
-
-def _to_max(strokes: int):
-    return int((strokes - 1) / 2)
-
-
 def _make_range_tree(values):
     stack = []
     _start_range(stack, 0)
