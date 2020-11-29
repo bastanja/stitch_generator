@@ -28,10 +28,10 @@ def test_running_stitch_line():
     assert len(s) == 2
     assert np.allclose(s, ((0, 0), (10, 10)))
 
-    # check that running stitch line has at least start and end point
+    # check that running stitch line of length 0 has only a single point
     stitch_effect = running_stitch_line(stitch_length=1, include_endpoint=True)
     s = stitch_effect((0, 0), (0, 0))
-    assert len(s) == 2
+    assert len(s) == 1
 
     # check that running stitch line has at least a start point
     stitch_effect = running_stitch_line(stitch_length=1, include_endpoint=False)

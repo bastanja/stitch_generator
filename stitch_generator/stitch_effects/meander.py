@@ -22,6 +22,11 @@ def meander_between(boundary_left, boundary_right, sampling_function: SamplingFu
                     connect_function: ConnectFunction, length) -> Array2D:
     points = _meander(boundary_left, boundary_right, sampling_function=sampling_function, length=length)
     connection = [connect_function(points[i - 1], points[i]) for i in range(1, len(points), 2)]
+
+    last = connection[-1]
+    if len(last) > 0 and not np.allclose(last[-1], points[-1]):
+        connection.append([points[-1]])
+
     return np.concatenate(connection)
 
 

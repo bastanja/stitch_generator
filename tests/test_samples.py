@@ -24,15 +24,16 @@ def _test_samples_by_length(total_length, segment_length, expected_segments):
     with_endpoint = sample_by_length(total_length, segment_length, include_endpoint=True)
     no_endpoint = sample_by_length(total_length, segment_length, include_endpoint=False)
 
-    with_endpoint = with_endpoint
-    no_endpoint = no_endpoint
+    if expected_segments is 0:
+        assert len(with_endpoint) == 1
+        assert len(no_endpoint) == 1
+    else:
+        reference = [1 / expected_segments * i for i in range(expected_segments + 1)]
 
-    reference = [1 / expected_segments * i for i in range(expected_segments + 1)]
-
-    assert len(with_endpoint) == expected_segments + 1
-    assert len(no_endpoint) == expected_segments
-    assert np.allclose(with_endpoint[:-1], no_endpoint)
-    assert np.allclose(with_endpoint, reference)
+        assert len(with_endpoint) == expected_segments + 1
+        assert len(no_endpoint) == expected_segments
+        assert np.allclose(with_endpoint[:-1], no_endpoint)
+        assert np.allclose(with_endpoint, reference)
 
 
 def test_samples_by_length():
@@ -49,7 +50,7 @@ def test_samples_by_length():
     _test_samples_by_length(total_length=5, segment_length=10, expected_segments=1)
 
     # test with total length of zero
-    _test_samples_by_length(total_length=0, segment_length=10, expected_segments=1)
+    _test_samples_by_length(total_length=0, segment_length=10, expected_segments=0)
 
     # test with segment length of zero
     _test_samples_by_length(total_length=5, segment_length=0, expected_segments=1)

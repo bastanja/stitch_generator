@@ -31,12 +31,15 @@ def contour_between(boundary_left, boundary_right, stitch_length: float, length:
     connect_end = line(origin=boundary_left(1)[0], to=boundary_right(0)[0])
     connect_start = line(origin=boundary_right(1)[0], to=boundary_left(0)[0])
 
+    # left boundary
     stitches = [boundary_left(t)]
-    if end_width > 0.5:
+    # close end
+    if not np.isclose(end_width, 0):
         stitches.append(connect_end(t_end))
+    # right boundary
     stitches.append(boundary_right(t))
-    if start_width > 0.5:
-        stitches.append(connect_start(t_start))
+    # close start
+    stitches.append(connect_start(t_start))
 
     stitches = np.concatenate(stitches)
 

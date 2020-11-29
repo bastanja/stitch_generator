@@ -1,11 +1,13 @@
 import numpy as np
 
-from stitch_generator.utilities.types import SamplingFunction, Array1D
 from stitch_generator.sampling.sample_by_number import sample_by_number
+from stitch_generator.utilities.types import SamplingFunction, Array1D
 
 
 def sample_by_length(total_length: float, segment_length: float, include_endpoint: bool) -> Array1D:
-    if np.isclose(total_length, 0) or np.isclose(segment_length, 0) or segment_length > total_length:
+    if np.isclose(total_length, 0):
+        return sample_by_number(1, include_endpoint=False)
+    if segment_length > total_length or np.isclose(segment_length, 0):
         return sample_by_number(1, include_endpoint=include_endpoint)
 
     number_of_segments = int(round(total_length / segment_length))
