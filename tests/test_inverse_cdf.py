@@ -8,7 +8,7 @@ def test_inverse_cdf():
     for name, f in functions_1d_positive.items():
         icdf, area = _inverse_cdf(f)
         # Area should be between 0 and 1
-        assert 0 < area <= 1
+        assert 0 <= area <= 1
 
         # Evaluate the inverse cumulative distribution function
         v = icdf(np.linspace(0, 1, 100))

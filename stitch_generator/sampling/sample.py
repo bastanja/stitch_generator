@@ -9,8 +9,10 @@ def sample(total_length: float,
            include_endpoint: bool,
            offset: float,
            minimal_segment_size: float = 0.5):
-    if np.isclose(total_length, 0) or np.isclose(segment_length, 0) or segment_length > total_length:
-        return _default_samples(include_endpoint=include_endpoint)
+    if np.isclose(total_length, 0):
+        return sample_by_number(1, include_endpoint=False)
+    if segment_length > total_length or np.isclose(segment_length, 0):
+        return sample_by_number(1, include_endpoint=include_endpoint)
 
     relative_segment_length = segment_length / total_length
     minimal_segment_length = relative_segment_length * minimal_segment_size

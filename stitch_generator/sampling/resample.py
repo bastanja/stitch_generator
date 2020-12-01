@@ -7,7 +7,7 @@ from stitch_generator.sampling.sample_by_length import sample_by_length
 
 def resample(stitches, stitch_length):
     """
-    Returns stitches which lie the polyline defined by the parameter stitches. The newly calculated stitches have
+    Returns stitches which lie on the polyline defined by the parameter stitches. The newly calculated stitches have
     approximately the distance stitch_length. This function can be used to increase or decrease the stitch density.
     """
     interpolation, total_length = _get_interpolation_and_length(stitches)
@@ -18,7 +18,7 @@ def resample(stitches, stitch_length):
 
 def resample_with_sampling_function(stitches, sampling_function: SamplingFunction):
     """
-    Returns stitches which lie the polyline defined by the parameter stitches.
+    Returns stitches which lie on the polyline defined by the parameter stitches.
     """
     interpolation, total_length = _get_interpolation_and_length(stitches)
 
