@@ -8,7 +8,7 @@ from stitch_generator.functions.function_sequence import function_sequence
 from stitch_generator.functions.functions_1d import linear_interpolation, constant, arc
 from stitch_generator.functions.functions_2d import line, constant_direction
 from stitch_generator.path.path import Path
-from stitch_generator.sampling.sample_by_length import regular
+from stitch_generator.sampling.sample_by_fixed_length import sampling_by_fixed_length
 from stitch_generator.stitch_effects.meander import meander_along
 from stitch_generator.stitch_effects.underlay import contour_zigzag_underlay, dense_underlay
 
@@ -37,8 +37,10 @@ class Design(EmbroideryDesign):
                     width=self._get_width_function(parameters),
                     stroke_alignment=constant(parameters.alignment))
 
+        satin_row_spacing = sampling_by_fixed_length(parameters.stitch_spacing, include_endpoint=False)
+
         stitches = [
-            meander_along(path=path, sampling_function=regular(parameters.stitch_spacing),
+            meander_along(path=path, sampling_function=satin_row_spacing,
                           connect_function=combine_start_end(connect_function), length=parameters.length) for
             connect_function in presets(include_endpoint=True, alignment=parameters.pattern_alignment)]
 
