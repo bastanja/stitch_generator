@@ -23,13 +23,25 @@ def _motif_to_points(path: Path, motif_position_sampling: SamplingFunction, line
 
     fills = []
 
+    motif_locations = add_first_and_last(motif_locations)
+
     spaces = zip(motif_locations, motif_locations[1:])
     for space in spaces:
         difference = space[1] - space[0]
         space_length = difference * length
         samples = line_sampling(space_length) * difference + space[0]
         fills.append(path.position(samples))
+    fills.append(path.position(1))
 
-    combined = [i for i in itertools.chain.from_iterable(itertools.zip_longest(motifs, fills)) if i is not None]
+    combined = [i for i in itertools.chain.from_iterable(itertools.zip_longest(fills, motifs)) if i is not None]
 
     return np.concatenate(combined)
+
+
+def add_first_and_last(samples):
+    if not np.isclose(samples[0], 0):
+        samples = np.concatenate(([0], samples))
+    if not np.isclose(samples[-1], 1):
+        samples = np.concatenate((samples, [1]))
+
+    return samples
