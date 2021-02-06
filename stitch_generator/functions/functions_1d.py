@@ -1,8 +1,6 @@
-from functools import partial
 from typing import Callable
 
 import numpy as np
-from noise import pnoise1
 from scipy.interpolate import interp1d
 
 from stitch_generator.utilities.types import Function1D
@@ -40,11 +38,6 @@ def sinus() -> Function1D:
 
 def cosinus() -> Function1D:
     return lambda v: np.asarray(np.cos(np.asarray(v) * np.pi * 2))
-
-
-def noise(octaves: int = 4) -> Function1D:
-    n = partial(pnoise1, octaves=octaves)
-    return function_1d(n)
 
 
 def cubic_interpolation_evenly_spaced(values) -> Function1D:

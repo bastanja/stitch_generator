@@ -3,13 +3,14 @@ from stitch_generator.design_utilities.palette import palette
 from stitch_generator.design_utilities.parameter import FloatParameter, IntParameter
 from stitch_generator.functions.arc_length_mapping import arc_length_mapping_with_length
 from stitch_generator.functions.embroidery_pattern import EmbroideryPattern
+from stitch_generator.functions.function_1d_noise import noise
 from stitch_generator.functions.function_modifiers import combine, add, multiply, repeat, scale, shift
-from stitch_generator.functions.functions_1d import noise, constant
+from stitch_generator.functions.functions_1d import constant
 from stitch_generator.functions.functions_2d import spiral, circle
 from stitch_generator.functions.motif_generators import repeat_motif_mirrored
+from stitch_generator.motifs.satin_circle import satin_circle
 from stitch_generator.path.path import Path
 from stitch_generator.sampling.sample_by_length import regular, sampling_by_length
-from stitch_generator.motifs.satin_circle import satin_circle
 from stitch_generator.stitch_effects.motif_to_points import motif_to_points
 
 
