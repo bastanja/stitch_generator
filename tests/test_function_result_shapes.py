@@ -1,4 +1,5 @@
 import numpy as np
+import pytest
 
 from tests.functions import functions_2d, functions_1d
 
@@ -18,17 +19,15 @@ multiple_values_parameters = [
     np.array(multiple_values, ndmin=2).T
 ]
 
+@pytest.mark.parametrize("name, f", functions_2d.items())
+def test_shapes_2d(name, f):
+    _test_2d_single_parameter(f)
+    _test_2d_multiple_parameters(f)
 
-def test_shapes_2d():
-    for name, f in functions_2d.items():
-        _test_2d_single_parameter(f)
-        _test_2d_multiple_parameters(f)
-
-
-def test_shapes_1d():
-    for name, f in functions_1d.items():
-        _test_1d_single_parameter(f)
-        _test_1d_multiple_parameters(f)
+@pytest.mark.parametrize("name, f", functions_1d.items())
+def test_shapes_1d(name, f):
+    _test_1d_single_parameter(f)
+    _test_1d_multiple_parameters(f)
 
 
 def _test_2d_single_parameter(function):
