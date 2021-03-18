@@ -1,14 +1,15 @@
-import math
 from typing import Sequence
 
+import math
 import numpy as np
+from scipy.interpolate import interp1d
 
 from stitch_generator.functions.bezier import de_casteljau
-from stitch_generator.functions.ensure_shape import ensure_1d_shape
+from stitch_generator.functions.ensure_shape import ensure_1d_shape, ensure_2d_shape
 from stitch_generator.functions.function_modifiers import scale, add, repeat, mix
 from stitch_generator.functions.functions_1d import cosinus, sinus, constant, linear_interpolation
-from stitch_generator.utilities.types import Function2D, Function1D
 from stitch_generator.stitch_operations.rotate import rotate_by_degrees
+from stitch_generator.utilities.types import Function2D, Function1D
 
 
 def function_2d(fx: Function1D, fy: Function1D) -> Function2D:
@@ -36,7 +37,11 @@ def ellipse(rx: float, ry: float, center: Sequence[float] = (0, 0)) -> Function2
 
 
 def line(origin: Sequence[float] = (0, 0), to: Sequence[float] = (100, 0)) -> Function2D:
-    return function_2d(linear_interpolation(origin[0], to[0]), linear_interpolation(origin[1], to[1]))
+    interpolation_values = np.vstack((origin, to))
+    def f(v):
+        result = interp1d(np.array([0, 1]), interpolation_values, fill_value="extrapolate", axis=0)(v)
+        return ensure_2d_shape(result)
+    return f
 
 
 def spiral(inner_radius: float, outer_radius: float, turns: float, center: Sequence[float] = (0, 0)) -> Function2D:

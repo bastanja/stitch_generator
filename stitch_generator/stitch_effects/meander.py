@@ -32,11 +32,17 @@ def meander_between(boundary_left, boundary_right, sampling_function: SamplingFu
 
 def _meander(boundary_left, boundary_right, sampling_function: SamplingFunction, length):
     t = sampling_function(length)
-    stitches = np.zeros((len(t) * 2, 2))
 
-    stitches[0::4] = boundary_left(t[0::2])
-    stitches[1::4] = boundary_right(t[0::2])
-    stitches[2::4] = boundary_right(t[1::2])
-    stitches[3::4] = boundary_left(t[1::2])
+    values_left_even = boundary_left(t[0::2])
+    values_right_even = boundary_right(t[0::2])
+    values_right_odd = boundary_right(t[1::2])
+    values_left_odd = boundary_left(t[1::2])
+
+    stitches = np.zeros((len(t) * 2, len(values_left_even[0])))
+
+    stitches[0::4] = values_left_even
+    stitches[1::4] = values_right_even
+    stitches[2::4] = values_right_odd
+    stitches[3::4] = values_left_odd
 
     return stitches

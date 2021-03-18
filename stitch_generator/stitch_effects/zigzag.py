@@ -7,9 +7,8 @@ def zigzag_between(boundary_left: Function2D, boundary_right: Function2D, sampli
                    length: float) -> Array2D:
     p = sampling_function(length)
     if len(p) < 2:
-        p = np.array([0, 1], dtype=float)
-    stitches = np.zeros((len(p), 2))
-    stitches[0::2] = boundary_left(p[0::2])
+        p = boundary_left(0)
+    stitches = boundary_left(p)
     stitches[1::2] = boundary_right(p[1::2])
     return stitches
 
