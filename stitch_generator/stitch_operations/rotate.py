@@ -1,7 +1,6 @@
 import numpy as np
 
-from stitch_generator.functions.ensure_shape import ensure_1d_shape
-from stitch_generator.utilities.types import Function2D, Function1D, Array2D
+from stitch_generator.utilities.types import Array2D
 
 
 def rotate_by_degrees(stitches: Array2D, angle_deg) -> Array2D:
@@ -51,41 +50,3 @@ def rotate_by_sin_cos(stitches: Array2D, sin, cos) -> Array2D:
     x = stitches[:, 0]
     y = stitches[:, 1]
     return np.array([cos * x - sin * y, sin * x + cos * y]).T
-
-
-def rotation_by_degrees(stitch_position_function: Function2D, angle_function: Function1D) -> Function2D:
-    """
-    Creates a rotated 2D Function
-
-    Args:
-        stitch_position_function: A 2D Function returning stitch positions
-        angle_function:           A 1D Function returning rotation angles in degrees
-
-    Returns:
-        A 2D Function that returns the stitches from `stitch_position_function` rotated by the angles from
-        `angle_function`
-    """
-    def f(t):
-        t = ensure_1d_shape(t)
-        return rotate_by_degrees(stitch_position_function(t), angle_function(t))
-
-    return f
-
-
-def rotation_by_radians(stitch_position_function: Function2D, angle_function: Function1D) -> Function2D:
-    """
-    Creates a rotated 2D Function
-
-    Args:
-        stitch_position_function: A 2D Function returning stitch positions
-        angle_function:           A 1D Function returning rotation angles in radians
-
-    Returns:
-        A 2D Function that returns the stitches from `stitch_position_function` rotated by the angles from
-        `angle_function`
-    """
-    def f(t):
-        t = ensure_1d_shape(t)
-        return rotate_by_radians(stitch_position_function(t), angle_function(t))
-
-    return f
