@@ -3,7 +3,7 @@ from stitch_generator.framework.palette import palette
 from stitch_generator.framework.parameter import FloatParameter, IntParameter
 from stitch_generator.functions.arc_length_mapping import arc_length_mapping_with_length
 from stitch_generator.framework.embroidery_pattern import EmbroideryPattern
-from stitch_generator.functions.function_1d_noise import noise
+from stitch_generator.functions.noise import noise
 from stitch_generator.functions.function_modifiers import combine, add, multiply, repeat, scale, shift
 from stitch_generator.functions.functions_1d import constant
 from stitch_generator.functions.functions_2d import spiral, circle

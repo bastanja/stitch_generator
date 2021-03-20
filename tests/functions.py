@@ -1,6 +1,6 @@
 import numpy as np
 
-from stitch_generator.functions.function_1d_noise import noise
+from stitch_generator.functions.noise import noise
 from stitch_generator.functions.function_1d_stairs import stairs
 from stitch_generator.functions.function_sequence import function_sequence
 from stitch_generator.functions.functions_1d import linear_interpolation, constant, cubic_interpolation_evenly_spaced, \

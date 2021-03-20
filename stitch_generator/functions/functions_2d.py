@@ -4,7 +4,7 @@ import math
 import numpy as np
 from scipy.interpolate import interp1d
 
-from stitch_generator.functions.bezier import de_casteljau
+from stitch_generator.functions.de_casteljau import de_casteljau
 from stitch_generator.functions.ensure_shape import ensure_1d_shape, ensure_2d_shape
 from stitch_generator.functions.function_modifiers import scale, add, repeat, mix
 from stitch_generator.functions.functions_1d import cosinus, sinus, constant, linear_interpolation
