@@ -6,9 +6,10 @@ from stitch_generator.framework.parameter import FloatParameter, IntParameter, B
 from stitch_generator.framework.embroidery_pattern import EmbroideryPattern
 from stitch_generator.functions.function_modifiers import multiply, add, combine, inverse
 from stitch_generator.functions.functions_1d import linear_interpolation, smoothstep
-from stitch_generator.functions.functions_2d import spiral, constant_direction
+from stitch_generator.functions.functions_2d import constant_direction
 from stitch_generator.sampling.resample import resample
 from stitch_generator.sampling.sample_by_number import sample_by_number
+from stitch_generator.shapes.spiral import spiral
 from stitch_generator.stitch_operations.remove_duplicates import remove_duplicates
 
 

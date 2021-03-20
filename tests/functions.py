@@ -5,7 +5,11 @@ from stitch_generator.functions.function_1d_stairs import stairs
 from stitch_generator.functions.function_sequence import function_sequence
 from stitch_generator.functions.functions_1d import linear_interpolation, constant, cubic_interpolation_evenly_spaced, \
     square, arc, smoothstep, smootherstep, circular_arc, sinus, cosinus
-from stitch_generator.functions.functions_2d import circle, line, spiral, bezier, function_2d
+from stitch_generator.functions.functions_2d import function_2d
+from stitch_generator.shapes.bezier import bezier
+from stitch_generator.shapes.circle import circle
+from stitch_generator.shapes.line import line
+from stitch_generator.shapes.spiral import spiral
 
 functions_1d_positive = {
     'lin01': linear_interpolation(0, 1),

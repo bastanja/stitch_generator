@@ -1,9 +1,9 @@
 import numpy as np
 
-from stitch_generator.functions.functions_2d import line
 from stitch_generator.sampling.resample import resample, resample_with_sampling_function
 from stitch_generator.sampling.sample_by_number import sample_by_number
 from stitch_generator.sampling.sampling_presets import sampling_presets_stateless
+from stitch_generator.shapes.line import line
 
 
 def test_resample():

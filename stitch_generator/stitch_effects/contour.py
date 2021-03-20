@@ -2,10 +2,10 @@ import numpy as np
 
 from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.function_modifiers import inverse
-from stitch_generator.functions.functions_2d import line
 from stitch_generator.path.get_boundaries import get_boundaries
 from stitch_generator.path.path import Path
 from stitch_generator.sampling.sample_by_length import sample_by_length
+from stitch_generator.shapes.line import line
 from stitch_generator.stitch_effects.stitch_effect import StitchEffect
 from stitch_generator.utilities.types import Array2D
 
