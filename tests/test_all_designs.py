@@ -1,4 +1,4 @@
-from stitch_generator.design_utilities.design_collection import designs
+from stitch_generator.designs.design_collection import designs
 from stitch_generator.framework.embroidery_pattern import EmbroideryPattern
 
 
