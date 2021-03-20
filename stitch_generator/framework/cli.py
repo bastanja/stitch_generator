@@ -1,6 +1,6 @@
 import argparse
 
-from stitch_generator.design_utilities.parameter import IntParameter, FloatParameter, BoolParameter
+from stitch_generator.framework.parameter import IntParameter, FloatParameter, BoolParameter
 from stitch_generator.file_io.embroidery_export import export_vp3
 
 

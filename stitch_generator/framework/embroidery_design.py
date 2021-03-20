@@ -1,6 +1,6 @@
 from types import SimpleNamespace
 
-from stitch_generator.design_utilities.cli import get_parser, write_pattern_to_file
+from stitch_generator.framework.cli import get_parser, write_pattern_to_file
 
 
 class EmbroideryDesign:

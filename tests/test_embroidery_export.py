@@ -2,7 +2,7 @@ from pyembroidery import COMMAND_MASK, COLOR_BREAK
 
 from stitch_generator.file_io.embroidery_export import to_pyembroidery
 from stitch_generator.functions.connect_functions import running_stitch_line
-from stitch_generator.functions.embroidery_pattern import EmbroideryPattern
+from stitch_generator.framework.embroidery_pattern import EmbroideryPattern
 
 
 def test_to_pyembroidery():

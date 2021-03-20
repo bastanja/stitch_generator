@@ -1,8 +1,8 @@
-from stitch_generator.design_utilities.embroidery_design import EmbroideryDesign
-from stitch_generator.design_utilities.palette import palette
-from stitch_generator.design_utilities.parameter import FloatParameter, BoolParameter
+from stitch_generator.framework.embroidery_design import EmbroideryDesign
+from stitch_generator.framework.palette import palette
+from stitch_generator.framework.parameter import FloatParameter, BoolParameter
 from stitch_generator.functions.connect_functions import presets, combine_start_end
-from stitch_generator.functions.embroidery_pattern import EmbroideryPattern
+from stitch_generator.framework.embroidery_pattern import EmbroideryPattern
 from stitch_generator.functions.function_modifiers import combine, multiply, subtract
 from stitch_generator.functions.function_sequence import function_sequence
 from stitch_generator.functions.functions_1d import linear_interpolation, constant, arc

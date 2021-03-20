@@ -1,9 +1,9 @@
 import numpy as np
 from scipy.spatial.ckdtree import cKDTree
 
-from stitch_generator.design_utilities.embroidery_design import EmbroideryDesign
-from stitch_generator.design_utilities.parameter import FloatParameter, IntParameter, BoolParameter
-from stitch_generator.functions.embroidery_pattern import EmbroideryPattern
+from stitch_generator.framework.embroidery_design import EmbroideryDesign
+from stitch_generator.framework.parameter import FloatParameter, IntParameter, BoolParameter
+from stitch_generator.framework.embroidery_pattern import EmbroideryPattern
 from stitch_generator.functions.function_modifiers import multiply, add, combine, inverse
 from stitch_generator.functions.functions_1d import linear_interpolation, smoothstep
 from stitch_generator.functions.functions_2d import spiral, constant_direction

@@ -1,9 +1,9 @@
 import numpy as np
 
-from stitch_generator.design_utilities.embroidery_design import EmbroideryDesign
-from stitch_generator.design_utilities.palette import palette
-from stitch_generator.design_utilities.parameter import FloatParameter, RampParameter, BoolParameter
-from stitch_generator.functions.embroidery_pattern import EmbroideryPattern
+from stitch_generator.framework.embroidery_design import EmbroideryDesign
+from stitch_generator.framework.palette import palette
+from stitch_generator.framework.parameter import FloatParameter, RampParameter, BoolParameter
+from stitch_generator.framework.embroidery_pattern import EmbroideryPattern
 from stitch_generator.functions.function_modifiers import multiply
 from stitch_generator.functions.functions_1d import constant
 from stitch_generator.functions.functions_2d import bezier_normals, bezier
