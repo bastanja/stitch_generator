@@ -1,6 +1,5 @@
 import numpy as np
 
-from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.path.get_boundaries import get_boundaries
 from stitch_generator.path.path import Path
 from stitch_generator.stitch_effects.stitch_effect import StitchEffect
@@ -10,7 +9,7 @@ from stitch_generator.utilities.types import ConnectFunction, SamplingFunction
 
 def meander(sampling_function: SamplingFunction, connect_function) -> StitchEffect:
     return lambda path: meander_along(path=path, sampling_function=sampling_function, connect_function=connect_function,
-                                      length=estimate_length(path.position))
+                                      length=path.length)
 
 
 def meander_along(path: Path, sampling_function: SamplingFunction, connect_function, length) -> Array2D:

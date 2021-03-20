@@ -1,4 +1,3 @@
-from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.function_modifiers import scale, add, repeat, multiply, subtract
 from stitch_generator.functions.functions_1d import constant, cosinus, linear_interpolation, arc, smoothstep
 from stitch_generator.path.get_boundaries import get_boundaries
@@ -14,7 +13,7 @@ def lattice(strands, pattern_f, pattern_length) -> StitchEffect:
 
 def lattice_along(path: Path, strands, pattern_f, pattern_length) -> Array2D:
     stitch_length = _calculate_stitch_length(pattern_length, strands)
-    return _lattice(path=path, strands=strands, length=estimate_length(path.position), pattern_f=pattern_f,
+    return _lattice(path=path, strands=strands, length=path.length, pattern_f=pattern_f,
                     pattern_length=pattern_length, stitch_length=stitch_length)
 
 

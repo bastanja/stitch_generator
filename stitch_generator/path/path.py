@@ -1,3 +1,4 @@
+from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.function_modifiers import split, inverse
 from stitch_generator.utilities.types import Function1D, Function2D
 
@@ -61,3 +62,7 @@ class Path:
         width = function_modifier(function=self.width)
         stroke_alignment = function_modifier(function=self.stroke_alignment)
         return Path(position, direction, width, stroke_alignment)
+
+    @property
+    def length(self):
+        return estimate_length(self.position)

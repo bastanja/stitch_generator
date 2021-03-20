@@ -1,6 +1,5 @@
 import numpy as np
 
-from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.function_modifiers import inverse
 from stitch_generator.path.get_boundaries import get_boundaries
 from stitch_generator.path.path import Path
@@ -16,7 +15,7 @@ def contour(stitch_length: float) -> StitchEffect:
 
 def contour_along(path: Path, stitch_length: float) -> Array2D:
     left, right = get_boundaries(path)
-    return contour_between(left, right, stitch_length=stitch_length, length=estimate_length(path.position))
+    return contour_between(left, right, stitch_length=stitch_length, length=path.length)
 
 
 def contour_between(boundary_left, boundary_right, stitch_length: float, length: float) -> Array2D:

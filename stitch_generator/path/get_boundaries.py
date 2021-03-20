@@ -1,6 +1,5 @@
 from typing import Tuple
 
-from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.function_modifiers import multiply, subtract, add, maximum, minimum, repeat, shift
 from stitch_generator.functions.functions_1d import constant
 from stitch_generator.path.path import Path
@@ -47,7 +46,7 @@ def get_underlay_boundaries(path: Path, inset: float):
     left = add(path.position, multiply(path.direction, positive_width))
     right = add(path.position, multiply(path.direction, negative_width))
 
-    cut = inset / estimate_length(path.position)
+    cut = inset / path.length
 
     left = repeat(1 - 2 * cut, shift(cut, left))
     right = repeat(1 - 2 * cut, shift(cut, right))

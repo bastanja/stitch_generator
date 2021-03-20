@@ -1,7 +1,6 @@
 import numpy as np
 
 from stitch_generator.functions.connect_functions import running_stitch_line
-from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.function_modifiers import repeat, scale
 from stitch_generator.functions.functions_1d import circular_arc, constant
 from stitch_generator.functions.functions_2d import constant_direction
@@ -31,7 +30,7 @@ def satin_circle(diameter: float, stitch_length: float, pull_compensation: float
     stitches = []
     if return_to_start:
         middle_run = lambda path: path.position(
-            sample_by_length(estimate_length(path.position), stitch_length, include_endpoint=False))
+            sample_by_length(path.length, stitch_length, include_endpoint=False))
         stitches.append(middle_run(path))
         path = path.inverse()
     else:
