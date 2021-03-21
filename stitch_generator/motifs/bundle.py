@@ -1,6 +1,6 @@
 import numpy as np
 
-from stitch_generator.functions.function_modifiers import mix
+from stitch_generator.functions.function_modifiers import mix, rotate_degrees
 from stitch_generator.functions.functions_1d import constant, arc, linear_interpolation
 from stitch_generator.functions.functions_2d import constant_direction
 from stitch_generator.functions.motif_generators import cycle_motifs
@@ -9,7 +9,6 @@ from stitch_generator.sampling.sample_by_number import sample_by_number, samplin
 from stitch_generator.utilities.types import Function1D
 from stitch_generator.motifs.line import bent_line_with_motif
 from stitch_generator.stitch_effects.motif_to_points import motif_to_points
-from stitch_generator.stitch_operations.rotate import rotation_by_degrees
 
 
 def bundle(start_angle, end_angle, bend_angle_start, bend_angle_end, min_length, max_length, number_of_lines,
@@ -26,7 +25,7 @@ def bundle_f(angle: Function1D, bend: Function1D, length: Function1D, number_of_
 
     stitch_effect = motif_to_points(sampling_by_number(number_of_lines-1, include_endpoint=True),
                                     line_sampling=lambda _: np.array([]),
-                                    motif_generator=gen, length=0)
+                                    motif_generator=gen)
 
     return np.vstack((stitch_effect(_zero_path(angle)), [0, 0]))
 
@@ -41,6 +40,6 @@ def _motif_generator(number, stitch_length, bend_f, length_f, motif):
 
 def _zero_path(angle_f: Function1D):
     return Path(position=constant_direction(0, 0),
-                direction=rotation_by_degrees(constant_direction(1, 0), angle_f),
+                direction=rotate_degrees(constant_direction(1, 0), angle_f),
                 width=constant(1),
                 stroke_alignment=constant(0.5))

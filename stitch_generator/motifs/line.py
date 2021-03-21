@@ -2,9 +2,10 @@ import numpy as np
 
 from stitch_generator.functions.arc_length_mapping import arc_length_mapping_with_length
 from stitch_generator.functions.function_modifiers import combine
-from stitch_generator.functions.functions_2d import line, bezier
 from stitch_generator.functions.place_motif import place_motif_at
 from stitch_generator.sampling.sample_by_length import sample_by_length
+from stitch_generator.shapes.bezier import bezier
+from stitch_generator.shapes.line import line
 from stitch_generator.stitch_operations.rotate import rotate_by_degrees
 
 
