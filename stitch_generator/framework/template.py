@@ -1,10 +1,11 @@
 from stitch_generator.framework.embroidery_design import EmbroideryDesign
+from stitch_generator.framework.embroidery_pattern import EmbroideryPattern
 from stitch_generator.framework.palette import palette
 from stitch_generator.framework.parameter import FloatParameter
-from stitch_generator.framework.embroidery_pattern import EmbroideryPattern
-from stitch_generator.functions.functions_1d import constant
-from stitch_generator.functions.functions_2d import line, constant_direction
 from stitch_generator.framework.path import Path
+from stitch_generator.functions.functions_1d import constant
+from stitch_generator.functions.functions_2d import constant_direction
+from stitch_generator.shapes.line import line
 from stitch_generator.stitch_effects.contour import contour
 
 
