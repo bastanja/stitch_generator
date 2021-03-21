@@ -1,7 +1,7 @@
 import numpy as np
 
-from stitch_generator.path.get_boundaries import get_boundaries
-from stitch_generator.path.path import Path
+from stitch_generator.functions.get_boundaries import get_boundaries
+from stitch_generator.framework.path import Path
 from stitch_generator.stitch_effects.utilities.zigzag import double_zigzag_between
 from stitch_generator.utilities.types import ConnectFunction, Function2D, SamplingFunction, Array2D
 

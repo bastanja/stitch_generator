@@ -4,7 +4,7 @@ from stitch_generator.functions.connect_functions import running_stitch_line
 from stitch_generator.functions.function_modifiers import repeat, scale
 from stitch_generator.functions.functions_1d import circular_arc, constant
 from stitch_generator.functions.functions_2d import constant_direction
-from stitch_generator.path.path import Path
+from stitch_generator.framework.path import Path
 from stitch_generator.sampling.sample_by_length import sample_by_length, sampling_by_length_with_offset
 from stitch_generator.shapes.line import line
 from stitch_generator.stitch_effects.satin import satin

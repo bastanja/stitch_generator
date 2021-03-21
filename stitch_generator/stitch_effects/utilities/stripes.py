@@ -2,8 +2,8 @@ import numpy as np
 
 from stitch_generator.functions.function_1d_stairs import stairs
 from stitch_generator.functions.function_modifiers import repeat, mix
-from stitch_generator.path.get_boundaries import get_boundaries
-from stitch_generator.path.path import Path
+from stitch_generator.functions.get_boundaries import get_boundaries
+from stitch_generator.framework.path import Path
 from stitch_generator.utilities.types import SamplingFunction
 
 

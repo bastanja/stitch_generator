@@ -7,7 +7,7 @@ from stitch_generator.functions.function_modifiers import combine, multiply, sub
 from stitch_generator.functions.function_sequence import function_sequence
 from stitch_generator.functions.functions_1d import linear_interpolation, constant, arc
 from stitch_generator.functions.functions_2d import constant_direction
-from stitch_generator.path.path import Path
+from stitch_generator.framework.path import Path
 from stitch_generator.sampling.sample_by_fixed_length import sampling_by_fixed_length
 from stitch_generator.shapes.line import line
 from stitch_generator.stitch_effects.meander import meander_along

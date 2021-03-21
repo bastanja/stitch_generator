@@ -4,7 +4,7 @@ from stitch_generator.functions.function_modifiers import mix, rotate_degrees
 from stitch_generator.functions.functions_1d import constant, arc, linear_interpolation
 from stitch_generator.functions.functions_2d import constant_direction
 from stitch_generator.functions.motif_generators import cycle_motifs
-from stitch_generator.path.path import Path
+from stitch_generator.framework.path import Path
 from stitch_generator.sampling.sample_by_number import sample_by_number, sampling_by_number
 from stitch_generator.utilities.types import Function1D
 from stitch_generator.motifs.line import bent_line_with_motif

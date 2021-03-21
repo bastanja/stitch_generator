@@ -7,7 +7,7 @@ from stitch_generator.framework.embroidery_pattern import EmbroideryPattern
 from stitch_generator.functions.function_modifiers import multiply
 from stitch_generator.functions.functions_1d import constant
 from stitch_generator.shapes.bezier import bezier_normals, bezier
-from stitch_generator.path.path import Path
+from stitch_generator.framework.path import Path
 from stitch_generator.stitch_effects.contour import contour_along
 from stitch_generator.stitch_effects.utilities.variable_running_stitch import variable_running_stitch, variable_underlay
 
