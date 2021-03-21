@@ -2,14 +2,15 @@ from stitch_generator.framework.embroidery_design import EmbroideryDesign
 from stitch_generator.framework.embroidery_pattern import EmbroideryPattern
 from stitch_generator.framework.palette import palette
 from stitch_generator.framework.parameter import FloatParameter, IntParameter
+from stitch_generator.framework.path import Path
 from stitch_generator.functions.arc_length_mapping import arc_length_mapping_with_length
 from stitch_generator.functions.function_modifiers import combine, add, multiply, repeat, scale, shift
 from stitch_generator.functions.functions_1d import constant
 from stitch_generator.functions.motif_generators import repeat_motif_mirrored
 from stitch_generator.functions.noise import noise
 from stitch_generator.motifs.satin_circle import satin_circle
-from stitch_generator.framework.path import Path
 from stitch_generator.sampling.sample_by_length import regular, sampling_by_length
+from stitch_generator.sampling.sampling_modifiers import free_start_end
 from stitch_generator.shapes.circle import circle
 from stitch_generator.shapes.spiral import spiral
 from stitch_generator.stitch_effects.motif_to_points import motif_to_points
@@ -27,6 +28,8 @@ class Design(EmbroideryDesign):
             'noise_width': FloatParameter("Noise width", 0, 14, 30),
             'dot_spacing': FloatParameter("Dot spacing", 5, 50, 100),
             'dot_diameter': FloatParameter("Dot diameter", 2, 4, 12),
+            'start_spacing': FloatParameter("Start Spacing", 0, 30, 50),
+            'end_spacing': FloatParameter("End Spacing", 0, 0, 50),
         })
 
     def get_pattern(self, parameters):
@@ -53,7 +56,9 @@ class Design(EmbroideryDesign):
             satin_circle(diameter=parameters.dot_diameter, stitch_length=parameters.stitch_length,
                          pull_compensation=0.1 * parameters.dot_diameter))
 
-        effect = motif_to_points(motif_position_sampling=regular(parameters.dot_spacing),
+        sampling = free_start_end(parameters.start_spacing, parameters.end_spacing, regular(parameters.dot_spacing))
+
+        effect = motif_to_points(motif_position_sampling=sampling,
                                  line_sampling=sampling_by_length(parameters.stitch_length, include_endpoint=False),
                                  motif_generator=motif_gen)
 
