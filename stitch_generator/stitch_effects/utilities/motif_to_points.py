@@ -2,8 +2,8 @@ import itertools
 
 import numpy as np
 
-from stitch_generator.functions.place_motif import place_motif_at
 from stitch_generator.framework.path import Path
+from stitch_generator.functions.place_motif import place_motif_at
 from stitch_generator.utilities.types import SamplingFunction, Array2D
 
 
@@ -15,10 +15,11 @@ def motif_to_points_along(path: Path, motif_position_sampling: SamplingFunction,
     motifs = [place_motif_at(path.position(t), path.direction(t)[0], path.width(t), next(motif_generator)) for
               t in motif_locations]
 
-    fills = []
+    starts_with_motif = np.isclose(motif_locations[0], 0)
 
     motif_locations = add_first_and_last(motif_locations)
 
+    fills = []
     spaces = zip(motif_locations, motif_locations[1:])
     for space in spaces:
         difference = space[1] - space[0]
@@ -27,7 +28,12 @@ def motif_to_points_along(path: Path, motif_position_sampling: SamplingFunction,
         fills.append(path.position(samples))
     fills.append(path.position(1))
 
-    combined = [i for i in itertools.chain.from_iterable(itertools.zip_longest(fills, motifs)) if i is not None]
+    if starts_with_motif:
+        parts = itertools.zip_longest(motifs, fills)
+    else:
+        parts = itertools.zip_longest(fills, motifs)
+
+    combined = [i for i in itertools.chain.from_iterable(parts) if i is not None]
 
     return np.concatenate(combined)
 
