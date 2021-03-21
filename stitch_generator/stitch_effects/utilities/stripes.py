@@ -4,21 +4,16 @@ from stitch_generator.functions.function_1d_stairs import stairs
 from stitch_generator.functions.function_modifiers import repeat, mix
 from stitch_generator.path.get_boundaries import get_boundaries
 from stitch_generator.path.path import Path
-from stitch_generator.stitch_effects.stitch_effect import StitchEffect
 from stitch_generator.utilities.types import SamplingFunction
 
 
-def repeat_effect(repetitions: int, sampling_function: SamplingFunction, step_ratio: float) -> StitchEffect:
-    return lambda path: repeat_along(path, repetitions=repetitions, sampling_function=sampling_function,
-                                     length=path.length, step_ratio=step_ratio)
 
-
-def repeat_along(path: Path, repetitions: int, sampling_function: SamplingFunction, length: float, step_ratio: float):
-    return repeat_between(*get_boundaries(path), repetitions=repetitions, sampling_function=sampling_function,
+def stripes_along(path: Path, repetitions: int, sampling_function: SamplingFunction, length: float, step_ratio: float):
+    return stripes_between(*get_boundaries(path), repetitions=repetitions, sampling_function=sampling_function,
                           length=length, step_ratio=step_ratio)
 
 
-def repeat_between(boundary_left, boundary_right, repetitions: int, sampling_function: SamplingFunction, length: float,
+def stripes_between(boundary_left, boundary_right, repetitions: int, sampling_function: SamplingFunction, length: float,
                    step_ratio: float):
     boundary_left = repeat(r=repetitions, function=boundary_left, mode='reflect')
     boundary_right = repeat(r=repetitions, function=boundary_right, mode='reflect')

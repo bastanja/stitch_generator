@@ -6,8 +6,9 @@ from stitch_generator.sampling.tatami_sampling import alternating_tatami_samplin
 from stitch_generator.stitch_effects.contour import contour
 from stitch_generator.stitch_effects.double_satin import double_satin
 from stitch_generator.stitch_effects.meander import meander
-from stitch_generator.stitch_effects.repeat_along import repeat_effect
-from stitch_generator.stitch_effects.underlay import dense_underlay, contour_zigzag_underlay
+from stitch_generator.stitch_effects.stripes import stripes
+from stitch_generator.stitch_effects.underlay_contour_zigzag import underlay_contour_zigzag
+from stitch_generator.stitch_effects.underlay_dense import underlay_dense
 
 
 def get_tatami(include_endpoint=True, stitch_length: float = 3):
@@ -29,10 +30,10 @@ def stitch_effects(stitch_length: float):
 
     yield meander(sampling_function=regular(3), connect_function=running_stitch_line(stitch_length, True))
 
-    yield repeat_effect(repetitions=6,
+    yield stripes(repetitions=6,
                         sampling_function=get_tatami(include_endpoint=False, stitch_length=stitch_length),
                         step_ratio=0.1)
 
-    yield dense_underlay(inset=0, stitch_length=stitch_length, spacing=2)
+    yield underlay_dense(inset=0, stitch_length=stitch_length, spacing=2)
 
-    yield contour_zigzag_underlay(inset=0, stitch_length=stitch_length, spacing=4)
+    yield underlay_contour_zigzag(inset=0, stitch_length=stitch_length, spacing=4)

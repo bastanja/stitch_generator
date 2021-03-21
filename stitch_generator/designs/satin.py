@@ -11,7 +11,7 @@ from stitch_generator.path.path import Path
 from stitch_generator.sampling.sample_by_fixed_length import sampling_by_fixed_length
 from stitch_generator.shapes.line import line
 from stitch_generator.stitch_effects.meander import meander_along
-from stitch_generator.stitch_effects.underlay import contour_zigzag_underlay, dense_underlay
+from stitch_generator.stitch_effects.underlay_dense import underlay_dense
 
 
 class Design(EmbroideryDesign):
@@ -48,11 +48,12 @@ class Design(EmbroideryDesign):
         pattern = EmbroideryPattern()
         col = palette()
 
-        underlay_stitch_effect = contour_zigzag_underlay(inset=parameters.underlay_inset,
+        from stitch_generator.stitch_effects.underlay_contour_zigzag import underlay_contour_zigzag
+        underlay_stitch_effect = underlay_contour_zigzag(inset=parameters.underlay_inset,
                                                          stitch_length=parameters.stitch_length,
                                                          spacing=parameters.underlay_spacing)
         if parameters.dense_underlay:
-            underlay_stitch_effect = dense_underlay(inset=parameters.underlay_inset,
+            underlay_stitch_effect = underlay_dense(inset=parameters.underlay_inset,
                                                     stitch_length=parameters.stitch_length,
                                                     spacing=parameters.underlay_spacing)
 

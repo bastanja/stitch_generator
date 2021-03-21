@@ -9,7 +9,7 @@ from stitch_generator.functions.functions_1d import constant
 from stitch_generator.shapes.bezier import bezier_normals, bezier
 from stitch_generator.path.path import Path
 from stitch_generator.stitch_effects.contour import contour_along
-from stitch_generator.stitch_effects.variable_running_stitch import variable_underlay, variable_running_stitch
+from stitch_generator.stitch_effects.utilities.variable_running_stitch import variable_running_stitch, variable_underlay
 
 
 class Design(EmbroideryDesign):
