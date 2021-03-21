@@ -6,10 +6,9 @@ from stitch_generator.stitch_effects.utilities.zigzag import double_zigzag_betwe
 from stitch_generator.utilities.types import ConnectFunction, Function2D, SamplingFunction, Array2D
 
 
-def double_satin_along(path: Path, sampling_function: SamplingFunction, connect_function: ConnectFunction,
-                       length: float) -> Array2D:
+def double_satin_along(path: Path, sampling_function: SamplingFunction, connect_function: ConnectFunction) -> Array2D:
     return double_satin_between(*get_boundaries(path), sampling_function=sampling_function,
-                                connect_function=connect_function, length=length)
+                                connect_function=connect_function, length=path.length)
 
 
 def double_satin_between(boundary_left: Function2D, boundary_right: Function2D, sampling_function: SamplingFunction,

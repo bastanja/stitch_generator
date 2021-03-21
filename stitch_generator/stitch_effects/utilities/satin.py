@@ -7,10 +7,9 @@ from stitch_generator.utilities.types import Array2D
 from stitch_generator.utilities.types import ConnectFunction, Function2D, SamplingFunction
 
 
-def satin_along(path: Path, sampling_function: SamplingFunction, connect_function: ConnectFunction,
-                length: float) -> Array2D:
+def satin_along(path: Path, sampling_function: SamplingFunction, connect_function: ConnectFunction) -> Array2D:
     return satin_between(*get_boundaries(path), sampling_function=sampling_function, connect_function=connect_function,
-                         length=length)
+                         length=path.length)
 
 
 def satin_between(boundary_left: Function2D, boundary_right: Function2D, sampling_function: SamplingFunction,

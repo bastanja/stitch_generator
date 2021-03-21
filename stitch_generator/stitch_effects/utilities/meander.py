@@ -6,9 +6,9 @@ from stitch_generator.utilities.types import Array2D
 from stitch_generator.utilities.types import ConnectFunction, SamplingFunction
 
 
-def meander_along(path: Path, sampling_function: SamplingFunction, connect_function, length) -> Array2D:
+def meander_along(path: Path, sampling_function: SamplingFunction, connect_function) -> Array2D:
     return meander_between(*get_boundaries(path), sampling_function=sampling_function,
-                           connect_function=connect_function, length=length)
+                           connect_function=connect_function, length=path.length)
 
 
 def meander_between(boundary_left, boundary_right, sampling_function: SamplingFunction,

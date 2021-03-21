@@ -19,8 +19,7 @@ def underlay_contour_zigzag(inset: float, stitch_length: float, spacing: float) 
 
         contour = contour_along(path, stitch_length=stitch_length)
 
-        zigzag = double_satin_along(path=path, sampling_function=regular(spacing), connect_function=connect_function,
-                                    length=path.length)
+        zigzag = double_satin_along(path=path, sampling_function=regular(spacing), connect_function=connect_function)
 
         return np.concatenate((contour[:-1], zigzag))
 

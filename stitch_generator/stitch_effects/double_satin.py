@@ -5,5 +5,4 @@ from stitch_generator.utilities.types import ConnectFunction, SamplingFunction
 
 def double_satin(sampling_function: SamplingFunction, connect_function: ConnectFunction) -> StitchEffect:
     return lambda path: double_satin_along(path=path, sampling_function=sampling_function,
-                                           connect_function=connect_function,
-                                           length=path.length)
+                                           connect_function=connect_function)

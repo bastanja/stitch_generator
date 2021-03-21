@@ -9,7 +9,8 @@ from stitch_generator.utilities.types import SamplingFunction, Array2D
 
 
 def motif_to_segments_along(path: Path, motif_position_sampling: SamplingFunction, line_sampling: SamplingFunction,
-                      motif_generator, length) -> Array2D:
+                            motif_generator) -> Array2D:
+    length = path.length
     minimal_segment_length = 0.1
     motif_locations = motif_position_sampling(length)
 

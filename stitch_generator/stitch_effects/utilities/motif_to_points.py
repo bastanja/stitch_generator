@@ -8,7 +8,8 @@ from stitch_generator.utilities.types import SamplingFunction, Array2D
 
 
 def motif_to_points_along(path: Path, motif_position_sampling: SamplingFunction, line_sampling: SamplingFunction,
-                          motif_generator, length) -> Array2D:
+                          motif_generator) -> Array2D:
+    length = path.length
     motif_locations = motif_position_sampling(length)
 
     motifs = [place_motif_at(path.position(t), path.direction(t)[0], path.width(t), next(motif_generator)) for
