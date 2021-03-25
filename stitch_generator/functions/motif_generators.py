@@ -13,9 +13,15 @@ def cycle_motifs(motifs):
 
 def repeat_motif_mirrored(motif):
     mirrored = motif.copy() * np.array((-1, 1))
-    while (True):
+    while True:
         yield motif
         yield mirrored
+
+
+def alternate_direction(motif_generator):
+    direction = itertools.cycle(((1, 1), (-1, 1)))
+    while True:
+        yield next(motif_generator) * next(direction)
 
 
 def combine_motif_mirrored(motif):

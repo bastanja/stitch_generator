@@ -6,6 +6,7 @@ from stitch_generator.framework.path import Path
 from stitch_generator.functions.functions_1d import constant
 from stitch_generator.motif_stitches.e_stitch import e_stitch, alternating_e_stitch
 from stitch_generator.motif_stitches.stem_stitch import stem_stitch
+from stitch_generator.motif_stitches.twig import twig
 from stitch_generator.shapes.bezier import bezier, bezier_normals
 
 
@@ -15,42 +16,49 @@ class Design(EmbroideryDesign):
             'stitch_spacing': FloatParameter("Stitch spacing", 1, 3, 20),
             'length': FloatParameter("Length", 10, 80, 200),
             'stitch_width': FloatParameter("Stitch Width", 0.1, 0.8, 10),
-            'stitch_length': FloatParameter("Stitch Length", 1, 4, 15),
+            'stem_stitch_length': FloatParameter("Stem stitch Length", 1, 4, 15),
             'angle': FloatParameter("Angle", -180, 20, 180),
             'repetitions': IntParameter("Repetitions", 2, 5, 12),
+            'leaf_spacing': FloatParameter("Leaf spacing", 3, 7, 15),
+            'leaf_angle_left': FloatParameter("Leaf Angle", 0, 45, 90),
+            'leaf_angle_right': FloatParameter("Leaf Angle", -90, -45, 0),
+            'stitch_length': FloatParameter("Stitch Length", 1, 2.5, 5),
         })
 
     def get_pattern(self, parameters):
         parameters = self.validate(parameters)
         color = palette()
 
-        l = parameters.length
-        w = parameters.length / 3
-        control_points = ((0, 0), (l / 3, -w), (2 * l / 3, w), (l, 0))
+        l = -parameters.length / 3
+        w = parameters.length / 4
+        control_points = ((0, 0), (-w, l), (w, l * 2), (0, l * 3))
 
         f = bezier(control_points)
         direction = bezier_normals(control_points)
 
         path = Path(position=f, direction=direction, width=constant(1), stroke_alignment=constant(0.5))
+
+        effects = [
+            stem_stitch(
+                spacing=parameters.stitch_spacing,
+                stitch_width=parameters.stitch_width, stitch_length=parameters.stem_stitch_length,
+                repetitions=parameters.repetitions, stitch_rotation=parameters.angle),
+            e_stitch(
+                spacing=parameters.stitch_spacing, line_length=parameters.stem_stitch_length,
+                stitch_length=parameters.stem_stitch_length, stitch_rotation=parameters.angle),
+            alternating_e_stitch(
+                spacing=parameters.stitch_spacing, line_length=parameters.stem_stitch_length,
+                stitch_length=parameters.stem_stitch_length, stitch_rotation=0),
+            twig(stem_length=2, leaf_length=7, leaf_width=3, spacing=parameters.leaf_spacing,
+                 start_length=parameters.leaf_spacing, end_length=parameters.leaf_spacing,
+                 stitch_length=parameters.stitch_length, angle_left=parameters.leaf_angle_left,
+                 angle_right=parameters.leaf_angle_right)
+        ]
+
         pattern = EmbroideryPattern()
 
-        stitch_effect = stem_stitch(
-            spacing=parameters.stitch_spacing,
-            stitch_width=parameters.stitch_width, stitch_length=parameters.stitch_length,
-            repetitions=parameters.repetitions, stitch_rotation=parameters.angle)
-        pattern.add_stitches(stitch_effect(path), next(color))
-
-        stitch_effect = e_stitch(
-            spacing=parameters.stitch_spacing, line_length=parameters.stitch_length,
-            stitch_length=parameters.stitch_length, stitch_rotation=parameters.angle)
-        pattern.add_stitches(stitch_effect(path) + (0, 20), next(color))
-
-        stitch_effect = alternating_e_stitch(
-            spacing=parameters.stitch_spacing, line_length=parameters.stitch_length,
-            stitch_length=parameters.stitch_length, stitch_rotation=0)
-        pattern.add_stitches(stitch_effect(path) + (0, 40), next(color))
-
-
+        for i, stitch_effect in enumerate(effects):
+            pattern.add_stitches(stitch_effect(path) + (20 * i, 0), next(color))
 
         return pattern
 
