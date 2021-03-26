@@ -4,10 +4,15 @@ from stitch_generator.framework.palette import palette
 from stitch_generator.framework.parameter import FloatParameter, IntParameter
 from stitch_generator.framework.path import Path
 from stitch_generator.functions.functions_1d import constant
+from stitch_generator.functions.motif_generators import repeat_motif, repeat_motif_mirrored
 from stitch_generator.motif_stitches.e_stitch import e_stitch, alternating_e_stitch
 from stitch_generator.motif_stitches.stem_stitch import stem_stitch
 from stitch_generator.motif_stitches.twig import twig
+from stitch_generator.motifs.heart import heart
+from stitch_generator.motifs.satin_arc import satin_arc
+from stitch_generator.sampling.sample_by_length import regular
 from stitch_generator.shapes.bezier import bezier, bezier_normals
+from stitch_generator.stitch_effects.motif_chain import motif_chain
 
 
 class Design(EmbroideryDesign):
@@ -23,6 +28,7 @@ class Design(EmbroideryDesign):
             'leaf_angle_left': FloatParameter("Leaf Angle", 0, 45, 90),
             'leaf_angle_right': FloatParameter("Leaf Angle", -90, -45, 0),
             'stitch_length': FloatParameter("Stitch Length", 1, 2.5, 5),
+            'heart_spacing': FloatParameter("Heart spacing", 4, 8, 15)
         })
 
     def get_pattern(self, parameters):
@@ -52,7 +58,8 @@ class Design(EmbroideryDesign):
             twig(stem_length=2, leaf_length=7, leaf_width=3, spacing=parameters.leaf_spacing,
                  start_length=parameters.leaf_spacing, end_length=parameters.leaf_spacing,
                  stitch_length=parameters.stitch_length, angle_left=parameters.leaf_angle_left,
-                 angle_right=parameters.leaf_angle_right)
+                 angle_right=parameters.leaf_angle_right),
+            motif_chain(regular(parameters.heart_spacing), repeat_motif_mirrored(heart(parameters.heart_spacing)))
         ]
 
         pattern = EmbroideryPattern()
