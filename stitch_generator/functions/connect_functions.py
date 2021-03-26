@@ -3,11 +3,16 @@ from typing import Iterable
 
 import numpy as np
 
+from stitch_generator.functions.ensure_shape import ensure_2d_shape
+from stitch_generator.sampling.sample_by_length import sampling_by_length
+from stitch_generator.sampling.sampling_presets import sampling_presets
+from stitch_generator.sampling.tatami_sampling import alternating_tatami_sampling
 from stitch_generator.shapes.line import line
 from stitch_generator.utilities.types import ConnectFunction
-from stitch_generator.sampling.sample_by_length import sampling_by_length
-from stitch_generator.sampling.tatami_sampling import alternating_tatami_sampling
-from stitch_generator.sampling.sampling_presets import sampling_presets
+
+
+def simple_connect(p1, p2):
+    return ensure_2d_shape(p2)
 
 
 def line_with_sampling_function(sampling_function):  # -> ConnectFunction
