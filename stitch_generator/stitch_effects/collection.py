@@ -8,6 +8,7 @@ from stitch_generator.stitch_effects.contour import contour
 from stitch_generator.stitch_effects.double_satin import double_satin
 from stitch_generator.stitch_effects.lattice import lattice
 from stitch_generator.stitch_effects.meander import meander
+from stitch_generator.stitch_effects.scribble import scribble
 from stitch_generator.stitch_effects.stripes import stripes
 from stitch_generator.stitch_effects.underlay_contour_zigzag import underlay_contour_zigzag
 from stitch_generator.stitch_effects.underlay_dense import underlay_dense
@@ -49,3 +50,5 @@ def stitch_effects(stitch_length: float):
     yield underlay_dense(inset=0, stitch_length=stitch_length, spacing=2)
 
     yield underlay_contour_zigzag(inset=0, stitch_length=stitch_length, spacing=4)
+
+    yield scribble(repetitions=12, stitch_length=stitch_length)
