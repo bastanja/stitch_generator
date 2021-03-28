@@ -1,3 +1,5 @@
+import numpy as np
+
 from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.function_modifiers import split, inverse
 from stitch_generator.utilities.types import Function1D, Function2D
@@ -66,3 +68,7 @@ class Path:
     @property
     def length(self):
         return estimate_length(self.position)
+
+    @property
+    def is_circular(self):
+        return np.all(np.isclose(self.position(0), self.position(1)))
