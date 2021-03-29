@@ -4,12 +4,11 @@ from stitch_generator.framework.palette import palette
 from stitch_generator.framework.parameter import FloatParameter, IntParameter
 from stitch_generator.framework.path import Path
 from stitch_generator.functions.functions_1d import constant
-from stitch_generator.functions.motif_generators import repeat_motif, repeat_motif_mirrored
+from stitch_generator.functions.motif_generators import repeat_motif_mirrored
 from stitch_generator.motif_stitches.e_stitch import e_stitch, alternating_e_stitch
 from stitch_generator.motif_stitches.stem_stitch import stem_stitch
 from stitch_generator.motif_stitches.twig import twig
 from stitch_generator.motifs.heart import heart
-from stitch_generator.motifs.satin_arc import satin_arc
 from stitch_generator.sampling.sample_by_length import regular
 from stitch_generator.shapes.bezier import bezier, bezier_normals
 from stitch_generator.stitch_effects.motif_chain import motif_chain
@@ -49,6 +48,10 @@ class Design(EmbroideryDesign):
                 spacing=parameters.stitch_spacing,
                 stitch_width=parameters.stitch_width, stitch_length=parameters.stem_stitch_length,
                 repetitions=parameters.repetitions, stitch_rotation=parameters.angle),
+            stem_stitch(
+                spacing=2.5,
+                stitch_width=5, stitch_length=parameters.stem_stitch_length,
+                repetitions=parameters.repetitions, stitch_rotation=0),
             e_stitch(
                 spacing=parameters.stitch_spacing, line_length=parameters.stem_stitch_length,
                 stitch_length=parameters.stem_stitch_length, stitch_rotation=parameters.angle),
