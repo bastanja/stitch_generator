@@ -16,7 +16,7 @@ def resample(stitches, stitch_length, smooth: bool = False):
     return interpolation(samples)
 
 
-def resample_with_sampling_function(stitches, sampling_function: SamplingFunction, smooth: bool):
+def resample_with_sampling_function(stitches, sampling_function: SamplingFunction, smooth: bool = False):
     """
     Returns stitches which lie on the polyline defined by the parameter stitches.
     """
