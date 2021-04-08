@@ -1,10 +1,10 @@
 import numpy as np
 
+from stitch_generator.framework.path import Path
 from stitch_generator.functions.connect_functions import running_stitch_line
 from stitch_generator.functions.function_modifiers import repeat, scale
 from stitch_generator.functions.functions_1d import circular_arc, constant
 from stitch_generator.functions.functions_2d import constant_direction
-from stitch_generator.framework.path import Path
 from stitch_generator.sampling.sample_by_length import sample_by_length, sampling_by_length_with_offset
 from stitch_generator.shapes.line import line
 from stitch_generator.stitch_effects.satin import satin
@@ -20,8 +20,10 @@ def satin_circle(diameter: float, stitch_length: float, pull_compensation: float
         sampling_function=sampling_by_length_with_offset(segment_length=satin_spacing, offset=0.5),
         connect_function=running_stitch_line(diameter * 2, include_endpoint=False))
 
+    radius = diameter / 2
+
     path = Path(
-        position=line((0, 0), (diameter, 0)),
+        position=line((-radius, 0), (radius, 0)),
         direction=constant_direction(0, -1),
         width=scale(diameter + pull_compensation, repeat(2, circular_arc(), mode='reflect')),
         stroke_alignment=constant(0.5)
@@ -29,9 +31,7 @@ def satin_circle(diameter: float, stitch_length: float, pull_compensation: float
 
     stitches = []
     if return_to_start:
-        middle_run = lambda path: path.position(
-            sample_by_length(path.length, stitch_length, include_endpoint=False))
-        stitches.append(middle_run(path))
+        stitches.append(path.position(sample_by_length(diameter, stitch_length, include_endpoint=True)))
         path = path.inverse()
     else:
         stitches.append(path.position(0))
