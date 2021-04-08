@@ -2,9 +2,9 @@ import itertools
 
 import numpy as np
 
+from stitch_generator.framework.path import Path
 from stitch_generator.functions.functions_1d import linear_interpolation
 from stitch_generator.functions.place_motif import place_motif_between
-from stitch_generator.framework.path import Path
 from stitch_generator.utilities.types import SamplingFunction, Array2D
 
 
@@ -23,8 +23,8 @@ def motif_to_segments_along(path: Path, motif_position_sampling: SamplingFunctio
     start_points = path.position(starts)
     end_points = path.position(ends)
 
-    motifs = [place_motif_between(start, end, next(motif_generator)) for start, end in zip(start_points, end_points) if
-              np.linalg.norm(start - end) > length_to_param(minimal_segment_length)]
+    motifs = [place_motif_between(start, end, next(motif_generator))[1:] for start, end in zip(start_points, end_points)
+              if np.linalg.norm(start - end) > length_to_param(minimal_segment_length)]
 
     fills = []
 
