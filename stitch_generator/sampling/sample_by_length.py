@@ -40,3 +40,19 @@ def sampling_by_length_with_offset(segment_length: float, offset: float) -> Samp
 
 def regular(segment_length: float) -> SamplingFunction:
     return sampling_by_length(segment_length, include_endpoint=True)
+
+
+def regular_even(segment_length: float) -> SamplingFunction:
+    def f(total_length: float):
+        number_of_segments = (round(total_length / (2 * segment_length)) * 2)
+        return sample_by_number(number_of_segments=number_of_segments, include_endpoint=True)
+
+    return f
+
+
+def regular_odd(segment_length: float) -> SamplingFunction:
+    def f(total_length: float):
+        number_of_segments = (round(total_length / (2 * segment_length)) * 2) + 1
+        return sample_by_number(number_of_segments=number_of_segments, include_endpoint=True)
+
+    return f
