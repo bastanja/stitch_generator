@@ -26,8 +26,8 @@ class Design(EmbroideryDesign):
         parameters = self.validate(parameters)
         color = palette()
 
-        x = repeat(parameters.repetitions_x, scale(parameters.width/2, shift(parameters.shift_x, sinus())))
-        y = repeat(parameters.repetitions_y, scale(parameters.height/2, shift(parameters.shift_y, sinus())))
+        x = repeat(parameters.repetitions_x, scale(parameters.width/2, shift(parameters.shift_x, sinus)))
+        y = repeat(parameters.repetitions_y, scale(parameters.height/2, shift(parameters.shift_y, sinus)))
 
         f = function_2d(x, y)
 

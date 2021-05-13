@@ -23,7 +23,7 @@ def sampling_presets_stateless(include_endpoint: bool):
     yield sampling_by_fixed_length(segment_length=10, include_endpoint=False, alignment=0.5, offset=0,
                                    minimal_segment_size=0.5)
     yield sampling_by_number(number_of_segments=3, include_endpoint=include_endpoint)
-    yield sampling_by_density(segment_length=0.5, density_distribution=arc(), include_endpoint=include_endpoint)
+    yield sampling_by_density(segment_length=0.5, density_distribution=arc, include_endpoint=include_endpoint)
 
 
 def sampling_presets(include_endpoint: bool, alignment: float):
@@ -47,7 +47,7 @@ def sampling_presets(include_endpoint: bool, alignment: float):
                                       alignment=alignment, minimal_segment_size=0.25)
 
     yield alternating_tatami_sampling(stitch_length=3, include_endpoint=include_endpoint,
-                                      offsets=arc()(sample_by_number(30, include_endpoint=False)) * 0.5,
+                                      offsets=arc(sample_by_number(30, include_endpoint=False)) * 0.5,
                                       alignment=alignment, minimal_segment_size=0.1)
 
     yield alternating_tatami_sampling(stitch_length=3, include_endpoint=include_endpoint,

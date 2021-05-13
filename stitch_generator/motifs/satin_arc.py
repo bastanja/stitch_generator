@@ -10,9 +10,9 @@ from stitch_generator.stitch_effects.utilities.satin import satin_along
 
 
 def satin_arc(length: float, height: float, start_thickness: float, middle_thickness: float, spacing=0.5):
-    path = Path(position=function_2d(linear_interpolation(0, length), scale(-height, arc())),
+    path = Path(position=function_2d(linear_interpolation(0, length), scale(-height, arc)),
                 direction=constant_direction(0, 1),
-                width=combine(arc(), linear_interpolation(start_thickness, middle_thickness)),
+                width=combine(arc, linear_interpolation(start_thickness, middle_thickness)),
                 stroke_alignment=constant(0))
     samples = length / spacing
     samples = int(samples / 2) * 2

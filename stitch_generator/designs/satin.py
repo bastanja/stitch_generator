@@ -69,7 +69,7 @@ class Design(EmbroideryDesign):
     @staticmethod
     def _get_width_function(parameters):
         widths = [linear_interpolation(0, 1),
-                  subtract(constant(1), multiply(constant(0.5), arc())),
+                  subtract(constant(1), multiply(constant(0.5), arc)),
                   linear_interpolation(1, 0)]
         segment_lengths = (parameters.max_width / 2, parameters.length - parameters.max_width, parameters.max_width / 2)
         width = function_sequence(widths, segment_lengths)

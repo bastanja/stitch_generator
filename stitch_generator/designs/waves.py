@@ -37,7 +37,7 @@ class Design(EmbroideryDesign):
         for i in range(0, parameters.number_of_lines):
             initial_offset = parameters.initial_offset + i * parameters.offset_per_line
             fx = linear_interpolation(0, parameters.width)
-            fy = shift(initial_offset, cosinus())
+            fy = shift(initial_offset, cosinus)
             fy = scale(parameters.wave_height, repeat(repetitions, fy))
             fy = add(constant(i * parameters.line_distance), fy)
             f = function_2d(fx, fy)

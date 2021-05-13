@@ -41,7 +41,7 @@ class Design(EmbroideryDesign):
         dist[dist > parameters.max_distance] = parameters.max_distance
         dist /= parameters.max_distance
 
-        profile = combine(inverse(smoothstep()), linear_interpolation(0, parameters.elevation))
+        profile = combine(inverse(smoothstep), linear_interpolation(0, parameters.elevation))
         for line in dist:
             line[:] = profile(line)
 

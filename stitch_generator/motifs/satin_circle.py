@@ -25,7 +25,7 @@ def satin_circle(diameter: float, stitch_length: float, pull_compensation: float
     path = Path(
         position=line((-radius, 0), (radius, 0)),
         direction=constant_direction(0, -1),
-        width=scale(diameter + pull_compensation, repeat(2, circular_arc(), mode='reflect')),
+        width=scale(diameter + pull_compensation, repeat(2, circular_arc, mode='reflect')),
         stroke_alignment=constant(0.5)
     )
 

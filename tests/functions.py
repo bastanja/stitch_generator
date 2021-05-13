@@ -19,17 +19,17 @@ functions_1d_positive = {
     'const1': constant(1),
     'cub': cubic_interpolation_evenly_spaced([0, 1, 0]),
     'stair': stairs(np.linspace(0, 1, 6), 0.1),
-    'square': square(),
-    'arc': arc(),
-    'smooth': smoothstep(),
-    'smoother': smootherstep(),
-    'circ': circular_arc(),
+    'square': square,
+    'arc': arc,
+    'smooth': smoothstep,
+    'smoother': smootherstep,
+    'circ': circular_arc,
     'seq': function_sequence((linear_interpolation(0, 1), constant(1)), (1, 1))
 }
 
 functions_1d_negative = {
-    'sin': sinus(),
-    'cos': cosinus(),
+    'sin': sinus,
+    'cos': cosinus,
     'noise': noise()
 }
 

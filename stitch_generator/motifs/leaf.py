@@ -20,7 +20,7 @@ def leaf(stem_length: float, leaf_length: float, leaf_width: float, angle_degree
     get_baseline = partial(get_curve, length=leaf_length + stem_length, angle=angle_degrees, arc_length_param=True)
 
     stem_ratio = stem_length/(stem_length+leaf_length)
-    stem, leaf_shape = get_leaf_shape(get_baseline, stem_ratio, scale(leaf_width, arc()))
+    stem, leaf_shape = get_leaf_shape(get_baseline, stem_ratio, scale(leaf_width, arc))
 
     stem_1, stem_1 = get_boundaries(stem)
     t_stem = sample_by_length(stem_length, segment_length=stitch_length, include_endpoint=False)

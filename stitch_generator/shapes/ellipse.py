@@ -7,8 +7,8 @@ from stitch_generator.utilities.types import Function2D
 
 
 def ellipse(rx: float, ry: float, center: Sequence[float] = (0, 0)) -> Function2D:
-    fx = cosinus()
-    fy = sinus()
+    fx = cosinus
+    fy = sinus
     fx = scale(rx, fx)
     fy = scale(ry, fy)
     f = function_2d(fx, fy)

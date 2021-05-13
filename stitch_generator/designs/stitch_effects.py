@@ -28,7 +28,7 @@ class Design(EmbroideryDesign):
         parameters = self.validate(parameters)
         color = itertools.cycle(light)
 
-        width_f = mix(constant(10), scale(10, arc()), constant(parameters.width_factor))
+        width_f = mix(constant(10), scale(10, arc), constant(parameters.width_factor))
 
         if parameters.circular:
             path = Path(position=scale(parameters.length / 4, circle()),

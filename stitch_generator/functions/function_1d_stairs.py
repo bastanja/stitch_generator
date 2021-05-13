@@ -15,7 +15,7 @@ def stairs(values, ascend_ratio):
 
     functions = [constant(values[0])]
     for previous, current in zip(values, values[1:]):
-        step_function = combine(smootherstep(), linear_interpolation(previous, current))
+        step_function = combine(smootherstep, linear_interpolation(previous, current))
         functions.append(step_function)
         functions.append(constant(current))
 

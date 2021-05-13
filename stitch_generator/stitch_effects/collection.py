@@ -13,9 +13,9 @@ from stitch_generator.stitch_effects.stripes import stripes
 from stitch_generator.stitch_effects.underlay_contour_zigzag import underlay_contour_zigzag
 from stitch_generator.stitch_effects.underlay_dense import underlay_dense
 
-_cosine_pattern = add(constant(0.5), scale(0.5, repeat(0.5, cosinus())))
+_cosine_pattern = add(constant(0.5), scale(0.5, repeat(0.5, cosinus)))
 _linear_pattern = linear_interpolation(0, 1)
-_peaks = subtract(constant(1), repeat(0.5, arc()))
+_peaks = subtract(constant(1), repeat(0.5, arc))
 
 
 def get_tatami(include_endpoint=True, stitch_length: float = 3):
@@ -36,7 +36,7 @@ def stitch_effects(stitch_length: float):
 
     yield lattice(strands=5, pattern_f=_peaks, pattern_length=25)
 
-    yield lattice(strands=5, pattern_f=smoothstep(), pattern_length=25)
+    yield lattice(strands=5, pattern_f=smoothstep, pattern_length=25)
 
     yield meander(sampling_function=regular(1), connect_function=combine_start_end(
         line_with_sampling_function(get_tatami(include_endpoint=True, stitch_length=stitch_length))))

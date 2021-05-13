@@ -27,19 +27,6 @@ def linear_interpolation(target_low, target_high, source_low=0, source_high=1) -
         return constant(target_low)
     return interp1d([source_low, source_high], [target_low, target_high], fill_value="extrapolate")
 
-
-def square() -> Function1D:
-    return lambda v: np.asarray(np.asarray(v) * np.asarray(v))
-
-
-def sinus() -> Function1D:
-    return lambda v: np.asarray(np.sin(np.asarray(v) * np.pi * 2))
-
-
-def cosinus() -> Function1D:
-    return lambda v: np.asarray(np.cos(np.asarray(v) * np.pi * 2))
-
-
 def cubic_interpolation_evenly_spaced(values) -> Function1D:
     assert len(values) > 1, "Interpolation function needs at least two values"
     samples = np.linspace(0, 1, num=len(values), endpoint=True)
@@ -52,17 +39,29 @@ def cubic_interpolation_evenly_spaced(values) -> Function1D:
     return f
 
 
-def arc() -> Function1D:
-    return lambda v: np.asarray(1 - ((np.asarray(v) * 2) - 1) ** 2)
+def square(v):
+    return np.asarray(np.asarray(v) * np.asarray(v))
 
 
-def smoothstep() -> Function1D:
-    return lambda v: np.asarray(3 * np.asarray(v) ** 2 - 2 * np.asarray(v) ** 3)
+def sinus(v):
+    return np.asarray(np.sin(np.asarray(v) * np.pi * 2))
 
 
-def smootherstep() -> Function1D:
-    return lambda v: np.asarray(6 * np.asarray(v) ** 5 - 15 * np.asarray(v) ** 4 + 10 * np.asarray(v) ** 3)
+def cosinus(v):
+    return np.asarray(np.cos(np.asarray(v) * np.pi * 2))
 
 
-def circular_arc() -> Function1D:
-    return lambda v: np.asarray(np.sqrt(1 - (1 - np.asarray(v)) ** 2))
+def arc(v):
+    return np.asarray(1 - ((np.asarray(v) * 2) - 1) ** 2)
+
+
+def smoothstep(v):
+    return np.asarray(3 * np.asarray(v) ** 2 - 2 * np.asarray(v) ** 3)
+
+
+def smootherstep(v):
+    return np.asarray(6 * np.asarray(v) ** 5 - 15 * np.asarray(v) ** 4 + 10 * np.asarray(v) ** 3)
+
+
+def circular_arc(v):
+    return np.asarray(np.sqrt(1 - (1 - np.asarray(v)) ** 2))

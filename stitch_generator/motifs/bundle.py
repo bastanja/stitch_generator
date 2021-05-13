@@ -13,7 +13,7 @@ from stitch_generator.stitch_effects.motif_to_points import motif_to_points
 
 def bundle(start_angle, end_angle, bend_angle_start, bend_angle_end, min_length, max_length, number_of_lines,
            stitch_length, motif_generator):
-    length = mix(constant(min_length), constant(max_length), arc())
+    length = mix(constant(min_length), constant(max_length), arc)
     bend = mix(constant(bend_angle_start), constant(bend_angle_end), linear_interpolation(0, 1))
     angle = linear_interpolation(start_angle, end_angle)
 

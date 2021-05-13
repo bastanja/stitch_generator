@@ -48,7 +48,7 @@ def variable_underlay(path: Path, stroke_spacing: float, stitch_length: float) -
     dir2 = inverse(multiply(path.direction, constant(-1)))
     path2 = Path(position=pos2, direction=dir2, width=width2, stroke_alignment=constant(0))
 
-    step_function = smootherstep()
+    step_function = smootherstep
 
     return np.concatenate((_variable_underlay(path1, stroke_spacing, stitch_length, step_function)[:-1],
                            _variable_underlay(path2, stroke_spacing, stitch_length, step_function)))

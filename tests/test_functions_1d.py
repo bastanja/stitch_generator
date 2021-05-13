@@ -61,7 +61,7 @@ def test_linear_interpolation():
 
 
 def test_sinus():
-    f = sinus()
+    f = sinus
     # check that full sinus curve is mapped to range [0;1]
     assert f(0) == approx(0)
     assert f(0.25) == approx(1)
@@ -75,7 +75,7 @@ def test_sinus():
 
 
 def test_cosinus():
-    f = cosinus()
+    f = cosinus
     # check that full cosinus curve is mapped to range [0;1]
     assert f(0) == approx(1)
     assert f(0.25) == approx(0)
@@ -148,35 +148,35 @@ def test_stairs():
 
 
 def test_square():
-    f = square()
+    f = square
     assert f(0) == approx(0)
     assert f(0.5) == approx(0.25)
     assert f(1) == approx(1)
 
 
 def test_arc():
-    f = arc()
+    f = arc
     assert f(0) == approx(0)
     assert f(0.5) == approx(1)
     assert f(1) == approx(0)
 
 
 def test_smoothstep():
-    f = smoothstep()
+    f = smoothstep
     assert (f(0) == approx(0))
     assert (f(0.5) == approx(0.5))
     assert (f(1) == approx(1))
 
 
 def test_smootherstep():
-    f = smootherstep()
+    f = smootherstep
     assert (f(0) == approx(0))
     assert (f(0.5) == approx(0.5))
     assert (f(1) == approx(1))
 
 
 def test_circular_arc():
-    f = circular_arc()
+    f = circular_arc
     assert (f(0) == approx(0))
     assert (f(0.2) == approx(0.6))
     assert (f(0.4) == approx(0.8))
