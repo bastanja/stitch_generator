@@ -50,7 +50,7 @@ class Design(EmbroideryDesign):
 
         f = add(f, multiply(direction, offset))
 
-        path = Path(position=f, direction=direction, width=constant(1), stroke_alignment=constant(0.5))
+        path = Path(shape=f, direction=direction, width=constant(1), stroke_alignment=constant(0.5))
 
         dot = satin_circle(diameter=parameters.dot_diameter, stitch_length=parameters.stitch_length,
                          pull_compensation=0.1 * parameters.dot_diameter, return_to_start=True)

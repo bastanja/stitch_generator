@@ -39,7 +39,7 @@ class Design(EmbroideryDesign):
         direction = bezier_normals(control_points)
 
         width = multiply(constant(parameters.width_scale), parameters.width)
-        path = Path(position=f, direction=direction, width=width, stroke_alignment=constant(parameters.alignment))
+        path = Path(shape=f, direction=direction, width=width, stroke_alignment=constant(parameters.alignment))
 
         stitches = variable_running_stitch(path, parameters.spacing, stitch_length=parameters.stitch_length)
         stitches2 = variable_underlay(path, parameters.spacing, stitch_length=parameters.stitch_length)

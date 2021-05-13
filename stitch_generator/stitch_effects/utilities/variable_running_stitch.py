@@ -11,7 +11,7 @@ from stitch_generator.utilities.types import Function1D, Array2D
 
 
 def variable_running_stitch(path: Path, stroke_spacing: float, stitch_length: float) -> Array2D:
-    segments = int(round(estimate_length(path.position) / stitch_length))
+    segments = int(round(estimate_length(path.shape) / stitch_length))
     t = sample_by_number(number_of_segments=segments, include_endpoint=True)
 
     widths = path.width(t)
@@ -22,7 +22,7 @@ def variable_running_stitch(path: Path, stroke_spacing: float, stitch_length: fl
     width_level_tree = _make_range_tree(levels)
     indices, offsets = _tree_to_indices_and_offsets(width_level_tree)
 
-    positions = path.position(t)
+    positions = path.shape(t)
     directions = path.direction(t)
     alignment = (1 - path.stroke_alignment(t)) * path.width(t)
     positions = positions - (directions * alignment[:, None])
@@ -38,15 +38,15 @@ def variable_running_stitch(path: Path, stroke_spacing: float, stitch_length: fl
 
 
 def variable_underlay(path: Path, stroke_spacing: float, stitch_length: float) -> Array2D:
-    pos1 = add(path.position, multiply(path.direction, multiply(path.width, path.stroke_alignment)))
+    pos1 = add(path.shape, multiply(path.direction, multiply(path.width, path.stroke_alignment)))
     width1 = multiply(path.width, path.stroke_alignment)
-    path1 = Path(position=pos1, direction=path.direction, width=width1, stroke_alignment=constant(0))
+    path1 = Path(shape=pos1, direction=path.direction, width=width1, stroke_alignment=constant(0))
 
-    pos2 = inverse(add(path.position,
+    pos2 = inverse(add(path.shape,
                        multiply(path.direction, multiply(path.width, subtract(path.stroke_alignment, constant(1))))))
     width2 = inverse(multiply(path.width, subtract(constant(1), path.stroke_alignment)))
     dir2 = inverse(multiply(path.direction, constant(-1)))
-    path2 = Path(position=pos2, direction=dir2, width=width2, stroke_alignment=constant(0))
+    path2 = Path(shape=pos2, direction=dir2, width=width2, stroke_alignment=constant(0))
 
     step_function = smootherstep
 
@@ -56,7 +56,7 @@ def variable_underlay(path: Path, stroke_spacing: float, stitch_length: float) -
 
 def _variable_underlay(path: Path, stroke_spacing: float, stitch_length: float, step_function: Function1D):
     precision = 10
-    segments = int(round(estimate_length(path.position) * precision))
+    segments = int(round(estimate_length(path.shape) * precision))
     t = sample_by_number(number_of_segments=segments, include_endpoint=True)
 
     widths = path.width(t)
@@ -72,7 +72,7 @@ def _variable_underlay(path: Path, stroke_spacing: float, stitch_length: float, 
 
     stitches = []
     iopairs = list(zip(indices, offsets))
-    baseline = path.position
+    baseline = path.shape
     for p1, p2 in zip(iopairs, iopairs[1:]):
         i1, o1 = p1
         i2, o2 = p2

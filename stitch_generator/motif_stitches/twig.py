@@ -30,8 +30,8 @@ def twig_with_motif(motif_generator, spacing, start_length, end_length, stitch_l
                                   motif_position_sampling=free_start_end(start_length, end_length, regular(spacing)),
                                   line_sampling=sampling_by_length(stitch_length, include_endpoint=False),
                                   motif_generator=alternating_notifs)[:-1],
-            place_motif_at(path.position(1), end_direction, 1, next(motif_generator)),
-            inverse(path.position)(sample_by_length(path.length, stitch_length, include_endpoint=True))
+            place_motif_at(path.shape(1), end_direction, 1, next(motif_generator)),
+            inverse(path.shape)(sample_by_length(path.length, stitch_length, include_endpoint=True))
         ]
         return np.concatenate(stitches)
 

@@ -41,7 +41,7 @@ class Design(EmbroideryDesign):
         f = bezier(control_points)
         direction = bezier_normals(control_points)
 
-        path = Path(position=f, direction=direction, width=constant(1), stroke_alignment=constant(0.5))
+        path = Path(shape=f, direction=direction, width=constant(1), stroke_alignment=constant(0.5))
 
         effects = [
             stem_stitch(

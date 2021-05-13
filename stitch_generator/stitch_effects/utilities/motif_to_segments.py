@@ -20,8 +20,8 @@ def motif_to_segments_along(path: Path, motif_position_sampling: SamplingFunctio
     starts = np.array([max(0, location - size) for location, size in zip(motif_locations, sizes)])
     ends = np.array([min(1, location + size) for location, size in zip(motif_locations, sizes)])
 
-    start_points = path.position(starts)
-    end_points = path.position(ends)
+    start_points = path.shape(starts)
+    end_points = path.shape(ends)
 
     motifs = [place_motif_between(start, end, next(motif_generator))[1:] for start, end in zip(start_points, end_points)
               if np.linalg.norm(start - end) > length_to_param(minimal_segment_length)]
@@ -35,7 +35,7 @@ def motif_to_segments_along(path: Path, motif_position_sampling: SamplingFunctio
         difference = space[1] - space[0]
         space_length = difference * length
         samples = line_sampling(space_length) * difference + space[0]
-        fills.append(path.position(samples))
+        fills.append(path.shape(samples))
 
     combined = [i for i in itertools.chain.from_iterable(itertools.zip_longest(fills, motifs)) if i is not None]
 

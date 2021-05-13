@@ -36,7 +36,7 @@ from stitch_generator.functions.functions_1d import constant
 from stitch_generator.functions.functions_2d import constant_direction
 from stitch_generator.shapes.line import line
 
-path = Path(position=line((0, 0), (100, 0)),
+path = Path(shape=line((0, 0), (100, 0)),
             direction=constant_direction(0, -1),
             width=constant(10),
             stroke_alignment=constant(0.5))

@@ -33,7 +33,7 @@ class Design(EmbroideryDesign):
     def get_pattern(self, parameters):
         parameters = self.validate(parameters)
 
-        path = Path(position=line((0, 0), (parameters.length, 0)),
+        path = Path(shape=line((0, 0), (parameters.length, 0)),
                     direction=constant_direction(0, -1),
                     width=self._get_width_function(parameters),
                     stroke_alignment=constant(parameters.alignment))

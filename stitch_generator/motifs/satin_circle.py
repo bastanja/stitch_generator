@@ -23,7 +23,7 @@ def satin_circle(diameter: float, stitch_length: float, pull_compensation: float
     radius = diameter / 2
 
     path = Path(
-        position=line((-radius, 0), (radius, 0)),
+        shape=line((-radius, 0), (radius, 0)),
         direction=constant_direction(0, -1),
         width=scale(diameter + pull_compensation, repeat(2, circular_arc, mode='reflect')),
         stroke_alignment=constant(0.5)
@@ -31,11 +31,11 @@ def satin_circle(diameter: float, stitch_length: float, pull_compensation: float
 
     stitches = []
     if return_to_start:
-        stitches.append(path.position(sample_by_length(diameter, stitch_length, include_endpoint=True)))
+        stitches.append(path.shape(sample_by_length(diameter, stitch_length, include_endpoint=True)))
         path = path.inverse()
     else:
-        stitches.append(path.position(0))
+        stitches.append(path.shape(0))
 
     stitches += [underlay_effect(path), satin_effect(path)]
-    stitches.append(path.position(1))
+    stitches.append(path.shape(1))
     return np.concatenate(stitches)

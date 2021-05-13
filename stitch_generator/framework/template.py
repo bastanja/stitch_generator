@@ -20,7 +20,7 @@ class Design(EmbroideryDesign):
         parameters = self.validate(parameters)
         color = palette()
 
-        path = Path(position=line((0, 0), (parameters.length, 0)), direction=constant_direction(0, -1),
+        path = Path(shape=line((0, 0), (parameters.length, 0)), direction=constant_direction(0, -1),
                     width=constant(1), stroke_alignment=constant(0.5))
 
         stitch_effect = contour(stitch_length=parameters.stitch_length)

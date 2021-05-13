@@ -46,23 +46,23 @@ def get_curve(length: float, angle: float, arc_length_param: bool):
     control_points[-2:] = rotate_by_degrees(control_points[-2:], angle)
     control_points += offset
 
-    position = bezier(control_points)
+    shape = bezier(control_points)
     direction = bezier_normals(control_points)
     if arc_length_param:
-        mapping = arc_length_mapping(position)
-        position = combine(mapping, position)
+        mapping = arc_length_mapping(shape)
+        shape = combine(mapping, shape)
         direction = combine(mapping, direction)
 
-    return position, direction
+    return shape, direction
 
 
 def get_leaf_shape(get_baseline: Callable, stem_ratio: float, leaf_width: Function1D):
-    position, direction = get_baseline()
-    pos_stem, pos_leaf = split(position, [stem_ratio])
-    dir_stem, dir_leaf = split(direction, [stem_ratio])
+    shape, direction = get_baseline()
+    stem_shape, leaf_shape = split(shape, [stem_ratio])
+    stem_direction, leaf_direction = split(direction, [stem_ratio])
 
-    stem = Path(position=pos_stem, direction=dir_stem, width=constant(0), stroke_alignment=constant(0.5))
-    leaf = Path(position=pos_leaf, direction=dir_leaf, width=leaf_width,
+    stem = Path(shape=stem_shape, direction=stem_direction, width=constant(0), stroke_alignment=constant(0.5))
+    leaf = Path(shape=leaf_shape, direction=leaf_direction, width=leaf_width,
                 stroke_alignment=constant(0.5))
 
     return stem, leaf

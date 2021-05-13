@@ -6,12 +6,12 @@ from stitch_generator.utilities.types import Function1D, Function2D
 
 
 class Path:
-    def __init__(self, position: Function2D, direction: Function2D, width: Function1D, stroke_alignment: Function1D):
+    def __init__(self, shape: Function2D, direction: Function2D, width: Function1D, stroke_alignment: Function1D):
         """
         Creates a Path
 
         Args:
-            position:         A 2D function that defines the base line of the path
+            shape:            A 2D function that defines the base line of the path
             direction:        A 2D function that defines the direction along the path. Usually perpendicular to the
                               tangent of the base line, pointing to the left side of the path
             width:            A 1D function that defines the width of the path
@@ -19,7 +19,7 @@ class Path:
                               side of the path is equal to the base line. 1 means that the right side of the path is
                               equal to the base line. 0.5 means that the path is centered around the base line.
         """
-        self.position = position
+        self.shape = shape
         self.direction = direction
         self.width = width
         self.stroke_alignment = stroke_alignment
@@ -34,11 +34,11 @@ class Path:
         Returns:
             A list of paths, from which each one represents the section of the original path between two offsets
         """
-        positions = split(self.position, offsets)
+        shapes = split(self.shape, offsets)
         directions = split(self.direction, offsets)
         widths = split(self.width, offsets)
         stroke_alignments = split(self.stroke_alignment, offsets)
-        return [Path(*params) for params in zip(positions, directions, widths, stroke_alignments)]
+        return [Path(*params) for params in zip(shapes, directions, widths, stroke_alignments)]
 
     def inverse(self):
         """
@@ -59,16 +59,16 @@ class Path:
         Returns:
             A Path where the function_modifier is applied to all members
         """
-        position = function_modifier(function=self.position)
+        shape = function_modifier(function=self.shape)
         direction = function_modifier(function=self.direction)
         width = function_modifier(function=self.width)
         stroke_alignment = function_modifier(function=self.stroke_alignment)
-        return Path(position, direction, width, stroke_alignment)
+        return Path(shape, direction, width, stroke_alignment)
 
     @property
     def length(self):
-        return estimate_length(self.position)
+        return estimate_length(self.shape)
 
     @property
     def is_circular(self):
-        return np.all(np.isclose(self.position(0), self.position(1)))
+        return np.all(np.isclose(self.shape(0), self.shape(1)))

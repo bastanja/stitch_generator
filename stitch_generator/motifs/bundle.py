@@ -39,7 +39,7 @@ def _motif_generator(number, stitch_length, bend_f, length_f, motif):
 
 
 def _zero_path(angle_f: Function1D):
-    return Path(position=constant_direction(0, 0),
+    return Path(shape=constant_direction(0, 0),
                 direction=rotate_degrees(constant_direction(1, 0), angle_f),
                 width=constant(1),
                 stroke_alignment=constant(0.5))
