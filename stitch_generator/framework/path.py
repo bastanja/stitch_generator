@@ -71,4 +71,6 @@ class Path:
 
     @property
     def is_circular(self):
-        return np.all(np.isclose(self.shape(0), self.shape(1)))
+        shape_start_end_equal = np.all(np.isclose(self.shape(0), self.shape(1)))
+        direction_start_end_equal = np.all(np.isclose(self.direction(0), self.direction(1)))
+        return shape_start_end_equal and direction_start_end_equal

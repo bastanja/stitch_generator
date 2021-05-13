@@ -19,8 +19,10 @@ def _lattice(path: Path, strands, length, pattern_f, pattern_length, stitch_leng
     pattern_f = multiply(pattern_f, repeat(strands, path.width, mode='reflect'))
 
     left, right = get_boundaries(path)
-    f = add(repeat(strands, right, mode='reflect'),
-            multiply(repeat(strands, path.direction, mode='reflect'), pattern_f))
+
+    repetition_mode = 'wrap' if path.is_circular else 'reflect'
+    f = add(repeat(strands, right, mode=repetition_mode),
+            multiply(repeat(strands, path.direction, mode=repetition_mode), pattern_f))
 
     stitches = int(round(pattern_length / stitch_length))
     points = f(sampling_by_number(stitches * times, include_endpoint=True)(1))
