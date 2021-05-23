@@ -32,9 +32,13 @@ def repeat_stitches(stitches: Array2D, times: int, reflect: bool = True) -> Arra
     last = stitch_coordinates[-1, -1, :]
 
     # remove end stitch to avoid duplicates
-    stitch_coordinates = stitch_coordinates[:, 0:-1, :]
+    if reflect:
+        stitch_coordinates = stitch_coordinates[:, 0:-1, :]
 
     # turn grid columns and rows into a single row
     result = stitch_coordinates.reshape((-1, 1, 2), order='C')
     result = result[:, 0]
-    return np.vstack((result, last))
+    if reflect:
+        result = np.vstack((result, last))
+
+    return result
