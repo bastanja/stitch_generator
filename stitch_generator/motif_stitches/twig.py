@@ -15,7 +15,7 @@ from stitch_generator.stitch_operations.rotate import rotate_by_degrees
 def twig(stem_length: float, leaf_length: float, leaf_width: float, spacing: float, start_length: float,
          end_length: float, stitch_length, angle_left, angle_right):
     motif = repeat_motif(leaf(stem_length=stem_length, leaf_length=leaf_length, leaf_width=leaf_width, angle_degrees=0,
-                              stitch_length=stitch_length))
+                              stitch_length=stitch_length, contour_repetitions=2))
 
     return twig_with_motif(motif_generator=motif, spacing=spacing, start_length=start_length, end_length=end_length,
                            stitch_length=stitch_length, angle_left=angle_left, angle_right=angle_right)
