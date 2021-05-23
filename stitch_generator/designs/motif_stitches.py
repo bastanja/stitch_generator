@@ -75,17 +75,11 @@ def star():
 class Design(EmbroideryDesign):
     def __init__(self):
         EmbroideryDesign.__init__(self, name="motif_stitches", parameters={
-            'stitch_spacing': FloatParameter("Stitch spacing", 1, 3, 20),
             'length': FloatParameter("Length", 10, 110, 200),
-            'stitch_width': FloatParameter("Stitch Width", 0.1, 0.8, 10),
-            'stem_stitch_length': FloatParameter("Stem stitch Length", 1, 4, 15),
-            'angle': FloatParameter("Angle", -180, 20, 180),
-            'repetitions': IntParameter("Repetitions", 2, 5, 12),
             'leaf_spacing': FloatParameter("Leaf spacing", 3, 7, 15),
             'leaf_angle_left': FloatParameter("Leaf Angle", 0, 45, 90),
             'leaf_angle_right': FloatParameter("Leaf Angle", -90, -45, 0),
             'stitch_length': FloatParameter("Stitch Length", 1, 2, 5),
-            'heart_spacing': FloatParameter("Heart spacing", 4, 8, 15),
             'random_seed': IntParameter("Random Seed", 0, 2, 1000),
         })
 
@@ -99,27 +93,34 @@ class Design(EmbroideryDesign):
 
         path = Path(shape=bezier(control_points), direction=bezier_normals(control_points))
 
+        stem_stitch_width = 0.8
+        stem_stitch_length = 4
+        stitch_spacing = 3
+        stem_stitch_angle = 20
+        stem_stitch_repetitions = 5
+        heart_spacing = 8
+
         effects = [
             (0, stem_stitch(
-                spacing=parameters.stitch_spacing,
-                stitch_width=parameters.stitch_width, stitch_length=parameters.stem_stitch_length,
-                repetitions=parameters.repetitions, stitch_rotation=parameters.angle)),
+                spacing=stitch_spacing,
+                stitch_width=stem_stitch_width, stitch_length=stem_stitch_length,
+                repetitions=stem_stitch_repetitions, stitch_rotation=stem_stitch_angle)),
             (10, stem_stitch(
                 spacing=2.5,
-                stitch_width=5, stitch_length=parameters.stem_stitch_length,
-                repetitions=parameters.repetitions, stitch_rotation=0)),
+                stitch_width=5, stitch_length=stem_stitch_length,
+                repetitions=stem_stitch_repetitions, stitch_rotation=0)),
             (14, e_stitch(
-                spacing=parameters.stitch_spacing, line_length=parameters.stem_stitch_length,
-                stitch_length=parameters.stem_stitch_length, stitch_rotation=parameters.angle)),
+                spacing=stitch_spacing, line_length=stem_stitch_length,
+                stitch_length=stem_stitch_length, stitch_rotation=stem_stitch_angle)),
             (12, alternating_e_stitch(
-                spacing=parameters.stitch_spacing, line_length=parameters.stem_stitch_length,
-                stitch_length=parameters.stem_stitch_length, stitch_rotation=0)),
+                spacing=stitch_spacing, line_length=stem_stitch_length,
+                stitch_length=stem_stitch_length, stitch_rotation=0)),
             (16, twig(stem_length=2, leaf_length=7, leaf_width=3, spacing=parameters.leaf_spacing,
                       start_length=parameters.leaf_spacing, end_length=parameters.leaf_spacing,
                       stitch_length=parameters.stitch_length, angle_left=parameters.leaf_angle_left,
                       angle_right=parameters.leaf_angle_right)),
-            (21, motif_chain(regular(parameters.heart_spacing),
-                             repeat_motif_mirrored(repeat_stitches(heart(parameters.heart_spacing), times=3)))),
+            (21, motif_chain(regular(heart_spacing),
+                             repeat_motif_mirrored(repeat_stitches(heart(heart_spacing), times=3)))),
             (20, twig_with_motif(spacing=parameters.leaf_spacing, start_length=3,
                                  end_length=parameters.leaf_spacing, stitch_length=parameters.stitch_length,
                                  angle_left=parameters.leaf_angle_left,
