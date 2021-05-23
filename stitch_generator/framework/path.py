@@ -2,11 +2,13 @@ import numpy as np
 
 from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.function_modifiers import split, inverse
+from stitch_generator.functions.functions_1d import constant
 from stitch_generator.utilities.types import Function1D, Function2D
 
 
 class Path:
-    def __init__(self, shape: Function2D, direction: Function2D, width: Function1D, stroke_alignment: Function1D):
+    def __init__(self, shape: Function2D, direction: Function2D, width: Function1D = constant(1),
+                 stroke_alignment: Function1D = constant(0.5)):
         """
         Creates a Path
 
