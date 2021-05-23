@@ -23,13 +23,13 @@ def twig(stem_length: float, leaf_length: float, leaf_width: float, spacing: flo
 
 def twig_with_motif(motif_generator, spacing, start_length, end_length, stitch_length, angle_left, angle_right):
     def f(path):
-        alternating_notifs = _cycle_angles(motif_generator, (angle_left, angle_right))
+        alternating_motifs = _cycle_angles(motif_generator, (angle_left, angle_right))
         end_direction = rotate_by_degrees(path.direction(1), 90)[0]
         stitches = [
             motif_to_points_along(path,
                                   motif_position_sampling=free_start_end(start_length, end_length, regular(spacing)),
                                   line_sampling=sampling_by_length(stitch_length, include_endpoint=False),
-                                  motif_generator=alternating_notifs)[:-1],
+                                  motif_generator=alternating_motifs)[:-1],
             place_motif_at(path.shape(1), end_direction, 1, next(motif_generator)),
             inverse(path.shape)(sample_by_length(path.length, stitch_length, include_endpoint=True))
         ]
