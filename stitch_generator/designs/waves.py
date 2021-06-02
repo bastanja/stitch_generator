@@ -20,7 +20,7 @@ class Design(EmbroideryDesign):
             'initial_offset': FloatParameter("Initial Offset", -0.5, 0, 0.5),
             'offset_per_line': FloatParameter("Offset per Line", -0.5, 0.25, 0.5),
             'line_distance': FloatParameter("Line Distance", 1, 8, 50),
-            'number_of_lines': IntParameter("Number of Lines", 2, 20, 50)
+            'number_of_lines': IntParameter("Number of Lines", 2, 15, 50)
         })
 
     def get_pattern(self, parameters):
