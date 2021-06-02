@@ -77,3 +77,16 @@ def add_start_end(samples, include_startpoint, include_endpoint):
         samples = np.concatenate((samples, ensure_1d_shape(1)))
 
     return samples
+
+
+def ensure_sample_at(sampling_function: SamplingFunction, sample_position: float):
+    def f(total_length: float):
+        s = sampling_function(total_length)
+
+        delta = np.abs(s - sample_position)
+        nearest_index = np.argmin(delta)
+        s[nearest_index] = sample_position
+
+        return s
+
+    return f
