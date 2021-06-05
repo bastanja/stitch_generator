@@ -53,7 +53,7 @@ class Design(EmbroideryDesign):
         path = Path(shape=f, direction=direction, width=constant(1), stroke_alignment=constant(0.5))
 
         dot = satin_circle(diameter=parameters.dot_diameter, stitch_length=parameters.stitch_length,
-                         pull_compensation=0.1 * parameters.dot_diameter, return_to_start=True)
+                           pull_compensation=0.1 * parameters.dot_diameter, return_to_start=True)
         motif_gen = repeat_motif_mirrored(dot - dot[0])
 
         sampling = free_start_end(parameters.start_spacing, parameters.end_spacing, regular(parameters.dot_spacing))
