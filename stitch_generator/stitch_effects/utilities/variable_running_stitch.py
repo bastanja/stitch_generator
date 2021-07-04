@@ -10,7 +10,7 @@ from stitch_generator.sampling.tatami_sampling import tatami_sampling
 from stitch_generator.utilities.types import Function1D, Array2D
 
 
-def variable_running_stitch(path: Path, stroke_spacing: float, stitch_length: float) -> Array2D:
+def variable_running_stitch_along(path: Path, stroke_spacing: float, stitch_length: float) -> Array2D:
     segments = int(round(estimate_length(path.shape) / stitch_length))
     t = sample_by_number(number_of_segments=segments, include_endpoint=True)
 
@@ -37,7 +37,7 @@ def variable_running_stitch(path: Path, stroke_spacing: float, stitch_length: fl
     return positions + directions
 
 
-def variable_underlay(path: Path, stroke_spacing: float, stitch_length: float) -> Array2D:
+def variable_underlay_along(path: Path, stroke_spacing: float, stitch_length: float) -> Array2D:
     pos1 = add(path.shape, multiply(path.direction, multiply(path.width, path.stroke_alignment)))
     width1 = multiply(path.width, path.stroke_alignment)
     path1 = Path(shape=pos1, direction=path.direction, width=width1, stroke_alignment=constant(0))
