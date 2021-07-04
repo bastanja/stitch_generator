@@ -27,14 +27,14 @@ def straight_line_with_motif(length: float, stitch_length: float, motif):
     return np.vstack((forward[:-1], motif + (length, 0), back))
 
 
-def bent_line_with_motif(length: float, stitch_length: float, angle_deg, motif):
+def bent_line_with_motif(length: float, stitch_length: float, angle_deg: float, motif):
     f, direction = _bent_line_f(length, angle_deg)
     forward, back = _sample(f, length, stitch_length)
     motif = place_motif_at(position=forward[-1], direction=direction, scale=1, motif=motif, include_endpoint=True)
     return np.vstack((forward[:-1], motif, back))
 
 
-def _bent_line_f(length: float, angle_deg):
+def _bent_line_f(length: float, angle_deg: float):
     factor = 0.4
     last_point = rotate_by_degrees(np.array([length, 0], ndmin=2), angle_deg)
     control_points = np.array(((0, 0), (factor * length, 0), last_point[0]))
