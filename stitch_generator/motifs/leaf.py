@@ -1,9 +1,11 @@
+import math
+
 import numpy as np
 
 from stitch_generator.framework.path import Path
 from stitch_generator.functions.arc_length_mapping import arc_length_mapping
 from stitch_generator.functions.connect_functions import simple_connect
-from stitch_generator.functions.function_modifiers import combine, split, scale, inverse
+from stitch_generator.functions.function_modifiers import combine, split, scale, inverse, repeat
 from stitch_generator.functions.functions_1d import constant, arc
 from stitch_generator.functions.get_boundaries import get_boundaries
 from stitch_generator.functions.get_underlay_path import get_underlay_path
@@ -20,21 +22,8 @@ from stitch_generator.utilities.types import Function1D
 
 def leaf(stem_length: float, leaf_length: float, leaf_width: float, angle_degrees: float, stitch_length: float,
          contour_repetitions: int = 1):
-    stem, leaf_shape = leaf_paths(stem_length, leaf_length, scale(leaf_width, arc), angle_degrees)
-    stem_forward, stem_backward = stem_points(stem, stitch_length)
-
-    leaf_left, leaf_right = get_boundaries(leaf_shape)
-    t_leaf = sample_by_length(leaf_length, segment_length=stitch_length, include_endpoint=False)
-
-    leaf_points = np.concatenate((leaf_left(t_leaf), inverse(leaf_right)(t_leaf)))
-    leaf_points = repeat_stitches(stitches=leaf_points, times=contour_repetitions, reflect=False)
-
-    stitches = [
-        stem_forward,
-        leaf_points,
-        stem_backward
-    ]
-    return np.concatenate(stitches)
+    return _leaf(stem_length, leaf_length, leaf_width, angle_degrees, stitch_length, contour_repetitions,
+                 middle_line_length=0)
 
 
 def satin_leaf(stem_length: float, leaf_length: float, leaf_width: float, angle_degrees: float, stitch_length: float,
@@ -56,6 +45,12 @@ def satin_leaf(stem_length: float, leaf_length: float, leaf_width: float, angle_
         stem_backward
     ]
     return np.concatenate(stitches)
+
+
+def leaf_with_middle_line(stem_length: float, leaf_length: float, leaf_width: float, angle_degrees: float,
+                          stitch_length: float, contour_repetitions: int = 1):
+    return _leaf(stem_length, leaf_length, leaf_width, angle_degrees, stitch_length, contour_repetitions,
+                 middle_line_length=0.7)
 
 
 def leaf_baseline(length: float, angle: float, arc_length_param: bool):
@@ -96,3 +91,29 @@ def leaf_paths(stem_length: float, leaf_length: float, leaf_width: Function1D, a
     leaf = Path(shape=leaf_shape, direction=leaf_direction, width=leaf_width)
 
     return stem, leaf
+
+
+def _leaf(stem_length: float, leaf_length: float, leaf_width: float, angle_degrees: float,
+          stitch_length: float, contour_repetitions: int = 1, middle_line_length: float = 0):
+    stem, leaf_shape = leaf_paths(stem_length, leaf_length, scale(leaf_width, arc), angle_degrees)
+    stem_forward, stem_backward = stem_points(stem, stitch_length)
+
+    leaf_left, leaf_right = get_boundaries(leaf_shape)
+    t_leaf = sample_by_length(leaf_length, segment_length=stitch_length, include_endpoint=False)
+
+    even_repetitions = int((math.floor(contour_repetitions + 1) / 2)) * 2
+
+    leaf_middle = repeat(middle_line_length, leaf_shape.shape)(
+        sample_by_length(leaf_length * middle_line_length, segment_length=stitch_length, include_endpoint=True))
+    leaf_middle = repeat_stitches(stitches=leaf_middle, times=even_repetitions, reflect=True)[:-1]
+
+    leaf_points = np.concatenate((leaf_left(t_leaf), inverse(leaf_right)(t_leaf)))
+    leaf_points = repeat_stitches(stitches=leaf_points, times=contour_repetitions, reflect=False)
+
+    stitches = [
+        stem_forward,
+        leaf_points,
+        leaf_middle,
+        stem_backward
+    ]
+    return np.concatenate(stitches)
