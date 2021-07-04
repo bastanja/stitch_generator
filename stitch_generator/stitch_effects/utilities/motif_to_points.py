@@ -12,10 +12,16 @@ def motif_to_points_along(path: Path, motif_position_sampling: SamplingFunction,
     length = path.length
     motif_locations = motif_position_sampling(length)
 
-    motifs = [place_motif_at(path.shape(t), path.direction(t)[0], path.width(t), next(motif_generator)) for
-              t in motif_locations]
+    if motif_locations.size > 0:
 
-    starts_with_motif = np.isclose(motif_locations[0], 0)
+        motifs = [place_motif_at(path.shape(t), path.direction(t)[0], path.width(t), next(motif_generator)) for
+                  t in motif_locations]
+
+        starts_with_motif = np.isclose(motif_locations[0], 0)
+
+    else:
+        motifs = []
+        starts_with_motif = False
 
     motif_locations = add_first_and_last(motif_locations)
 
@@ -39,6 +45,8 @@ def motif_to_points_along(path: Path, motif_position_sampling: SamplingFunction,
 
 
 def add_first_and_last(samples):
+    if samples.size == 0:
+        return np.array((0.0, 1))
     if not np.isclose(samples[0], 0):
         samples = np.concatenate(([0], samples))
     if not np.isclose(samples[-1], 1):
