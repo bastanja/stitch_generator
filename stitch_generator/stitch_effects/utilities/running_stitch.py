@@ -11,4 +11,4 @@ def running_stitch_along(path: Path, stitch_length: float, include_endpoint: boo
 
 def running_stitch_shape(shape: Function2D, stitch_length: float, include_endpoint: bool = True):
     return shape(sample_by_length(total_length=estimate_length(shape), segment_length=stitch_length,
-                            include_endpoint=include_endpoint))
+                                  include_endpoint=include_endpoint))

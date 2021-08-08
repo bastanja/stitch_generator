@@ -1,8 +1,8 @@
 from typing import Tuple
 
+from stitch_generator.framework.path import Path
 from stitch_generator.functions.function_modifiers import multiply, subtract, add, maximum, minimum, repeat, shift
 from stitch_generator.functions.functions_1d import constant
-from stitch_generator.framework.path import Path
 from stitch_generator.utilities.types import Function2D
 
 

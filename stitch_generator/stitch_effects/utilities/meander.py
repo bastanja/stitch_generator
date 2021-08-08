@@ -1,7 +1,7 @@
 import numpy as np
 
-from stitch_generator.functions.get_boundaries import get_boundaries
 from stitch_generator.framework.path import Path
+from stitch_generator.functions.get_boundaries import get_boundaries
 from stitch_generator.utilities.types import Array2D
 from stitch_generator.utilities.types import ConnectFunction, SamplingFunction
 

@@ -1,9 +1,9 @@
 import numpy as np
 
 from stitch_generator.framework.embroidery_design import EmbroideryDesign
+from stitch_generator.framework.embroidery_pattern import EmbroideryPattern
 from stitch_generator.framework.parameter import FloatParameter, IntParameter
 from stitch_generator.functions.connect_functions import running_stitch_line
-from stitch_generator.framework.embroidery_pattern import EmbroideryPattern
 from stitch_generator.functions.function_modifiers import shift, scale, repeat, add, inverse
 from stitch_generator.functions.functions_1d import cosinus, linear_interpolation, constant
 from stitch_generator.functions.functions_2d import function_2d

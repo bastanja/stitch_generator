@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.interpolate import interp1d
 
-from stitch_generator.functions.functions_1d import constant, linear_interpolation
+from stitch_generator.functions.functions_1d import linear_interpolation
 from stitch_generator.sampling.sample_by_length import sample_by_length
 from stitch_generator.utilities.types import SamplingFunction, Array1D, Function1D
 
@@ -47,7 +47,7 @@ def _inverse_cdf(f, num_approximation_samples: int = 200):
 
     # handle case where the density is zero
     if np.allclose(y_values, 0):
-        return linear_interpolation(0,1), 0
+        return linear_interpolation(0, 1), 0
 
     y_values[y_values < epsilon] = epsilon
     y_values = np.cumsum(y_values)

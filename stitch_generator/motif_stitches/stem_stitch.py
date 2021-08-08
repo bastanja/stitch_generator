@@ -1,7 +1,7 @@
 from stitch_generator.functions.functions_1d import constant
 from stitch_generator.functions.motif_generators import repeat_motif
 from stitch_generator.motifs.zigzag import zigzag
-from stitch_generator.sampling.sample_by_length import regular, sampling_by_length_with_offset
+from stitch_generator.sampling.sample_by_length import sampling_by_length_with_offset
 from stitch_generator.stitch_effects.utilities.motif_sequence import motif_sequence_along
 
 

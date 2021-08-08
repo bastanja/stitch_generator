@@ -1,5 +1,4 @@
 import math
-
 import numpy as np
 
 from stitch_generator.framework.path import Path

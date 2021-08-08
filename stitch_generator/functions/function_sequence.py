@@ -1,9 +1,9 @@
 import numpy as np
 
+from stitch_generator.functions.ensure_shape import ensure_1d_shape
 from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.function_modifiers import combine
 from stitch_generator.functions.functions_1d import linear_interpolation
-from stitch_generator.functions.ensure_shape import ensure_1d_shape
 
 
 def function_sequence(functions, lengths=None):
@@ -78,4 +78,3 @@ def _get_lengths(functions, lengths):
     lengths = np.cumsum(lengths).astype(float)
     lengths /= lengths[-1]
     return lengths
-

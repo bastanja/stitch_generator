@@ -52,6 +52,7 @@ def rotate_degrees(stitch_position_function: Function2D, angle_function: Functio
         A 2D Function that returns the stitches from `stitch_position_function` rotated by the angles from
         `angle_function`
     """
+
     def f(t):
         t = ensure_1d_shape(t)
         return rotate_by_degrees(stitch_position_function(t), angle_function(t))
@@ -71,6 +72,7 @@ def rotate_radians(stitch_position_function: Function2D, angle_function: Functio
         A 2D Function that returns the stitches from `stitch_position_function` rotated by the angles from
         `angle_function`
     """
+
     def f(t):
         t = ensure_1d_shape(t)
         return rotate_by_radians(stitch_position_function(t), angle_function(t))

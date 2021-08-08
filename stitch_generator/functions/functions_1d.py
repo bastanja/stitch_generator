@@ -27,6 +27,7 @@ def linear_interpolation(target_low, target_high, source_low=0, source_high=1) -
         return constant(target_low)
     return interp1d([source_low, source_high], [target_low, target_high], fill_value="extrapolate")
 
+
 def cubic_interpolation_evenly_spaced(values) -> Function1D:
     assert len(values) > 1, "Interpolation function needs at least two values"
     samples = np.linspace(0, 1, num=len(values), endpoint=True)

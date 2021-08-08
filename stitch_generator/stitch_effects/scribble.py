@@ -30,7 +30,7 @@ def scribble_between(boundary_left, boundary_right, repetitions: int, sampling_f
     boundary_left = repeat(r=repetitions, function=boundary_left, mode=repetition_mode)
     boundary_right = repeat(r=repetitions, function=boundary_right, mode=repetition_mode)
 
-    mix_factor = combine(shift(noise_offset, repeat(noise_scale * repetitions * length/100, noise())),
+    mix_factor = combine(shift(noise_offset, repeat(noise_scale * repetitions * length / 100, noise())),
                          linear_interpolation(target_low=0, target_high=1, source_low=-0.4, source_high=0.4))
     mixed = mix(boundary_left, boundary_right, factor=mix_factor)
 

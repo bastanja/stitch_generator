@@ -1,8 +1,8 @@
 import numpy as np
 
+from stitch_generator.framework.path import Path
 from stitch_generator.functions.function_modifiers import inverse
 from stitch_generator.functions.get_boundaries import get_boundaries
-from stitch_generator.framework.path import Path
 from stitch_generator.sampling.sample_by_length import sample_by_length
 from stitch_generator.shapes.line import line
 from stitch_generator.utilities.types import Array2D

@@ -35,7 +35,7 @@ class Design(EmbroideryDesign):
                         direction=circle(),
                         width=width_f,
                         stroke_alignment=constant(0.5))
-            offset = (0, (parameters.length / 2)+20)
+            offset = (0, (parameters.length / 2) + 20)
         else:
             path = Path(shape=line((0, 0), (parameters.length, 0)),
                         direction=constant_direction(0, -1),
