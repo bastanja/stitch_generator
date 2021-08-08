@@ -1,40 +1,37 @@
+from functools import partial
+
 import numpy as np
 
 from stitch_generator.framework.path import Path
 from stitch_generator.functions.function_modifiers import inverse
 from stitch_generator.functions.get_boundaries import get_boundaries
-from stitch_generator.sampling.sample_by_length import sample_by_length
 from stitch_generator.shapes.line import line
+from stitch_generator.stitch_effects.utilities.running_stitch import running_stitch_shape
 from stitch_generator.utilities.types import Array2D
 
 
 def contour_along(path: Path, stitch_length: float) -> Array2D:
     left, right = get_boundaries(path)
-    return contour_between(left, right, stitch_length=stitch_length, length=path.length)
+    return contour_between(left, right, stitch_length=stitch_length)
 
 
-def contour_between(boundary_left, boundary_right, stitch_length: float, length: float) -> Array2D:
-    t = sample_by_length(total_length=length, segment_length=stitch_length)[:-1]  # ToDo: check array length
+def contour_between(boundary_left, boundary_right, stitch_length: float) -> Array2D:
+    running_stitch = partial(running_stitch_shape, stitch_length=stitch_length, include_endpoint=False)
 
-    start_width = np.linalg.norm(boundary_left(0) - boundary_right(0), axis=1)
-    end_width = np.linalg.norm(boundary_left(1) - boundary_right(1), axis=1)
-    t_start = sample_by_length(start_width.item(), stitch_length)
-    t_end = sample_by_length(end_width.item(), stitch_length)[:-1]  # ToDo: check array length
+    left_0, right_0 = boundary_left(0), boundary_right(0)
+    left_1, right_1 = boundary_left(1), boundary_right(1)
 
-    boundary_right = inverse(boundary_right)
-    connect_end = line(origin=boundary_left(1)[0], to=boundary_right(0)[0])
-    connect_start = line(origin=boundary_right(1)[0], to=boundary_left(0)[0])
+    # four sides of the contour
+    shapes = [boundary_left,
+              line(left_1, right_1) if not np.allclose(left_1, right_1) else None,
+              inverse(boundary_right),
+              line(right_0, left_0) if not np.allclose(left_0, right_0) else None]
 
-    # left boundary
-    stitches = [boundary_left(t)]
-    # close end
-    if not np.isclose(end_width, 0):
-        stitches.append(connect_end(t_end))
-    # right boundary
-    stitches.append(boundary_right(t))
-    # close start
-    stitches.append(connect_start(t_start))
+    # collect stitches for all four sides
+    stitches = [running_stitch(shape) for shape in shapes if shape is not None]
 
-    stitches = np.concatenate(stitches)
+    # add end point if it is not the same as the start point
+    if not np.all(np.isclose(left_0, stitches[-1][-1])):
+        stitches.append(left_0)
 
-    return stitches
+    return np.concatenate(stitches)
