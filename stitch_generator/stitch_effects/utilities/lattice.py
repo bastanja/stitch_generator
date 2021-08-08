@@ -25,7 +25,7 @@ def _lattice(path: Path, strands, length, pattern_f, pattern_length, stitch_leng
             multiply(repeat(strands, path.direction, mode=repetition_mode), pattern_f))
 
     stitches = int(round(pattern_length / stitch_length))
-    points = f(sampling_by_number(stitches * times, include_endpoint=True)(1))
+    points = f(sampling_by_number(stitches * times)(1))
     return points
 
 

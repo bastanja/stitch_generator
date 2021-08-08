@@ -31,7 +31,7 @@ def satin_circle(diameter: float, stitch_length: float, pull_compensation: float
 
     stitches = []
     if return_to_start:
-        stitches.append(path.shape(sample_by_length(diameter, stitch_length, include_endpoint=True)))
+        stitches.append(path.shape(sample_by_length(diameter, stitch_length)))
         path = path.inverse()
     else:
         stitches.append(path.shape(0))

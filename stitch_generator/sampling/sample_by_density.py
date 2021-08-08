@@ -6,25 +6,23 @@ from stitch_generator.sampling.sample_by_length import sample_by_length
 from stitch_generator.utilities.types import SamplingFunction, Array1D, Function1D
 
 
-def sample_by_density(total_length: float, segment_length: float, density_distribution: Function1D,
-                      include_endpoint: bool) -> Array1D:
+def sample_by_density(total_length: float, segment_length: float, density_distribution: Function1D) -> Array1D:
     density_function, sample_ratio = _inverse_cdf(density_distribution)
 
-    samples = density_function(sample_by_length(total_length=total_length * sample_ratio, segment_length=segment_length,
-                                                include_endpoint=include_endpoint))
+    samples = density_function(
+        sample_by_length(total_length=total_length * sample_ratio, segment_length=segment_length))
 
     # handle case where the density is zero
-    if not np.isclose(samples[-1], 1) and include_endpoint:
+    if not np.isclose(samples[-1], 1):
         samples = np.append(samples, 1)
 
     return samples
 
 
-def sampling_by_density(segment_length: float, density_distribution: Function1D,
-                        include_endpoint: bool) -> SamplingFunction:
+def sampling_by_density(segment_length: float, density_distribution: Function1D) -> SamplingFunction:
     def f(total_length: float):
         return sample_by_density(total_length=total_length, segment_length=segment_length,
-                                 density_distribution=density_distribution, include_endpoint=include_endpoint)
+                                 density_distribution=density_distribution)
 
     return f
 

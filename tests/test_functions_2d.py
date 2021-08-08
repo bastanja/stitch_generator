@@ -75,7 +75,7 @@ def test_bezier():
     ]
 
     for f in functions:
-        samples = f(sample_by_number(10, include_endpoint=True))
+        samples = f(sample_by_number(10))
         # no specific check for coordinates, just check that we get a ndarray
         assert isinstance(samples, np.ndarray)
         assert len(samples) == 11
@@ -87,7 +87,7 @@ def test_bezier_normals():
     f = bezier(control_points)
     direction = bezier_normals(control_points)
 
-    samples = sample_by_number(10, include_endpoint=True)
+    samples = sample_by_number(10)
     points = f(samples)
     directions = direction(samples)
 

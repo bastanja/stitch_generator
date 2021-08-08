@@ -47,7 +47,7 @@ def _bent_line_f(length: float, angle_deg: float):
 
 
 def _sample(f, length: float, stitch_length: float):
-    samples = sample_by_length(total_length=length, segment_length=stitch_length, include_endpoint=True)
+    samples = sample_by_length(total_length=length, segment_length=stitch_length)
     stitches = f(samples)
     back = stitches[::-1][1:]
     return stitches, back

@@ -10,6 +10,7 @@ from stitch_generator.functions.get_boundaries import get_boundaries
 from stitch_generator.functions.get_underlay_path import get_underlay_path
 from stitch_generator.sampling.sample_by_length import sample_by_length, sampling_by_length
 from stitch_generator.sampling.sample_by_number import sample_by_number
+from stitch_generator.sampling.sampling_modifiers import remove_end
 from stitch_generator.shapes.bezier import bezier, bezier_normals
 from stitch_generator.shapes.line import line
 from stitch_generator.stitch_effects.utilities.satin import satin_along
@@ -31,10 +32,10 @@ def satin_leaf(stem_length: float, leaf_length: float, leaf_width: float, angle_
     stem_forward, stem_backward = stem_points(stem, stitch_length)
 
     leaf_underlay = stripes_along(get_underlay_path(leaf_shape, inset=underlay_inset), repetitions=3,
-                                  sampling_function=sampling_by_length(stitch_length, include_endpoint=False),
+                                  sampling_function=sampling_by_length(stitch_length),
                                   step_ratio=0.1)
     leaf_satin = satin_along(leaf_shape.inverse(),
-                             sampling_function=sampling_by_length(satin_spacing, include_endpoint=False),
+                             sampling_function=remove_end(sampling_by_length(satin_spacing)),
                              connect_function=simple_connect)[:-1]
 
     stitches = [
@@ -54,7 +55,7 @@ def leaf_with_middle_line(stem_length: float, leaf_length: float, leaf_width: fl
 
 def leaf_baseline(length: float, angle: float, arc_length_param: bool):
     baseline = line((0, 0), (length, 0))
-    control_points = baseline(sample_by_number(3, include_endpoint=True))
+    control_points = baseline(sample_by_number(3))
     offset = control_points[1].copy()
     control_points -= offset
     control_points[-2:] = rotate_by_degrees(control_points[-2:], angle)
@@ -72,7 +73,7 @@ def leaf_baseline(length: float, angle: float, arc_length_param: bool):
 
 def stem_points(stem_path: Path, stitch_length: float):
     stem_1, stem_2 = get_boundaries(stem_path)
-    t_stem = sample_by_length(stem_path.length, segment_length=stitch_length, include_endpoint=True)
+    t_stem = sample_by_length(stem_path.length, segment_length=stitch_length)
     stem_forward = stem_1(t_stem)
     stem_backward = inverse(stem_2)(t_stem)
     return stem_forward[:-1], stem_backward
@@ -98,12 +99,12 @@ def _leaf(stem_length: float, leaf_length: float, leaf_width: float, angle_degre
     stem_forward, stem_backward = stem_points(stem, stitch_length)
 
     leaf_left, leaf_right = get_boundaries(leaf_shape)
-    t_leaf = sample_by_length(leaf_length, segment_length=stitch_length, include_endpoint=False)
+    t_leaf = sample_by_length(leaf_length, segment_length=stitch_length)[:-1]
 
     even_repetitions = int((math.floor(contour_repetitions + 1) / 2)) * 2
 
     leaf_middle = repeat(middle_line_length, leaf_shape.shape)(
-        sample_by_length(leaf_length * middle_line_length, segment_length=stitch_length, include_endpoint=True))
+        sample_by_length(leaf_length * middle_line_length, segment_length=stitch_length))
     leaf_middle = repeat_stitches(stitches=leaf_middle, times=even_repetitions, reflect=True)[:-1]
 
     leaf_points = np.concatenate((leaf_left(t_leaf), inverse(leaf_right)(t_leaf)))

@@ -1,12 +1,10 @@
 from functools import partial
-from typing import Iterable
 
 import numpy as np
 
 from stitch_generator.functions.ensure_shape import ensure_2d_shape
 from stitch_generator.sampling.sample_by_length import sampling_by_length
-from stitch_generator.sampling.sampling_presets import sampling_presets
-from stitch_generator.sampling.tatami_sampling import alternating_tatami_sampling
+from stitch_generator.sampling.sampling_modifiers import remove_end
 from stitch_generator.shapes.line import line
 from stitch_generator.utilities.types import ConnectFunction
 
@@ -19,6 +17,13 @@ def line_with_sampling_function(sampling_function):  # -> ConnectFunction
     return partial(_line_with_sampling_function, sampling_function=sampling_function)
 
 
+def running_stitch_line(stitch_length: float, include_endpoint: bool):  # -> ConnectFunction
+    sampling_function = sampling_by_length(segment_length=stitch_length)
+    if not include_endpoint:
+        sampling_function = remove_end(sampling_function)
+    return line_with_sampling_function(sampling_function)
+
+
 def _line_with_sampling_function(p1, p2, sampling_function):
     p1, p2 = np.asarray(p1), np.asarray(p2)
     length = np.linalg.norm(p2 - p1)
@@ -27,10 +32,16 @@ def _line_with_sampling_function(p1, p2, sampling_function):
 
 
 def combine_start_end(connect_function: ConnectFunction) -> ConnectFunction:
+    """
+    Combines the end point of the previous call of the connect function with the start point of the current call.
+    Averages their position and sets it as start point of the current connection.
+    """
     last_point = None
 
     def f(p1, p2):
         points = connect_function(p1, p2)
+        if len(points) == 0:
+            return points
 
         nonlocal last_point
         try:
@@ -43,21 +54,3 @@ def combine_start_end(connect_function: ConnectFunction) -> ConnectFunction:
         return points[0: -1]
 
     return f
-
-
-def running_stitch_line(stitch_length: float, include_endpoint: bool):  # -> ConnectFunction
-    return line_with_sampling_function(
-        sampling_by_length(segment_length=stitch_length, include_endpoint=include_endpoint))
-
-
-def tatami_line(stitch_length: float, include_endpoint: bool = True, offsets: Iterable[float] = (0, 1 / 3, 2 / 3),
-                alignment: float = 0.5, minimal_segment_size: float = 0.25):  # -> ConnectFunction
-    return line_with_sampling_function(
-        sampling_function=alternating_tatami_sampling(stitch_length=stitch_length, include_endpoint=include_endpoint,
-                                                      offsets=offsets, alignment=alignment,
-                                                      minimal_segment_size=minimal_segment_size))
-
-
-def presets(include_endpoint: bool, alignment: float):
-    for s in iter(sampling_presets(include_endpoint, alignment)):
-        yield line_with_sampling_function(s)

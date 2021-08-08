@@ -23,15 +23,14 @@ def bundle(start_angle, end_angle, bend_angle_start, bend_angle_end, min_length,
 def bundle_f(angle: Function1D, bend: Function1D, length: Function1D, number_of_lines, stitch_length, motif_generator):
     gen = _motif_generator(number_of_lines - 1, stitch_length, bend, length, motif_generator)
 
-    stitch_effect = motif_to_points(sampling_by_number(number_of_lines - 1, include_endpoint=True),
-                                    line_sampling=lambda _: np.array([]),
+    stitch_effect = motif_to_points(sampling_by_number(number_of_lines - 1), line_sampling=lambda _: np.array([]),
                                     motif_generator=gen)
 
     return np.vstack((stitch_effect(_zero_path(angle)), [0, 0]))
 
 
 def _motif_generator(number, stitch_length, bend_f, length_f, motif):
-    samples = sample_by_number(number, include_endpoint=True)
+    samples = sample_by_number(number)
     lengths = length_f(samples)
     angles = bend_f(samples)
     motifs = [bent_line_with_motif(length, stitch_length, angle, next(motif)) for length, angle in zip(lengths, angles)]

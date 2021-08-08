@@ -7,7 +7,7 @@ from stitch_generator.functions.motif_generators import alternate_direction, rep
 from stitch_generator.functions.place_motif import place_motif_at
 from stitch_generator.motifs.leaf import leaf
 from stitch_generator.sampling.sample_by_length import regular, sampling_by_length, sample_by_length
-from stitch_generator.sampling.sampling_modifiers import free_start_end
+from stitch_generator.sampling.sampling_modifiers import free_start_end, remove_end
 from stitch_generator.stitch_effects.utilities.motif_to_points import motif_to_points_along
 from stitch_generator.stitch_operations.rotate import rotate_by_degrees
 
@@ -28,10 +28,10 @@ def twig_with_motif(motif_generator, spacing, start_length, end_length, stitch_l
         stitches = [
             motif_to_points_along(path,
                                   motif_position_sampling=free_start_end(start_length, end_length, regular(spacing)),
-                                  line_sampling=sampling_by_length(stitch_length, include_endpoint=False),
+                                  line_sampling=remove_end(sampling_by_length(stitch_length)),
                                   motif_generator=alternating_motifs)[:-1],
             place_motif_at(path.shape(1), end_direction, 1, next(motif_generator)),
-            inverse(path.shape)(sample_by_length(path.length, stitch_length, include_endpoint=True))
+            inverse(path.shape)(sample_by_length(path.length, stitch_length))
         ]
         return np.concatenate(stitches)
 

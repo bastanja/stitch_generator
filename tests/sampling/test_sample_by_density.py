@@ -11,45 +11,38 @@ segment_lengths = [0, 0.1, 0.55, 1, 2, 6]
 
 
 def test_constant_density_one():
-    """ Test that constant density of 1 is the same as regular sampling """
+    """ Test that sampling with constant density of 1 is the same as regular sampling """
 
     density_function = constant(1)
 
     for segment_length in segment_lengths:
-        constant_density = sampling_by_density(segment_length=segment_length, density_distribution=density_function,
-                                               include_endpoint=True)
-        regular_sampling = sampling_by_length(segment_length=segment_length, include_endpoint=True)
+        constant_density = sampling_by_density(segment_length=segment_length, density_distribution=density_function)
+        regular_sampling = sampling_by_length(segment_length=segment_length)
 
         for length in lengths:
             assert np.allclose(constant_density(length), regular_sampling(length))
 
 
 def test_constant_density_low():
-    """ Test that constant density of 0 is only the start point and the endpoint """
+    """ Test that sampling with constant density of 0 returns only the start point and the end point """
 
     density_function = constant(0)
 
     for segment_length in segment_lengths:
-        with_endpoint = sampling_by_density(segment_length=segment_length, density_distribution=density_function,
-                                            include_endpoint=True)
-        no_endpoint = sampling_by_density(segment_length=segment_length, density_distribution=density_function,
-                                          include_endpoint=False)
+        with_endpoint = sampling_by_density(segment_length=segment_length, density_distribution=density_function)
 
         for length in lengths:
             samples_with_endpoint = with_endpoint(length)
             assert np.allclose(samples_with_endpoint, np.array([0, 1], dtype=float))
-            samples_no_endpoint = no_endpoint(length)
-            assert np.allclose(samples_no_endpoint, np.array([0], dtype=float))
 
 
 def test_varying_density():
-    """ Test that varying density results in fewer or equal samples than regular sampling """
+    """ Test that sampling with varying density results in fewer or equal samples than regular sampling """
 
     for f in functions_1d_positive.values():
         for segment_length in segment_lengths:
-            varying_density = sampling_by_density(segment_length=segment_length, density_distribution=f,
-                                                  include_endpoint=True)
-            regular_sampling = sampling_by_length(segment_length=segment_length, include_endpoint=True)
+            varying_density = sampling_by_density(segment_length=segment_length, density_distribution=f)
+            regular_sampling = sampling_by_length(segment_length=segment_length)
 
             for length in lengths:
                 samples_varying_density = varying_density(length)
@@ -62,7 +55,7 @@ def test_zero_and_one_included():
 
     for name, f in functions_1d_positive.items():
         for segment_length in segment_lengths:
-            sampling = sampling_by_density(segment_length=segment_length, density_distribution=f, include_endpoint=True)
+            sampling = sampling_by_density(segment_length=segment_length, density_distribution=f)
 
             for length in lengths:
                 samples_varying_density = sampling(length)

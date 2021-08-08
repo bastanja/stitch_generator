@@ -10,7 +10,7 @@ from stitch_generator.functions.motif_generators import repeat_motif_mirrored
 from stitch_generator.functions.noise import noise
 from stitch_generator.motifs.satin_circle import satin_circle
 from stitch_generator.sampling.sample_by_length import regular, sampling_by_length
-from stitch_generator.sampling.sampling_modifiers import free_start_end
+from stitch_generator.sampling.sampling_modifiers import free_start_end, remove_end
 from stitch_generator.shapes.circle import circle
 from stitch_generator.shapes.spiral import spiral
 from stitch_generator.stitch_effects.motif_to_points import motif_to_points
@@ -59,7 +59,7 @@ class Design(EmbroideryDesign):
         sampling = free_start_end(parameters.start_spacing, parameters.end_spacing, regular(parameters.dot_spacing))
 
         effect = motif_to_points(motif_position_sampling=sampling,
-                                 line_sampling=sampling_by_length(parameters.stitch_length, include_endpoint=False),
+                                 line_sampling=remove_end(sampling_by_length(parameters.stitch_length)),
                                  motif_generator=motif_gen)
 
         stitches = effect(path)

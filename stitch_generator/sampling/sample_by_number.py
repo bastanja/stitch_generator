@@ -3,13 +3,13 @@ import numpy as np
 from stitch_generator.utilities.types import SamplingFunction, Array1D
 
 
-def sample_by_number(number_of_segments: int, include_endpoint: bool) -> Array1D:
-    return linspace(start=0, stop=1, number_of_segments=number_of_segments, include_endpoint=include_endpoint)
+def sample_by_number(number_of_segments: int) -> Array1D:
+    return linspace(start=0, stop=1, number_of_segments=number_of_segments, include_endpoint=True)
 
 
-def sampling_by_number(number_of_segments: int, include_endpoint: bool) -> SamplingFunction:
+def sampling_by_number(number_of_segments: int) -> SamplingFunction:
     def f(total_length: float):
-        return sample_by_number(number_of_segments=number_of_segments, include_endpoint=include_endpoint)
+        return sample_by_number(number_of_segments=number_of_segments)
 
     return f
 

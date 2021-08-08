@@ -13,6 +13,6 @@ def accumulate_lengths(points):
 
 
 def estimate_length(function, number_of_samples=100):
-    samples = sample_by_number(number_of_samples, include_endpoint=True)
+    samples = sample_by_number(number_of_samples)
     lengths = accumulate_lengths(function(samples))
     return lengths[-1]

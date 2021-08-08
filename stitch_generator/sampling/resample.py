@@ -12,7 +12,7 @@ def resample(stitches, stitch_length, smooth: bool = False):
     """
     interpolation, total_length = _get_interpolation_and_length(stitches, smooth)
 
-    samples = sample_by_length(total_length=total_length, segment_length=stitch_length, include_endpoint=True)
+    samples = sample_by_length(total_length=total_length, segment_length=stitch_length)
     return interpolation(samples)
 
 

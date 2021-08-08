@@ -13,4 +13,4 @@ def zigzag(width: float, height: float, repetitions: int, flip: bool = False):
     f1 = line((-half_width, -half_height), (half_width, -half_height))
     f2 = line((-half_width, half_height), (half_width, half_height))
 
-    return zigzag_between(f1, f2, sampling_by_number(repetitions, include_endpoint=True), width)
+    return zigzag_between(f1, f2, sampling_by_number(repetitions), width)

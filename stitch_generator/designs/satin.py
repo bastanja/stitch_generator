@@ -3,12 +3,14 @@ from stitch_generator.framework.embroidery_pattern import EmbroideryPattern
 from stitch_generator.framework.palette import palette
 from stitch_generator.framework.parameter import FloatParameter, BoolParameter
 from stitch_generator.framework.path import Path
-from stitch_generator.functions.connect_functions import presets, combine_start_end
+from stitch_generator.functions.connect_functions import combine_start_end, line_with_sampling_function
 from stitch_generator.functions.function_modifiers import combine, multiply, subtract
 from stitch_generator.functions.function_sequence import function_sequence
 from stitch_generator.functions.functions_1d import linear_interpolation, constant, arc
 from stitch_generator.functions.functions_2d import constant_direction
-from stitch_generator.sampling.sample_by_fixed_length import sampling_by_fixed_length
+from stitch_generator.sampling.sample_by_length import sampling_by_length
+from stitch_generator.sampling.sampling_modifiers import add_end, add_start
+from stitch_generator.sampling.sampling_presets import sampling_presets
 from stitch_generator.shapes.line import line
 from stitch_generator.stitch_effects.meander import meander_along
 from stitch_generator.stitch_effects.underlay_dense import underlay_dense
@@ -38,12 +40,15 @@ class Design(EmbroideryDesign):
                     width=self._get_width_function(parameters),
                     stroke_alignment=constant(parameters.alignment))
 
-        satin_row_spacing = sampling_by_fixed_length(parameters.stitch_spacing, include_endpoint=False)
+        satin_row_spacing = sampling_by_length(parameters.stitch_spacing)
+
+        sampling_functions = sampling_presets(alignment=parameters.pattern_alignment)
+        connect_functions = [combine_start_end(line_with_sampling_function(add_start(add_end(f)))) for f in
+                             sampling_functions]
 
         stitches = [
             meander_along(path=path, sampling_function=satin_row_spacing,
-                          connect_function=combine_start_end(connect_function)) for
-            connect_function in presets(include_endpoint=True, alignment=parameters.pattern_alignment)]
+                          connect_function=connect_function) for connect_function in connect_functions]
 
         pattern = EmbroideryPattern()
         col = palette()

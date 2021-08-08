@@ -7,7 +7,8 @@ from stitch_generator.functions.connect_functions import running_stitch_line
 from stitch_generator.functions.function_modifiers import shift, scale, repeat, add, inverse
 from stitch_generator.functions.functions_1d import cosinus, linear_interpolation, constant
 from stitch_generator.functions.functions_2d import function_2d
-from stitch_generator.sampling.sample_by_length import sample_by_length
+from stitch_generator.sampling.sample_by_length import sampling_by_length
+from stitch_generator.sampling.sampling_modifiers import remove_end
 
 
 class Design(EmbroideryDesign):
@@ -33,6 +34,7 @@ class Design(EmbroideryDesign):
         last_point = None
 
         connect = running_stitch_line(parameters.stitch_length, include_endpoint=False)
+        p = remove_end(sampling_by_length(parameters.stitch_length))(parameters.width)
 
         for i in range(0, parameters.number_of_lines):
             initial_offset = parameters.initial_offset + i * parameters.offset_per_line
@@ -50,7 +52,6 @@ class Design(EmbroideryDesign):
                 if len(fill_stitches):
                     stitches.append(fill_stitches)
 
-            p = sample_by_length(parameters.width, parameters.stitch_length, include_endpoint=False)
             current_line = f(p)
             stitches.append(current_line)
 

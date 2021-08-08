@@ -16,7 +16,7 @@ def satin_arc(length: float, height: float, start_thickness: float, middle_thick
                 stroke_alignment=constant(0))
     samples = length / spacing
     samples = int(samples / 2) * 2
-    sampling = sampling_by_number(samples, include_endpoint=True)
+    sampling = sampling_by_number(samples)
 
     stitches = np.concatenate(
         (path.shape(0), satin_along(path, sampling_function=sampling, connect_function=simple_connect)))

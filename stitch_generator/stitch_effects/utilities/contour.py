@@ -14,12 +14,12 @@ def contour_along(path: Path, stitch_length: float) -> Array2D:
 
 
 def contour_between(boundary_left, boundary_right, stitch_length: float, length: float) -> Array2D:
-    t = sample_by_length(total_length=length, segment_length=stitch_length, include_endpoint=False)
+    t = sample_by_length(total_length=length, segment_length=stitch_length)[:-1]  # ToDo: check array length
 
     start_width = np.linalg.norm(boundary_left(0) - boundary_right(0), axis=1)
     end_width = np.linalg.norm(boundary_left(1) - boundary_right(1), axis=1)
-    t_start = sample_by_length(start_width.item(), stitch_length, include_endpoint=True)
-    t_end = sample_by_length(end_width.item(), stitch_length, include_endpoint=False)
+    t_start = sample_by_length(start_width.item(), stitch_length)
+    t_end = sample_by_length(end_width.item(), stitch_length)[:-1]  # ToDo: check array length
 
     boundary_right = inverse(boundary_right)
     connect_end = line(origin=boundary_left(1)[0], to=boundary_right(0)[0])

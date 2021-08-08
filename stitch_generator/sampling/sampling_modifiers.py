@@ -27,66 +27,96 @@ def free_start_end(start_length: float, end_length: float, sampling_function: Sa
     return f
 
 
-def alternate_direction(sampling_function: SamplingFunction, include_endpoint: bool):
+def alternate_direction(sampling_function: SamplingFunction):
     """
     Returns the samples from the sampling_function in alternating direction by reversing it on every second call
     """
     forward = itertools.cycle((True, False))
 
+    def modify(samples):
+        if not next(forward) and len(samples) > 0:
+            samples = np.flip(1 - samples, axis=0)
+
+        return samples
+
+    return modify_sampling(sampling_function, modify)
+
+
+def modify_sampling(sampling_function, modify_samples):
+    """
+    Args:
+        sampling_function: The sampling function to modify
+        modify_samples: The modification that shall be applied to the samplesof the sampling function
+
+    Returns:
+        A new sampling function which returns the modified samples
+    """
+
     def f(total_length: float):
-        s = sampling_function(total_length)
-
-        if not next(forward):
-            s = np.flip(1 - s, axis=0)
-
-        return s if include_endpoint else s[0:-1]
+        return modify_samples(sampling_function(total_length))
 
     return f
-
-
-def ensure_start_end(samples, include_startpoint, include_endpoint):
-    """
-    Adds or removes the first and last sample to ensure that start and end sample are set as desired
-    """
-    # remove start point if not desired
-    if np.isclose(samples[0], 0.0) and not include_startpoint:
-        samples = samples[1:]
-    # add start point if desired and missing
-    if samples[0] > 0:
-        samples = np.concatenate((ensure_1d_shape(0), samples))
-    # remove end point if not desired
-    if np.isclose(samples[-1], 1.0) and not include_endpoint:
-        samples = samples[:-1]
-    # add end point if desired and missing
-    if samples[-1] < 1 and include_endpoint:
-        samples = np.concatenate((samples, ensure_1d_shape(1)))
-
-    return samples
-
-
-def add_start_end(samples, include_startpoint, include_endpoint):
-    """
-    Ensures that the first sample is 0 if include_startpoint and that the last sample is 1 if include_endpoint
-    Returns: the samples including 0 (if include_startpoint) and 1 (if include_endpoint)
-    """
-    # add start point if desired and missing
-    if (len(samples) == 0 or samples[0] > 0) and include_startpoint:
-        samples = np.concatenate((ensure_1d_shape(0), samples))
-    # add end point if desired and missing
-    if (len(samples) == 0 or samples[-1] < 1) and include_endpoint:
-        samples = np.concatenate((samples, ensure_1d_shape(1)))
-
-    return samples
 
 
 def ensure_sample_at(sampling_function: SamplingFunction, sample_position: float):
-    def f(total_length: float):
-        s = sampling_function(total_length)
+    """ Moves the sample which is nearest to sample_position exactly to sample_position """
 
-        delta = np.abs(s - sample_position)
+    def modify(samples):
+        if len(samples) == 0:
+            return ensure_1d_shape(sample_position)
+        delta = np.abs(samples - sample_position)
         nearest_index = np.argmin(delta)
-        s[nearest_index] = sample_position
+        samples[nearest_index] = sample_position
+        return samples
 
-        return s
+    return modify_sampling(sampling_function, modify)
 
-    return f
+
+def add_start(sampling_function: SamplingFunction) -> SamplingFunction:
+    """ Adds a sample at the start if it is missing """
+
+    def modify(samples):
+        if len(samples) > 0:
+            if not np.isclose(samples[0], 0):
+                return np.concatenate((ensure_1d_shape(0), samples))
+            else:
+                return samples
+        return ensure_1d_shape(0)
+
+    return modify_sampling(sampling_function, modify)
+
+
+def add_end(sampling_function: SamplingFunction) -> SamplingFunction:
+    """ Adds a sample at the end if it is missing """
+
+    def modify(samples):
+        if len(samples) > 0:
+            if not np.isclose(samples[-1], 1):
+                return np.concatenate((samples, ensure_1d_shape(1)))
+            else:
+                return samples
+        return ensure_1d_shape(1)
+
+    return modify_sampling(sampling_function, modify)
+
+
+def remove_start(sampling_function: SamplingFunction) -> SamplingFunction:
+    """ Removes the first sample from the sampling function if it is close to the start """
+
+    def modify(samples):
+        if len(samples) > 0 and np.isclose(samples[0], 0):
+            return samples[1:]
+        return samples
+
+    return modify_sampling(sampling_function, modify)
+
+
+def remove_end(sampling_function: SamplingFunction) -> SamplingFunction:
+    """ Removes the last sample from the sampling function if it is close to the end """
+
+    def modify(samples):
+        if len(samples) > 0 and np.isclose(samples[-1], 1):
+            return samples[:-1]
+        return samples
+
+    return modify_sampling(sampling_function, modify)

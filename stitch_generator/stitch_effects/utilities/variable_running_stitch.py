@@ -6,6 +6,7 @@ from stitch_generator.functions.function_modifiers import add, multiply, subtrac
 from stitch_generator.functions.functions_1d import linear_interpolation, constant, smootherstep
 from stitch_generator.functions.get_boundaries import get_boundaries
 from stitch_generator.sampling.sample_by_number import sample_by_number
+from stitch_generator.sampling.sampling_modifiers import add_start
 from stitch_generator.sampling.tatami_sampling import tatami_sampling
 from stitch_generator.utilities.types import Function1D, Array2D
 
@@ -57,7 +58,7 @@ def variable_underlay_along(path: Path, stroke_spacing: float, stitch_length: fl
 def _variable_underlay(path: Path, stroke_spacing: float, stitch_length: float, step_function: Function1D):
     precision = 10
     segments = int(round(estimate_length(path.shape) * precision))
-    t = sample_by_number(number_of_segments=segments, include_endpoint=True)
+    t = sample_by_number(number_of_segments=segments)
 
     widths = path.width(t)
     widths = np.minimum(widths[0:-1], widths[1:])
@@ -67,8 +68,8 @@ def _variable_underlay(path: Path, stroke_spacing: float, stitch_length: float, 
     width_level_tree = _make_range_tree(levels)
     indices, offsets = _tree_to_indices_and_offsets_basic(width_level_tree)
 
-    sampling_function = tatami_sampling(stitch_length=stitch_length, include_endpoint=False, offsets=(0, 1 / 3, 2 / 3),
-                                        alignment=0.5, minimal_segment_size=0.25)
+    sampling_function = add_start(tatami_sampling(stitch_length=stitch_length, offsets=(0, 1 / 3, 2 / 3), alignment=0.5,
+                                                  minimal_segment_size=0.25))
 
     stitches = []
     iopairs = list(zip(indices, offsets))

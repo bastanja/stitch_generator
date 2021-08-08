@@ -50,7 +50,7 @@ def arc_length_mapping_with_length(function: Function2D, approximation_samples=1
         A 1D function that maps each parameter in range [0, 1] to its arc length parameterized value in range [0, 1]
         and the approximated length of the 2D function
     """
-    parameters = sample_by_number(number_of_segments=approximation_samples, include_endpoint=True)
+    parameters = sample_by_number(number_of_segments=approximation_samples)
     accumulated = accumulate_lengths(function(parameters))
     length = accumulated[-1]
     accumulated /= length

@@ -1,18 +1,14 @@
 import numpy as np
+import pytest
 
-from stitch_generator.sampling.sample_by_number import linspace
+from stitch_generator.sampling.sample_by_number import sample_by_number
 
 
-def test_linspace():
-    segments = 10
-    length = 5
+@pytest.mark.parametrize("number_of_segments", [1, 5, 10])
+def test_sample_by_number(number_of_segments):
+    with_endpoint = sample_by_number(number_of_segments)
 
-    with_endpoint = linspace(0, length, segments, include_endpoint=True)
-    no_endpoint = linspace(0, length, segments, include_endpoint=False)
+    reference = [1 / number_of_segments * i for i in range(number_of_segments + 1)]
 
-    reference = [length / segments * i for i in range(segments + 1)]
-
-    assert len(with_endpoint) == segments + 1
-    assert len(no_endpoint) == segments
-    assert np.allclose(with_endpoint[:-1], no_endpoint)
+    assert len(with_endpoint) == number_of_segments + 1
     assert np.allclose(with_endpoint, reference)

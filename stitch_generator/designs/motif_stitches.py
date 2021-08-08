@@ -20,7 +20,7 @@ from stitch_generator.motifs.line import straight_line_with_motif
 from stitch_generator.motifs.satin_circle import satin_circle
 from stitch_generator.sampling.sample_by_length import regular, sampling_by_length
 from stitch_generator.sampling.sample_by_number import sample_by_number
-from stitch_generator.sampling.sampling_modifiers import free_start_end
+from stitch_generator.sampling.sampling_modifiers import free_start_end, remove_end
 from stitch_generator.shapes.bezier import bezier, bezier_normals
 from stitch_generator.shapes.circle import circle
 from stitch_generator.stitch_effects.motif_chain import motif_chain
@@ -57,7 +57,7 @@ def lines_with_dots(random_seed):
                                                 motif=satin_circle(2.5, 3, pull_compensation=0.5))
             yield rotate_by_degrees(stitches, angle + next(rotate))
 
-    return motif_to_points(regular(4), sampling_by_length(3, include_endpoint=False), motif_gen())
+    return motif_to_points(regular(4), remove_end(sampling_by_length(3)), motif_gen())
 
 
 def star():
@@ -65,11 +65,11 @@ def star():
     segments = 11
     radius = 2
     shape = repeat(turns, shift(0.5, circle(radius)), mode='wrap')
-    motif = shape(sample_by_number(segments, include_endpoint=True))
+    motif = shape(sample_by_number(segments))
     motif += (radius, 0)
     motif = straight_line_with_motif(length=5, stitch_length=3, motif=motif)
     motif_gen = repeat_motif(motif)
-    return motif_to_points(regular(10), sampling_by_length(3, include_endpoint=False), motif_gen)
+    return motif_to_points(regular(10), remove_end(sampling_by_length(3)), motif_gen)
 
 
 class Design(EmbroideryDesign):
