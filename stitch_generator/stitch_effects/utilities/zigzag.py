@@ -17,9 +17,11 @@ def double_zigzag_between(boundary_left: Function2D, boundary_right: Function2D,
                           length: float) -> Array2D:
     points_forward = zigzag_between(boundary_left, boundary_right, sampling_function, length)
     points_backward = zigzag_between(boundary_right, boundary_left, sampling_function, length)
-    points_backward = np.flipud(points_backward)
 
-    if np.allclose(points_forward[-1], points_backward[0]):
+    if np.allclose(points_forward[-1], points_backward[-1]):
+        points_backward = points_backward[:-1]
+
+    if np.allclose(points_forward[0], points_backward[0]):
         points_backward = points_backward[1:]
 
-    return np.concatenate((points_forward, points_backward, [points_forward[0]]))
+    return np.concatenate((points_forward, np.flipud(points_backward), [points_forward[0]]))

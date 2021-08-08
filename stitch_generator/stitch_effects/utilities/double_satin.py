@@ -14,7 +14,5 @@ def double_satin_along(path: Path, sampling_function: SamplingFunction, connect_
 def double_satin_between(boundary_left: Function2D, boundary_right: Function2D, sampling_function: SamplingFunction,
                          connect_function: ConnectFunction, length: float) -> Array2D:
     points = double_zigzag_between(boundary_left, boundary_right, sampling_function, length)
-    connection = [connect_function(*p) for p in zip(points, points[1:])]
-    if not len(connection[-1]) == 0 and np.allclose(connection[-1][-1], points[0]):
-        connection.append([points[0]])
+    connection = [connect_function(*p) for p in zip(points, np.roll(points, -1, 0))]
     return np.concatenate(connection)
