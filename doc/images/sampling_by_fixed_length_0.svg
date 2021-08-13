@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" baseProfile="full" height="60mm" version="1.1" viewBox="0,0,100,60" width="100mm">
+    <defs>
+        <style type="text/css"><![CDATA[
+.stitch_line {
+    stroke-width: 0.3;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    fill: none;
+}
+.sampling_line {
+    stroke:#148983;
+    stroke-width: 0.5;
+    fill: none;
+}
+.path_handle {
+    stroke-width: 0.5;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    fill:none;
+    stroke: #808080;
+    marker-start: url(#handles);
+    marker-mid: url(#handles);
+    marker-end: url(#handles);
+}
+.path_center_line {
+    stroke-width: 0.5;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    fill: none;
+    stroke:#148983;
+    stroke-dasharray: 2,1.5;
+    stroke-dashoffset: 1;
+}
+.path_contour {
+    stroke: #85c4c1;
+    fill-opacity: 0;
+    stroke-width: 0.3;
+}
+.path_direction_line {
+    stroke-width: 0.05;
+    fill: none;
+    stroke: #85c4c1;
+}
+.text{
+    text-anchor: middle;
+    dominant-baseline: middle;
+    font-family: sans-serif;
+    font-size: 1.5mm;
+}
+.smalltext{
+    text-anchor: middle;
+    dominant-baseline: middle;
+    font-family: sans-serif;
+    font-size: 1mm;
+}
+.color_0 {
+    stroke:#148983;
+    marker-start:url(#dot_0);
+    marker-mid:url(#dot_0);
+    marker-end:url(#dot_0);
+}
+.color_1 {
+    stroke:#1873ac;
+    marker-start:url(#dot_1);
+    marker-mid:url(#dot_1);
+    marker-end:url(#dot_1);
+}
+.color_2 {
+    stroke:#8c5290;
+    marker-start:url(#dot_2);
+    marker-mid:url(#dot_2);
+    marker-end:url(#dot_2);
+}
+.color_3 {
+    stroke:#61a09c;
+    marker-start:url(#dot_3);
+    marker-mid:url(#dot_3);
+    marker-end:url(#dot_3);
+}
+.color_4 {
+    stroke:#5ad2f4;
+    marker-start:url(#dot_4);
+    marker-mid:url(#dot_4);
+    marker-end:url(#dot_4);
+}
+.color_5 {
+    stroke:#0f6460;
+    marker-start:url(#dot_5);
+    marker-mid:url(#dot_5);
+    marker-end:url(#dot_5);
+}
+.color_6 {
+    stroke:#0f4668;
+    marker-start:url(#dot_6);
+    marker-mid:url(#dot_6);
+    marker-end:url(#dot_6);
+}
+.color_7 {
+    stroke:#543156;
+    marker-start:url(#dot_7);
+    marker-mid:url(#dot_7);
+    marker-end:url(#dot_7);
+}
+.color_8 {
+    stroke:#487673;
+    marker-start:url(#dot_8);
+    marker-mid:url(#dot_8);
+    marker-end:url(#dot_8);
+}
+.color_9 {
+    stroke:#0c8baf;
+    marker-start:url(#dot_9);
+    marker-mid:url(#dot_9);
+    marker-end:url(#dot_9);
+}
+]]></style>
+        <marker id="dot_0" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
+            <circle cx="1.5" cy="1.5" fill="#148983" r="1.5"/>
+        </marker>
+        <marker id="dot_1" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
+            <circle cx="1.5" cy="1.5" fill="#1873ac" r="1.5"/>
+        </marker>
+        <marker id="dot_2" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
+            <circle cx="1.5" cy="1.5" fill="#8c5290" r="1.5"/>
+        </marker>
+        <marker id="dot_3" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
+            <circle cx="1.5" cy="1.5" fill="#61a09c" r="1.5"/>
+        </marker>
+        <marker id="dot_4" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
+            <circle cx="1.5" cy="1.5" fill="#5ad2f4" r="1.5"/>
+        </marker>
+        <marker id="dot_5" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
+            <circle cx="1.5" cy="1.5" fill="#0f6460" r="1.5"/>
+        </marker>
+        <marker id="dot_6" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
+            <circle cx="1.5" cy="1.5" fill="#0f4668" r="1.5"/>
+        </marker>
+        <marker id="dot_7" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
+            <circle cx="1.5" cy="1.5" fill="#543156" r="1.5"/>
+        </marker>
+        <marker id="dot_8" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
+            <circle cx="1.5" cy="1.5" fill="#487673" r="1.5"/>
+        </marker>
+        <marker id="dot_9" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
+            <circle cx="1.5" cy="1.5" fill="#0c8baf" r="1.5"/>
+        </marker>
+    </defs>
+    <g>
+        <g transform="translate(0,5)">
+            <path class="sampling_line" d="M 0.000, 0.000 L 60.000, 0.000 M 0.000, 1.000 L 0.000, -1.000 M 20.000, 1.000 L 20.000, -1.000 M 40.000, 1.000 L 40.000, -1.000 M 60.000, 1.000 L 60.000, -1.000" transform="translate(15,0)"/>
+            <text class="smalltext" x="7" y="0">60</text>
+        </g>
+        <g transform="translate(0,10)">
+            <path class="sampling_line" d="M 0.000, 0.000 L 62.000, 0.000 M 0.000, 1.000 L 0.000, -1.000 M 20.000, 1.000 L 20.000, -1.000 M 40.000, 1.000 L 40.000, -1.000 M 60.000, 1.000 L 60.000, -1.000" transform="translate(15,0)"/>
+            <text class="smalltext" x="7" y="0">62</text>
+        </g>
+        <g transform="translate(0,15)">
+            <path class="sampling_line" d="M 0.000, 0.000 L 64.000, 0.000 M 0.000, 1.000 L 0.000, -1.000 M 20.000, 1.000 L 20.000, -1.000 M 40.000, 1.000 L 40.000, -1.000 M 60.000, 1.000 L 60.000, -1.000" transform="translate(15,0)"/>
+            <text class="smalltext" x="7" y="0">64</text>
+        </g>
+        <g transform="translate(0,20)">
+            <path class="sampling_line" d="M 0.000, 0.000 L 66.000, 0.000 M 0.000, 1.000 L 0.000, -1.000 M 20.000, 1.000 L 20.000, -1.000 M 40.000, 1.000 L 40.000, -1.000 M 60.000, 1.000 L 60.000, -1.000" transform="translate(15,0)"/>
+            <text class="smalltext" x="7" y="0">66</text>
+        </g>
+        <g transform="translate(0,25)">
+            <path class="sampling_line" d="M 0.000, 0.000 L 68.000, 0.000 M 0.000, 1.000 L 0.000, -1.000 M 20.000, 1.000 L 20.000, -1.000 M 40.000, 1.000 L 40.000, -1.000 M 60.000, 1.000 L 60.000, -1.000" transform="translate(15,0)"/>
+            <text class="smalltext" x="7" y="0">68</text>
+        </g>
+        <g transform="translate(0,30)">
+            <path class="sampling_line" d="M 0.000, 0.000 L 70.000, 0.000 M 0.000, 1.000 L 0.000, -1.000 M 20.000, 1.000 L 20.000, -1.000 M 40.000, 1.000 L 40.000, -1.000 M 60.000, 1.000 L 60.000, -1.000" transform="translate(15,0)"/>
+            <text class="smalltext" x="7" y="0">70</text>
+        </g>
+        <g transform="translate(0,35)">
+            <path class="sampling_line" d="M 0.000, 0.000 L 72.000, 0.000 M 0.000, 1.000 L 0.000, -1.000 M 20.000, 1.000 L 20.000, -1.000 M 40.000, 1.000 L 40.000, -1.000 M 60.000, 1.000 L 60.000, -1.000" transform="translate(15,0)"/>
+            <text class="smalltext" x="7" y="0">72</text>
+        </g>
+        <g transform="translate(0,40)">
+            <path class="sampling_line" d="M 0.000, 0.000 L 74.000, 0.000 M 0.000, 1.000 L 0.000, -1.000 M 20.000, 1.000 L 20.000, -1.000 M 40.000, 1.000 L 40.000, -1.000 M 60.000, 1.000 L 60.000, -1.000" transform="translate(15,0)"/>
+            <text class="smalltext" x="7" y="0">74</text>
+        </g>
+        <g transform="translate(0,45)">
+            <path class="sampling_line" d="M 0.000, 0.000 L 76.000, 0.000 M 0.000, 1.000 L 0.000, -1.000 M 20.000, 1.000 L 20.000, -1.000 M 40.000, 1.000 L 40.000, -1.000 M 60.000, 1.000 L 60.000, -1.000" transform="translate(15,0)"/>
+            <text class="smalltext" x="7" y="0">76</text>
+        </g>
+        <g transform="translate(0,50)">
+            <path class="sampling_line" d="M 0.000, 0.000 L 78.000, 0.000 M 0.000, 1.000 L 0.000, -1.000 M 20.000, 1.000 L 20.000, -1.000 M 40.000, 1.000 L 40.000, -1.000 M 60.000, 1.000 L 60.000, -1.000" transform="translate(15,0)"/>
+            <text class="smalltext" x="7" y="0">78</text>
+        </g>
+        <g transform="translate(0,55)">
+            <path class="sampling_line" d="M 0.000, 0.000 L 80.000, 0.000 M 0.000, 1.000 L 0.000, -1.000 M 20.000, 1.000 L 20.000, -1.000 M 40.000, 1.000 L 40.000, -1.000 M 60.000, 1.000 L 60.000, -1.000 M 80.000, 1.000 L 80.000, -1.000" transform="translate(15,0)"/>
+            <text class="smalltext" x="7" y="0">80</text>
+        </g>
+    </g>
+</svg>
