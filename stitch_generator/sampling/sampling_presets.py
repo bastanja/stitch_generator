@@ -34,14 +34,14 @@ def sampling_presets(alignment: float):
     yield alternate_direction(
         sampling_by_fixed_length(segment_length=3, alignment=alignment, minimal_segment_size=0.15))
 
-    yield alternating_tatami_sampling(stitch_length=4, offsets=(0, 1 / 3, 2 / 3), alignment=alignment,
+    yield alternating_tatami_sampling(segment_length=4, offsets=(0, 1 / 3, 2 / 3), alignment=alignment,
                                       minimal_segment_size=0.25)
 
-    yield alternating_tatami_sampling(stitch_length=4, offsets=[.0] * 10 + [.5] * 10,
+    yield alternating_tatami_sampling(segment_length=4, offsets=[.0] * 10 + [.5] * 10,
                                       alignment=alignment, minimal_segment_size=0.25)
 
-    yield alternating_tatami_sampling(stitch_length=3, offsets=arc(sample_by_number(30))[:-1] * 0.5,
+    yield alternating_tatami_sampling(segment_length=3, offsets=arc(sample_by_number(30))[:-1] * 0.5,
                                       alignment=alignment, minimal_segment_size=0.1)
 
-    yield alternating_tatami_sampling(stitch_length=3, offsets=linear_interpolation(0, 0.7)(
+    yield alternating_tatami_sampling(segment_length=3, offsets=linear_interpolation(0, 0.7)(
         sample_by_number(10))[:-1], alignment=alignment, minimal_segment_size=0.1)

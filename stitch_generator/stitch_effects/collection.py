@@ -4,7 +4,7 @@ from stitch_generator.functions.function_modifiers import subtract, add, scale, 
 from stitch_generator.functions.functions_1d import smoothstep, constant, linear_interpolation, cosinus, arc
 from stitch_generator.sampling.sample_by_length import regular
 from stitch_generator.sampling.sampling_modifiers import add_start, add_end
-from stitch_generator.sampling.tatami_sampling import alternating_tatami_sampling
+from stitch_generator.sampling.tatami_sampling import alternating_tatami_sampling, tatami_sampling
 from stitch_generator.stitch_effects.contour import contour
 from stitch_generator.stitch_effects.double_satin import double_satin
 from stitch_generator.stitch_effects.lattice import lattice
@@ -19,8 +19,8 @@ _linear_pattern = linear_interpolation(0, 1)
 _peaks = subtract(constant(1), repeat(0.5, arc))
 
 
-def get_tatami(stitch_length: float = 3):
-    return alternating_tatami_sampling(stitch_length=stitch_length,
+def get_tatami(segment_length: float = 3):
+    return tatami_sampling(segment_length=segment_length,
                                        offsets=(0, 1 / 3, 2 / 3), alignment=0.5, minimal_segment_size=0.5)
 
 
@@ -40,11 +40,11 @@ def stitch_effects(stitch_length: float):
     yield lattice(strands=5, pattern_f=smoothstep, pattern_length=25)
 
     yield meander(sampling_function=regular(1), connect_function=combine_start_end(
-        line_with_sampling_function(add_start(add_end(get_tatami(stitch_length=stitch_length))))))
+        line_with_sampling_function(add_start(add_end(get_tatami(segment_length=stitch_length))))))
 
     yield meander(sampling_function=regular(3), connect_function=running_stitch_line(stitch_length, True))
 
-    yield stripes(repetitions=6, sampling_function=add_start(get_tatami(stitch_length=stitch_length)),
+    yield stripes(repetitions=6, sampling_function=add_start(get_tatami(segment_length=stitch_length)),
                   step_ratio=0.1)
 
     yield underlay_dense(inset=0, stitch_length=stitch_length, spacing=2)

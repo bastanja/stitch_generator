@@ -5,14 +5,14 @@ from stitch_generator.sampling.sample_by_length import sample_by_length
 from stitch_generator.utilities.types import SamplingFunction
 
 
-def resample(stitches, stitch_length, smooth: bool = False):
+def resample(stitches, segment_length: float, smooth: bool = False):
     """
     Returns stitches which lie on the polyline defined by the parameter stitches. The newly calculated stitches have
-    approximately the distance stitch_length. This function can be used to increase or decrease the stitch density.
+    approximately the distance segment_length. This function can be used to increase or decrease the stitch density.
     """
     interpolation, total_length = _get_interpolation_and_length(stitches, smooth)
 
-    samples = sample_by_length(total_length=total_length, segment_length=stitch_length)
+    samples = sample_by_length(total_length=total_length, segment_length=segment_length)
     return interpolation(samples)
 
 

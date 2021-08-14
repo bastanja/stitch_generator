@@ -68,7 +68,7 @@ def _variable_underlay(path: Path, stroke_spacing: float, stitch_length: float, 
     width_level_tree = _make_range_tree(levels)
     indices, offsets = _tree_to_indices_and_offsets_basic(width_level_tree)
 
-    sampling_function = add_start(tatami_sampling(stitch_length=stitch_length, offsets=(0, 1 / 3, 2 / 3), alignment=0.5,
+    sampling_function = add_start(tatami_sampling(segment_length=stitch_length, offsets=(0, 1 / 3, 2 / 3), alignment=0.5,
                                                   minimal_segment_size=0.25))
 
     stitches = []
