@@ -3,8 +3,9 @@ from stitch_generator.functions.connect_functions import line_with_sampling_func
 from stitch_generator.functions.function_modifiers import subtract, add, scale, repeat
 from stitch_generator.functions.functions_1d import smoothstep, constant, linear_interpolation, cosinus, arc
 from stitch_generator.sampling.sample_by_length import regular
+from stitch_generator.sampling.sample_by_number import sample_by_number
 from stitch_generator.sampling.sampling_modifiers import add_start, add_end
-from stitch_generator.sampling.tatami_sampling import alternating_tatami_sampling, tatami_sampling
+from stitch_generator.sampling.tatami_sampling import tatami_sampling
 from stitch_generator.stitch_effects.contour import contour
 from stitch_generator.stitch_effects.double_satin import double_satin
 from stitch_generator.stitch_effects.lattice import lattice
@@ -20,8 +21,8 @@ _peaks = subtract(constant(1), repeat(0.5, arc))
 
 
 def get_tatami(segment_length: float = 3):
-    return tatami_sampling(segment_length=segment_length,
-                                       offsets=(0, 1 / 3, 2 / 3), alignment=0.5, minimal_segment_size=0.5)
+    return tatami_sampling(segment_length=segment_length, offsets=sample_by_number(3)[:-1], alignment=0.5,
+                           minimal_segment_size=0.5)
 
 
 def stitch_effects(stitch_length: float):

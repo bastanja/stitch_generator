@@ -9,7 +9,7 @@ from stitch_generator.functions.function_sequence import function_sequence
 from stitch_generator.functions.functions_1d import linear_interpolation, constant, arc
 from stitch_generator.functions.functions_2d import constant_direction
 from stitch_generator.sampling.sample_by_length import sampling_by_length
-from stitch_generator.sampling.sampling_modifiers import add_end, add_start
+from stitch_generator.sampling.sampling_modifiers import add_end, add_start, alternate_direction
 from stitch_generator.sampling.sampling_presets import sampling_presets
 from stitch_generator.shapes.line import line
 from stitch_generator.stitch_effects.meander import meander_along
@@ -43,8 +43,8 @@ class Design(EmbroideryDesign):
         satin_row_spacing = sampling_by_length(parameters.stitch_spacing)
 
         sampling_functions = sampling_presets(alignment=parameters.pattern_alignment)
-        connect_functions = [combine_start_end(line_with_sampling_function(add_start(add_end(f)))) for f in
-                             sampling_functions]
+        connect_functions = [combine_start_end(line_with_sampling_function(add_start(add_end(alternate_direction(f)))))
+                             for f in sampling_functions]
 
         stitches = [
             meander_along(path=path, sampling_function=satin_row_spacing,

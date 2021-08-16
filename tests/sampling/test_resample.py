@@ -25,7 +25,7 @@ def test_resample_with_sampling_function():
     f = line((0, 0), (total_length, 0))
     stitches = f(sample_by_number(100))
 
-    for sampling_function in iter(sampling_presets_stateless()):
+    for sampling_function in iter(sampling_presets_stateless(alignment=0)):
         direct_samples = f(sampling_function(total_length))
         resampled = resample_with_sampling_function(stitches, sampling_function)
         assert np.allclose(direct_samples, resampled)
