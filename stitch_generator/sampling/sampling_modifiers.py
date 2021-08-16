@@ -120,3 +120,26 @@ def remove_end(sampling_function: SamplingFunction) -> SamplingFunction:
         return samples
 
     return modify_sampling(sampling_function, modify)
+
+
+def free_start(start_length: float, sampling_function: SamplingFunction):
+    """ Removes the samples which are closer to the start than start_length """
+
+    def f(total_length: float):
+        relative_length = (start_length / total_length) if (total_length > 0) else 0
+        samples = sampling_function(total_length)
+        samples = samples[samples >= relative_length]
+        return samples
+
+    return f
+
+
+def free_end(end_length: float, sampling_function: SamplingFunction):
+    """ Removes the samples which are closer to the end than end_length """
+    def f(total_length: float):
+        relative_length = (end_length / total_length) if (total_length > 0) else 0
+        samples = sampling_function(total_length)
+        samples = samples[samples <= 1 - relative_length]
+        return samples
+
+    return f
