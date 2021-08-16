@@ -3,7 +3,8 @@ from stitch_generator.sampling.sample_by_density import sampling_by_density
 from stitch_generator.sampling.sample_by_fixed_length import sampling_by_fixed_length
 from stitch_generator.sampling.sample_by_length import sampling_by_length
 from stitch_generator.sampling.sample_by_number import sample_by_number, sampling_by_number
-from stitch_generator.sampling.sampling_modifiers import remove_end
+from stitch_generator.sampling.sample_by_pattern import sampling_by_pattern
+from stitch_generator.sampling.sampling_modifiers import remove_end, free_start, free_end
 from stitch_generator.sampling.tatami_sampling import tatami_sampling
 
 
@@ -22,6 +23,7 @@ def sampling_presets_stateless(alignment: float):
     yield sampling_by_density(segment_length=0.5, density_distribution=arc)
 
     yield sampling_by_fixed_length(segment_length=3, alignment=alignment, minimal_segment_size=0.15)
+    yield free_start(1, free_end(1, sampling_by_pattern(pattern=(2, 4), alignment=alignment, offset=0)))
 
 
 def sampling_presets(alignment: float):
