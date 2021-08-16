@@ -22,7 +22,7 @@ _peaks = subtract(constant(1), repeat(0.5, arc))
 
 def get_tatami(segment_length: float = 3):
     return tatami_sampling(segment_length=segment_length, offsets=sample_by_number(3)[:-1], alignment=0.5,
-                           minimal_segment_size=0.5)
+                           minimal_segment_size=1.5)
 
 
 def stitch_effects(stitch_length: float):

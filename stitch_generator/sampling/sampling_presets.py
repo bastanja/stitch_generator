@@ -14,15 +14,13 @@ def sampling_presets_stateless(alignment: float):
     parameter total_length
     """
     yield sampling_by_length(segment_length=3)
-    yield sampling_by_fixed_length(segment_length=2, alignment=0, offset=0,
-                                   minimal_segment_size=0)
-    yield sampling_by_fixed_length(segment_length=3, alignment=1, offset=0.5,
-                                   minimal_segment_size=0.5)
-    yield remove_end(sampling_by_fixed_length(segment_length=10, alignment=0.5, offset=0, minimal_segment_size=0.5))
+    yield sampling_by_fixed_length(segment_length=2, alignment=0, offset=0)
+    yield free_start(1, free_end(1, sampling_by_fixed_length(segment_length=3, alignment=1, offset=0.5)))
+    yield remove_end(sampling_by_fixed_length(segment_length=10, alignment=0.5, offset=0))
     yield sampling_by_number(number_of_segments=3)
     yield sampling_by_density(segment_length=0.5, density_distribution=arc)
 
-    yield sampling_by_fixed_length(segment_length=3, alignment=alignment, minimal_segment_size=0.15)
+    yield free_start(1, free_end(1, sampling_by_fixed_length(segment_length=3, alignment=alignment)))
     yield free_start(1, free_end(1, sampling_by_pattern(pattern=(2, 4), alignment=alignment, offset=0)))
 
 
@@ -36,13 +34,13 @@ def sampling_presets(alignment: float):
     """
     yield from sampling_presets_stateless(alignment=alignment)
     yield tatami_sampling(segment_length=4, offsets=sample_by_number(3)[:-1], alignment=alignment,
-                          minimal_segment_size=0.25)
+                          minimal_segment_size=1)
 
     yield tatami_sampling(segment_length=4, offsets=[.0] * 10 + [.5] * 10, alignment=alignment,
-                          minimal_segment_size=0.25)
+                          minimal_segment_size=1)
 
     yield tatami_sampling(segment_length=3, offsets=arc(sample_by_number(30))[:-1] * 0.5, alignment=alignment,
-                          minimal_segment_size=0.1)
+                          minimal_segment_size=1)
 
     yield tatami_sampling(segment_length=3, offsets=linear_interpolation(0, 0.7)(sample_by_number(10))[:-1],
-                          alignment=alignment, minimal_segment_size=0.1)
+                          alignment=alignment, minimal_segment_size=1)

@@ -6,8 +6,7 @@ from stitch_generator.sampling.sample_by_number import sample_by_number
 def sample(total_length: float,
            segment_length: float,
            alignment: float,
-           offset: float,
-           minimal_segment_size: float = 0.5):
+           offset: float):
     if np.isclose(total_length, 0):
         return _default_samples()
 
@@ -15,13 +14,12 @@ def sample(total_length: float,
         return _default_samples()
 
     relative_segment_length = segment_length / total_length
-    minimal_segment_length = relative_segment_length * minimal_segment_size
 
     segment_offset = relative_segment_length * offset
-    reference_stitch = (alignment + segment_offset) - minimal_segment_length
-    relative_segment_offset = reference_stitch % relative_segment_length + minimal_segment_length
+    reference_stitch = (alignment + segment_offset)
+    relative_segment_offset = reference_stitch % relative_segment_length
 
-    available_length = 1 - (relative_segment_offset + minimal_segment_length)
+    available_length = 1 - relative_segment_offset
 
     if available_length <= 0:
         return []
