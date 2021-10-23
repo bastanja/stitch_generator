@@ -2,13 +2,13 @@ import numpy as np
 import scipy.interpolate
 
 
-def _clamp(low, high, value):
-    value = min(high, value)
-    value = max(low, value)
-    return value
-
-
 class FloatParameter:
+    """
+    A floating point number parameter for an EmbroideryDesign. Has a default value, an allowed minimum and allowed
+    maximum value. If the value passed to the StitchDesign exceeds the allowed range, it will be clamped to the nearest
+    allowed value.
+    """
+
     def __init__(self, label, minimum: float, default: float, maximum: float):
         self.label = label
         self.min = minimum
@@ -27,6 +27,12 @@ class FloatParameter:
 
 
 class IntParameter:
+    """
+    An integer number parameter for an EmbroideryDesign. Has a default value, an allowed minimum and allowed maximum
+    value. If the value passed to the StitchDesign exceeds the allowed range, it will be clamped to the nearest allowed
+    value.
+    """
+
     def __init__(self, label, minimum: int, default: int, maximum: int):
         self.label = label
         self.min = minimum
@@ -45,6 +51,10 @@ class IntParameter:
 
 
 class BoolParameter:
+    """
+    A boolean parameter for a EmbroideryDesign with a default value.
+    """
+
     def __init__(self, label, default: bool):
         self.label = label
         self.value = default
@@ -63,6 +73,13 @@ class BoolParameter:
 
 
 class RampParameter:
+    """
+    A parameter for an EmbroideryDesign that represents a 1DFunction. The 1DFunction returned by this parameter is an
+    interpolation that goes through a given set of control points.
+
+    This parameter is not available from the command line interface.
+    """
+
     def __init__(self, label, control_points: np.ndarray):
         self.label = label
         self.control_points = np.asarray(control_points)
@@ -75,17 +92,7 @@ class RampParameter:
         return function_1d
 
 
-class ControlPointsParameter:
-    def __init__(self, control_points):
-        self.value = np.array(control_points, dtype=float)
-
-
-if __name__ == "__main__":
-    values = [0, 1, 1, 1, 1]
-    samples = np.linspace(0, 1, num=len(values), endpoint=True)
-    control_points = np.array([samples, values]).T
-
-    r = RampParameter("bla", control_points)
-    f = r.value
-    v = [f(t / 10).item() for t in range(0, 11)]
-    print(v)
+def _clamp(low, high, value):
+    value = min(high, value)
+    value = max(low, value)
+    return value
