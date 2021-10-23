@@ -1,6 +1,9 @@
 from types import SimpleNamespace
+from typing import Iterable
 
 from stitch_generator.framework.cli import get_parser, write_pattern_to_file
+from stitch_generator.framework.embroidery_pattern import EmbroideryPattern
+from stitch_generator.framework.palette import palette
 
 
 class EmbroideryDesign:
@@ -22,7 +25,7 @@ class EmbroideryDesign:
         self.parameters = parameters
         self.name = name
 
-    def validate(self, parameters):
+    def _validate(self, parameters):
         default_parameters = {k: v.value for k, v in self.parameters.items()}
 
         if parameters:
@@ -30,6 +33,17 @@ class EmbroideryDesign:
                                  k in self.parameters}
             default_parameters.update(update_parameters)
         return SimpleNamespace(**default_parameters)
+
+    def _to_pattern(self, parameters: SimpleNamespace, pattern: EmbroideryPattern, colors: Iterable):
+        pass
+
+    def get_pattern(self, parameters):
+        validated_parameters = self._validate(parameters)
+        pattern = EmbroideryPattern()
+
+        self._to_pattern(validated_parameters, pattern, palette())
+
+        return pattern
 
     def cli(self):
         parser = get_parser(self.parameters)

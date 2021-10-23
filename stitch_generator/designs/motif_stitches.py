@@ -4,8 +4,6 @@ from random import seed, random
 import numpy as np
 
 from stitch_generator.framework.embroidery_design import EmbroideryDesign
-from stitch_generator.framework.embroidery_pattern import EmbroideryPattern
-from stitch_generator.framework.palette import palette
 from stitch_generator.framework.parameter import FloatParameter, IntParameter
 from stitch_generator.framework.path import Path
 from stitch_generator.functions.function_modifiers import repeat, shift
@@ -83,10 +81,7 @@ class Design(EmbroideryDesign):
             'random_seed': IntParameter("Random Seed", 0, 2, 1000),
         })
 
-    def get_pattern(self, parameters):
-        parameters = self.validate(parameters)
-        color = palette()
-
+    def _to_pattern(self, parameters, pattern, color):
         y_step = parameters.length / 3
         x = parameters.length / 4
         control_points = ((0, 0), (y_step, -x), (y_step * 2, x), (y_step * 3, 0))
@@ -134,14 +129,10 @@ class Design(EmbroideryDesign):
             (25, star())
         ]
 
-        pattern = EmbroideryPattern()
-
         current_offset = 0
         for i, stitch_effect in enumerate(effects):
             current_offset += stitch_effect[0]
             pattern.add_stitches(stitch_effect[1](path) + (0, current_offset), next(color))
-
-        return pattern
 
 
 if __name__ == "__main__":

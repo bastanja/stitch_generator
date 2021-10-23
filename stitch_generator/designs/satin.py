@@ -1,6 +1,4 @@
 from stitch_generator.framework.embroidery_design import EmbroideryDesign
-from stitch_generator.framework.embroidery_pattern import EmbroideryPattern
-from stitch_generator.framework.palette import palette
 from stitch_generator.framework.parameter import FloatParameter, BoolParameter
 from stitch_generator.framework.path import Path
 from stitch_generator.functions.connect_functions import combine_start_end, line_with_sampling_function
@@ -32,8 +30,7 @@ class Design(EmbroideryDesign):
             'underlay_spacing': FloatParameter("Underlay spacing", 0.5, 1.5, 5),
         })
 
-    def get_pattern(self, parameters):
-        parameters = self.validate(parameters)
+    def _to_pattern(self, parameters, pattern, color):
 
         path = Path(shape=line((0, 0), (parameters.length, 0)),
                     direction=constant_direction(0, -1),
@@ -50,9 +47,6 @@ class Design(EmbroideryDesign):
             meander_along(path=path, sampling_function=satin_row_spacing,
                           connect_function=connect_function) for connect_function in connect_functions]
 
-        pattern = EmbroideryPattern()
-        col = palette()
-
         from stitch_generator.stitch_effects.underlay_contour_zigzag import underlay_contour_zigzag
         underlay_stitch_effect = underlay_contour_zigzag(inset=parameters.underlay_inset,
                                                          stitch_length=parameters.stitch_length,
@@ -65,11 +59,10 @@ class Design(EmbroideryDesign):
         underlay_stitches = underlay_stitch_effect(path)
 
         offsets = [(0, i * (parameters.max_width + 5)) for i in range(len(stitches))]
-        for stitch, offset, color in zip(stitches, offsets, col):
+        for stitch, offset, color in zip(stitches, offsets, color):
             if not parameters.hide_underlay:
                 pattern.add_stitches(underlay_stitches + offset, color)
             pattern.add_stitches(stitch + offset, color)
-        return pattern
 
     @staticmethod
     def _get_width_function(parameters):

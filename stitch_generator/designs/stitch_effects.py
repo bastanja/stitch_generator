@@ -1,10 +1,6 @@
-import itertools
-
 import numpy as np
 
 from stitch_generator.framework.embroidery_design import EmbroideryDesign
-from stitch_generator.framework.embroidery_pattern import EmbroideryPattern
-from stitch_generator.framework.palette import light
 from stitch_generator.framework.parameter import FloatParameter, BoolParameter
 from stitch_generator.framework.path import Path
 from stitch_generator.functions.function_modifiers import mix, scale
@@ -24,10 +20,7 @@ class Design(EmbroideryDesign):
             'circular': BoolParameter("Circular", False)
         })
 
-    def get_pattern(self, parameters):
-        parameters = self.validate(parameters)
-        color = itertools.cycle(light)
-
+    def _to_pattern(self, parameters, pattern, color):
         width_f = mix(constant(10), scale(10, arc), constant(parameters.width_factor))
 
         if parameters.circular:
@@ -43,15 +36,11 @@ class Design(EmbroideryDesign):
                         stroke_alignment=constant(0.5))
             offset = (0, 15)
 
-        pattern = EmbroideryPattern()
-
         effects = list(iter(stitch_effects(parameters.stitch_length)))
         offsets = [np.array(offset) * i for i in range(len(effects))]
 
         for effect, offset in zip(effects, offsets):
             pattern.add_stitches(effect(path) + offset, next(color))
-
-        return pattern
 
 
 if __name__ == "__main__":
