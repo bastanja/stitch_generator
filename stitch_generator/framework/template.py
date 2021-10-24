@@ -11,12 +11,13 @@ class Design(EmbroideryDesign):
     def __init__(self):
         EmbroideryDesign.__init__(self, name="template_design", parameters={
             'stitch_length': FloatParameter("Stitch length", 1, 3, 6),
-            'length': FloatParameter("Length", 10, 80, 200),
+            'length': FloatParameter("Line Length", 10, 80, 120),
+            'width': FloatParameter("Line Width", 1, 10, 50),
         })
 
     def _to_pattern(self, parameters, pattern):
         path = Path(shape=line((0, 0), (parameters.length, 0)), direction=constant_direction(0, -1),
-                    width=constant(1), stroke_alignment=constant(0.5))
+                    width=constant(parameters.width), stroke_alignment=constant(0.5))
         stitch_effect = contour(stitch_length=parameters.stitch_length)
         stitches = stitch_effect(path)
         pattern.add_stitches(stitches)
