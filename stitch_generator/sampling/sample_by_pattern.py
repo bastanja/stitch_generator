@@ -34,6 +34,7 @@ def sample_by_pattern(total_length: float,
     pattern = np.asarray(pattern, dtype=float)
     pattern_length = np.sum(pattern)
     relative_pattern_length = pattern_length / total_length
+    offset = offset / total_length
 
     pattern /= total_length
 
@@ -41,7 +42,7 @@ def sample_by_pattern(total_length: float,
 
     tiled_pattern = np.tile(pattern, repetitions)
 
-    offset = ((offset % 1) - 1) * relative_pattern_length
+    offset = (offset % relative_pattern_length)
 
     alignment_to_offset = alignment % relative_pattern_length
     offset += alignment_to_offset
