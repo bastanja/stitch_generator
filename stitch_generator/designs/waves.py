@@ -23,7 +23,7 @@ class Design(EmbroideryDesign):
             'number_of_lines': IntParameter("Number of Lines", 2, 15, 50)
         })
 
-    def _to_pattern(self, parameters, pattern, color):
+    def _to_pattern(self, parameters, pattern):
 
         repetitions = parameters.width / parameters.wave_length
 

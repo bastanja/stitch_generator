@@ -1,4 +1,5 @@
 from stitch_generator.framework.embroidery_design import EmbroideryDesign
+from stitch_generator.framework.palette import palette
 from stitch_generator.framework.parameter import FloatParameter, IntParameter
 from stitch_generator.framework.path import Path
 from stitch_generator.functions.arc_length_mapping import arc_length_mapping_with_length
@@ -30,7 +31,8 @@ class Design(EmbroideryDesign):
             'end_spacing': FloatParameter("End Spacing", 0, 0, 50),
         })
 
-    def _to_pattern(self, parameters, pattern, color):
+    def _to_pattern(self, parameters, pattern):
+        color = palette()
         f = spiral(parameters.inner_radius, parameters.outer_radius, parameters.turns)
         direction = repeat(parameters.turns, circle())
 

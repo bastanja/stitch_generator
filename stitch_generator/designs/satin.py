@@ -1,4 +1,5 @@
 from stitch_generator.framework.embroidery_design import EmbroideryDesign
+from stitch_generator.framework.palette import palette
 from stitch_generator.framework.parameter import FloatParameter, BoolParameter
 from stitch_generator.framework.path import Path
 from stitch_generator.functions.connect_functions import combine_start_end, line_with_sampling_function
@@ -30,7 +31,8 @@ class Design(EmbroideryDesign):
             'underlay_spacing': FloatParameter("Underlay spacing", 0.5, 1.5, 5),
         })
 
-    def _to_pattern(self, parameters, pattern, color):
+    def _to_pattern(self, parameters, pattern):
+        color = palette()
 
         path = Path(shape=line((0, 0), (parameters.length, 0)),
                     direction=constant_direction(0, -1),

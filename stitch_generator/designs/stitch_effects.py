@@ -1,6 +1,7 @@
 import numpy as np
 
 from stitch_generator.framework.embroidery_design import EmbroideryDesign
+from stitch_generator.framework.palette import palette
 from stitch_generator.framework.parameter import FloatParameter, BoolParameter
 from stitch_generator.framework.path import Path
 from stitch_generator.functions.function_modifiers import mix, scale
@@ -20,7 +21,8 @@ class Design(EmbroideryDesign):
             'circular': BoolParameter("Circular", False)
         })
 
-    def _to_pattern(self, parameters, pattern, color):
+    def _to_pattern(self, parameters, pattern):
+        color = palette()
         width_f = mix(constant(10), scale(10, arc), constant(parameters.width_factor))
 
         if parameters.circular:

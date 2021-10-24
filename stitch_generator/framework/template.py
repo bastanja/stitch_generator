@@ -1,6 +1,4 @@
 from stitch_generator.framework.embroidery_design import EmbroideryDesign
-from stitch_generator.framework.embroidery_pattern import EmbroideryPattern
-from stitch_generator.framework.palette import palette
 from stitch_generator.framework.parameter import FloatParameter
 from stitch_generator.framework.path import Path
 from stitch_generator.functions.functions_1d import constant
@@ -16,20 +14,12 @@ class Design(EmbroideryDesign):
             'length': FloatParameter("Length", 10, 80, 200),
         })
 
-    def get_pattern(self, parameters):
-        parameters = self.validate(parameters)
-        color = palette()
-
+    def _to_pattern(self, parameters, pattern):
         path = Path(shape=line((0, 0), (parameters.length, 0)), direction=constant_direction(0, -1),
                     width=constant(1), stroke_alignment=constant(0.5))
-
         stitch_effect = contour(stitch_length=parameters.stitch_length)
         stitches = stitch_effect(path)
-
-        pattern = EmbroideryPattern()
-        pattern.add_stitches(stitches, next(color))
-
-        return pattern
+        pattern.add_stitches(stitches)
 
 
 if __name__ == "__main__":
