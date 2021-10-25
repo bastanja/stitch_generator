@@ -3,7 +3,7 @@ import numpy as np
 from stitch_generator.stitch_operations.rotate import rotate_by_sin_cos
 
 
-def calculate_direction(stitches):
+def calculate_direction(stitches, circular: bool = False):
     """
     Calculates the normal direction for stitches. This is the direction perpendicular to the stitching line at this
     stitch point. From start to end the calculated direction vector points to the left side of the stitch line. The
@@ -17,9 +17,18 @@ def calculate_direction(stitches):
     stitches = np.array(stitches, ndmin=2, dtype=float)
     assert len(stitches) > 1, "Direction calculation needs at least two stitches"
 
+    start_is_end = np.all(np.isclose(stitches[0], stitches[-1]))
+
+    prev = np.roll(stitches, 1, axis=0)
+    nxt = np.roll(stitches, -1, axis=0)
+
+    if start_is_end:
+        prev[0] = prev[-1]
+        nxt[-1] = nxt[0]
+
     # Vectors to the previous and next stitch
-    to_previous = _normalize(np.roll(stitches, 1, axis=0) - stitches)
-    to_next = _normalize(np.roll(stitches, -1, axis=0) - stitches)
+    to_previous = _normalize(prev - stitches)
+    to_next = _normalize(nxt - stitches)
 
     # Calculate the normal direction as sum of the vectors to_previous and to_next
     directions = to_next + to_previous
@@ -44,8 +53,9 @@ def calculate_direction(stitches):
     directions[flip] = -directions[flip]
 
     # For the first and last stitch, use the perpendicular direction as normal direction
-    directions[0] = _get_perpendicular(stitches[0] - stitches[1])
-    directions[-1] = _get_perpendicular(stitches[-2] - stitches[-1])
+    if not circular:
+        directions[0] = _get_perpendicular(stitches[0] - stitches[1])
+        directions[-1] = _get_perpendicular(stitches[-2] - stitches[-1])
 
     assert directions.shape == stitches.shape
     return directions
