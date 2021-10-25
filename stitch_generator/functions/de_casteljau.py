@@ -4,6 +4,8 @@ from stitch_generator.functions.ensure_shape import ensure_1d_shape
 
 
 def de_casteljau(control_points: np.ndarray, parameters: np.ndarray) -> (np.ndarray, np.ndarray):
+    if len(parameters) == 0:
+        return
     interpolated_points = control_points
     parameters = np.atleast_2d(ensure_1d_shape(parameters)).T
     while len(interpolated_points) > 1:
