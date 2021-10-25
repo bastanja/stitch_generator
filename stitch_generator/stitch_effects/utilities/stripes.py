@@ -4,6 +4,7 @@ from stitch_generator.framework.path import Path
 from stitch_generator.functions.function_1d_stairs import stairs
 from stitch_generator.functions.function_modifiers import repeat, mix
 from stitch_generator.functions.get_boundaries import get_boundaries
+from stitch_generator.sampling.sampling_modifiers import remove_end
 from stitch_generator.utilities.types import SamplingFunction
 
 
@@ -22,6 +23,8 @@ def stripes_between(boundary_left, boundary_right, repetitions: int, sampling_fu
     mixed = mix(boundary_left, boundary_right, factor=mix_factor_stairs)
 
     sampling_length = 1 / repetitions
+
+    sampling_function = remove_end(sampling_function)
 
     t = [sampling_function(length) * sampling_length + i * sampling_length for i in range(repetitions)]
     t.append([1])
