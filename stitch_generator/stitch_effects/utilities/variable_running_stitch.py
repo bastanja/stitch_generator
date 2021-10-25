@@ -13,7 +13,7 @@ from stitch_generator.utilities.types import Function1D, Array2D
 
 def variable_running_stitch_along(path: Path, stroke_spacing: float, stitch_length: float) -> Array2D:
     segments = int(round(estimate_length(path.shape) / stitch_length))
-    t = sample_by_number(number_of_segments=segments, include_endpoint=True)
+    t = sample_by_number(number_of_segments=segments)
 
     widths = path.width(t)
     widths = np.minimum(widths[0:-1], widths[1:])
@@ -177,7 +177,7 @@ def _tree_to_indices_and_offsets(tree, level=0):
     # start to end, level up
     if level > 0:
         indices.extend(list(level_indices[0:-1]))
-        samples = sample_by_number(number_of_segments=len(level_indices) - 1, include_endpoint=False)
+        samples = sample_by_number(number_of_segments=len(level_indices) - 1)[:-1]
         offsets.extend(linear_interpolation(level - 1, level)(samples))
 
     children = tree.children
@@ -218,7 +218,7 @@ def _tree_to_indices_and_offsets(tree, level=0):
         offsets.append(level)
     else:
         indices.extend(level_indices[0:-1])
-        samples = sample_by_number(number_of_segments=len(level_indices) - 1, include_endpoint=False)
+        samples = sample_by_number(number_of_segments=len(level_indices) - 1)[:-1]
         offsets.extend(linear_interpolation(level, level - 1)(samples))
 
     assert len(indices) == len(offsets)
