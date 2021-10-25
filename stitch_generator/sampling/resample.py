@@ -1,7 +1,9 @@
+import numpy as np
 from scipy.interpolate import interp1d
 
 from stitch_generator.functions.estimate_length import accumulate_lengths
 from stitch_generator.sampling.sample_by_length import sample_by_length
+from stitch_generator.shapes.line import line
 from stitch_generator.utilities.types import SamplingFunction
 
 
@@ -24,6 +26,15 @@ def resample_with_sampling_function(stitches, sampling_function: SamplingFunctio
 
     samples = sampling_function(total_length)
     return interpolation(samples)
+
+
+def resample_by_segment(stitches, stitch_length):
+    result = []
+    for p1, p2 in zip(stitches, stitches[1:]):
+        f = line(p1, p2)
+        result.append(f(sample_by_length(np.linalg.norm(p2 - p1), stitch_length)[:-1]))
+    result.append([stitches[-1]])
+    return np.concatenate(result)
 
 
 def _get_interpolation_and_length(stitches, smooth: bool):
