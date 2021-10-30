@@ -1,5 +1,6 @@
 import numpy as np
-import scipy.interpolate
+
+from stitch_generator.functions.functions_1d import pchip_interpolation
 
 
 class FloatParameter:
@@ -86,7 +87,7 @@ class RampParameter:
         self.value = self.function_from_control_points()
 
     def function_from_control_points(self):
-        return scipy.interpolate.PchipInterpolator(self.control_points[:, 0], self.control_points[:, 1])
+        return pchip_interpolation(self.control_points)
 
     def evaluate(self, function_1d):
         return function_1d
