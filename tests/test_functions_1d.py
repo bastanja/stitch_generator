@@ -4,7 +4,7 @@ from pytest import approx
 
 from stitch_generator.functions.function_1d_stairs import stairs
 from stitch_generator.functions.functions_1d import linear_interpolation, constant, sinus, cosinus, \
-    cubic_interpolation_evenly_spaced, square, arc, smoothstep, smootherstep, circular_arc
+    cubic_interpolation, square, arc, smoothstep, smootherstep, circular_arc
 from tests.functions import functions_1d
 
 
@@ -88,15 +88,15 @@ def test_cosinus():
     assert f(-1) == approx(f(1))
 
 
-def test_cubic_interpolation_evenly_spaced():
-    f = cubic_interpolation_evenly_spaced([1, 2, 0, 3, 5])
+def test_cubic_interpolation():
+    f = cubic_interpolation(((0, 1), (0.25, 2), (0.5, 0), (0.75, 3), (1, 5)))
     assert f(0) == approx(1)
     assert f(0.25) == approx(2)
     assert f(0.5) == approx(0)
     assert f(0.75) == approx(3)
     assert f(1) == approx(5)
 
-    f = cubic_interpolation_evenly_spaced([1, 2])
+    f = cubic_interpolation(((0, 1), (1, 2)))
     assert f(0) == approx(1)
     assert f(0.5) == approx(1.5)
     assert f(1) == approx(2)
@@ -107,7 +107,7 @@ def test_cubic_interpolation_evenly_spaced():
 
     # expect that interpolation is not possible with only one value
     with pytest.raises(Exception):
-        f = cubic_interpolation_evenly_spaced([2])
+        f = cubic_interpolation((0, 2))
 
 
 def test_stairs():

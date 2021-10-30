@@ -1,11 +1,11 @@
 import numpy as np
 
-from stitch_generator.functions.noise import noise
 from stitch_generator.functions.function_1d_stairs import stairs
 from stitch_generator.functions.function_sequence import function_sequence
-from stitch_generator.functions.functions_1d import linear_interpolation, constant, cubic_interpolation_evenly_spaced, \
-    square, arc, smoothstep, smootherstep, circular_arc, sinus, cosinus
+from stitch_generator.functions.functions_1d import linear_interpolation, constant, square, arc, smoothstep, \
+    smootherstep, circular_arc, sinus, cosinus, cubic_interpolation, pchip_interpolation
 from stitch_generator.functions.functions_2d import function_2d
+from stitch_generator.functions.noise import noise
 from stitch_generator.shapes.bezier import bezier
 from stitch_generator.shapes.circle import circle
 from stitch_generator.shapes.line import line
@@ -17,7 +17,8 @@ functions_1d_positive = {
     'const0': constant(0),
     'const0.5': constant(0.5),
     'const1': constant(1),
-    'cub': cubic_interpolation_evenly_spaced([0, 1, 0]),
+    'cub': cubic_interpolation(((0, 0), (0.5, 1), (1, 0))),
+    'pchip': pchip_interpolation(((0, 1), (0.5, 0.2), (1, 1))),
     'stair': stairs(np.linspace(0, 1, 6), 0.1),
     'square': square,
     'arc': arc,

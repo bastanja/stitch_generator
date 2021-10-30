@@ -1,7 +1,7 @@
 from typing import Callable
 
 import numpy as np
-from scipy.interpolate import interp1d
+from scipy.interpolate import interp1d, PchipInterpolator
 
 from stitch_generator.utilities.types import Function1D
 
@@ -22,22 +22,31 @@ def constant(c: float) -> Function1D:
     return lambda v: np.full_like(np.array(v), c, dtype=float)
 
 
-def linear_interpolation(target_low, target_high, source_low=0, source_high=1) -> Callable:
+def linear_interpolation(target_low, target_high, source_low=0, source_high=1) -> Function1D:
     if source_low == source_high:
         return constant(target_low)
     return interp1d([source_low, source_high], [target_low, target_high], fill_value="extrapolate")
 
 
-def cubic_interpolation_evenly_spaced(values) -> Function1D:
-    assert len(values) > 1, "Interpolation function needs at least two values"
-    samples = np.linspace(0, 1, num=len(values), endpoint=True)
+def cubic_interpolation(control_points) -> Function1D:
+    control_points = np.asarray(control_points)
+    assert len(control_points) > 1, "Interpolation function needs at least two values"
 
     # Use cubic interpolation (3) if there are enough samples,
     # otherwise reduce to len(samples) - 1, i.e. quadratic (2) or linear (1)
-    interpolation = min(len(samples) - 1, 3)
+    interpolation = min(len(control_points) - 1, 3)
 
-    f = interp1d(samples, values, kind=interpolation)
-    return f
+    return interp1d(control_points[:, 0], control_points[:, 1], kind=interpolation)
+
+
+def pchip_interpolation(control_points) -> Function1D:
+    """
+    Piecewise Cubic Hermite Interpolating Polynomial
+    """
+    control_points = np.asarray(control_points)
+    assert len(control_points) > 1, "Interpolation function needs at least two values"
+
+    return PchipInterpolator(control_points[:, 0], control_points[:, 1])
 
 
 def square(v):
