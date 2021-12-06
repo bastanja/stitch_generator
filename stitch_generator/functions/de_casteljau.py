@@ -4,6 +4,14 @@ from stitch_generator.functions.ensure_shape import ensure_1d_shape
 
 
 def de_casteljau(control_points: np.ndarray, parameters: np.ndarray) -> (np.ndarray, np.ndarray):
+    """
+    Subdivides a bezier curve into segments using De Casteljau's algorithm
+    Args:
+        control_points: The control points of the bezier curve
+        parameters: The offsets along the curve (between 0 and 1) where the curve is cut into segments
+    Returns:
+        The points on the curve at the requested offsets
+    """
     if len(parameters) == 0:
         return
     interpolated_points = control_points
