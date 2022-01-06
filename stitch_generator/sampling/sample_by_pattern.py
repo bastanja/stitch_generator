@@ -70,3 +70,25 @@ def sample_by_pattern(total_length: float,
     tiled_pattern = tiled_pattern[tiled_pattern <= 1]
 
     return tiled_pattern
+
+
+def pattern_from_spaces(spaces, with_start, with_end):
+    """
+    Creates sample positions between 0 and 1, where the distance between the samples corresponds to the spaces.
+
+    Args:
+        spaces: distances between two neighboring samples
+        with_start: If true, the result will start with sample value 0
+        with_end: If true, the result will end with sample value 1
+
+    Returns:
+        Sampling positions between 0 and 1. N-1 samples for N spaces, plus one for the start and one for the end.
+    """
+    positions = np.cumsum(np.asarray(spaces, dtype=float))
+    last = positions[-1]
+    positions /= last
+    if with_start:
+        positions = np.concatenate([[0], positions])
+    if not with_end:
+        positions = positions[:-1]
+    return positions
