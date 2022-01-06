@@ -21,7 +21,8 @@ def sampling_presets_stateless(alignment: float):
     yield sampling_by_density(segment_length=0.5, density_distribution=arc)
 
     yield free_start(1, free_end(1, sampling_by_fixed_length(segment_length=3, alignment=alignment)))
-    yield free_start(1, free_end(1, sampling_by_pattern(pattern=(2, 4), alignment=alignment, offset=0)))
+    yield free_start(1, free_end(1, sampling_by_pattern(pattern=(0.0, 0.4), pattern_length=4, alignment=alignment,
+                                                        offset=0)))
 
 
 def sampling_presets(alignment: float):
