@@ -14,13 +14,28 @@ def sampling_by_pattern(pattern,
                    offset=offset)
 
 
+def get_pattern_offset(relative_pattern_length: float, offset: float, alignment: float):
+    # Map alignment into the range of one pattern length
+    alignment = alignment % relative_pattern_length
+
+    # Calculate the alignment position relative to one pattern length
+    relative_alignment = alignment / relative_pattern_length
+
+    # Move the pattern by offset and relative alignment
+    return offset + relative_alignment
+
+
+def apply_pattern_offset(pattern, offset):
+    # Make sure the pattern stays in the range between 0 and 1, sort the pattern in ascending order
+    return np.sort((pattern + offset) % 1)
+
+
 def sample_by_pattern(total_length: float,
                       pattern_length: float,
                       pattern: list[float],
                       alignment: float,
                       offset: float):
     """
-
     Args:
         total_length: The total length to sample in millimeters
         pattern_length: The length of one pattern repetition in millimeters
@@ -31,7 +46,6 @@ def sample_by_pattern(total_length: float,
 
     Returns:
         The samples which subdivide the total length in segments
-
     """
     if np.isclose(total_length, 0):
         return ensure_1d_shape([0, 1])
@@ -39,23 +53,12 @@ def sample_by_pattern(total_length: float,
     # The length of the pattern relative to the total length
     relative_pattern_length = pattern_length / total_length
 
-    # Map alignment into the range of one pattern length
-    alignment = alignment % relative_pattern_length
+    # Calculate the offset which the pattern has at the start
+    effective_pattern_offset = get_pattern_offset(relative_pattern_length=relative_pattern_length,
+                                                  offset=offset, alignment=alignment)
 
-    # Calculate the alignment position relative to one pattern length
-    relative_alignment = alignment / relative_pattern_length
-
-    # Make sure the pattern is an numpy array of floats
-    pattern = np.asarray(pattern, dtype=float)
-
-    # Move the pattern by offset and relative alignment
-    pattern = pattern + offset + relative_alignment
-
-    # Make sure the pattern stays in the range between 0 and 1
-    pattern = pattern % 1
-
-    # Sort the pattern in ascending order
-    pattern = np.sort(pattern)
+    # Apply the pattern offset
+    pattern = apply_pattern_offset(np.asarray(pattern, dtype=float), effective_pattern_offset)
 
     # Scale the pattern relative to the total length
     pattern *= relative_pattern_length
