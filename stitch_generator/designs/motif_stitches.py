@@ -6,23 +6,47 @@ from stitch_generator.framework.parameter import FloatParameter
 from stitch_generator.framework.path import Path
 from stitch_generator.functions.functions_1d import constant
 from stitch_generator.functions.motif_generators import repeat_motif, alternate_direction
-from stitch_generator.motif_stitches.e_stitch import e_stitch, alternating_e_stitch
-from stitch_generator.motif_stitches.stem_stitch import stem_stitch
-from stitch_generator.sampling.sample_by_length import regular, sampling_by_length
-from stitch_generator.sampling.sampling_modifiers import free_start_end
+from stitch_generator.motifs.line import straight_line
+from stitch_generator.motifs.zigzag import zigzag
+from stitch_generator.sampling.sample_by_length import regular, sampling_by_length, sampling_by_length_with_offset
+from stitch_generator.sampling.sampling_modifiers import free_start_end, remove_end
 from stitch_generator.shapes.bezier import bezier, bezier_normals
 from stitch_generator.stitch_effects.motif_sequence import motif_sequence
 from stitch_generator.stitch_effects.motif_to_segments import motif_to_segments
+from stitch_generator.stitch_effects.utilities.motif_sequence import motif_sequence_along
+from stitch_generator.stitch_effects.utilities.motif_to_points import motif_to_points_along
+from stitch_generator.stitch_operations.rotate import rotate_by_degrees
 
 
-def arrows():
+def e_stitch(spacing: float, line_length: float, stitch_length: float, stitch_rotation: float):
+    motif = rotate_by_degrees(straight_line(line_length, stitch_length), stitch_rotation)
+    motif_generator = repeat_motif(motif)
+
+    return lambda path: motif_to_points_along(path,
+                                              motif_position_sampling=sampling_by_length(spacing),
+                                              line_sampling=remove_end(sampling_by_length(stitch_length)),
+                                              motif_generator=motif_generator)
+
+
+def stem_stitch(spacing: float, stitch_width: float, stitch_length: float,
+                repetitions: int, stitch_rotation: float):
+    motif = zigzag(stitch_width, stitch_length, repetitions)
+    motif_generator = repeat_motif(motif)
+    sampling = sampling_by_length_with_offset(segment_length=spacing, offset=0.5)
+    return lambda path: motif_sequence_along(path=path,
+                                             motif_position_sampling=sampling,
+                                             motif_generator=motif_generator,
+                                             motif_rotation_degrees=constant(stitch_rotation))
+
+
+def three_arrows():
     single_arrow = np.array(((0, 0.0), (-3, -3), (0, 0), (-3, 3), (0, 0)))
     combined = np.concatenate((single_arrow, single_arrow + (2, 0), single_arrow + (4, 0)))
     return motif_to_segments(
         free_start_end(10, 10, regular(20)), regular(3), repeat_motif(combined))
 
 
-def arrows2():
+def arrow_chain():
     single_arrow = np.array(((-2, -2), (0, 0), (2, -2)))
     motif_gen = alternate_direction(repeat_motif(single_arrow))
     sampling = sampling_by_length(2)
@@ -55,8 +79,8 @@ class Design(EmbroideryDesign):
                 spacing=2.5, stitch_width=5, stitch_length=stem_stitch_length, repetitions=5, stitch_rotation=0),
             e_stitch(
                 spacing=2, line_length=stem_stitch_length, stitch_length=stem_stitch_length, stitch_rotation=45),
-            arrows(),
-            arrows2()
+            three_arrows(),
+            arrow_chain()
         ]
 
         for i, stitch_effect in enumerate(effects):
