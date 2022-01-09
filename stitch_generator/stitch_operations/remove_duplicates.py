@@ -1,6 +1,6 @@
 import numpy as np
 
-from stitch_generator.utilities.types import Array2D
+from stitch_generator.framework.types import Array2D
 
 
 def remove_duplicates(points: Array2D, threshold: float = 0.01):

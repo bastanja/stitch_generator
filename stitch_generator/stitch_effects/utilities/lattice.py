@@ -2,7 +2,7 @@ from stitch_generator.framework.path import Path
 from stitch_generator.functions.function_modifiers import add, repeat, multiply
 from stitch_generator.functions.get_boundaries import get_boundaries
 from stitch_generator.sampling.sample_by_number import sampling_by_number
-from stitch_generator.utilities.types import Array2D
+from stitch_generator.framework.types import Array2D
 
 
 def lattice_along(path: Path, strands, pattern_f, pattern_length) -> Array2D:

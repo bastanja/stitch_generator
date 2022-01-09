@@ -1,6 +1,6 @@
 from stitch_generator.framework.stitch_effect import StitchEffect
 from stitch_generator.stitch_effects.utilities.motif_sequence import motif_sequence_along
-from stitch_generator.utilities.types import SamplingFunction, Function1D
+from stitch_generator.framework.types import SamplingFunction, Function1D
 
 
 def motif_sequence(motif_position_sampling: SamplingFunction, motif_generator,

@@ -5,7 +5,7 @@ from stitch_generator.functions.function_1d_stairs import stairs
 from stitch_generator.functions.function_modifiers import repeat, mix
 from stitch_generator.functions.get_boundaries import get_boundaries
 from stitch_generator.sampling.sampling_modifiers import remove_end
-from stitch_generator.utilities.types import SamplingFunction
+from stitch_generator.framework.types import SamplingFunction
 
 
 def stripes_along(path: Path, repetitions: int, sampling_function: SamplingFunction, step_ratio: float):

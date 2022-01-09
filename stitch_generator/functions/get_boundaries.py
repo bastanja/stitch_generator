@@ -3,7 +3,7 @@ from typing import Tuple
 from stitch_generator.framework.path import Path
 from stitch_generator.functions.function_modifiers import multiply, subtract, add
 from stitch_generator.functions.functions_1d import constant
-from stitch_generator.utilities.types import Function2D
+from stitch_generator.framework.types import Function2D
 
 
 def get_boundaries(path: Path) -> Tuple[Function2D, Function2D]:

@@ -1,5 +1,5 @@
 from stitch_generator.sampling.sample import sample
-from stitch_generator.utilities.types import Array1D, SamplingFunction
+from stitch_generator.framework.types import Array1D, SamplingFunction
 
 
 def sample_by_fixed_length(total_length: float, segment_length: float, alignment: float = 0,

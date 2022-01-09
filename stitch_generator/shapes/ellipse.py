@@ -3,7 +3,7 @@ from typing import Sequence
 from stitch_generator.functions.function_modifiers import scale, add
 from stitch_generator.functions.functions_1d import cosinus, sinus, constant
 from stitch_generator.functions.functions_2d import function_2d
-from stitch_generator.utilities.types import Function2D
+from stitch_generator.framework.types import Function2D
 
 
 def ellipse(rx: float, ry: float, center: Sequence[float] = (0, 0)) -> Function2D:

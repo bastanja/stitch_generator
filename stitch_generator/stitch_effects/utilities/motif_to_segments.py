@@ -5,7 +5,7 @@ import numpy as np
 from stitch_generator.framework.path import Path
 from stitch_generator.functions.functions_1d import linear_interpolation
 from stitch_generator.functions.place_motif import place_motif_between
-from stitch_generator.utilities.types import SamplingFunction, Array2D
+from stitch_generator.framework.types import SamplingFunction, Array2D
 
 
 def motif_to_segments_along(path: Path, motif_position_sampling: SamplingFunction, line_sampling: SamplingFunction,

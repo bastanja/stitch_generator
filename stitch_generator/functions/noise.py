@@ -4,7 +4,7 @@ from noise import pnoise2
 from stitch_generator.functions.function_modifiers import shift, rotate_degrees
 from stitch_generator.functions.functions_1d import linear_interpolation, constant, function_1d
 from stitch_generator.functions.functions_2d import function_2d
-from stitch_generator.utilities.types import Function1D, Function2D
+from stitch_generator.framework.types import Function1D, Function2D
 
 
 def noise(octaves: int = 4, angle=20, scale=1) -> Function1D:

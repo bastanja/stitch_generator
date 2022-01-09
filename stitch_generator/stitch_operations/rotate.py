@@ -1,6 +1,6 @@
 import numpy as np
 
-from stitch_generator.utilities.types import Array2D
+from stitch_generator.framework.types import Array2D
 
 
 def rotate_by_degrees(stitches: Array2D, angle_deg) -> Array2D:

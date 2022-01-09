@@ -4,7 +4,7 @@ from typing import Iterable
 
 from stitch_generator.sampling.sample import sample
 from stitch_generator.sampling.sampling_modifiers import free_start, free_end
-from stitch_generator.utilities.types import SamplingFunction
+from stitch_generator.framework.types import SamplingFunction
 
 
 def tatami_sampling(segment_length: float, offsets: Iterable[float], alignment: float,

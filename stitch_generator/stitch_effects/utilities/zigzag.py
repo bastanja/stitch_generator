@@ -1,6 +1,6 @@
 import numpy as np
 
-from stitch_generator.utilities.types import Function2D, SamplingFunction, Array2D
+from stitch_generator.framework.types import Function2D, SamplingFunction, Array2D
 
 
 def zigzag_between(boundary_left: Function2D, boundary_right: Function2D, sampling_function: SamplingFunction,

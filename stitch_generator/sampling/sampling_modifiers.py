@@ -4,7 +4,7 @@ import numpy as np
 
 from stitch_generator.functions.ensure_shape import ensure_1d_shape
 from stitch_generator.functions.functions_1d import linear_interpolation
-from stitch_generator.utilities.types import SamplingFunction
+from stitch_generator.framework.types import SamplingFunction
 
 
 def free_start_end(start_length: float, end_length: float, sampling_function: SamplingFunction):

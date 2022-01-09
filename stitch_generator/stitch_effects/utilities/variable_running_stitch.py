@@ -8,7 +8,7 @@ from stitch_generator.functions.get_boundaries import get_boundaries
 from stitch_generator.sampling.sample_by_number import sample_by_number
 from stitch_generator.sampling.sampling_modifiers import add_start
 from stitch_generator.sampling.tatami_sampling import tatami_sampling
-from stitch_generator.utilities.types import Function1D, Array2D
+from stitch_generator.framework.types import Function1D, Array2D
 
 
 def variable_running_stitch_along(path: Path, stroke_spacing: float, stitch_length: float) -> Array2D:

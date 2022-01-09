@@ -7,7 +7,7 @@ from stitch_generator.functions.function_modifiers import inverse
 from stitch_generator.functions.get_boundaries import get_boundaries
 from stitch_generator.shapes.line import line
 from stitch_generator.stitch_effects.utilities.running_stitch import running_stitch_shape
-from stitch_generator.utilities.types import Array2D
+from stitch_generator.framework.types import Array2D
 
 
 def contour_along(path: Path, stitch_length: float) -> Array2D:

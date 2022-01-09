@@ -2,7 +2,7 @@ from stitch_generator.framework.path import Path
 from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.sampling.sample_by_length import sampling_by_length
 from stitch_generator.sampling.sampling_modifiers import remove_end
-from stitch_generator.utilities.types import Function2D
+from stitch_generator.framework.types import Function2D
 
 
 def running_stitch_along(path: Path, stitch_length: float, include_endpoint: bool = True):

@@ -1,7 +1,7 @@
 from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.function_modifiers import repeat, shift
 from stitch_generator.functions.functions_1d import linear_interpolation
-from stitch_generator.utilities.types import Function2D
+from stitch_generator.framework.types import Function2D
 
 
 def add_gap(function: Function2D, gap_offset_mm, gap_length_mm) -> Function2D:

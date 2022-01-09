@@ -1,7 +1,7 @@
 import numpy as np
 
 from stitch_generator.sampling.sample_by_number import sample_by_number
-from stitch_generator.utilities.types import SamplingFunction, Array1D
+from stitch_generator.framework.types import SamplingFunction, Array1D
 
 
 def sample_by_length(total_length: float, segment_length: float) -> Array1D:

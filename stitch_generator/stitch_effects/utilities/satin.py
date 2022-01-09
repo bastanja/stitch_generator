@@ -3,8 +3,8 @@ import numpy as np
 from stitch_generator.framework.path import Path
 from stitch_generator.functions.get_boundaries import get_boundaries
 from stitch_generator.stitch_effects.utilities.zigzag import zigzag_between
-from stitch_generator.utilities.types import Array2D
-from stitch_generator.utilities.types import ConnectFunction, Function2D, SamplingFunction
+from stitch_generator.framework.types import Array2D
+from stitch_generator.framework.types import ConnectFunction, Function2D, SamplingFunction
 
 
 def satin_along(path: Path, sampling_function: SamplingFunction, connect_function: ConnectFunction) -> Array2D:

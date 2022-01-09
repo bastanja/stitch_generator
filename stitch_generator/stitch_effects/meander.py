@@ -2,7 +2,7 @@ from stitch_generator.framework.stitch_effect import StitchEffect
 from stitch_generator.functions.connect_functions import line_with_sampling_function
 from stitch_generator.sampling.sample_by_length import regular
 from stitch_generator.stitch_effects.utilities.meander import meander_along
-from stitch_generator.utilities.types import SamplingFunction
+from stitch_generator.framework.types import SamplingFunction
 
 
 def meander(sampling_function: SamplingFunction, connect_function) -> StitchEffect:

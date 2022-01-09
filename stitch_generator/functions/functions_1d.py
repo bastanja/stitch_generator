@@ -3,7 +3,7 @@ from typing import Callable
 import numpy as np
 from scipy.interpolate import interp1d, PchipInterpolator
 
-from stitch_generator.utilities.types import Function1D
+from stitch_generator.framework.types import Function1D
 
 
 def function_1d(f: Callable[..., float]) -> Function1D:

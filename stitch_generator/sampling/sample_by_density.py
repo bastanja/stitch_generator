@@ -3,7 +3,7 @@ from scipy.interpolate import interp1d
 
 from stitch_generator.functions.functions_1d import linear_interpolation
 from stitch_generator.sampling.sample_by_length import sample_by_length
-from stitch_generator.utilities.types import SamplingFunction, Array1D, Function1D
+from stitch_generator.framework.types import SamplingFunction, Array1D, Function1D
 
 
 def sample_by_density(total_length: float, segment_length: float, density_distribution: Function1D) -> Array1D:

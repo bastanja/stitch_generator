@@ -2,7 +2,7 @@ import numpy as np
 
 from stitch_generator.functions.ensure_shape import ensure_1d_shape
 from stitch_generator.stitch_operations.rotate import rotate_by_degrees, rotate_by_radians
-from stitch_generator.utilities.types import Function2D, Function1D
+from stitch_generator.framework.types import Function2D, Function1D
 
 
 def reflect(function):

@@ -8,7 +8,7 @@ from stitch_generator.functions.get_boundaries import get_boundaries
 from stitch_generator.functions.noise import noise
 from stitch_generator.sampling.sampling_modifiers import add_start
 from stitch_generator.sampling.tatami_sampling import tatami_sampling
-from stitch_generator.utilities.types import SamplingFunction
+from stitch_generator.framework.types import SamplingFunction
 
 
 def scribble(repetitions: int, stitch_length: float, noise_scale: float = 1, noise_offset: float = 0) -> StitchEffect:

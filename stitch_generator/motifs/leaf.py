@@ -18,7 +18,7 @@ from stitch_generator.stitch_effects.utilities.running_stitch import running_sti
 from stitch_generator.stitch_effects.utilities.satin import satin_along
 from stitch_generator.stitch_effects.utilities.stripes import stripes_along
 from stitch_generator.stitch_operations.rotate import rotate_by_degrees
-from stitch_generator.utilities.types import Function1D
+from stitch_generator.framework.types import Function1D
 
 
 def leaf(stem_length: float, leaf_length: float, leaf_width: float, angle_degrees: float, stitch_length: float,

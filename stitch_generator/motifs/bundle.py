@@ -8,7 +8,7 @@ from stitch_generator.functions.motif_generators import cycle_motifs
 from stitch_generator.motifs.line import bent_line_with_motif
 from stitch_generator.sampling.sample_by_number import sample_by_number, sampling_by_number
 from stitch_generator.stitch_effects.motif_to_points import motif_to_points
-from stitch_generator.utilities.types import Function1D
+from stitch_generator.framework.types import Function1D
 
 
 def bundle(start_angle, end_angle, bend_angle_start, bend_angle_end, min_length, max_length, number_of_lines,
