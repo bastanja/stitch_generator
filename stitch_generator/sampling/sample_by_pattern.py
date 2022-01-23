@@ -3,6 +3,7 @@ from functools import partial
 import numpy as np
 
 from stitch_generator.functions.ensure_shape import ensure_1d_shape
+from stitch_generator.sampling.sample import alignment_to_offset
 from stitch_generator.sampling.sample_by_fixed_length import sample_by_fixed_length
 
 
@@ -12,17 +13,6 @@ def sampling_by_pattern(pattern,
                         offset: float):
     return partial(sample_by_pattern, pattern=pattern, pattern_length=pattern_length, alignment=alignment,
                    offset=offset)
-
-
-def get_pattern_offset(relative_pattern_length: float, offset: float, alignment: float):
-    # Map alignment into the range of one pattern length
-    alignment = alignment % relative_pattern_length
-
-    # Calculate the alignment position relative to one pattern length
-    relative_alignment = alignment / relative_pattern_length
-
-    # Move the pattern by offset and relative alignment
-    return offset + relative_alignment
 
 
 def apply_pattern_offset(pattern, offset):
@@ -54,8 +44,8 @@ def sample_by_pattern(total_length: float,
     relative_pattern_length = pattern_length / total_length
 
     # Calculate the offset which the pattern has at the start
-    effective_pattern_offset = get_pattern_offset(relative_pattern_length=relative_pattern_length,
-                                                  offset=offset, alignment=alignment)
+    effective_pattern_offset = alignment_to_offset(relative_segment_length=relative_pattern_length,
+                                                   offset=offset, alignment=alignment)
 
     # Apply the pattern offset
     pattern = apply_pattern_offset(np.asarray(pattern, dtype=float), effective_pattern_offset)

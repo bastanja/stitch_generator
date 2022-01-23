@@ -1,22 +1,36 @@
+from itertools import product
+
 import numpy as np
+import pytest
 
 from stitch_generator.sampling.sample_by_fixed_length import sampling_by_fixed_length
 
+segment_lengths = [0.01, 1, 2, 10]
+total_lengths = [0.5, 1, 5.5, 10, 99]
+test_values = list(product(total_lengths, segment_lengths))
 
-def _test_sample_by_fixed_length(total_length, segment_length, expected_segments):
+
+@pytest.mark.parametrize("total_length, segment_length", test_values)
+def test_sample_by_fixed_length(total_length, segment_length):
+    # create sampling function
     sampling = sampling_by_fixed_length(segment_length=segment_length)
+
+    # sample the total length
     samples = sampling(total_length)
 
-    segment_length_relative = 0
-    if total_length > 0:
-        segment_length_relative = segment_length / total_length
+    # expect that all samples are greater than zero or equal to zero
+    assert np.alltrue(samples >= 0)
 
-    reference = [segment_length_relative * i for i in range(expected_segments + 1)]
+    # expect that all samples are below 1
+    assert np.alltrue(samples < 1)
 
-    assert len(samples) == expected_segments + 1
-    assert np.allclose(samples, reference)
+    # if there are multiple samples, check that their distance is always segment_length
+    if len(samples) > 1:
+        # scale samples from range [0,1] to [0, total_length]
+        samples *= total_length
 
+        # calculate the difference between each sample and its predecessor
+        delta = samples[1:] - samples[:-1]
 
-def test_sample_by_fixed_length():
-    _test_sample_by_fixed_length(total_length=10, segment_length=2, expected_segments=5)
-    _test_sample_by_fixed_length(total_length=12, segment_length=2, expected_segments=6)
+        # check if the differences are all equal to segment-length
+        assert np.allclose(delta, segment_length)
