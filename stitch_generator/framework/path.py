@@ -1,9 +1,9 @@
 import numpy as np
 
-from stitch_generator.functions.estimate_length import estimate_length
-from stitch_generator.functions.function_modifiers import split, inverse
-from stitch_generator.functions.functions_1d import constant
 from stitch_generator.framework.types import Function1D, Function2D
+from stitch_generator.functions.estimate_length import estimate_length
+from stitch_generator.functions.function_modifiers import split, inverse, mix
+from stitch_generator.functions.functions_1d import constant
 
 
 class Path:
@@ -76,3 +76,15 @@ class Path:
         shape_start_end_equal = np.all(np.isclose(self.shape(0), self.shape(1)))
         direction_start_end_equal = np.all(np.isclose(self.direction(0), self.direction(1)))
         return shape_start_end_equal and direction_start_end_equal
+
+
+def path_from_boundaries(left, right, alignment=constant(0.5)):
+    position = mix(left, right, alignment)
+
+    def width(t):
+        return np.linalg.norm(left(t) - right(t))
+
+    def direction(t):
+        return (left(t) - right(t)) / width(t)
+
+    return Path(shape=position, direction=direction, width=width, stroke_alignment=alignment)
