@@ -17,21 +17,28 @@ def get_underlay_path(path: Path, inset: float) -> Path:
     Returns:
         The underlay path
     """
-    cut = inset / path.length
-    underlay = path.apply_modifier(lambda function: repeat(1 - 2 * cut, (shift(cut, function))))
 
+    return inset_sides(cut_start_end(path, inset), inset)
+
+
+def cut_start_end(path: Path, inset: float) -> Path:
+    cut = inset / path.length
+    return path.apply_modifier(lambda function: repeat(1 - 2 * cut, (shift(cut, function))))
+
+
+def inset_sides(path: Path, inset: float) -> Path:
     # calculate the middle of the stroke, relative to the center line 'underlay.shape'
-    to_middle = add(underlay.stroke_alignment, constant(-0.5))
-    middle_relative_to_old_width = multiply(to_middle, underlay.width)
+    to_middle = add(path.stroke_alignment, constant(-0.5))
+    middle_relative_to_old_width = multiply(to_middle, path.width)
 
     # subtract inset * 2 from the width and make sure it stays positive
-    new_width = maximum(subtract(underlay.width, constant(inset * 2)), constant(0))
+    new_width = maximum(subtract(path.width, constant(inset * 2)), constant(0))
 
     # calculate offset of the new center line relative to middle of the stroke
     offset = multiply(to_middle, multiply(constant(-1), new_width))
     new_pos_offset = add(middle_relative_to_old_width, offset)
 
-    new_shape = add(underlay.shape, multiply(underlay.direction, new_pos_offset))
+    new_shape = add(path.shape, multiply(path.direction, new_pos_offset))
 
-    return Path(shape=new_shape, direction=underlay.direction, width=new_width,
-                stroke_alignment=underlay.stroke_alignment)
+    return Path(shape=new_shape, direction=path.direction, width=new_width,
+                stroke_alignment=path.stroke_alignment)
