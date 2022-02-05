@@ -18,11 +18,7 @@ def sample(total_length: float,
            alignment: float,
            offset: float):
     if total_length == 0 or segment_length == 0:
-        return _default_samples()
+        return sample_by_number(1)
     step_size = segment_length / total_length
     step_offset = alignment_to_offset(step_size, offset, alignment) * step_size
     return np.arange(start=step_offset, step=step_size, stop=1)
-
-
-def _default_samples():
-    return sample_by_number(1)
