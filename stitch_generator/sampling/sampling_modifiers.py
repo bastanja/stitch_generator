@@ -2,9 +2,9 @@ import itertools
 
 import numpy as np
 
+from stitch_generator.framework.types import SamplingFunction
 from stitch_generator.functions.ensure_shape import ensure_1d_shape
 from stitch_generator.functions.functions_1d import linear_interpolation
-from stitch_generator.framework.types import SamplingFunction
 
 
 def free_start_end(start_length: float, end_length: float, sampling_function: SamplingFunction):
@@ -136,10 +136,29 @@ def free_start(start_length: float, sampling_function: SamplingFunction):
 
 def free_end(end_length: float, sampling_function: SamplingFunction):
     """ Removes the samples which are closer to the end than end_length """
+
     def f(total_length: float):
         relative_length = (end_length / total_length) if (total_length > 0) else 0
         samples = sampling_function(total_length)
         samples = samples[samples <= 1 - relative_length]
         return samples
+
+    return f
+
+
+def cycle_offsets(partial_sampling, offsets):
+    offset_gen = itertools.cycle(offsets)
+
+    def f(total_length: float):
+        return partial_sampling(offset=next(offset_gen), total_length=total_length)
+
+    return f
+
+
+def cycle_alignment(partial_sampling, alignments):
+    alignment_gen = itertools.cycle(alignments)
+
+    def f(total_length: float):
+        return partial_sampling(alignment=next(alignment_gen), total_length=total_length)
 
     return f
