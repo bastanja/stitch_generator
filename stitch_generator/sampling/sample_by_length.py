@@ -1,7 +1,7 @@
 import numpy as np
 
-from stitch_generator.sampling.sample_by_number import sample_by_number
 from stitch_generator.framework.types import SamplingFunction, Array1D
+from stitch_generator.sampling.sample_by_number import sample_by_number
 
 
 def sample_by_length(total_length: float, segment_length: float) -> Array1D:
@@ -34,11 +34,8 @@ def sampling_by_length_with_offset(segment_length: float, offset: float) -> Samp
     return f
 
 
-def regular(segment_length: float) -> SamplingFunction:
-    """
-    Returns a sampling function which spaces the samples equally with a segment length that is close to segment_length
-    """
-    return sampling_by_length(segment_length)
+# alternative name for sampling_by_length
+regular = sampling_by_length
 
 
 def regular_even(segment_length: float) -> SamplingFunction:
