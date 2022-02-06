@@ -1,23 +1,30 @@
 from functools import partial
 
 from stitch_generator.framework.types import Function1D, SamplingFunction
-from stitch_generator.functions.function_sequence import function_sequence
+from stitch_generator.functions.function_modifiers import repeat, combine
 from stitch_generator.functions.functions_1d import sinus, arc, linear_interpolation
 from stitch_generator.sampling.sample import sample
+from stitch_generator.sampling.sample_by_number import sample_by_number
 from stitch_generator.sampling.sampling_modifiers import cycle_offsets
 
 
-def wave_sampling(segment_length: float, steps: int):
-    return sampling_with_offset_function(segment_length=segment_length, steps=steps, offset_function=sinus)
+def wave_sampling(segment_length: float, steps: int, function_range=(0, 1)):
+    return sampling_with_offset_function(segment_length=segment_length, steps=steps,
+                                         offset_function=to_range(sinus, function_range))
 
 
-def arc_sampling(segment_length: float, steps: int):
-    return sampling_with_offset_function(segment_length=segment_length, steps=steps, offset_function=arc)
+def arc_sampling(segment_length: float, steps: int, function_range=(0, 1)):
+    return sampling_with_offset_function(segment_length=segment_length, steps=steps,
+                                         offset_function=to_range(arc, function_range))
 
 
-def triangle_sampling(segment_length: float, steps: int):
-    offset_function = function_sequence((linear_interpolation(0, 1), linear_interpolation(0, 1)), (1, 1))
+def triangle_sampling(segment_length: float, steps: int, function_range=(0, 1)):
+    offset_function = to_range(repeat(2, linear_interpolation(0, 1), mode="reflect"), function_range)
     return sampling_with_offset_function(segment_length=segment_length, steps=steps, offset_function=offset_function)
+
+
+def to_range(offset_function, function_range):
+    return combine(offset_function, linear_interpolation(function_range[0], function_range[1]))
 
 
 def sampling_with_offset_function(segment_length: float, steps: int, offset_function: Function1D,
@@ -38,7 +45,7 @@ def sampling_with_offset_function(segment_length: float, steps: int, offset_func
     """
 
     # create the offsets by number
-    offsets = offset_function(steps)[:-1]
+    offsets = offset_function(sample_by_number(steps)[:-1])
 
     # create a sampling function without the parameter 'offset'
     sampling_function = partial(sample, segment_length=segment_length, alignment=alignment)
