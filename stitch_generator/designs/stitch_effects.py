@@ -9,7 +9,7 @@ from stitch_generator.functions.functions_1d import constant, arc
 from stitch_generator.functions.functions_2d import constant_direction
 from stitch_generator.shapes.circle import circle
 from stitch_generator.shapes.line import line
-from stitch_generator.stitch_effects.collection import stitch_effects
+from stitch_generator.collection.stitch_effects import stitch_effects
 
 
 class Design(EmbroideryDesign):
