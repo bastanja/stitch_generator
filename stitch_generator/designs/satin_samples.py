@@ -1,7 +1,8 @@
-import itertools
-
 import numpy as np
 
+from stitch_generator.collection.sampling_with_offset_function import triangle_sampling, sampling_with_offset_function, \
+    arc_sampling, wave_sampling
+from stitch_generator.collection.tatami_sampling import tatami_3_1, tatami_4_2
 from stitch_generator.framework.embroidery_design import EmbroideryDesign
 from stitch_generator.framework.palette import palette
 from stitch_generator.framework.parameter import FloatParameter, BoolParameter
@@ -9,16 +10,13 @@ from stitch_generator.framework.path import Path
 from stitch_generator.functions.arc_length_mapping import arc_length_mapping_with_length
 from stitch_generator.functions.connect_functions import combine_start_end, line_with_sampling_function
 from stitch_generator.functions.estimate_length import estimate_length
-from stitch_generator.functions.function_modifiers import combine, add, repeat
+from stitch_generator.functions.function_modifiers import combine, add
 from stitch_generator.functions.function_sequence import function_sequence
 from stitch_generator.functions.functions_1d import constant, circular_arc, linear_interpolation, pchip_interpolation, \
     arc, sinus
 from stitch_generator.functions.functions_2d import constant_direction
-from stitch_generator.sampling.sample_by_fixed_length import sampling_by_fixed_length
 from stitch_generator.sampling.sample_by_length import sampling_by_length
-from stitch_generator.sampling.sample_by_number import sample_by_number
 from stitch_generator.sampling.sampling_modifiers import add_start, add_end, alternate_direction, free_start, free_end
-from stitch_generator.sampling.tatami_sampling import tatami_sampling
 from stitch_generator.shapes.bezier import bezier_normals, bezier
 from stitch_generator.shapes.line import line
 from stitch_generator.stitch_effects.meander import meander
@@ -58,44 +56,17 @@ def make_paths(offsets, max_width, shape_function):
     return paths
 
 
-def simple_tatami(segment_length, offsets):
-    return tatami_sampling(segment_length=segment_length, offsets=offsets, alignment=0.5, minimal_segment_size=1)
+def free_start_end(sampling_function):
+    return free_start(1, free_end(1, sampling_function))
 
 
 def sampling_functions():
-    yield simple_tatami(segment_length=4, offsets=sample_by_number(3)[:-1])
-
-    yield simple_tatami(segment_length=3, offsets=np.repeat(sample_by_number(4)[:-1], 2))
-
-    offsets = sample_by_number(15)[:-1]
-    combined = list(itertools.chain(*zip(offsets, 1 - offsets)))
-    yield simple_tatami(segment_length=3.5, offsets=combined)
-
-    yield free_start(1, free_end(1, sampling_by_fixed_length(segment_length=2.5, alignment=0.5)))
-
-    yield simple_tatami(segment_length=4, offsets=[.0] * 10 + [.5] * 10)
-
-    samples = sample_by_number(30)[:-1]
-    offsets = combine(arc, linear_interpolation(0.75, 0.25))(samples)
-    yield simple_tatami(segment_length=3, offsets=offsets)
-
-    samples = sample_by_number(60)[:-1]
-    offsets = combine(sinus, linear_interpolation(0.2, 0.8))(samples)
-    yield simple_tatami(segment_length=3, offsets=offsets)
-
-    samples = sample_by_number(40)[:-1]
-    offsets = repeat(2, linear_interpolation(0, 1), mode="reflect")(samples)
-    yield simple_tatami(segment_length=3, offsets=offsets)
-
-    offsets = sample_by_number(5) - 0.5
-    offsets = np.concatenate((offsets, offsets[-2:0:-1]))
-    offsets = np.repeat(offsets, 7)
-    yield simple_tatami(segment_length=3, offsets=offsets)
-
-    arc_height = 0.3
-    offsets = combine(arc, linear_interpolation(0, arc_height))(sample_by_number(15))
-    offsets = np.concatenate((offsets, 0.5 + offsets)) - arc_height / 2
-    yield simple_tatami(segment_length=3, offsets=offsets)
+    yield tatami_3_1(segment_length=4)
+    yield tatami_4_2(segment_length=3)
+    yield free_start_end(alternate_direction(triangle_sampling(segment_length=3.5, steps=30)))
+    yield free_start_end(arc_sampling(segment_length=3, steps=30, function_range=(0.75, 0.25)))
+    yield free_start_end(wave_sampling(segment_length=3, steps=60, function_range=(0.2, 0.8)))
+    yield free_start_end(triangle_sampling(segment_length=3, steps=40))
 
 
 def make_stitch_effects(satin_spacing):
