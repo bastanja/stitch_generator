@@ -3,7 +3,7 @@ from functools import partial
 import numpy as np
 
 from stitch_generator.functions.ensure_shape import ensure_1d_shape
-from stitch_generator.sampling.sample import alignment_to_offset
+from stitch_generator.sampling.alignment_to_offset import alignment_to_offset
 from stitch_generator.sampling.sample_by_fixed_length import sample_by_fixed_length
 
 

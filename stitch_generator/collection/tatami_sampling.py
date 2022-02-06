@@ -3,7 +3,8 @@ from functools import partial
 import numpy as np
 
 from stitch_generator.framework.types import SamplingFunction
-from stitch_generator.sampling.sample import sample
+from stitch_generator.sampling.sample_by_fixed_length import sample_by_fixed_length
+
 from stitch_generator.sampling.sample_by_number import sample_by_number
 from stitch_generator.sampling.sampling_modifiers import free_start, free_end, cycle_offsets
 
@@ -33,7 +34,7 @@ def tatami(segment_length: float, steps: int, repetitions: int = 1, alignment=0.
     offsets = np.repeat(offsets, repeats=repetitions)
 
     # create a sampling function without the parameter 'offset'
-    sampling_function = partial(sample, segment_length=segment_length, alignment=alignment)
+    sampling_function = partial(sample_by_fixed_length, segment_length=segment_length, alignment=alignment)
 
     # create a sampling function which cycles through the given offset
     sampling_function = cycle_offsets(sampling_function, offsets)

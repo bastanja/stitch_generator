@@ -3,7 +3,7 @@ from functools import partial
 from stitch_generator.framework.types import Function1D, SamplingFunction
 from stitch_generator.functions.function_modifiers import repeat, combine
 from stitch_generator.functions.functions_1d import sinus, arc, linear_interpolation
-from stitch_generator.sampling.sample import sample
+from stitch_generator.sampling.sample_by_fixed_length import sample_by_fixed_length
 from stitch_generator.sampling.sample_by_number import sample_by_number
 from stitch_generator.sampling.sampling_modifiers import cycle_offsets
 
@@ -48,7 +48,7 @@ def sampling_with_offset_function(segment_length: float, steps: int, offset_func
     offsets = offset_function(sample_by_number(steps)[:-1])
 
     # create a sampling function without the parameter 'offset'
-    sampling_function = partial(sample, segment_length=segment_length, alignment=alignment)
+    sampling_function = partial(sample_by_fixed_length, segment_length=segment_length, alignment=alignment)
 
     # create a sampling function which cycles through the given offset
     sampling_function = cycle_offsets(sampling_function, offsets)
