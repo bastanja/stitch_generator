@@ -2,17 +2,17 @@ import numpy as np
 
 from stitch_generator.framework.path import Path
 from stitch_generator.framework.stitch_effect import StitchEffect
+from stitch_generator.framework.types import SamplingFunction
 from stitch_generator.functions.function_modifiers import repeat, mix, combine, shift
 from stitch_generator.functions.functions_1d import linear_interpolation
 from stitch_generator.functions.get_boundaries import get_boundaries
 from stitch_generator.functions.noise import noise
-from stitch_generator.sampling.sampling_modifiers import add_start
-from stitch_generator.sampling.tatami_sampling import tatami_sampling
-from stitch_generator.framework.types import SamplingFunction
+from stitch_generator.sampling.sample_by_length import sampling_by_length
+from stitch_generator.sampling.sampling_modifiers import remove_end
 
 
 def scribble(repetitions: int, stitch_length: float, noise_scale: float = 1, noise_offset: float = 0) -> StitchEffect:
-    sampling = add_start(tatami_sampling(stitch_length, offsets=[0, 1 / 3, 2 / 3], alignment=0.5))
+    sampling = remove_end(sampling_by_length(segment_length=stitch_length))
     return lambda path: scribble_along(path, repetitions=repetitions, sampling_function=sampling,
                                        noise_scale=noise_scale, noise_offset=noise_offset)
 
