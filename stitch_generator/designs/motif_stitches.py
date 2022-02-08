@@ -12,7 +12,7 @@ from stitch_generator.sampling.sample_by_length import regular, sampling_by_leng
 from stitch_generator.sampling.sampling_modifiers import free_start_end, remove_end
 from stitch_generator.shapes.bezier import bezier, bezier_normals
 from stitch_generator.stitch_effects.motif_sequence import motif_sequence
-from stitch_generator.stitch_effects.motif_to_segments import motif_to_segments
+from stitch_generator.stitch_effects.shape_effects.segment_motif_to_shape import segment_motif
 from stitch_generator.stitch_effects.utilities.motif_sequence import motif_sequence_along
 from stitch_generator.stitch_effects.utilities.motif_to_points import motif_to_points_along
 from stitch_generator.stitch_operations.rotate import rotate_by_degrees
@@ -42,8 +42,8 @@ def stem_stitch(spacing: float, stitch_width: float, stitch_length: float,
 def three_arrows():
     single_arrow = np.array(((0, 0.0), (-3, -3), (0, 0), (-3, 3), (0, 0)))
     combined = np.concatenate((single_arrow, single_arrow + (2, 0), single_arrow + (4, 0)))
-    return motif_to_segments(
-        free_start_end(10, 10, regular(20)), regular(3), repeat_motif(combined))
+    return segment_motif(
+        free_start_end(10, 10, regular(20)), regular(3), repeat_motif(combined), motif_length=3)
 
 
 def arrow_chain():
