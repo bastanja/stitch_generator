@@ -13,7 +13,7 @@ def de_casteljau(control_points: np.ndarray, parameters: np.ndarray) -> (np.ndar
         The points on the curve at the requested offsets
     """
     if len(parameters) == 0:
-        return
+        return None, None
     interpolated_points = control_points
     parameters = np.atleast_2d(ensure_1d_shape(parameters)).T
     while len(interpolated_points) > 1:
