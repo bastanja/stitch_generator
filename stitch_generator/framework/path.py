@@ -1,8 +1,10 @@
+from typing import Tuple
+
 import numpy as np
 
 from stitch_generator.framework.types import Function1D, Function2D
 from stitch_generator.functions.estimate_length import estimate_length
-from stitch_generator.functions.function_modifiers import split, inverse, mix
+from stitch_generator.functions.function_modifiers import split, inverse, mix, multiply, subtract, add
 from stitch_generator.functions.functions_1d import constant
 
 
@@ -88,3 +90,22 @@ def path_from_boundaries(left, right, alignment=constant(0.5)):
         return (left(t) - right(t)) / width(t)
 
     return Path(shape=position, direction=direction, width=width, stroke_alignment=alignment)
+
+
+def get_boundaries(path: Path) -> Tuple[Function2D, Function2D]:
+    """
+    Calculates the left and right boundary of a path
+
+    Args:
+        path: The path for which the boundaries are calculated
+
+    Returns:
+        left and right boundary of the path
+    """
+    positive_width = multiply(path.width, path.stroke_alignment)
+    negative_width = multiply(path.width, subtract(constant(1), path.stroke_alignment))
+
+    left = add(path.shape, multiply(path.direction, positive_width))
+    right = subtract(path.shape, multiply(path.direction, negative_width))
+
+    return left, right

@@ -1,8 +1,7 @@
-from stitch_generator.framework.path import Path
+from stitch_generator.framework.path import Path, get_boundaries
 from stitch_generator.framework.stitch_effect import StitchEffect
 from stitch_generator.framework.types import Array2D
 from stitch_generator.functions.function_modifiers import add, repeat, multiply
-from stitch_generator.functions.get_boundaries import get_boundaries
 from stitch_generator.sampling.sample_by_number import sampling_by_number
 
 

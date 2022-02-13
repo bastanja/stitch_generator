@@ -2,11 +2,10 @@ from functools import partial
 
 import numpy as np
 
-from stitch_generator.framework.path import Path
+from stitch_generator.framework.path import Path, get_boundaries
 from stitch_generator.framework.stitch_effect import StitchEffect
 from stitch_generator.framework.types import Array2D
 from stitch_generator.functions.function_modifiers import inverse
-from stitch_generator.functions.get_boundaries import get_boundaries
 from stitch_generator.shapes.line import line
 from stitch_generator.stitch_effects.shape_effects.running_stitch import running_stitch_on_shape
 

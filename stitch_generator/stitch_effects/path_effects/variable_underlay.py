@@ -1,12 +1,11 @@
 import numpy as np
 
-from stitch_generator.framework.path import Path
+from stitch_generator.framework.path import Path, get_boundaries
 from stitch_generator.framework.stitch_effect import StitchEffect
 from stitch_generator.framework.types import Array2D, Function1D, SamplingFunction
 from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.function_modifiers import multiply, add, subtract, inverse, scale
 from stitch_generator.functions.functions_1d import constant, linear_interpolation
-from stitch_generator.functions.get_boundaries import get_boundaries
 from stitch_generator.sampling.sample_by_number import sample_by_number
 from stitch_generator.sampling.sampling_modifiers import remove_end
 from stitch_generator.stitch_effects.utilities.range_tree import width_to_level, make_range_tree, \

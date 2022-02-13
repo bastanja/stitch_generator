@@ -1,11 +1,10 @@
 import numpy as np
 
-from stitch_generator.framework.path import Path
+from stitch_generator.framework.path import Path, get_boundaries
 from stitch_generator.framework.stitch_effect import StitchEffect
-from stitch_generator.functions.connect_functions import line_with_sampling_function
-from stitch_generator.functions.get_boundaries import get_boundaries
-from stitch_generator.sampling.sample_by_length import regular
 from stitch_generator.framework.types import SamplingFunction, ConnectFunction, Array2D
+from stitch_generator.functions.connect_functions import line_with_sampling_function
+from stitch_generator.sampling.sample_by_length import regular
 
 
 def meander(sampling_function: SamplingFunction, connect_function) -> StitchEffect:

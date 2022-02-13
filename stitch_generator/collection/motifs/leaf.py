@@ -2,23 +2,22 @@ from functools import partial
 
 import numpy as np
 
-from stitch_generator.framework.path import Path
+from stitch_generator.framework.path import Path, get_boundaries
+from stitch_generator.framework.types import Function1D
 from stitch_generator.functions.arc_length_mapping import arc_length_mapping
 from stitch_generator.functions.connect_functions import simple_connect
 from stitch_generator.functions.function_modifiers import combine, split, scale, inverse, repeat
 from stitch_generator.functions.functions_1d import constant, arc
-from stitch_generator.functions.get_boundaries import get_boundaries
 from stitch_generator.functions.get_underlay_path import get_underlay_path
 from stitch_generator.sampling.sample_by_length import sample_by_length, sampling_by_length
 from stitch_generator.sampling.sample_by_number import sample_by_number
 from stitch_generator.sampling.sampling_modifiers import remove_end
 from stitch_generator.shapes.bezier import bezier, bezier_normals
 from stitch_generator.shapes.line import line
+from stitch_generator.stitch_effects.path_effects.satin import satin_along
 from stitch_generator.stitch_effects.path_effects.stripes import stripes_along
 from stitch_generator.stitch_effects.shape_effects.running_stitch import running_stitch_on_shape
-from stitch_generator.stitch_effects.path_effects.satin import satin_along
 from stitch_generator.stitch_operations.rotate import rotate_by_degrees
-from stitch_generator.framework.types import Function1D
 
 
 def leaf(stem_length: float, leaf_length: float, leaf_width: float, angle_degrees: float, stitch_length: float,

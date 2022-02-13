@@ -1,8 +1,7 @@
 import numpy as np
 
-from stitch_generator.framework.path import Path
+from stitch_generator.framework.path import Path, get_boundaries
 from stitch_generator.framework.types import Function2D, SamplingFunction, Array2D
-from stitch_generator.functions.get_boundaries import get_boundaries
 
 
 def zigzag(sampling_function: SamplingFunction):
