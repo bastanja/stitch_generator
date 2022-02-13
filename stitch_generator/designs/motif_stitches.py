@@ -2,6 +2,8 @@ import itertools
 
 import numpy as np
 
+from stitch_generator.collection.motifs.line import straight_line
+from stitch_generator.collection.motifs.zigzag import zigzag, zigzag_motif
 from stitch_generator.framework.embroidery_design import EmbroideryDesign
 from stitch_generator.framework.palette import palette
 from stitch_generator.framework.parameter import FloatParameter
@@ -11,8 +13,6 @@ from stitch_generator.functions.ensure_shape import ensure_2d_shape
 from stitch_generator.functions.function_modifiers import combine, inverse
 from stitch_generator.functions.functions_1d import constant
 from stitch_generator.functions.motif_generators import repeat_motif, alternate_direction
-from stitch_generator.motifs.line import straight_line
-from stitch_generator.motifs.zigzag import zigzag_motif, zigzag
 from stitch_generator.sampling.sample_by_length import regular, sampling_by_length, sampling_by_length_with_offset
 from stitch_generator.sampling.sampling_modifiers import free_start_end, remove_end, add_start, add_end
 from stitch_generator.shapes.bezier import bezier, bezier_normals

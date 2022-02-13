@@ -1,3 +1,4 @@
+from stitch_generator.collection.motifs.satin_circle import satin_circle
 from stitch_generator.framework.embroidery_design import EmbroideryDesign
 from stitch_generator.framework.palette import palette
 from stitch_generator.framework.parameter import FloatParameter, IntParameter
@@ -7,7 +8,6 @@ from stitch_generator.functions.function_modifiers import combine, add, multiply
 from stitch_generator.functions.functions_1d import constant
 from stitch_generator.functions.motif_generators import repeat_motif_mirrored
 from stitch_generator.functions.noise import noise
-from stitch_generator.motifs.satin_circle import satin_circle
 from stitch_generator.sampling.sample_by_length import regular, sampling_by_length
 from stitch_generator.sampling.sampling_modifiers import free_start_end, remove_end
 from stitch_generator.shapes.circle import circle
