@@ -8,7 +8,7 @@ from stitch_generator.functions.functions_2d import constant_direction
 from stitch_generator.sampling.sample_by_length import sample_by_length, sampling_by_length_with_offset
 from stitch_generator.shapes.line import line
 from stitch_generator.stitch_effects.path_effects.satin import satin
-from stitch_generator.collection.underlay_contour_zigzag import underlay_contour_zigzag
+from stitch_generator.collection.stitch_effects.underlay_contour_zigzag import underlay_contour_zigzag
 
 
 def satin_ellipse(width: float, height: float, stitch_length: float, pull_compensation: float = 0,

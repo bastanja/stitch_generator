@@ -1,6 +1,6 @@
 import numpy as np
 
-from stitch_generator.collection.tatami_sampling import tatami_3_1
+from stitch_generator.collection.sampling.tatami_sampling import tatami_3_1
 from stitch_generator.framework.path import Path
 from stitch_generator.framework.stitch_effect import StitchEffect
 from stitch_generator.framework.types import Array2D

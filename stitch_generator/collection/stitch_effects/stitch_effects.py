@@ -1,6 +1,6 @@
-from stitch_generator.collection.tatami_sampling import tatami_3_1
-from stitch_generator.collection.underlay_contour_zigzag import underlay_contour_zigzag
-from stitch_generator.collection.underlay_dense import underlay_dense
+from stitch_generator.collection.sampling.tatami_sampling import tatami_3_1
+from stitch_generator.collection.stitch_effects.underlay_contour_zigzag import underlay_contour_zigzag
+from stitch_generator.collection.stitch_effects.underlay_dense import underlay_dense
 from stitch_generator.functions.connect_functions import line_with_sampling_function, combine_start_end, \
     running_stitch_line
 from stitch_generator.functions.function_modifiers import subtract, add, scale, repeat

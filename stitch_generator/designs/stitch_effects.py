@@ -1,5 +1,6 @@
 import numpy as np
 
+from stitch_generator.collection.stitch_effects.stitch_effects import stitch_effects
 from stitch_generator.framework.embroidery_design import EmbroideryDesign
 from stitch_generator.framework.palette import palette
 from stitch_generator.framework.parameter import FloatParameter, BoolParameter
@@ -9,7 +10,6 @@ from stitch_generator.functions.functions_1d import constant, arc
 from stitch_generator.functions.functions_2d import constant_direction
 from stitch_generator.shapes.circle import circle
 from stitch_generator.shapes.line import line
-from stitch_generator.collection.stitch_effects import stitch_effects
 
 
 class Design(EmbroideryDesign):

@@ -1,7 +1,10 @@
 import numpy as np
 
-from stitch_generator.collection.sampling_with_offset_function import triangle_sampling, arc_sampling, wave_sampling
-from stitch_generator.collection.tatami_sampling import tatami_3_1, tatami_4_2
+from stitch_generator.collection.sampling.sampling_with_offset_function import triangle_sampling, arc_sampling, \
+    wave_sampling
+from stitch_generator.collection.sampling.tatami_sampling import tatami_3_1, tatami_4_2
+from stitch_generator.collection.stitch_effects.underlay_contour_zigzag import underlay_contour_zigzag
+from stitch_generator.collection.stitch_effects.underlay_dense import underlay_dense
 from stitch_generator.framework.embroidery_design import EmbroideryDesign
 from stitch_generator.framework.palette import palette
 from stitch_generator.framework.parameter import FloatParameter, BoolParameter
@@ -18,8 +21,6 @@ from stitch_generator.sampling.sampling_modifiers import add_start, add_end, alt
 from stitch_generator.shapes.bezier import bezier_normals, bezier
 from stitch_generator.shapes.line import line
 from stitch_generator.stitch_effects.path_effects.meander import meander
-from stitch_generator.collection.underlay_contour_zigzag import underlay_contour_zigzag
-from stitch_generator.collection.underlay_dense import underlay_dense
 
 
 def make_shape_linear():
