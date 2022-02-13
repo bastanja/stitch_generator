@@ -1,9 +1,8 @@
 import numpy as np
 
-from stitch_generator.framework.path import Path
+from stitch_generator.framework.path import Path, get_inset_path
 from stitch_generator.framework.stitch_effect import StitchEffect
 from stitch_generator.functions.connect_functions import running_stitch_line
-from stitch_generator.functions.get_underlay_path import get_underlay_path
 from stitch_generator.sampling.sample_by_length import regular
 from stitch_generator.stitch_effects.path_effects.contour import contour_along
 from stitch_generator.stitch_effects.path_effects.double_satin import double_satin_along
@@ -13,7 +12,7 @@ from stitch_generator.framework.types import Array2D
 def underlay_contour_zigzag(inset: float, stitch_length: float, spacing: float) -> StitchEffect:
     def underlay(path: Path) -> Array2D:
         if inset > 0:
-            path = get_underlay_path(path, inset)
+            path = get_inset_path(path, inset)
 
         connect_function = running_stitch_line(stitch_length=stitch_length, include_endpoint=False)
 
