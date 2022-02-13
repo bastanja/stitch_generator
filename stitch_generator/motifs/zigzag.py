@@ -14,3 +14,12 @@ def zigzag(width: float, height: float, repetitions: int, flip: bool = False):
     f2 = line((-half_width, half_height), (half_width, half_height))
 
     return zigzag_between(f1, f2, sampling_by_number(repetitions), width)
+
+
+def zigzag_motif(width: float, height: float, repetitions: int):
+    half_width = width / 2
+
+    f1 = line((0, -half_width), (0, half_width))
+    f2 = line((height, -half_width), (height, half_width))
+
+    return zigzag_between(f1, f2, sampling_by_number(repetitions), width)
