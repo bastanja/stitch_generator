@@ -1,6 +1,6 @@
 from stitch_generator.sampling.sample_by_number import sampling_by_number
 from stitch_generator.shapes.line import line
-from stitch_generator.stitch_effects.utilities.zigzag import zigzag_between
+from stitch_generator.stitch_effects.path_effects.zigzag import zigzag_between
 
 
 def zigzag(width: float, height: float, repetitions: int, flip: bool = False):

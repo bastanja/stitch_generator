@@ -1,103 +1,16 @@
 import numpy as np
 
-from stitch_generator.framework.path import Path
-from stitch_generator.framework.types import Function1D, Array2D
-from stitch_generator.functions.estimate_length import estimate_length
-from stitch_generator.functions.function_modifiers import add, multiply, subtract, inverse, scale
-from stitch_generator.functions.functions_1d import linear_interpolation, constant, smootherstep
-from stitch_generator.functions.get_boundaries import get_boundaries
-from stitch_generator.sampling.sample_by_length import sampling_by_length
+from stitch_generator.functions.functions_1d import linear_interpolation
 from stitch_generator.sampling.sample_by_number import sample_by_number
-from stitch_generator.sampling.sampling_modifiers import remove_end
 
 
-def variable_running_stitch_along(path: Path, stroke_spacing: float, stitch_length: float) -> Array2D:
-    segments = int(round(estimate_length(path.shape) / stitch_length))
-    t = sample_by_number(number_of_segments=segments)
-
-    widths = path.width(t)
-    widths = np.minimum(widths[0:-1], widths[1:])
-
-    levels = _width_to_level(widths, stroke_spacing)
-
-    width_level_tree = _make_range_tree(levels)
-    indices, offsets = _tree_to_indices_and_offsets(width_level_tree)
-
-    positions = path.shape(t)
-    directions = path.direction(t)
-    alignment = (1 - path.stroke_alignment(t)) * path.width(t)
-    positions = positions - (directions * alignment[:, None])
-
-    positions = np.array([positions[i] for i in indices])
-    directions = np.array([directions[i] for i in indices])
-
-    offsets = np.array(offsets, dtype=float)[:, None]
-    offsets *= stroke_spacing
-
-    directions = directions * offsets
-    return positions + directions
-
-
-def variable_underlay_along(path: Path, stroke_spacing: float, stitch_length: float) -> Array2D:
-    pos1 = add(path.shape, multiply(path.direction, multiply(path.width, path.stroke_alignment)))
-    width1 = multiply(path.width, path.stroke_alignment)
-    path1 = Path(shape=pos1, direction=path.direction, width=width1, stroke_alignment=constant(0))
-
-    pos2 = inverse(add(path.shape,
-                       multiply(path.direction, multiply(path.width, subtract(path.stroke_alignment, constant(1))))))
-    width2 = inverse(multiply(path.width, subtract(constant(1), path.stroke_alignment)))
-    dir2 = inverse(multiply(path.direction, constant(-1)))
-    path2 = Path(shape=pos2, direction=dir2, width=width2, stroke_alignment=constant(0))
-
-    step_function = smootherstep
-
-    return np.concatenate((_variable_underlay(path1, stroke_spacing, stitch_length, step_function)[:-1],
-                           _variable_underlay(path2, stroke_spacing, stitch_length, step_function)))
-
-
-def _variable_underlay(path: Path, stroke_spacing: float, stitch_length: float, step_function: Function1D):
-    precision = 10
-    segments = int(round(estimate_length(path.shape) * precision))
-    t = sample_by_number(number_of_segments=segments)
-
-    widths = path.width(t)
-    widths = np.minimum(widths[0:-1], widths[1:])
-
-    levels = _width_to_level(widths, stroke_spacing)
-
-    width_level_tree = _make_range_tree(levels)
-    indices, offsets = _tree_to_indices_and_offsets_basic(width_level_tree)
-
-    sampling_function = remove_end(sampling_by_length(segment_length=stitch_length))
-
-    stitches = []
-    iopairs = list(zip(indices, offsets))
-    baseline = path.shape
-    for p1, p2 in zip(iopairs, iopairs[1:]):
-        i1, o1 = p1
-        i2, o2 = p2
-
-        t1, t2 = t[i1], t[i2]
-        path_part = path.split([t1, t2])[1]
-        _, baseline = get_boundaries(path_part)
-        level_step = add(constant(o1 * stroke_spacing), scale((o2 - o1) * stroke_spacing, step_function))
-        direction = multiply(path_part.direction, level_step)
-        baseline = add(baseline, direction)
-        part_length = estimate_length(baseline)
-        stitches.append(baseline(sampling_function(part_length)))
-
-    stitches.append(baseline(1))
-    stitches = np.concatenate(stitches)
-    return stitches
-
-
-def _width_to_level(widths: np.ndarray, level_spacing: float):
+def width_to_level(widths: np.ndarray, level_spacing: float):
     widths = widths / level_spacing
     widths = np.maximum(widths, 0)  # avoid negative values
     return widths.astype(int)
 
 
-def _make_range_tree(values):
+def make_range_tree(values):
     stack = []
     _start_range(stack, 0)
     root = stack[0]
@@ -163,7 +76,7 @@ def _is_reverse(level):
     return level % 2 == 1  # odd numbers treated as reverse
 
 
-def _tree_to_indices_and_offsets(tree, level=0):
+def tree_to_indices_and_offsets(tree, level=0):
     indices = []
     offsets = []
 
@@ -194,7 +107,7 @@ def _tree_to_indices_and_offsets(tree, level=0):
             offsets.extend([level] * len(gap_indices))
 
         # add the child range
-        i, o = _tree_to_indices_and_offsets(children[i], level + 1)
+        i, o = tree_to_indices_and_offsets(children[i], level + 1)
         indices.extend(i)
         offsets.extend(o)
 
@@ -224,7 +137,7 @@ def _tree_to_indices_and_offsets(tree, level=0):
     return indices, offsets
 
 
-def _tree_to_indices_and_offsets_basic(tree, level=0):
+def tree_to_indices_and_offsets_basic(tree, level=0):
     indices = []
     offsets = []
 
@@ -256,7 +169,7 @@ def _tree_to_indices_and_offsets_basic(tree, level=0):
             offsets.append(level)
 
         # add the child range
-        ind, off = _tree_to_indices_and_offsets_basic(children[i], level + 1)
+        ind, off = tree_to_indices_and_offsets_basic(children[i], level + 1)
         indices.extend(ind)
         offsets.extend(off)
 

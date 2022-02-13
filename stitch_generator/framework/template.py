@@ -3,7 +3,7 @@ from stitch_generator.framework.parameter import FloatParameter
 from stitch_generator.framework.path import Path
 from stitch_generator.functions.functions_1d import constant
 from stitch_generator.shapes.circle import circle
-from stitch_generator.stitch_effects.contour import contour
+from stitch_generator.stitch_effects.path_effects.contour import contour
 
 
 class Design(EmbroideryDesign):

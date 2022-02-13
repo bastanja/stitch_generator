@@ -6,7 +6,7 @@ from stitch_generator.functions.function_modifiers import scale, combine
 from stitch_generator.functions.functions_1d import arc, linear_interpolation, constant
 from stitch_generator.functions.functions_2d import function_2d, constant_direction
 from stitch_generator.sampling.sample_by_number import sampling_by_number
-from stitch_generator.stitch_effects.utilities.satin import satin_along
+from stitch_generator.stitch_effects.path_effects.satin import satin_along
 
 
 def satin_arc(length: float, height: float, start_thickness: float, middle_thickness: float, spacing=0.5):

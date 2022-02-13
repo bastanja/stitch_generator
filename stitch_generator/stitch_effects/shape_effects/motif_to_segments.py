@@ -5,20 +5,20 @@ import numpy as np
 from stitch_generator.framework.stitch_effect import StitchEffect
 from stitch_generator.framework.types import SamplingFunction, Array2D, Function2D
 from stitch_generator.functions.estimate_length import estimate_length
-from stitch_generator.functions.place_motif import place_motif_between
+from stitch_generator.stitch_effects.utilities.place_motif import place_motif_between
 from stitch_generator.sampling.samples_between import samples_between
 from stitch_generator.sampling.sampling_modifiers import free_start, free_end, remove_start, remove_end
 
 
-def segment_motif(motif_position_sampling: SamplingFunction, line_sampling: SamplingFunction,
-                  motif_generator, motif_length) -> StitchEffect:
-    return lambda path: segment_motif_to_shape(path.shape, motif_position_sampling=motif_position_sampling,
-                                               line_sampling=line_sampling, motif_generator=motif_generator,
-                                               motif_length=motif_length)
+def motif_to_segments(motif_position_sampling: SamplingFunction, line_sampling: SamplingFunction,
+                      motif_generator, motif_length) -> StitchEffect:
+    return lambda path: motif_to_segments_on_shape(path.shape, motif_position_sampling=motif_position_sampling,
+                                                   line_sampling=line_sampling, motif_generator=motif_generator,
+                                                   motif_length=motif_length)
 
 
-def segment_motif_to_shape(shape: Function2D, motif_position_sampling: SamplingFunction,
-                           line_sampling: SamplingFunction, motif_generator, motif_length) -> Array2D:
+def motif_to_segments_on_shape(shape: Function2D, motif_position_sampling: SamplingFunction,
+                               line_sampling: SamplingFunction, motif_generator, motif_length) -> Array2D:
     half_motif_length = motif_length / 2
     # keep start and end free of samples, to make sure only full length motifs are placed
     motif_position_sampling = free_start(half_motif_length, free_end(half_motif_length, motif_position_sampling))

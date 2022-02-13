@@ -1,6 +1,6 @@
 from stitch_generator.framework.path import Path
 from stitch_generator.framework.types import Array2D
-from stitch_generator.functions.motif_to_path import motif_to_path
+from stitch_generator.stitch_effects.utilities.motif_to_path import motif_to_path
 from stitch_generator.stitch_operations.tile import tile_x
 
 

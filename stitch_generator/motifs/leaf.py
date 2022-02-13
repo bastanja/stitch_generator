@@ -14,9 +14,9 @@ from stitch_generator.sampling.sample_by_number import sample_by_number
 from stitch_generator.sampling.sampling_modifiers import remove_end
 from stitch_generator.shapes.bezier import bezier, bezier_normals
 from stitch_generator.shapes.line import line
-from stitch_generator.stitch_effects.utilities.running_stitch import running_stitch_shape
-from stitch_generator.stitch_effects.utilities.satin import satin_along
-from stitch_generator.stitch_effects.utilities.stripes import stripes_along
+from stitch_generator.stitch_effects.path_effects.stripes import stripes_along
+from stitch_generator.stitch_effects.shape_effects.running_stitch import running_stitch_on_shape
+from stitch_generator.stitch_effects.path_effects.satin import satin_along
 from stitch_generator.stitch_operations.rotate import rotate_by_degrees
 from stitch_generator.framework.types import Function1D
 
@@ -108,7 +108,7 @@ def _leaf(stem_length: float, leaf_length: float, leaf_width: float, angle_degre
         inverse(stem.shape)
     ]
 
-    running_stitch = partial(running_stitch_shape, stitch_length=stitch_length, include_endpoint=False)
+    running_stitch = partial(running_stitch_on_shape, stitch_length=stitch_length, include_endpoint=False)
 
     stitches = [running_stitch(shape) for shape in shapes if shape is not None]
 

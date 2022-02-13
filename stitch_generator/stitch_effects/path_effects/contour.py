@@ -3,11 +3,16 @@ from functools import partial
 import numpy as np
 
 from stitch_generator.framework.path import Path
+from stitch_generator.framework.stitch_effect import StitchEffect
+from stitch_generator.framework.types import Array2D
 from stitch_generator.functions.function_modifiers import inverse
 from stitch_generator.functions.get_boundaries import get_boundaries
 from stitch_generator.shapes.line import line
-from stitch_generator.stitch_effects.utilities.running_stitch import running_stitch_shape
-from stitch_generator.framework.types import Array2D
+from stitch_generator.stitch_effects.shape_effects.running_stitch import running_stitch_on_shape
+
+
+def contour(stitch_length: float) -> StitchEffect:
+    return lambda path: contour_along(path, stitch_length=stitch_length)
 
 
 def contour_along(path: Path, stitch_length: float) -> Array2D:
@@ -16,7 +21,7 @@ def contour_along(path: Path, stitch_length: float) -> Array2D:
 
 
 def contour_between(boundary_left, boundary_right, stitch_length: float) -> Array2D:
-    running_stitch = partial(running_stitch_shape, stitch_length=stitch_length, include_endpoint=False)
+    running_stitch = partial(running_stitch_on_shape, stitch_length=stitch_length, include_endpoint=False)
 
     left_0, right_0 = boundary_left(0), boundary_right(0)
     left_1, right_1 = boundary_left(1), boundary_right(1)

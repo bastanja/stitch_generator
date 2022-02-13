@@ -1,10 +1,23 @@
 import numpy as np
 
 from stitch_generator.framework.path import Path
-from stitch_generator.functions.get_boundaries import get_boundaries
-from stitch_generator.stitch_effects.utilities.zigzag import zigzag_between
+from stitch_generator.framework.stitch_effect import StitchEffect
 from stitch_generator.framework.types import Array2D
 from stitch_generator.framework.types import ConnectFunction, Function2D, SamplingFunction
+from stitch_generator.functions.connect_functions import simple_connect
+from stitch_generator.functions.get_boundaries import get_boundaries
+from stitch_generator.sampling.sample_by_length import regular
+from stitch_generator.stitch_effects.path_effects.zigzag import zigzag_between
+
+
+def satin(sampling_function: SamplingFunction, connect_function: ConnectFunction) -> StitchEffect:
+    return lambda path: satin_along(path=path, sampling_function=sampling_function, connect_function=connect_function)
+
+
+def simple_satin(spacing: float) -> StitchEffect:
+    return lambda path: satin_along(
+        path=path, sampling_function=regular(spacing),
+        connect_function=simple_connect)
 
 
 def satin_along(path: Path, sampling_function: SamplingFunction, connect_function: ConnectFunction) -> Array2D:

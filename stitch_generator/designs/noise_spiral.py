@@ -12,7 +12,7 @@ from stitch_generator.sampling.sample_by_length import regular, sampling_by_leng
 from stitch_generator.sampling.sampling_modifiers import free_start_end, remove_end
 from stitch_generator.shapes.circle import circle
 from stitch_generator.shapes.spiral import spiral
-from stitch_generator.stitch_effects.motif_to_points import motif_to_points
+from stitch_generator.stitch_effects.shape_effects.motif_to_points import motif_to_points
 
 
 class Design(EmbroideryDesign):

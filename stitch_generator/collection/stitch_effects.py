@@ -1,18 +1,18 @@
 from stitch_generator.collection.tatami_sampling import tatami_3_1
+from stitch_generator.collection.underlay_contour_zigzag import underlay_contour_zigzag
+from stitch_generator.collection.underlay_dense import underlay_dense
 from stitch_generator.functions.connect_functions import line_with_sampling_function, combine_start_end, \
     running_stitch_line
 from stitch_generator.functions.function_modifiers import subtract, add, scale, repeat
 from stitch_generator.functions.functions_1d import smoothstep, constant, linear_interpolation, cosinus, arc
 from stitch_generator.sampling.sample_by_length import regular
 from stitch_generator.sampling.sampling_modifiers import add_start, add_end, alternate_direction
-from stitch_generator.stitch_effects.contour import contour
-from stitch_generator.stitch_effects.double_satin import double_satin
-from stitch_generator.stitch_effects.lattice import lattice
-from stitch_generator.stitch_effects.meander import meander
-from stitch_generator.stitch_effects.scribble import scribble
-from stitch_generator.stitch_effects.stripes import stripes
-from stitch_generator.stitch_effects.underlay_contour_zigzag import underlay_contour_zigzag
-from stitch_generator.stitch_effects.underlay_dense import underlay_dense
+from stitch_generator.stitch_effects.path_effects.contour import contour
+from stitch_generator.stitch_effects.path_effects.double_satin import double_satin
+from stitch_generator.stitch_effects.path_effects.lattice import lattice
+from stitch_generator.stitch_effects.path_effects.meander import meander
+from stitch_generator.stitch_effects.path_effects.scribble import scribble
+from stitch_generator.stitch_effects.path_effects.stripes import stripes
 
 _cosine_pattern = add(constant(0.5), scale(0.5, repeat(0.5, cosinus)))
 _linear_pattern = linear_interpolation(0, 1)
@@ -47,4 +47,4 @@ def stitch_effects(stitch_length: float):
 
     yield underlay_contour_zigzag(inset=0, stitch_length=stitch_length, spacing=4)
 
-    yield scribble(repetitions=12, stitch_length=stitch_length)
+    yield scribble(repetitions=12, sampling_function=add_start(alternate_direction(tatami_3_1(stitch_length))))
