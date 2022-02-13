@@ -47,8 +47,6 @@ def line_motif(length: float, repetitions: int):
     return np.concatenate((origin, motif, origin))
 
 
-def overlock_stitch_motif(width, height):
-    stem_height = height / 3
-    loop_height = height - stem_height
-
-    return [(-stem_height, 0), (loop_height, 0), (loop_height, width), (0, width / 10), (-stem_height, 0)]
+def overlock_stitch_motif(width: float, height: float, loop_ratio: float):
+    stem_height = height * loop_ratio
+    return np.array([(0, height), (0, 0), (width, 0), (width / 10, height - stem_height), (0, height)])
