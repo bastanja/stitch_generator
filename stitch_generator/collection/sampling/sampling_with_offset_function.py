@@ -1,5 +1,6 @@
 from functools import partial
 
+from stitch_generator.collection.functions.functions_1d import linear_0_1
 from stitch_generator.framework.types import Function1D, SamplingFunction
 from stitch_generator.functions.function_modifiers import repeat, combine
 from stitch_generator.functions.functions_1d import sinus, arc, linear_interpolation
@@ -8,18 +9,18 @@ from stitch_generator.sampling.sample_by_number import sample_by_number
 from stitch_generator.sampling.sampling_modifiers import cycle_offsets
 
 
-def wave_sampling(segment_length: float, steps: int, function_range=(0, 1)):
+def wave_offset_sampling(segment_length: float, steps: int, function_range=(0, 1)):
     return sampling_with_offset_function(segment_length=segment_length, steps=steps,
                                          offset_function=to_range(sinus, function_range))
 
 
-def arc_sampling(segment_length: float, steps: int, function_range=(0, 1)):
+def arc_offset_sampling(segment_length: float, steps: int, function_range=(0, 1)):
     return sampling_with_offset_function(segment_length=segment_length, steps=steps,
                                          offset_function=to_range(arc, function_range))
 
 
-def triangle_sampling(segment_length: float, steps: int, function_range=(0, 1)):
-    offset_function = to_range(repeat(2, linear_interpolation(0, 1), mode="reflect"), function_range)
+def triangle_offset_sampling(segment_length: float, steps: int, function_range=(0, 1)):
+    offset_function = to_range(repeat(2, linear_0_1, mode="reflect"), function_range)
     return sampling_with_offset_function(segment_length=segment_length, steps=steps, offset_function=offset_function)
 
 
@@ -37,7 +38,7 @@ def sampling_with_offset_function(segment_length: float, steps: int, offset_func
         segment_length: The length of the segments between the samples
         steps: The number of offsets until the sampling repeats
         offset_function: the function that defines the offset for each step
-        alignment: The alignment of the sampling pattern relative to the total length tht is sampled. Should be in the
+        alignment: The alignment of the sampling pattern relative to the total length that is sampled. Should be in the
             range [0,1]
 
     Returns:

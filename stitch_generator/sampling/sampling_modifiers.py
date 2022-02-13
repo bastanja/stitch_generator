@@ -155,7 +155,7 @@ def cycle_offsets(partial_sampling, offsets):
     return f
 
 
-def cycle_alignment(partial_sampling, alignments):
+def cycle_alignments(partial_sampling, alignments):
     alignment_gen = itertools.cycle(alignments)
 
     def f(total_length: float):
