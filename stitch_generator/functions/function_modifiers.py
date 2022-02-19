@@ -100,6 +100,10 @@ def multiply(f1, f2):
     return _binary_operation(lambda a, b: a * b, f1, f2)
 
 
+def divide(f1, f2):
+    return _binary_operation(lambda a, b: a / b, f1, f2)
+
+
 def inverse(function):
     return lambda v: function(1 - v)
 

@@ -5,7 +5,7 @@ import numpy as np
 from stitch_generator.framework.types import Function1D, Function2D
 from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.function_modifiers import split, inverse, mix, multiply, subtract, add, repeat, shift, \
-    maximum
+    maximum, divide
 from stitch_generator.functions.functions_1d import constant
 
 
@@ -16,13 +16,13 @@ class Path:
         Creates a Path
 
         Args:
-            shape:            A 2D function that defines the base line of the path
+            shape:            A 2D function that defines the baseline of the path
             direction:        A 2D function that defines the direction along the path. Usually perpendicular to the
-                              tangent of the base line, pointing to the left side of the path
+                              tangent of the baseline, pointing to the left side of the path
             width:            A 1D function that defines the width of the path
-            stroke_alignment: A 1D function that defines how much of the path is left of the base line. 0 means the left
-                              side of the path is equal to the base line. 1 means that the right side of the path is
-                              equal to the base line. 0.5 means that the path is centered around the base line.
+            stroke_alignment: A 1D function that defines how much of the path is left of the baseline. 0 means the left
+                              side of the path is equal to the baseline. 1 means that the right side of the path is
+                              equal to the baseline. 0.5 means that the path is centered around the baseline.
         """
         self.shape = shape
         self.direction = direction
@@ -85,10 +85,11 @@ def path_from_boundaries(left, right, alignment=constant(0.5)):
     position = mix(left, right, alignment)
 
     def width(t):
-        return np.linalg.norm(left(t) - right(t))
+        delta = subtract(right, left)(t)
+        return np.linalg.norm(delta, axis=1)
 
     def direction(t):
-        return (left(t) - right(t)) / width(t)
+        return divide(subtract(right, left), width)(t)
 
     return Path(shape=position, direction=direction, width=width, stroke_alignment=alignment)
 
