@@ -1,11 +1,14 @@
+import itertools
+
 import numpy as np
 
 from stitch_generator.framework.path import Path, get_boundaries
 from stitch_generator.framework.stitch_effect import StitchEffect
-from stitch_generator.framework.types import SamplingFunction
+from stitch_generator.framework.types import SamplingFunction, Array1D
 from stitch_generator.functions.function_1d_stairs import stairs
-from stitch_generator.functions.function_modifiers import repeat, mix
-from stitch_generator.sampling.sampling_modifiers import remove_end
+from stitch_generator.functions.function_modifiers import repeat, mix, inverse
+from stitch_generator.functions.functions_1d import constant
+from stitch_generator.sampling.sampling_modifiers import remove_end, alternate_direction
 
 
 def stripes(repetitions: int, sampling_function: SamplingFunction, step_ratio: float = 0.1) -> StitchEffect:
@@ -36,3 +39,22 @@ def stripes_between(boundary_left, boundary_right, repetitions: int, sampling_fu
     t = np.concatenate(t)
 
     return mixed(t)
+
+
+def parallel_stripes(steps: Array1D, sampling_function: SamplingFunction) -> StitchEffect:
+    return lambda path: parallel_stripes_along(path, steps, sampling_function)
+
+
+def parallel_stripes_along(path: Path, steps: Array1D, sampling_function: SamplingFunction):
+    return parallel_stripes_between(*get_boundaries(path), length=path.length, steps=steps,
+                                    sampling_function=sampling_function)
+
+
+def parallel_stripes_between(boundary_left, boundary_right, length: float, steps: Array1D,
+                             sampling_function: SamplingFunction):
+    lines = [mix(boundary_left, boundary_right, constant(t)) for t in steps]
+    reverse = itertools.cycle((False, True))
+    lines = [inverse(line) if next(reverse) else line for line in lines]
+    sampling_function = alternate_direction(sampling_function)
+    stitch_lines = [line(sampling_function(length)) for line in lines]
+    return np.concatenate(stitch_lines)

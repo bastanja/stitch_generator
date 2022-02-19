@@ -6,13 +6,14 @@ from stitch_generator.functions.connect_functions import line_with_sampling_func
     running_stitch_line
 from stitch_generator.functions.functions_1d import smoothstep
 from stitch_generator.sampling.sample_by_length import regular
+from stitch_generator.sampling.sample_by_number import sample_by_number
 from stitch_generator.sampling.sampling_modifiers import add_start, add_end, alternate_direction
 from stitch_generator.stitch_effects.path_effects.contour import contour
 from stitch_generator.stitch_effects.path_effects.double_satin import double_satin
 from stitch_generator.stitch_effects.path_effects.lattice import lattice
 from stitch_generator.stitch_effects.path_effects.meander import meander
 from stitch_generator.stitch_effects.path_effects.scribble import scribble
-from stitch_generator.stitch_effects.path_effects.stripes import stripes
+from stitch_generator.stitch_effects.path_effects.stripes import stripes, parallel_stripes
 
 
 def stitch_effects(stitch_length: float):
@@ -38,6 +39,9 @@ def stitch_effects(stitch_length: float):
     yield stripes(repetitions=6,
                   sampling_function=add_start(alternate_direction(tatami_3_1(segment_length=stitch_length))),
                   step_ratio=0.1)
+
+    yield parallel_stripes(steps=sample_by_number(6),
+                           sampling_function=add_start(add_end(tatami_3_1(segment_length=stitch_length))))
 
     yield underlay_dense(inset=0, stitch_length=stitch_length, spacing=2)
 
