@@ -28,6 +28,7 @@ class Path:
         self.direction = direction
         self.width = width
         self.stroke_alignment = stroke_alignment
+        self._length = None
 
     def split(self, offsets):
         """
@@ -72,7 +73,13 @@ class Path:
 
     @property
     def length(self):
+        if self._length:
+            return self._length
         return estimate_length(self.shape)
+
+    @length.setter
+    def length(self, value):
+        self._length = value
 
     @property
     def is_circular(self):
