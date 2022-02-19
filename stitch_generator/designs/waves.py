@@ -1,62 +1,56 @@
+import itertools
+
 import numpy as np
 
+from stitch_generator.designs.wave_paths import make_waves
 from stitch_generator.framework.embroidery_design import EmbroideryDesign
-from stitch_generator.framework.parameter import FloatParameter, IntParameter
-from stitch_generator.functions.connect_functions import running_stitch_line
-from stitch_generator.functions.function_modifiers import shift, scale, repeat, add, inverse
-from stitch_generator.functions.functions_1d import cosinus, linear_interpolation, constant
-from stitch_generator.functions.functions_2d import function_2d
+from stitch_generator.framework.parameter import FloatParameter
+from stitch_generator.functions.connect_functions import line_with_sampling_function
+from stitch_generator.functions.estimate_length import estimate_length
+from stitch_generator.functions.function_modifiers import inverse
 from stitch_generator.sampling.sample_by_length import sampling_by_length
-from stitch_generator.sampling.sampling_modifiers import remove_end
+from stitch_generator.sampling.sampling_modifiers import remove_start, remove_end
 
 
 class Design(EmbroideryDesign):
     def __init__(self):
         EmbroideryDesign.__init__(self, name="waves", parameters={
-            'width': FloatParameter("Width", 50, 120, 240),
-            'stitch_length': FloatParameter("Stitch Length", 1, 3, 6),
-            'wave_length': FloatParameter("Wave Length", 10, 70, 100),
-            'wave_height': FloatParameter("Wave Height", 0, 4, 20),
-            'initial_offset': FloatParameter("Initial Offset", -0.5, 0, 0.5),
-            'offset_per_line': FloatParameter("Offset per Line", -0.5, 0.25, 0.5),
-            'line_distance': FloatParameter("Line Distance", 1, 8, 50),
-            'number_of_lines': IntParameter("Number of Lines", 2, 15, 50)
+            'stitch_length': FloatParameter("Stitch length", 1, 3, 6),
+            'width': FloatParameter("Width", 30, 120, 240),
+            'height': FloatParameter("Height", 30, 120, 240),
+            'line_spacing': FloatParameter("Line spacing", 3, 8, 50),
+            'amplitude': FloatParameter("Amplitude", 0, 4, 20),
+            'wave_length': FloatParameter("Wave length", 10, 70, 100),
+            'initial_offset': FloatParameter("Initial offset", -0.5, 0, 0.5),
+            'offset_per_line': FloatParameter("Offset per line", -0.5, 0.25, 0.5)
         })
 
     def _to_pattern(self, parameters, pattern):
+        # create the wave lines
+        lines = make_waves(width=parameters.width, height=parameters.height,
+                           offset_per_line=parameters.offset_per_line, line_spacing=parameters.line_spacing,
+                           amplitude=parameters.amplitude, wave_length=parameters.wave_length,
+                           initial_offset=parameters.initial_offset)
 
-        repetitions = parameters.width / parameters.wave_length
+        # reverse every other line
+        reverse = itertools.cycle((False, True))
+        lines = [inverse(line) if next(reverse) else line for line in lines]
 
-        stitches = []
+        # sample all wave lines to get stitch coordinates
+        sampling = sampling_by_length(segment_length=parameters.stitch_length)
+        stitch_lines = [line(sampling(estimate_length(line))) for line in lines]
 
-        last_point = None
+        # connect the endpoint of each line with the start point of the next one
+        connect_points = [(first[-1], second[0]) for first, second in zip(stitch_lines, stitch_lines[1:])]
+        connect = line_with_sampling_function(remove_start(remove_end(sampling)))
+        fills = [connect(p1, p2) for p1, p2 in connect_points]
 
-        connect = running_stitch_line(parameters.stitch_length, include_endpoint=False)
-        p = remove_end(sampling_by_length(parameters.stitch_length))(parameters.width)
+        # combine stitch lines of the waves and the connection lines
+        parts = itertools.zip_longest(stitch_lines, fills)
+        combined = [i for i in itertools.chain.from_iterable(parts) if i is not None]
 
-        for i in range(0, parameters.number_of_lines):
-            initial_offset = parameters.initial_offset + i * parameters.offset_per_line
-            fx = linear_interpolation(0, parameters.width)
-            fy = shift(initial_offset, cosinus)
-            fy = scale(parameters.wave_height, repeat(repetitions, fy))
-            fy = add(constant(i * parameters.line_distance), fy)
-            f = function_2d(fx, fy)
-
-            if i % 2 == 1:
-                f = inverse(f)
-
-            if last_point is not None:
-                fill_stitches = connect(last_point, f(0)[0])
-                if len(fill_stitches):
-                    stitches.append(fill_stitches)
-
-            current_line = f(p)
-            stitches.append(current_line)
-
-            last_point = f(1)[0]
-
-        stitches.append([last_point])
-        stitches = np.concatenate(stitches)
+        # add the combined line to the embroidery pattern
+        stitches = np.concatenate(combined)
         pattern.add_stitches(stitches)
 
 
