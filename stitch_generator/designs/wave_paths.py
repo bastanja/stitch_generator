@@ -1,15 +1,21 @@
+import itertools
 from functools import partial
 
+import numpy as np
+
+from stitch_generator.collection.sampling.tatami_sampling import tatami_3_1
 from stitch_generator.framework.embroidery_design import EmbroideryDesign
 from stitch_generator.framework.parameter import FloatParameter
 from stitch_generator.framework.path import path_from_boundaries
+from stitch_generator.functions.connect_functions import line_with_sampling_function
 from stitch_generator.functions.function_modifiers import shift, repeat, combine, add
 from stitch_generator.functions.functions_1d import constant, cosinus, linear_interpolation
 from stitch_generator.functions.functions_2d import function_2d, constant_direction
 from stitch_generator.sampling.sample_by_fixed_length import sampling_by_fixed_length
-from stitch_generator.sampling.sampling_modifiers import free_start, free_end
+from stitch_generator.sampling.sample_by_length import regular_even
+from stitch_generator.sampling.sampling_modifiers import free_start, free_end, add_start, add_end, alternate_direction
 from stitch_generator.shapes.line import line
-from stitch_generator.stitch_effects.path_effects.meander import simple_meander
+from stitch_generator.stitch_effects.path_effects.meander import meander
 
 
 def make_wave_y(constant_y_offset, amplitude, shift_amount, repetitions):
@@ -77,9 +83,9 @@ class Design(EmbroideryDesign):
             'line_spacing': FloatParameter("Line spacing", 5, 12, 50),
             'amplitude': FloatParameter("Amplitude", 0, 3, 12),
             'wave_length': FloatParameter("Wave length", 10, 50, 100),
-            'initial_offset': FloatParameter("Initial offset", 0, 0.25, 1),
-            'offset_per_line': FloatParameter("Offset per line", -1, 0.5, 1),
-            'gap': FloatParameter("Gap", 0, 2, 5)
+            'initial_offset': FloatParameter("Initial offset", -0.5, 0.25, 0.5),
+            'offset_per_line': FloatParameter("Offset per line", -0.5, 0.5, 0.5),
+            'gap': FloatParameter("Gap", 0, 3, 10)
         })
 
     def _to_pattern(self, parameters, pattern):
@@ -90,11 +96,24 @@ class Design(EmbroideryDesign):
 
         paths = make_wave_paths(width=parameters.width, height=parameters.height, gap_size=parameters.gap, lines=lines)
 
-        effect = simple_meander(spacing=parameters.meander_spacing, stitch_length=parameters.stitch_length)
+        # reverse every other path
+        reverse = itertools.cycle((False, True))
+        paths = [path.inverse() if next(reverse) else path for path in paths]
 
+        # set predefined length
         for path in paths:
             path.length = parameters.width
-            pattern.add_stitches(effect(path))
+
+        line_sampling = add_start(add_end(alternate_direction(tatami_3_1(segment_length=parameters.stitch_length))))
+        meander_sampling = regular_even(segment_length=parameters.meander_spacing)
+        effect = meander(sampling_function=meander_sampling,
+                         connect_function=line_with_sampling_function(line_sampling))
+
+        path_stitches = [effect(path) for path in paths]
+
+        stitches = np.concatenate(path_stitches)
+
+        pattern.add_stitches(stitches)
 
         if __name__ == "__main__":
             Design().cli()
