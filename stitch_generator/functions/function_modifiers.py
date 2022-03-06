@@ -1,8 +1,8 @@
 import numpy as np
 
+from stitch_generator.framework.types import Function2D, Function1D
 from stitch_generator.functions.ensure_shape import ensure_1d_shape
 from stitch_generator.stitch_operations.rotate import rotate_by_degrees, rotate_by_radians
-from stitch_generator.framework.types import Function2D, Function1D
 
 
 def reflect(function):
@@ -19,8 +19,9 @@ def wrap(function):
 
 def nearest(function):
     def f(v):
-        if v < 0: v = 0
-        if v > 1: v = 1
+        v = np.asarray(v)
+        v[v < 0] = 0.
+        v[v > 1] = 1.
         return function(v)
 
     return f
