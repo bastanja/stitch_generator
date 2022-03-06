@@ -3,9 +3,8 @@ import numpy as np
 from stitch_generator.framework.path import Path, get_boundaries
 from stitch_generator.framework.stitch_effect import StitchEffect
 from stitch_generator.framework.types import SamplingFunction
-from stitch_generator.functions.function_modifiers import repeat, mix, combine, shift
-from stitch_generator.functions.functions_1d import linear_interpolation
-from stitch_generator.functions.noise import noise
+from stitch_generator.functions.function_modifiers import repeat, mix, shift
+from stitch_generator.functions.noise import noise, fix_distribution
 from stitch_generator.sampling.sampling_modifiers import remove_end
 
 
@@ -28,8 +27,8 @@ def scribble_between(boundary_left, boundary_right, repetitions: int, sampling_f
     boundary_left = repeat(r=repetitions, function=boundary_left, mode=repetition_mode)
     boundary_right = repeat(r=repetitions, function=boundary_right, mode=repetition_mode)
 
-    mix_factor = combine(shift(noise_offset, repeat(noise_scale * repetitions * length / 100, noise())),
-                         linear_interpolation(target_low=0, target_high=1, source_low=-0.4, source_high=0.4))
+    noise_function = shift(noise_offset, repeat(noise_scale * repetitions * length / 100, noise()))
+    mix_factor = fix_distribution(noise_function, target_low=0)
     mixed = mix(boundary_left, boundary_right, factor=mix_factor)
 
     sampling_length = 1 / repetitions
