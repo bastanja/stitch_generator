@@ -47,4 +47,5 @@ def stitch_effects(stitch_length: float):
 
     yield underlay_contour_zigzag(inset=0, stitch_length=stitch_length, spacing=4)
 
-    yield scribble(repetitions=12, sampling_function=add_start(alternate_direction(tatami_3_1(stitch_length))))
+    yield scribble(repetitions=12, sampling_function=add_start(alternate_direction(tatami_3_1(stitch_length))),
+                   noise_offset=1.5)
