@@ -76,5 +76,5 @@ class EmbroideryDesign:
         """
         parser = get_parser(self.parameters)
         args = parser.parse_args()
-        print(f"Exporting design {self.name} to file.")
-        write_pattern_to_file(self, vars(args))
+        print(f"Exporting design {self.name} to {args.file_format} file.")
+        write_pattern_to_file(self, vars(args), args.file_format)
