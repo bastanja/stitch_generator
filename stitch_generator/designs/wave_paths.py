@@ -5,7 +5,7 @@ import numpy as np
 
 from stitch_generator.collection.sampling.tatami_sampling import tatami_3_1
 from stitch_generator.framework.embroidery_design import EmbroideryDesign
-from stitch_generator.framework.parameter import FloatParameter
+from stitch_generator.framework.parameter import FloatParameter, BoolParameter
 from stitch_generator.framework.path import path_from_boundaries
 from stitch_generator.functions.function_modifiers import shift, repeat, combine, add
 from stitch_generator.functions.functions_1d import constant, cosinus, linear_interpolation
@@ -76,7 +76,7 @@ class Design(EmbroideryDesign):
     def __init__(self):
         EmbroideryDesign.__init__(self, name="wave_paths", parameters={
             'stitch_length': FloatParameter("Stitch length", 1, 3, 6),
-            'meander_spacing': FloatParameter("Meander Spacing", 1, 3, 6),
+            'meander_spacing': FloatParameter("Meander Spacing", 0.5, 3, 5),
             'width': FloatParameter("Width", 10, 100, 200),
             'height': FloatParameter("Height", 10, 100, 200),
             'line_spacing': FloatParameter("Line spacing", 5, 12, 50),
@@ -84,7 +84,8 @@ class Design(EmbroideryDesign):
             'wave_length': FloatParameter("Wave length", 10, 50, 100),
             'initial_offset': FloatParameter("Initial offset", -0.5, 0.25, 0.5),
             'offset_per_line': FloatParameter("Offset per line", -0.5, 0.5, 0.5),
-            'gap': FloatParameter("Gap", 0, 3, 10)
+            'gap': FloatParameter("Gap", 0, 3, 10),
+            'join_ends': BoolParameter("Join Ends", False)
         })
 
     def _to_pattern(self, parameters, pattern):
@@ -105,7 +106,8 @@ class Design(EmbroideryDesign):
 
         line_sampling = add_start(add_end(alternate_direction(tatami_3_1(segment_length=parameters.stitch_length))))
         meander_sampling = regular_even(segment_length=parameters.meander_spacing)
-        effect = meander(spacing_function=meander_sampling, line_sampling_function=line_sampling)
+        effect = meander(spacing_function=meander_sampling, line_sampling_function=line_sampling,
+                         join_ends=parameters.join_ends)
 
         path_stitches = [effect(path) for path in paths]
 

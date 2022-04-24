@@ -55,8 +55,8 @@ def make_paths(offsets, max_width, shape_function):
 def make_stitch_effects(satin_spacing):
     line_sampling_functions = [add_start(add_end(alternate_direction(f))) for f in sampling_functions()]
 
-    effects = [meander(spacing_function=sampling_by_length(satin_spacing), line_sampling_function=f) for f in
-               line_sampling_functions]
+    effects = [meander(spacing_function=sampling_by_length(satin_spacing), line_sampling_function=f, join_ends=True) for
+               f in line_sampling_functions]
 
     return effects
 
