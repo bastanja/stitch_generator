@@ -5,11 +5,11 @@ import numpy as np
 from stitch_generator.designs.wave_paths import make_waves
 from stitch_generator.framework.embroidery_design import EmbroideryDesign
 from stitch_generator.framework.parameter import FloatParameter
-from stitch_generator.functions.connect_functions import line_with_sampling_function
 from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.function_modifiers import inverse
 from stitch_generator.sampling.sample_by_length import sampling_by_length
 from stitch_generator.sampling.sampling_modifiers import remove_start, remove_end
+from stitch_generator.stitch_effects.utilities.sample_line import sample_line
 
 
 class Design(EmbroideryDesign):
@@ -42,8 +42,7 @@ class Design(EmbroideryDesign):
 
         # connect the endpoint of each line with the start point of the next one
         connect_points = [(first[-1], second[0]) for first, second in zip(stitch_lines, stitch_lines[1:])]
-        connect = line_with_sampling_function(remove_start(remove_end(sampling)))
-        fills = [connect(p1, p2) for p1, p2 in connect_points]
+        fills = [sample_line(p1, p2, sampling_function=remove_start(remove_end(sampling))) for p1, p2 in connect_points]
 
         # combine stitch lines of the waves and the connection lines
         parts = itertools.zip_longest(stitch_lines, fills)

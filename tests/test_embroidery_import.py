@@ -1,20 +1,21 @@
 from pyembroidery import EmbPattern
 
 from stitch_generator.file_io.embroidery_import import from_pyembroidery
-from stitch_generator.functions.connect_functions import running_stitch_line
+from stitch_generator.sampling.sample_by_length import regular
+from stitch_generator.stitch_effects.utilities.sample_line import sample_line
 
 
 def test_from_pyembroidery():
     # create embroidery pattern with two blocks
     pattern = EmbPattern()
 
-    stitch_effect = running_stitch_line(stitch_length=3, include_endpoint=True)
+    sampling = regular(segment_length=3)
 
-    stitches1 = stitch_effect((0, 0), (100, 0))
+    stitches1 = sample_line((0, 0), (100, 0), sampling)
     stitches1 = stitches1.tolist()
     pattern.add_block(stitches1, 0x808080)
 
-    stitches2 = stitch_effect((0, 0), (0, 100))
+    stitches2 = sample_line((0, 0), (0, 100), sampling)
     stitches2 = stitches2.tolist()
     pattern.add_block(stitches2, 0x000000)
 

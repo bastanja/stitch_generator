@@ -7,7 +7,6 @@ from stitch_generator.collection.sampling.tatami_sampling import tatami_3_1
 from stitch_generator.framework.embroidery_design import EmbroideryDesign
 from stitch_generator.framework.parameter import FloatParameter
 from stitch_generator.framework.path import path_from_boundaries
-from stitch_generator.functions.connect_functions import line_with_sampling_function
 from stitch_generator.functions.function_modifiers import shift, repeat, combine, add
 from stitch_generator.functions.functions_1d import constant, cosinus, linear_interpolation
 from stitch_generator.functions.functions_2d import function_2d, constant_direction
@@ -106,8 +105,7 @@ class Design(EmbroideryDesign):
 
         line_sampling = add_start(add_end(alternate_direction(tatami_3_1(segment_length=parameters.stitch_length))))
         meander_sampling = regular_even(segment_length=parameters.meander_spacing)
-        effect = meander(sampling_function=meander_sampling,
-                         connect_function=line_with_sampling_function(line_sampling))
+        effect = meander(spacing_function=meander_sampling, line_sampling_function=line_sampling)
 
         path_stitches = [effect(path) for path in paths]
 

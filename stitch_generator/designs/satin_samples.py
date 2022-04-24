@@ -8,7 +8,6 @@ from stitch_generator.framework.palette import palette
 from stitch_generator.framework.parameter import FloatParameter, BoolParameter
 from stitch_generator.framework.path import Path
 from stitch_generator.functions.arc_length_mapping import arc_length_mapping_with_length
-from stitch_generator.functions.connect_functions import combine_start_end, line_with_sampling_function
 from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.function_modifiers import combine, add
 from stitch_generator.functions.function_sequence import function_sequence
@@ -54,11 +53,10 @@ def make_paths(offsets, max_width, shape_function):
 
 
 def make_stitch_effects(satin_spacing):
-    connect_functions = [combine_start_end(line_with_sampling_function(add_start(add_end(alternate_direction(f)))))
-                         for f in sampling_functions()]
+    line_sampling_functions = [add_start(add_end(alternate_direction(f))) for f in sampling_functions()]
 
-    effects = [meander(sampling_function=sampling_by_length(satin_spacing), connect_function=f) for f in
-               connect_functions]
+    effects = [meander(spacing_function=sampling_by_length(satin_spacing), line_sampling_function=f) for f in
+               line_sampling_functions]
 
     return effects
 

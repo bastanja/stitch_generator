@@ -2,11 +2,10 @@ import numpy as np
 
 from stitch_generator.framework.path import Path, get_inset_path
 from stitch_generator.framework.stitch_effect import StitchEffect
-from stitch_generator.functions.connect_functions import running_stitch_line
+from stitch_generator.framework.types import Array2D
 from stitch_generator.sampling.sample_by_length import regular
 from stitch_generator.stitch_effects.path_effects.contour import contour_along
 from stitch_generator.stitch_effects.path_effects.double_satin import double_satin_along
-from stitch_generator.framework.types import Array2D
 
 
 def underlay_contour_zigzag(inset: float, stitch_length: float, spacing: float) -> StitchEffect:
@@ -14,11 +13,10 @@ def underlay_contour_zigzag(inset: float, stitch_length: float, spacing: float) 
         if inset > 0:
             path = get_inset_path(path, inset)
 
-        connect_function = running_stitch_line(stitch_length=stitch_length, include_endpoint=False)
-
         contour = contour_along(path, stitch_length=stitch_length)
 
-        zigzag = double_satin_along(path=path, sampling_function=regular(spacing), connect_function=connect_function)
+        zigzag = double_satin_along(path=path, spacing_function=regular(spacing),
+                                    line_sampling_function=regular(segment_length=stitch_length))
 
         return np.concatenate((contour[:-1], zigzag))
 

@@ -3,29 +3,29 @@ import numpy as np
 from stitch_generator.framework.path import Path, get_boundaries
 from stitch_generator.framework.stitch_effect import StitchEffect
 from stitch_generator.framework.types import Array2D
-from stitch_generator.framework.types import ConnectFunction, Function2D, SamplingFunction
-from stitch_generator.functions.connect_functions import simple_connect
+from stitch_generator.framework.types import Function2D, SamplingFunction
 from stitch_generator.sampling.sample_by_length import regular
 from stitch_generator.stitch_effects.path_effects.zigzag import zigzag_between
+from stitch_generator.stitch_effects.utilities.sample_line import sample_line
 
 
-def satin(sampling_function: SamplingFunction, connect_function: ConnectFunction) -> StitchEffect:
-    return lambda path: satin_along(path=path, sampling_function=sampling_function, connect_function=connect_function)
+def satin(spacing_function: SamplingFunction, line_sampling_function: SamplingFunction) -> StitchEffect:
+    return lambda path: satin_along(path=path, spacing_function=spacing_function,
+                                    line_sampling_function=line_sampling_function)
 
 
-def simple_satin(spacing: float) -> StitchEffect:
-    return lambda path: satin_along(
-        path=path, sampling_function=regular(spacing),
-        connect_function=simple_connect)
+def simple_satin(spacing: float, stitch_length: float) -> StitchEffect:
+    return lambda path: satin_along(path=path, spacing_function=regular(spacing),
+                                    line_sampling_function=regular(stitch_length))
 
 
-def satin_along(path: Path, sampling_function: SamplingFunction, connect_function: ConnectFunction) -> Array2D:
-    return satin_between(*get_boundaries(path), sampling_function=sampling_function, connect_function=connect_function,
-                         length=path.length)
+def satin_along(path: Path, spacing_function: SamplingFunction, line_sampling_function: SamplingFunction) -> Array2D:
+    return satin_between(*get_boundaries(path), spacing_function=spacing_function,
+                         line_sampling_function=line_sampling_function, length=path.length)
 
 
-def satin_between(boundary_left: Function2D, boundary_right: Function2D, sampling_function: SamplingFunction,
-                  connect_function: ConnectFunction, length: float) -> Array2D:
-    points = zigzag_between(boundary_left, boundary_right, sampling_function, length)
-    connection = [connect_function(points[i - 1], points[i]) for i in range(1, len(points))]
+def satin_between(boundary_left: Function2D, boundary_right: Function2D, spacing_function: SamplingFunction,
+                  line_sampling_function: SamplingFunction, length: float) -> Array2D:
+    points = zigzag_between(boundary_left, boundary_right, spacing_function, length)
+    connection = [sample_line(*p, line_sampling_function) for p in zip(points, np.roll(points, -1, 0))]
     return np.concatenate(connection)

@@ -3,11 +3,11 @@ import numpy as np
 from stitch_generator.collection.functions.functions_1d import half_circle
 from stitch_generator.collection.stitch_effects.underlay_contour_zigzag import underlay_contour_zigzag
 from stitch_generator.framework.path import Path
-from stitch_generator.functions.connect_functions import running_stitch_line
 from stitch_generator.functions.function_modifiers import scale
 from stitch_generator.functions.functions_1d import constant
 from stitch_generator.functions.functions_2d import constant_direction
-from stitch_generator.sampling.sample_by_length import sample_by_length, sampling_by_length_with_offset
+from stitch_generator.sampling.sample_by_length import sample_by_length, sampling_by_length_with_offset, regular
+from stitch_generator.sampling.sampling_modifiers import remove_end
 from stitch_generator.shapes.line import line
 from stitch_generator.stitch_effects.path_effects.satin import satin
 from stitch_generator.stitch_operations.rotate import rotate_by_degrees
@@ -36,8 +36,8 @@ def satin_ellipse(width: float, height: float, stitch_length: float, pull_compen
     underlay_stitches = rotate_by_degrees(underlay_effect(inner_path), angle_deg=90)
 
     satin_effect = satin(
-        sampling_function=sampling_by_length_with_offset(segment_length=satin_spacing, offset=0.5),
-        connect_function=running_stitch_line(width * 2, include_endpoint=False))
+        spacing_function=sampling_by_length_with_offset(segment_length=satin_spacing, offset=0.5),
+        line_sampling_function=remove_end(regular(width * 2)))
     satin_stitches = satin_effect(outer_path)
 
     stitches += [underlay_stitches, satin_stitches]

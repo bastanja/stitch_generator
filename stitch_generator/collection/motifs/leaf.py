@@ -5,7 +5,6 @@ import numpy as np
 from stitch_generator.framework.path import Path, get_boundaries, get_inset_path
 from stitch_generator.framework.types import Function1D
 from stitch_generator.functions.arc_length_mapping import arc_length_mapping
-from stitch_generator.functions.connect_functions import simple_connect
 from stitch_generator.functions.function_modifiers import combine, split, scale, inverse, repeat
 from stitch_generator.functions.functions_1d import constant, arc
 from stitch_generator.sampling.sample_by_length import sample_by_length, sampling_by_length
@@ -13,8 +12,8 @@ from stitch_generator.sampling.sample_by_number import sample_by_number
 from stitch_generator.sampling.sampling_modifiers import remove_end
 from stitch_generator.shapes.bezier import bezier, bezier_normals
 from stitch_generator.shapes.line import line
-from stitch_generator.stitch_effects.path_effects.satin import satin_along
 from stitch_generator.stitch_effects.path_effects.stripes import stripes_along
+from stitch_generator.stitch_effects.path_effects.zigzag import zigzag_along
 from stitch_generator.stitch_effects.shape_effects.running_stitch import running_stitch_on_shape
 from stitch_generator.stitch_operations.rotate import rotate_by_degrees
 
@@ -33,9 +32,8 @@ def satin_leaf(stem_length: float, leaf_length: float, leaf_width: float, angle_
     leaf_underlay = stripes_along(get_inset_path(leaf_shape, inset=underlay_inset), repetitions=3,
                                   sampling_function=remove_end(sampling_by_length(stitch_length)),
                                   step_ratio=0.1)
-    leaf_satin = satin_along(leaf_shape.inverse(),
-                             sampling_function=remove_end(sampling_by_length(satin_spacing)),
-                             connect_function=simple_connect)[:-1]
+    leaf_satin = zigzag_along(leaf_shape.inverse(),
+                              sampling_function=remove_end(sampling_by_length(satin_spacing)))[:-1]
 
     stitches = [
         stem_forward,
