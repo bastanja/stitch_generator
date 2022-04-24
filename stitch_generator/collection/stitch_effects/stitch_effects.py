@@ -30,7 +30,7 @@ def stitch_effects(stitch_length: float):
     yield lattice(strands=5, pattern_f=smoothstep, pattern_length=25)
 
     yield meander(spacing_function=regular(1), line_sampling_function=add_start(
-        add_end(alternate_direction(tatami_3_1(segment_length=stitch_length)))))
+        add_end(alternate_direction(tatami_3_1(segment_length=stitch_length)))), join_ends=True)
 
     yield meander(spacing_function=regular(3), line_sampling_function=regular(segment_length=stitch_length))
 
