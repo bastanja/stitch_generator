@@ -7,7 +7,7 @@ from stitch_generator.sampling.sample_by_length import regular
 from stitch_generator.sampling.sample_by_number import sample_by_number
 from stitch_generator.sampling.sampling_modifiers import add_start, add_end, alternate_direction, remove_end
 from stitch_generator.stitch_effects.path_effects.contour import contour
-from stitch_generator.stitch_effects.path_effects.double_satin import double_satin
+from stitch_generator.stitch_effects.path_effects.satin import double_satin
 from stitch_generator.stitch_effects.path_effects.lattice import lattice
 from stitch_generator.stitch_effects.path_effects.meander import meander
 from stitch_generator.stitch_effects.path_effects.scribble import scribble
