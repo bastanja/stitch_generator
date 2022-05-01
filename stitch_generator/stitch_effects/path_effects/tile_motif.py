@@ -1,10 +1,11 @@
 from stitch_generator.framework.path import Path
+from stitch_generator.framework.stitch_effect import StitchEffect
 from stitch_generator.framework.types import Array2D
 from stitch_generator.stitch_effects.utilities.motif_to_path import motif_to_path
 from stitch_generator.stitch_operations.tile import tile_x
 
 
-def tile_motif(motif, motif_length):
+def tile_motif(motif, motif_length) -> StitchEffect:
     return lambda path: tile_motif_along(path, motif, motif_length)
 
 
