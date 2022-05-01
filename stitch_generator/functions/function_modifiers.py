@@ -102,7 +102,12 @@ def multiply(f1, f2):
 
 
 def divide(f1, f2):
-    return _binary_operation(lambda a, b: a / b, f1, f2)
+    def f(a, b):
+        notnull = b > 0
+        b[notnull] = 1 / b[notnull]
+        return a * b
+
+    return _binary_operation(f, f1, f2)
 
 
 def inverse(function):
