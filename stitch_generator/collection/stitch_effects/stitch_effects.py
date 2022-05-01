@@ -7,9 +7,9 @@ from stitch_generator.sampling.sample_by_length import regular
 from stitch_generator.sampling.sample_by_number import sample_by_number
 from stitch_generator.sampling.sampling_modifiers import add_start, add_end, alternate_direction, remove_end
 from stitch_generator.stitch_effects.path_effects.contour import contour
-from stitch_generator.stitch_effects.path_effects.satin import double_satin
 from stitch_generator.stitch_effects.path_effects.lattice import lattice
 from stitch_generator.stitch_effects.path_effects.meander import meander
+from stitch_generator.stitch_effects.path_effects.satin import double_satin
 from stitch_generator.stitch_effects.path_effects.scribble import scribble
 from stitch_generator.stitch_effects.path_effects.stripes import stripes, parallel_stripes
 
@@ -34,7 +34,7 @@ def stitch_effects(stitch_length: float):
 
     yield meander(spacing_function=regular(3), line_sampling_function=regular(segment_length=stitch_length))
 
-    yield stripes(repetitions=6,
+    yield stripes(steps=sample_by_number(5),
                   sampling_function=add_start(alternate_direction(tatami_3_1(segment_length=stitch_length))),
                   step_ratio=0.1)
 
