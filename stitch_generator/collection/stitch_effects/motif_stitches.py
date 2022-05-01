@@ -1,6 +1,7 @@
 import numpy as np
 
-from stitch_generator.collection.motifs.collection import zigzag, zigzag_motif, rhomb_motif, x_motif, line_motif, \
+from stitch_generator.collection.motifs.collection import zigzag_rectangle, zigzag_motif, rhomb_motif, x_motif, \
+    line_motif, \
     overlock_stitch_motif
 from stitch_generator.collection.motifs.line import straight_line
 from stitch_generator.framework.path import Path, get_boundaries
@@ -27,7 +28,7 @@ def e_stitch(spacing: float, line_length: float, stitch_length: float, angle: fl
 
 
 def stem_stitch(spacing: float, stitch_width: float, stitch_length: float, repetitions: int, angle: float):
-    motif = zigzag(stitch_width, stitch_length, repetitions)
+    motif = zigzag_rectangle(stitch_width, stitch_length, repetitions, horizontal=True)
     motif_generator = repeat_motif(motif)
     sampling = sampling_by_length_with_offset(segment_length=spacing, offset=0.5)
 
@@ -80,7 +81,8 @@ def x_motif_stitch(spacing: float, width: float, height: float):
 
 
 def alternating_triangles(spacing: float, line_length: float, zig_zag_height: float, repetitions: int):
-    motif = zigzag(width=0.1, height=-line_length, repetitions=repetitions) + (zig_zag_height, 0)
+    motif = zigzag_rectangle(width=0.1, height=-line_length, repetitions=repetitions, horizontal=True) + (
+    zig_zag_height, 0)
     motif_gen = alternate_direction(repeat_motif(motif))
     sampling = sampling_by_length(spacing)
     return motif_chain(sampling, motif_gen, constant(0))

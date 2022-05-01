@@ -4,9 +4,17 @@ from stitch_generator.functions.ensure_shape import ensure_2d_shape
 from stitch_generator.sampling.sample_by_number import sampling_by_number
 from stitch_generator.shapes.line import line
 from stitch_generator.stitch_effects.path_effects.zigzag import zigzag_between
+from stitch_generator.stitch_operations.rotate import rotate_by_degrees
 
 
-def zigzag(width: float, height: float, repetitions: int, flip: bool = False):
+def zigzag_rectangle(width: float, height: float, repetitions: int, horizontal: bool, flip: bool = False):
+    if horizontal:
+        return _zigzag_rectangle(width=width, height=height, repetitions=repetitions, flip=flip)
+    else:
+        return rotate_by_degrees(_zigzag_rectangle(width=height, height=width, repetitions=repetitions, flip=flip), 90)
+
+
+def _zigzag_rectangle(width: float, height: float, repetitions: int, flip: bool = False):
     half_width = width / 2
     half_height = height / 2
 
@@ -42,7 +50,7 @@ def x_motif(width, height):
 
 
 def line_motif(length: float, repetitions: int):
-    motif = zigzag(width=0.1, height=length, repetitions=repetitions)
+    motif = zigzag_rectangle(width=0.1, height=length, repetitions=repetitions, horizontal=True)
     origin = ensure_2d_shape((0, 0))
     return np.concatenate((origin, motif, origin))
 
