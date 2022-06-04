@@ -1,5 +1,7 @@
 import numpy as np
 
+from stitch_generator.framework.types import Rectangle
+
 
 class EmbroideryPattern:
     def __init__(self):
@@ -30,3 +32,10 @@ class EmbroideryPattern:
         if len(self._block_offsets) == 0:
             return 0
         return self._block_offsets[-1]
+
+
+def bounding_rect(pattern: EmbroideryPattern) -> Rectangle:
+    all_stitches = np.concatenate(pattern.stitch_blocks)
+    min = np.min(all_stitches, axis=0)
+    max = np.max(all_stitches, axis=0)
+    return Rectangle(min[0], min[1], max[0], max[1])

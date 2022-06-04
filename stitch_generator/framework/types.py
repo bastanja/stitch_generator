@@ -14,3 +14,11 @@ Function3D = Callable[[Union[float, Array1D]], Array3D]
 
 # A function that is called with a length value and returns an array of floats between 0 and 1
 SamplingFunction = Callable[[float], Array1D]
+
+
+class Rectangle:
+    def __init__(self, left, top, right, bottom):
+        self.left = left
+        self.top = top
+        self.right = right
+        self.bottom = bottom
