@@ -4,6 +4,7 @@ import numpy as np
 
 from stitch_generator.designs.wave_paths import make_waves
 from stitch_generator.framework.embroidery_design import EmbroideryDesign
+from stitch_generator.framework.palette import palette
 from stitch_generator.framework.parameter import FloatParameter
 from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.function_modifiers import inverse
@@ -26,6 +27,8 @@ class Design(EmbroideryDesign):
         })
 
     def _to_pattern(self, parameters, pattern):
+        color = palette()
+
         # create the wave lines
         lines = make_waves(width=parameters.width, height=parameters.height,
                            offset_per_line=parameters.offset_per_line, line_spacing=parameters.line_spacing,
@@ -50,7 +53,7 @@ class Design(EmbroideryDesign):
 
         # add the combined line to the embroidery pattern
         stitches = np.concatenate(combined)
-        pattern.add_stitches(stitches)
+        pattern.add_stitches(stitches, next(color))
 
 
 if __name__ == "__main__":

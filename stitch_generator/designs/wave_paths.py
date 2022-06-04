@@ -5,6 +5,7 @@ import numpy as np
 
 from stitch_generator.collection.sampling.tatami_sampling import tatami_3_1
 from stitch_generator.framework.embroidery_design import EmbroideryDesign
+from stitch_generator.framework.palette import palette
 from stitch_generator.framework.parameter import FloatParameter, BoolParameter
 from stitch_generator.framework.path import path_from_boundaries
 from stitch_generator.functions.function_modifiers import shift, repeat, combine, add
@@ -89,6 +90,7 @@ class Design(EmbroideryDesign):
         })
 
     def _to_pattern(self, parameters, pattern):
+        color = palette()
         lines = make_waves(width=parameters.width, height=parameters.height - (2 * parameters.gap),
                            offset_per_line=parameters.offset_per_line, line_spacing=parameters.line_spacing,
                            amplitude=parameters.amplitude, wave_length=parameters.wave_length,
@@ -113,7 +115,7 @@ class Design(EmbroideryDesign):
 
         stitches = np.concatenate(path_stitches)
 
-        pattern.add_stitches(stitches)
+        pattern.add_stitches(stitches, next(color))
 
         if __name__ == "__main__":
             Design().cli()
