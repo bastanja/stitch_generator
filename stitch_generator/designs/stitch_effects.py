@@ -30,16 +30,19 @@ class Design(EmbroideryDesign):
                         direction=circle(),
                         width=width_f,
                         stroke_alignment=constant(0.5))
-            offset = (0, (parameters.length / 2) + 20)
+            row_spacing = (parameters.length / 2) + 20
+            init_x = 0
         else:
             path = Path(shape=line((0, 0), (parameters.length, 0)),
                         direction=constant_direction(0, -1),
                         width=width_f,
                         stroke_alignment=constant(0.5))
-            offset = (0, 15)
+            row_spacing = 15
+            init_x = -parameters.length / 2
 
         effects = list(iter(stitch_effects(parameters.stitch_length)))
-        offsets = [np.array(offset) * i for i in range(len(effects))]
+        init_y = -row_spacing * (len(effects) - 1) / 2
+        offsets = [(init_x, init_y + row_spacing * i) for i in range(len(effects))]
 
         for effect, offset in zip(effects, offsets):
             pattern.add_stitches(effect(path) + offset, next(color))

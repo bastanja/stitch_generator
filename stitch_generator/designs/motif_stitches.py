@@ -57,7 +57,9 @@ class Design(EmbroideryDesign):
         x = parameters.width
         points = np.array(((0, 0), (y_step, -x), (y_step * 2, x), (y_step * 3, 0)))
         direction = itertools.cycle((False, True))
-        offsets = [(0, i * parameters.row_spacing) for i in range(len(effects))]
+        init_x = -parameters.length / 2
+        init_y = -parameters.row_spacing * (len(effects) - 1) / 2
+        offsets = [(init_x, init_y + (i * parameters.row_spacing)) for i in range(len(effects))]
         paths = [bezier_path(points + o) for o in offsets]
         paths = [p if dir else p.inverse() for p, dir in zip(paths, direction)]
 
