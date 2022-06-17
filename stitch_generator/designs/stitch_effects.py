@@ -1,6 +1,4 @@
-import numpy as np
-
-from stitch_generator.collection.stitch_effects.stitch_effects import stitch_effects
+from stitch_generator.collection.stitch_effects.stitch_effects import path_effects
 from stitch_generator.framework.embroidery_design import EmbroideryDesign
 from stitch_generator.framework.palette import palette
 from stitch_generator.framework.parameter import FloatParameter, BoolParameter
@@ -15,7 +13,6 @@ from stitch_generator.shapes.line import line
 class Design(EmbroideryDesign):
     def __init__(self):
         EmbroideryDesign.__init__(self, name="stitch_effects", parameters={
-            'stitch_length': FloatParameter("Stitch length", 1, 3, 6),
             'length': FloatParameter("Length", 10, 100, 200),
             'width_factor': FloatParameter("Width Factor", 0, 0, 1),
             'circular': BoolParameter("Circular", False)
@@ -40,7 +37,7 @@ class Design(EmbroideryDesign):
             row_spacing = 15
             init_x = -parameters.length / 2
 
-        effects = list(iter(stitch_effects(parameters.stitch_length)))
+        effects = list(iter(path_effects()))
         init_y = -row_spacing * (len(effects) - 1) / 2
         offsets = [(init_x, init_y + row_spacing * i) for i in range(len(effects))]
 
