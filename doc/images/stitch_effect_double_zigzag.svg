@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" baseProfile="full" height="50mm" version="1.1" viewBox="0,0,200,50" width="200mm">
+    <defs>
+        <style type="text/css"><![CDATA[
+.stitch_line {
+    stroke-width: 0.3;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    fill: none;
+}
+.sampling_line {
+    stroke:#148983;
+    stroke-width: 0.5;
+    fill: none;
+}
+.path_handle {
+    stroke-width: 0.5;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    fill:none;
+    stroke: #808080;
+    marker-start: url(#handles);
+    marker-mid: url(#handles);
+    marker-end: url(#handles);
+}
+.path_center_line {
+    stroke-width: 0.5;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    fill: none;
+    stroke:#148983;
+    stroke-dasharray: 2,1.5;
+    stroke-dashoffset: 1;
+}
+.path_contour {
+    stroke: #85c4c1;
+    fill-opacity: 0;
+    stroke-width: 0.3;
+}
+.path_direction_line {
+    stroke-width: 0.05;
+    fill: none;
+    stroke: #85c4c1;
+}
+.text{
+    text-anchor: middle;
+    dominant-baseline: middle;
+    font-family: sans-serif;
+    font-size: 1.5mm;
+}
+.smalltext{
+    text-anchor: middle;
+    dominant-baseline: middle;
+    font-family: sans-serif;
+    font-size: 1mm;
+}
+.color_0 {
+    stroke:#148983;
+    marker-start:url(#dot_0);
+    marker-mid:url(#dot_0);
+    marker-end:url(#dot_0);
+}
+.color_1 {
+    stroke:#1873ac;
+    marker-start:url(#dot_1);
+    marker-mid:url(#dot_1);
+    marker-end:url(#dot_1);
+}
+.color_2 {
+    stroke:#8c5290;
+    marker-start:url(#dot_2);
+    marker-mid:url(#dot_2);
+    marker-end:url(#dot_2);
+}
+.color_3 {
+    stroke:#61a09c;
+    marker-start:url(#dot_3);
+    marker-mid:url(#dot_3);
+    marker-end:url(#dot_3);
+}
+.color_4 {
+    stroke:#5ad2f4;
+    marker-start:url(#dot_4);
+    marker-mid:url(#dot_4);
+    marker-end:url(#dot_4);
+}
+.color_5 {
+    stroke:#0f6460;
+    marker-start:url(#dot_5);
+    marker-mid:url(#dot_5);
+    marker-end:url(#dot_5);
+}
+.color_6 {
+    stroke:#0f4668;
+    marker-start:url(#dot_6);
+    marker-mid:url(#dot_6);
+    marker-end:url(#dot_6);
+}
+.color_7 {
+    stroke:#543156;
+    marker-start:url(#dot_7);
+    marker-mid:url(#dot_7);
+    marker-end:url(#dot_7);
+}
+.color_8 {
+    stroke:#487673;
+    marker-start:url(#dot_8);
+    marker-mid:url(#dot_8);
+    marker-end:url(#dot_8);
+}
+.color_9 {
+    stroke:#0c8baf;
+    marker-start:url(#dot_9);
+    marker-mid:url(#dot_9);
+    marker-end:url(#dot_9);
+}
+]]></style>
+        <marker id="dot_0" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
+            <circle cx="1.5" cy="1.5" fill="#148983" r="1.5"/>
+        </marker>
+        <marker id="dot_1" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
+            <circle cx="1.5" cy="1.5" fill="#1873ac" r="1.5"/>
+        </marker>
+        <marker id="dot_2" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
+            <circle cx="1.5" cy="1.5" fill="#8c5290" r="1.5"/>
+        </marker>
+        <marker id="dot_3" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
+            <circle cx="1.5" cy="1.5" fill="#61a09c" r="1.5"/>
+        </marker>
+        <marker id="dot_4" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
+            <circle cx="1.5" cy="1.5" fill="#5ad2f4" r="1.5"/>
+        </marker>
+        <marker id="dot_5" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
+            <circle cx="1.5" cy="1.5" fill="#0f6460" r="1.5"/>
+        </marker>
+        <marker id="dot_6" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
+            <circle cx="1.5" cy="1.5" fill="#0f4668" r="1.5"/>
+        </marker>
+        <marker id="dot_7" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
+            <circle cx="1.5" cy="1.5" fill="#543156" r="1.5"/>
+        </marker>
+        <marker id="dot_8" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
+            <circle cx="1.5" cy="1.5" fill="#487673" r="1.5"/>
+        </marker>
+        <marker id="dot_9" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
+            <circle cx="1.5" cy="1.5" fill="#0c8baf" r="1.5"/>
+        </marker>
+    </defs>
+    <g>
+        <path class="stitch_line color_0" d="M 11.118, 22.764  L 11.789, 28.976  L 17.078, 24.762  L 17.690, 32.027  L 22.926, 26.239  L 23.695, 34.524  L 28.678, 27.250  L 29.787, 36.492  L 34.353, 27.845  L 35.947, 37.957  L 39.972, 28.070  L 42.151, 38.953  L 45.557, 27.968  L 48.379, 39.514  L 51.127, 27.576  L 54.611, 39.680  L 56.702, 26.930  L 60.832, 39.494  L 62.295, 26.063  L 67.029, 38.998  L 67.918, 25.008  L 73.191, 38.236  L 73.579, 23.799  L 79.312, 37.250  L 79.285, 22.468  L 85.385, 36.083  L 85.039, 21.050  L 91.408, 34.777  L 90.846, 19.580  L 97.377, 33.371  L 96.707, 18.094  L 103.293, 31.906  L 102.623, 16.629  L 109.154, 30.420  L 108.592, 15.223  L 114.961, 28.950  L 114.615, 13.917  L 120.715, 27.532  L 120.688, 12.750  L 126.421, 26.201  L 126.809, 11.764  L 132.082, 24.992  L 132.971, 11.002  L 137.705, 23.937  L 139.168, 10.506  L 143.298, 23.070  L 145.389, 10.320  L 148.873, 22.424  L 151.621, 10.486  L 154.443, 22.032  L 157.849, 11.047  L 160.028, 21.930  L 164.053, 12.043  L 165.647, 22.155  L 170.213, 13.508  L 171.322, 22.750  L 176.305, 15.476  L 177.074, 23.761  L 182.310, 17.973  L 182.922, 25.238  L 188.211, 21.024  L 188.882, 27.236  L 191.118, 22.764  L 185.887, 26.169  L 185.275, 19.428  L 179.985, 24.438  L 179.320, 16.656  L 174.187, 23.200  L 173.269, 14.427  L 168.476, 22.403  L 167.140, 12.714  L 162.832, 21.999  L 160.956, 11.488  L 157.233, 21.942  L 154.737, 10.715  L 151.657, 22.194  L 148.504, 10.356  L 146.087, 22.718  L 142.276, 10.371  L 140.505, 23.478  L 136.065, 10.718  L 134.898, 24.443  L 129.885, 11.353  L 129.257, 25.579  L 123.743, 12.232  L 123.574, 26.853  L 117.645, 13.314  L 117.844, 28.232  L 111.597, 14.555  L 112.064, 29.681  L 105.601, 15.916  L 106.230, 31.164  L 99.658, 17.356  L 100.342, 32.644  L 93.770, 18.836  L 94.399, 34.084  L 87.936, 20.319  L 88.403, 35.445  L 82.156, 21.768  L 82.355, 36.686  L 76.426, 23.147  L 76.257, 37.768  L 70.743, 24.421  L 70.115, 38.647  L 65.102, 25.557  L 63.935, 39.282  L 59.495, 26.522  L 57.724, 39.629  L 53.913, 27.282  L 51.496, 39.644  L 48.343, 27.806  L 45.263, 39.285  L 42.767, 28.058  L 39.044, 38.512  L 37.168, 28.001  L 32.860, 37.286  L 31.524, 27.597  L 26.731, 35.573  L 25.813, 26.800  L 20.680, 33.344  L 20.015, 25.562  L 14.725, 30.572  L 14.113, 23.831  L 8.882, 27.236  L 11.118, 22.764 "/>
+    </g>
+</svg>
