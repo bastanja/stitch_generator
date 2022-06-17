@@ -74,8 +74,8 @@ def stitch_effect_meander_spacing_pattern(path):
 
 
 def stitch_effect_satin(path):
-    line_sampling_function = alternate_direction(
-        add_start(tatami(segment_length=3, steps=5, repetitions=1, minimal_segment_size=2)))
+    line_sampling_function = add_start(alternate_direction(
+        tatami(segment_length=3, steps=5, repetitions=1, minimal_segment_size=2)))
     effect = satin(spacing_function=regular(2),
                    line_sampling_function=line_sampling_function)
     return effect(path)
