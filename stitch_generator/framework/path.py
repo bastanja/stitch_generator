@@ -3,9 +3,10 @@ from typing import Tuple
 import numpy as np
 
 from stitch_generator.framework.types import Function1D, Function2D
+from stitch_generator.functions.arc_length_mapping import arc_length_mapping
 from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.function_modifiers import split, inverse, mix, multiply, subtract, add, repeat, shift, \
-    maximum, divide
+    maximum, divide, combine
 from stitch_generator.functions.functions_1d import constant
 
 
@@ -159,3 +160,8 @@ def inset_sides(path: Path, inset: float) -> Path:
 
     return Path(shape=new_shape, direction=path.direction, width=new_width,
                 stroke_alignment=path.stroke_alignment)
+
+
+def parameterize_path_by_arc_length(path: Path, samples: int = 200):
+    mapping = arc_length_mapping(path.shape, approximation_samples=samples)
+    return path.apply_modifier(lambda function: combine(mapping, function))
