@@ -28,6 +28,7 @@ def satin_between(boundary_left: Function2D, boundary_right: Function2D, spacing
                   line_sampling_function: SamplingFunction, length: float) -> Array2D:
     points = zigzag_between(boundary_left, boundary_right, spacing_function, length)
     connection = [sample_line(*p, line_sampling_function) for p in zip(points, points[1:])]
+    connection = connection + [[points[-1]]]
     return np.concatenate(connection)
 
 
