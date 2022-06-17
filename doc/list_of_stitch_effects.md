@@ -136,13 +136,15 @@ Example:
 ```python
 from stitch_generator.collection.sampling.tatami_sampling import tatami
 from stitch_generator.sampling.sample_by_length import regular
-from stitch_generator.sampling.sampling_modifiers import alternate_direction, add_end, add_start
+from stitch_generator.sampling.sampling_modifiers import alternate_direction, add_start
 from stitch_generator.stitch_effects.path_effects.satin import satin
 
-line_sampling_function = alternate_direction(
-    add_start(add_end(tatami(segment_length=3, steps=5, repetitions=1, minimal_segment_size=2))))
+line_sampling_function = add_start(alternate_direction(
+    tatami(segment_length=3, steps=5, repetitions=1, minimal_segment_size=2)))
+
 effect = satin(spacing_function=regular(2),
                line_sampling_function=line_sampling_function)
+
 stitches = effect(path)
 ```
 
