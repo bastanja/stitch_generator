@@ -25,37 +25,37 @@ def bezier_path(control_points):
 class Design(EmbroideryDesign):
     def __init__(self):
         EmbroideryDesign.__init__(self, name="motif_stitches", parameters={
-            'stitch_length': FloatParameter("Stitch Length", 2, 3, 6),
             'length': FloatParameter("Length", 10, 95, 200),
-            'width': FloatParameter("Width", 0, 15, 50),
-            'row_spacing': FloatParameter("Row Spacing", 5, 8, 12),
+            'curve_width': FloatParameter("Curve Width", 0, 15, 50),
+            'row_spacing': FloatParameter("Row Spacing", 7, 10, 14),
             'spacing': FloatParameter("Spacing", 2, 2.5, 4),
-            'pattern_spacing': FloatParameter("Pattern Spacing", 10, 20, 30)
+            'pattern_spacing': FloatParameter("Pattern Spacing", 10, 20, 30),
+            'stitch_width' : FloatParameter("Stitch width", 3, 5, 10)
         })
 
     def _to_pattern(self, parameters, pattern):
         color = palette()
 
         effects = [
-            arrow_chain(arrow_width=6, arrow_length=2, arrow_spacing=parameters.spacing),
-            alternating_triangles(spacing=parameters.spacing, line_length=4, width=2, repetitions=3),
-            chevron_stitch(spacing=parameters.spacing * 2, line_length=3, width=2, repetitions=5),
+            arrow_chain(arrow_width=parameters.stitch_width, arrow_length=2, arrow_spacing=parameters.spacing),
+            alternating_triangles(spacing=parameters.spacing, line_length=4, width=parameters.stitch_width, repetitions=3),
+            chevron_stitch(spacing=parameters.spacing * 2, line_length=3, width=parameters.stitch_width, repetitions=5),
             cretan_stitch(spacing=parameters.spacing * 2, stitch_width=0.1, stitch_length=3, repetitions=4,
-                          zigzag_width=1),
+                          zigzag_width=2),
             cretan_stitch(spacing=parameters.spacing * 2, stitch_width=0.1, stitch_length=3.5, repetitions=4),
-            e_stitch(spacing=parameters.spacing, line_length=4, stitch_length=parameters.stitch_length, angle=45),
+            e_stitch(spacing=parameters.spacing, line_length=4, stitch_length=10, angle=45),
             feather_stitch(spacing=parameters.spacing, stitch_width=0, stitch_length=3.5, repetitions=2),
-            overlock_stitch(length=parameters.spacing, width=5),
-            rhomb_motif_stitch(spacing=parameters.spacing, width=6, length=4),
+            overlock_stitch(length=parameters.spacing, width=parameters.stitch_width),
+            rhomb_motif_stitch(spacing=parameters.spacing, width=parameters.stitch_width, length=4),
             stem_stitch(spacing=parameters.spacing, stitch_width=0.6, stitch_length=5, repetitions=5, angle=-25),
-            stem_stitch(spacing=parameters.spacing, stitch_width=5, stitch_length=4, repetitions=5, angle=0),
+            stem_stitch(spacing=parameters.spacing, stitch_width=parameters.stitch_width, stitch_length=4, repetitions=5, angle=0),
             three_arrows(arrow_spacing=2, group_spacing=parameters.pattern_spacing,
-                         start_end_spacing=parameters.pattern_spacing / 2, stitch_length=parameters.stitch_length),
-            x_motif_stitch(spacing=parameters.spacing, width=6, length=4)
+                         start_end_spacing=parameters.pattern_spacing / 2, stitch_length=3),
+            x_motif_stitch(spacing=parameters.spacing, width=parameters.stitch_width, length=4)
         ]
 
         y_step = parameters.length / 3
-        x = parameters.width
+        x = parameters.curve_width
         points = np.array(((0, 0), (y_step, -x), (y_step * 2, x), (y_step * 3, 0)))
         direction = itertools.cycle((True, False))
         init_x = -parameters.length / 2

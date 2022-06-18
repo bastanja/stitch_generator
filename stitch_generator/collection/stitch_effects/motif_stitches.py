@@ -28,7 +28,7 @@ def alternating_triangles(spacing: float, line_length: float, width: float, repe
         repetitions: How often an outline stitch is repeated to form a thick line
     """
     motif = zigzag_rectangle(width=0.1, height=-line_length, repetitions=repetitions, horizontal=True)
-    motif += (width, 0)
+    motif += (width / 2, 0)
     motif_gen = alternate_direction(repeat_motif(motif))
     sampling = sampling_by_length(spacing)
     return motif_chain(sampling, motif_gen, constant(0))
@@ -60,7 +60,7 @@ def chevron_stitch(spacing: float, line_length: float, repetitions: int, width: 
         repetitions: How often an outline stitch is repeated to form a thick line
         width: The total width of the resulting stitch pattern
     """
-    motif = line_motif(line_length, repetitions) + (width, 0)
+    motif = line_motif(line_length, repetitions) + (width / 2, 0)
     motif_gen = alternate_direction(repeat_motif(motif))
     sampling = sampling_by_length(spacing / 2)
     return motif_chain(sampling, motif_gen, constant(0))
