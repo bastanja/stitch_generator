@@ -37,26 +37,27 @@ class Design(EmbroideryDesign):
         color = palette()
 
         effects = [
+            arrow_chain(arrow_width=6, arrow_length=2, arrow_spacing=parameters.spacing),
+            alternating_triangles(spacing=parameters.spacing, line_length=4, width=2, repetitions=3),
+            chevron_stitch(spacing=parameters.spacing * 2, line_length=3, width=2, repetitions=5),
+            cretan_stitch(spacing=parameters.spacing * 2, stitch_width=0.1, stitch_length=3, repetitions=4,
+                          zigzag_width=1),
+            cretan_stitch(spacing=parameters.spacing * 2, stitch_width=0.1, stitch_length=3.5, repetitions=4),
+            e_stitch(spacing=parameters.spacing, line_length=4, stitch_length=parameters.stitch_length, angle=45),
+            feather_stitch(spacing=parameters.spacing, stitch_width=0, stitch_length=3.5, repetitions=2),
+            overlock_stitch(length=parameters.spacing, width=5),
+            rhomb_motif_stitch(spacing=parameters.spacing, width=6, length=4),
             stem_stitch(spacing=parameters.spacing, stitch_width=0.6, stitch_length=5, repetitions=5, angle=-25),
             stem_stitch(spacing=parameters.spacing, stitch_width=5, stitch_length=4, repetitions=5, angle=0),
-            e_stitch(spacing=parameters.spacing, line_length=4, stitch_length=parameters.stitch_length, angle=45),
-            three_arrows(start_end_spacing=parameters.pattern_spacing / 2, pattern_spacing=parameters.pattern_spacing,
-                         stitch_length=parameters.stitch_length),
-            arrow_chain(spacing=parameters.spacing),
-            cretan_stitch(spacing=parameters.spacing, width=0.1, height=3, repetitions=4, zig_zag_height=1),
-            cretan_stitch(spacing=parameters.spacing, width=0.1, height=3.5, repetitions=4),
-            feather_stitch(spacing=parameters.spacing, width=0, height=3.5, repetitions=2),
-            rhomb_motif_stitch(spacing=parameters.spacing, width=4, height=6),
-            x_motif_stitch(spacing=parameters.spacing, width=6, height=4),
-            alternating_triangles(spacing=parameters.spacing, line_length=4, zig_zag_height=2, repetitions=3),
-            overlock_stitch(spacing=parameters.spacing, width=5),
-            chevron_stitch(spacing=parameters.spacing, line_length=3, zig_zag_height=2, repetitions=5)
+            three_arrows(arrow_spacing=2, group_spacing=parameters.pattern_spacing,
+                         start_end_spacing=parameters.pattern_spacing / 2, stitch_length=parameters.stitch_length),
+            x_motif_stitch(spacing=parameters.spacing, width=6, length=4)
         ]
 
         y_step = parameters.length / 3
         x = parameters.width
         points = np.array(((0, 0), (y_step, -x), (y_step * 2, x), (y_step * 3, 0)))
-        direction = itertools.cycle((False, True))
+        direction = itertools.cycle((True, False))
         init_x = -parameters.length / 2
         init_y = -parameters.row_spacing * (len(effects) - 1) / 2
         offsets = [(init_x, init_y + (i * parameters.row_spacing)) for i in range(len(effects))]
