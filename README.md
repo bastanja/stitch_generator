@@ -4,6 +4,7 @@ Stitch Generator creates stitch patterns for machine embroidery. It converts bas
 lines, Bézier curves or circles to decorative stitch patterns like satin stitches or motif stitches.
 
 ## Stitch Effects
+
 Stitch Effects use a Path as input and return an array of stitch coordinates as output.
 
 ![stitch effects](doc/images/path_stitch_effect_examples.svg "Examples of stitch effects" )
@@ -15,8 +16,16 @@ coordinates of the stitches.
 See [List of Stitch Effects](doc/list_of_stitch_effects.md) for an overview over the available
 stitch effects.
 
-## Motif Stitches
-Motif stitches place Motifs along a path. A Motif is an array of stitch coordinates.
+## Decorative Stitches
+
+Stitch Generator provides some pre-defined stitch effects called decorative stitches. These are mostly created with
+the stitch effects motif_chain or motif_to_points and a fixed motif.
+
+The decorative stitches are intended as showcase to demonstrate what is possible with stitch effects and to provide
+examples which are easy to copy and adapt in order to create onw stitch effects.
+
+See [List of Decorative Stitches](doc/list_of_decorative_stitches.md) for an overview over the available decorative
+stitches.
 
 ## Satin Patterns
 Stitch generator supports various stitch patterns for satin stitches.

@@ -1,4 +1,4 @@
-# Overview of Stitch Effects
+# List of Stitch Effects
 
 Stitch effects are functions that receive a path as parameter and return stitches. See section [Paths](doc/paths.md) to
 learn about creating paths.
