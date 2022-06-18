@@ -2,9 +2,9 @@ import itertools
 
 import numpy as np
 
-from stitch_generator.collection.stitch_effects.motif_stitches import stem_stitch, e_stitch, three_arrows, arrow_chain, \
-    cretan_stitch, feather_stitch, rhomb_motif_stitch, x_motif_stitch, alternating_triangles, chevron_stitch, \
-    overlock_stitch
+from stitch_generator.collection.stitch_effects.decorative_stitches import stem_stitch, e_stitch, three_arrows, \
+    arrow_chain, cretan_stitch, feather_stitch, rhomb_motif_stitch, x_motif_stitch, alternating_triangles, \
+    chevron_stitch, overlock_stitch
 from stitch_generator.framework.embroidery_design import EmbroideryDesign
 from stitch_generator.framework.palette import palette
 from stitch_generator.framework.parameter import FloatParameter
@@ -24,20 +24,21 @@ def bezier_path(control_points):
 
 class Design(EmbroideryDesign):
     def __init__(self):
-        EmbroideryDesign.__init__(self, name="motif_stitches", parameters={
+        EmbroideryDesign.__init__(self, name="decorative_stitches", parameters={
             'length': FloatParameter("Length", 10, 95, 200),
             'curve_width': FloatParameter("Curve Width", 0, 15, 50),
             'row_spacing': FloatParameter("Row Spacing", 7, 10, 14),
             'spacing': FloatParameter("Spacing", 2, 2.5, 4),
             'pattern_spacing': FloatParameter("Pattern Spacing", 10, 20, 30),
-            'stitch_width' : FloatParameter("Stitch width", 3, 5, 10)
+            'stitch_width': FloatParameter("Stitch width", 3, 5, 10)
         })
 
     def _to_pattern(self, parameters, pattern):
         color = palette()
 
         effects = [
-            alternating_triangles(spacing=parameters.spacing, line_length=4, width=parameters.stitch_width, repetitions=3),
+            alternating_triangles(spacing=parameters.spacing, line_length=4, width=parameters.stitch_width,
+                                  repetitions=3),
             arrow_chain(arrow_width=parameters.stitch_width, arrow_length=2, arrow_spacing=parameters.spacing),
             chevron_stitch(spacing=parameters.spacing * 2, line_length=3, width=parameters.stitch_width, repetitions=5),
             cretan_stitch(spacing=parameters.spacing * 2, stitch_width=0.1, stitch_length=3, repetitions=4,
@@ -48,7 +49,8 @@ class Design(EmbroideryDesign):
             overlock_stitch(length=parameters.spacing, width=parameters.stitch_width),
             rhomb_motif_stitch(spacing=parameters.spacing, width=parameters.stitch_width, length=4),
             stem_stitch(spacing=parameters.spacing, stitch_width=0.6, stitch_length=5, repetitions=5, angle=-25),
-            stem_stitch(spacing=parameters.spacing, stitch_width=parameters.stitch_width, stitch_length=4, repetitions=5, angle=0),
+            stem_stitch(spacing=parameters.spacing, stitch_width=parameters.stitch_width, stitch_length=4,
+                        repetitions=5, angle=0),
             three_arrows(arrow_spacing=2, group_spacing=parameters.pattern_spacing,
                          start_end_spacing=parameters.pattern_spacing / 2, stitch_length=3),
             x_motif_stitch(spacing=parameters.spacing, width=parameters.stitch_width, length=4)
