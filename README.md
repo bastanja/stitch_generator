@@ -21,8 +21,10 @@ stitch effects.
 Stitch Generator provides some pre-defined stitch effects called decorative stitches. These are mostly created with
 the stitch effects motif_chain or motif_to_points and a fixed motif.
 
-The decorative stitches are intended as showcase to demonstrate what is possible with stitch effects and to provide
-examples which are easy to copy and adapt in order to create onw stitch effects.
+![decorative stitches](doc/images/list_of_decorative_stitches.svg "Examples of decorative stitches" )
+
+The decorative stitches demonstrate how to use stitch effects and can be copied and adapted in order to create own
+stitch effects.
 
 See [List of Decorative Stitches](doc/list_of_decorative_stitches.md) for an overview over the available decorative
 stitches.
