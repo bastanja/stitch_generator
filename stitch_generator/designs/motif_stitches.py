@@ -37,8 +37,8 @@ class Design(EmbroideryDesign):
         color = palette()
 
         effects = [
-            arrow_chain(arrow_width=parameters.stitch_width, arrow_length=2, arrow_spacing=parameters.spacing),
             alternating_triangles(spacing=parameters.spacing, line_length=4, width=parameters.stitch_width, repetitions=3),
+            arrow_chain(arrow_width=parameters.stitch_width, arrow_length=2, arrow_spacing=parameters.spacing),
             chevron_stitch(spacing=parameters.spacing * 2, line_length=3, width=parameters.stitch_width, repetitions=5),
             cretan_stitch(spacing=parameters.spacing * 2, stitch_width=0.1, stitch_length=3, repetitions=4,
                           zigzag_width=2),
