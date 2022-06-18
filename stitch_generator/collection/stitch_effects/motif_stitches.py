@@ -144,7 +144,7 @@ def overlock_stitch(length: float, width: float):
         stitches = stitch_effect(constant_width_path)
         back_stitches = back_stitch_line(samples)
 
-        return np.concatenate((stitches, right(1), left(1), back_stitches))
+        return np.concatenate((stitches, right(1), left(1), back_stitches, back_stitches[-2::-1]))
 
     return effect
 
