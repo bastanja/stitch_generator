@@ -1,10 +1,10 @@
 from functools import partial
 
-from stitch_generator.collection.functions.functions_1d import linear_0_1
+from stitch_generator.collection.functions.functions_1d import linear_0_1, positive_sine
 from stitch_generator.collection.sampling.sampling_with_offset_function import to_range
 from stitch_generator.framework.types import Function1D, SamplingFunction
 from stitch_generator.functions.function_modifiers import repeat
-from stitch_generator.functions.functions_1d import sinus, arc
+from stitch_generator.functions.functions_1d import arc
 from stitch_generator.sampling.sample_by_fixed_length import sample_by_fixed_length
 from stitch_generator.sampling.sample_by_number import sample_by_number
 from stitch_generator.sampling.sampling_modifiers import cycle_alignments
@@ -12,7 +12,7 @@ from stitch_generator.sampling.sampling_modifiers import cycle_alignments
 
 def wave_alignment_sampling(segment_length: float, steps: int, function_range=(0, 1)):
     return sampling_with_alignment_function(segment_length=segment_length, steps=steps,
-                                            alignment_function=to_range(sinus, function_range))
+                                            alignment_function=to_range(positive_sine, function_range))
 
 
 def arc_alignment_sampling(segment_length: float, steps: int, function_range=(0, 1)):
