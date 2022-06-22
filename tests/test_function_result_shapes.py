@@ -19,10 +19,12 @@ multiple_values_parameters = [
     np.array(multiple_values, ndmin=2).T
 ]
 
+
 @pytest.mark.parametrize("name, f", functions_2d.items())
 def test_shapes_2d(name, f):
     _test_2d_single_parameter(f)
     _test_2d_multiple_parameters(f)
+
 
 @pytest.mark.parametrize("name, f", functions_1d.items())
 def test_shapes_1d(name, f):

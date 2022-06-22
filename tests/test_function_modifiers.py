@@ -4,12 +4,17 @@ import numpy as np
 import pytest
 from pytest import approx
 
+from stitch_generator.collection.functions.functions_1d import linear_0_1
 from stitch_generator.functions.function_modifiers import repeat, reflect, wrap, nearest, combine, inverse, mix, add, \
     multiply, split
-from tests.functions import all_functions, functions_1d, functions_1d_positive
+from stitch_generator.functions.functions_1d import smootherstep, arc, square, sinus
+from stitch_generator.shapes.bezier import bezier
+from tests.functions import all_functions
 
 offsets = [t / 10 for t in range(10)]
-functions = all_functions
+
+test_functions_positive = (linear_0_1, arc, smootherstep)
+test_functions = (bezier(((0, 0), (10, -10), (20, 0))), square, sinus)
 
 
 def test_repeat():
@@ -17,7 +22,7 @@ def test_repeat():
 
     modes = ['reflect', 'wrap', 'nearest']
 
-    for name, f in functions.items():
+    for name, f in all_functions.items():
         for m in modes:
             r = repeat(times, f, mode=m)
             for t in offsets:
@@ -25,7 +30,7 @@ def test_repeat():
 
 
 def test_wrap():
-    for name, f in functions.items():
+    for name, f in all_functions.items():
         z = wrap(f)
         for t in offsets:
             assert f(t) == approx(z(t))
@@ -35,7 +40,7 @@ def test_wrap():
 
 
 def test_reflect():
-    for name, f in functions.items():
+    for name, f in all_functions.items():
         z = reflect(f)
         for t in offsets:
             assert f(t) == approx(z(t))
@@ -48,7 +53,7 @@ def test_reflect():
 
 
 def test_nearest():
-    for name, f in functions.items():
+    for name, f in all_functions.items():
         z = nearest(f)
         for t in offsets:
             assert f(t) == approx(z(t))
@@ -59,7 +64,7 @@ def test_nearest():
 
 
 def test_combine():
-    pairs = permutations(functions_1d_positive.values(), 2)
+    pairs = permutations(test_functions_positive, 2)
     v = np.linspace(0, 1, 10)
     for f1, f2 in pairs:
         f_combined = combine(f1, f2)
@@ -76,13 +81,13 @@ def test_inverse():
     v = np.linspace(0, 1, 10)
     inv_v = 1 - v
 
-    for name, f in functions_1d.items():
+    for f in test_functions_positive:
         inv_f = inverse(f)
 
         assert np.allclose(inv_f(v), f(inv_v))
 
 
-@pytest.mark.parametrize("f1, f2, factor", permutations(functions_1d_positive.values(), 3))
+@pytest.mark.parametrize("f1, f2, factor", permutations(test_functions_positive, 3))
 def test_mix(f1, f2, factor):
     v = np.linspace(0, 1, 10)
 
@@ -97,7 +102,7 @@ def test_mix(f1, f2, factor):
     assert np.allclose(v_mixed, mixed(v))
 
 
-@pytest.mark.parametrize("f1, f2", permutations(all_functions.values(), 2))
+@pytest.mark.parametrize("f1, f2", permutations(test_functions, 2))
 def test_add(f1, f2):
     float_values = (0.0, 0.3, 0.5, 1.0)
 
@@ -108,7 +113,7 @@ def test_add(f1, f2):
     assert np.allclose(added(values), (f1(values).T + f2(values).T).T)
 
 
-@pytest.mark.parametrize("f1, f2", permutations(all_functions.values(), 2))
+@pytest.mark.parametrize("f1, f2", permutations(test_functions, 2))
 def test_multiply(f1, f2):
     float_values = (0.0, 0.3, 0.5, 1.0)
 
