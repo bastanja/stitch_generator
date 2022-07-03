@@ -89,6 +89,10 @@ def combine(f1, f2):
     return lambda v: f2(f1(v))
 
 
+def chain(f1, f2):
+    return lambda v: f2(f1(v))
+
+
 def add(f1, f2):
     return _binary_operation(lambda a, b: a + b, f1, f2)
 
