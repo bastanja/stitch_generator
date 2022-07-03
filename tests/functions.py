@@ -17,7 +17,7 @@ functions_1d_positive = {
     'positive_cosine': positive_cosine,
     'half_positive_sine': half_positive_sine,
     'half_positive_cosine': half_positive_cosine,
-    # 'half_peak': half_peak,
+    'half_peak': half_peak,
     'half_circle': half_circle,
     'cubic_arc': cubic_arc,
     'three_stairs': three_stairs,

@@ -121,10 +121,16 @@ def mix(f1, f2, factor):
 
 def _binary_operation(operation, f1, f2):
     def f(v):
+        original_shape = np.asarray(v).shape
         v = ensure_1d_shape(v)
         v1 = f1(v)
         v2 = f2(v)
         result = operation(v1.T, v2.T).T
+        try:
+            # if possible, return a result that has the same shape as the parameter v
+            result.shape = original_shape
+        except ValueError:
+            pass
         return result
 
     return f
