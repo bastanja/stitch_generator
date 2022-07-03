@@ -2,7 +2,7 @@ import numpy as np
 
 from stitch_generator.functions.ensure_shape import ensure_1d_shape
 from stitch_generator.functions.estimate_length import estimate_length
-from stitch_generator.functions.function_modifiers import combine
+from stitch_generator.functions.function_modifiers import chain
 from stitch_generator.functions.functions_1d import linear_interpolation
 
 
@@ -21,7 +21,7 @@ def _get_mapped_functions(functions, lengths):
     mapped_functions = []
     for idx, f in enumerate(functions):
         high = lengths[idx]
-        mapped_functions.append(combine(linear_interpolation(0, 1, low, high), f))
+        mapped_functions.append(chain(linear_interpolation(0, 1, low, high), f))
         low = high
     return mapped_functions
 

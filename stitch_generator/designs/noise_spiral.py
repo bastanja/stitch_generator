@@ -4,7 +4,7 @@ from stitch_generator.framework.palette import palette
 from stitch_generator.framework.parameter import FloatParameter, IntParameter
 from stitch_generator.framework.path import Path
 from stitch_generator.functions.arc_length_mapping import arc_length_mapping_with_length
-from stitch_generator.functions.function_modifiers import combine, add, multiply, repeat, scale, shift
+from stitch_generator.functions.function_modifiers import chain, add, multiply, repeat, scale, shift
 from stitch_generator.functions.functions_1d import constant
 from stitch_generator.functions.motif_generators import repeat_motif_mirrored
 from stitch_generator.functions.noise import noise
@@ -37,8 +37,8 @@ class Design(EmbroideryDesign):
         direction = repeat(parameters.turns, circle())
 
         mapping, length = arc_length_mapping_with_length(f)
-        f = combine(mapping, f)
-        direction = combine(mapping, direction)
+        f = chain(mapping, f)
+        direction = chain(mapping, direction)
 
         noise_repetitions = length / parameters.noise_length
 

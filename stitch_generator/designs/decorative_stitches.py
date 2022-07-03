@@ -10,15 +10,15 @@ from stitch_generator.framework.palette import palette
 from stitch_generator.framework.parameter import FloatParameter
 from stitch_generator.framework.path import Path
 from stitch_generator.functions.arc_length_mapping import arc_length_mapping
-from stitch_generator.functions.function_modifiers import combine
+from stitch_generator.functions.function_modifiers import chain
 from stitch_generator.shapes.bezier import bezier, bezier_normals
 
 
 def bezier_path(control_points):
     shape = bezier(control_points)
     param = arc_length_mapping(shape)
-    shape = combine(param, shape)
-    direction = combine(param, bezier_normals(control_points))
+    shape = chain(param, shape)
+    direction = chain(param, bezier_normals(control_points))
     return Path(shape=shape, direction=direction)
 
 

@@ -5,7 +5,7 @@ import numpy as np
 from stitch_generator.framework.path import Path, get_boundaries, get_inset_path
 from stitch_generator.framework.types import Function1D
 from stitch_generator.functions.arc_length_mapping import arc_length_mapping
-from stitch_generator.functions.function_modifiers import combine, split, scale, inverse, repeat
+from stitch_generator.functions.function_modifiers import chain, split, scale, inverse, repeat
 from stitch_generator.functions.functions_1d import constant, arc
 from stitch_generator.sampling.sample_by_length import sample_by_length, sampling_by_length
 from stitch_generator.sampling.sample_by_number import sample_by_number
@@ -62,8 +62,8 @@ def leaf_baseline(length: float, angle: float, arc_length_param: bool):
     direction = bezier_normals(control_points)
     if arc_length_param:
         mapping = arc_length_mapping(shape)
-        shape = combine(mapping, shape)
-        direction = combine(mapping, direction)
+        shape = chain(mapping, shape)
+        direction = chain(mapping, direction)
 
     return shape, direction
 

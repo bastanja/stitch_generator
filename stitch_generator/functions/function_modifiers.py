@@ -85,10 +85,6 @@ def shift(amount, function):
     return lambda v: function(v + amount)
 
 
-def combine(f1, f2):
-    return lambda v: f2(f1(v))
-
-
 def chain(f1, f2):
     return lambda v: f2(f1(v))
 

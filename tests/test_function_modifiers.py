@@ -5,7 +5,7 @@ import pytest
 from pytest import approx
 
 from stitch_generator.collection.functions.functions_1d import linear_0_1
-from stitch_generator.functions.function_modifiers import repeat, reflect, wrap, nearest, combine, inverse, mix, add, \
+from stitch_generator.functions.function_modifiers import repeat, reflect, wrap, nearest, chain, inverse, mix, add, \
     multiply, split
 from stitch_generator.functions.functions_1d import smootherstep, arc, square, sinus
 from stitch_generator.shapes.bezier import bezier
@@ -63,18 +63,18 @@ def test_nearest():
             assert f(1) == approx(z(t + 2))
 
 
-def test_combine():
+def test_chain():
     pairs = permutations(test_functions_positive, 2)
     v = np.linspace(0, 1, 10)
     for f1, f2 in pairs:
-        f_combined = combine(f1, f2)
+        f_chained = chain(f1, f2)
 
         v1 = f1(v)
         v2 = f2(v1)
 
-        v_combined = f_combined(v)
+        v_chained = f_chained(v)
 
-        assert np.allclose(v2, v_combined)
+        assert np.allclose(v2, v_chained)
 
 
 def test_inverse():

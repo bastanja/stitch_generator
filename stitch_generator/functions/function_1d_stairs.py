@@ -1,6 +1,6 @@
 import itertools
 
-from stitch_generator.functions.function_modifiers import combine
+from stitch_generator.functions.function_modifiers import chain
 from stitch_generator.functions.function_sequence import function_sequence
 from stitch_generator.functions.functions_1d import constant, linear_interpolation, smootherstep
 
@@ -15,7 +15,7 @@ def stairs(values, ascend_ratio):
 
     functions = [constant(values[0])]
     for previous, current in zip(values, values[1:]):
-        step_function = combine(smootherstep, linear_interpolation(previous, current))
+        step_function = chain(smootherstep, linear_interpolation(previous, current))
         functions.append(step_function)
         functions.append(constant(current))
 

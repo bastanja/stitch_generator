@@ -2,7 +2,7 @@ from functools import partial
 
 from stitch_generator.collection.functions.functions_1d import linear_0_1
 from stitch_generator.framework.types import Function1D, SamplingFunction
-from stitch_generator.functions.function_modifiers import repeat, combine
+from stitch_generator.functions.function_modifiers import repeat, chain
 from stitch_generator.functions.functions_1d import sinus, arc, linear_interpolation
 from stitch_generator.sampling.sample_by_fixed_length import sample_by_fixed_length
 from stitch_generator.sampling.sample_by_number import sample_by_number
@@ -25,7 +25,7 @@ def triangle_offset_sampling(segment_length: float, steps: int, function_range=(
 
 
 def to_range(offset_function, function_range):
-    return combine(offset_function, linear_interpolation(function_range[0], function_range[1]))
+    return chain(offset_function, linear_interpolation(function_range[0], function_range[1]))
 
 
 def sampling_with_offset_function(segment_length: float, steps: int, offset_function: Function1D,

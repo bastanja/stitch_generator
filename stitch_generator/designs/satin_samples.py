@@ -9,7 +9,7 @@ from stitch_generator.framework.parameter import FloatParameter, BoolParameter
 from stitch_generator.framework.path import Path
 from stitch_generator.functions.arc_length_mapping import arc_length_mapping_with_length
 from stitch_generator.functions.estimate_length import estimate_length
-from stitch_generator.functions.function_modifiers import combine, add
+from stitch_generator.functions.function_modifiers import chain, add
 from stitch_generator.functions.function_sequence import function_sequence
 from stitch_generator.functions.functions_1d import constant, circular_arc, linear_interpolation, pchip_interpolation
 from stitch_generator.functions.functions_2d import constant_direction
@@ -30,8 +30,8 @@ def make_shape():
     points = (3, 25), (-14, -1), (11, -5), (-2, -25)
     shape = bezier(points)
     mapping, length = arc_length_mapping_with_length(shape)
-    shape = combine(mapping, shape)
-    direction = combine(mapping, bezier_normals(points))
+    shape = chain(mapping, shape)
+    direction = chain(mapping, bezier_normals(points))
 
     return shape, direction
 
@@ -40,7 +40,7 @@ def make_width(width, length):
     width_profile = pchip_interpolation(((0, 1), (0.68, 0.68), (1, 0)))
     radius = width / 2
     width_f = function_sequence((circular_arc, width_profile), (radius, length - radius))
-    width_f = combine(width_f, linear_interpolation(0.5, width))
+    width_f = chain(width_f, linear_interpolation(0.5, width))
     alignment = constant(0.5)
     return width_f, alignment
 

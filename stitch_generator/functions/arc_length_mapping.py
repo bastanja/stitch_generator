@@ -1,7 +1,7 @@
 from scipy.interpolate import interp1d
 
 from stitch_generator.functions.estimate_length import accumulate_lengths
-from stitch_generator.functions.function_modifiers import combine
+from stitch_generator.functions.function_modifiers import chain
 from stitch_generator.sampling.sample_by_number import sample_by_number
 from stitch_generator.framework.types import Function2D, Function1D
 
@@ -20,7 +20,7 @@ def parameterize_by_arc_length(function: Function2D, approximation_samples: int 
         The reparameterized 2D function
     """
     mapping = arc_length_mapping(function, approximation_samples)
-    return combine(mapping, function)
+    return chain(mapping, function)
 
 
 def arc_length_mapping(function: Function2D, approximation_samples: int = 1000) -> Function1D:

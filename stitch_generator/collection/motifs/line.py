@@ -1,7 +1,7 @@
 import numpy as np
 
 from stitch_generator.functions.arc_length_mapping import arc_length_mapping_with_length
-from stitch_generator.functions.function_modifiers import combine
+from stitch_generator.functions.function_modifiers import chain
 from stitch_generator.stitch_effects.utilities.place_motif import place_motif_at
 from stitch_generator.sampling.sample_by_length import sample_by_length
 from stitch_generator.shapes.bezier import bezier
@@ -42,7 +42,7 @@ def _bent_line_f(length: float, angle_deg: float):
     direction /= np.linalg.norm(direction)
     f = bezier(control_points)
     mapping, length = arc_length_mapping_with_length(f)
-    f = combine(mapping, f)
+    f = chain(mapping, f)
     return f, direction
 
 

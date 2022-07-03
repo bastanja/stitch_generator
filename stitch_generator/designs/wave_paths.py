@@ -8,7 +8,7 @@ from stitch_generator.framework.embroidery_design import EmbroideryDesign
 from stitch_generator.framework.palette import palette
 from stitch_generator.framework.parameter import FloatParameter, BoolParameter
 from stitch_generator.framework.path import path_from_boundaries
-from stitch_generator.functions.function_modifiers import shift, repeat, combine, add
+from stitch_generator.functions.function_modifiers import shift, repeat, chain, add
 from stitch_generator.functions.functions_1d import constant, cosinus, linear_interpolation
 from stitch_generator.functions.functions_2d import function_2d, constant_direction
 from stitch_generator.sampling.sample_by_fixed_length import sampling_by_fixed_length
@@ -22,7 +22,7 @@ def make_wave_y(constant_y_offset, amplitude, shift_amount, repetitions):
     f = cosinus
     f = shift(shift_amount, f)
     f = repeat(r=repetitions, function=f, mode='wrap')
-    f = combine(f, linear_interpolation(-amplitude, amplitude, source_low=-1, source_high=1))
+    f = chain(f, linear_interpolation(-amplitude, amplitude, source_low=-1, source_high=1))
     f = add(constant(constant_y_offset), f)
     return f
 
