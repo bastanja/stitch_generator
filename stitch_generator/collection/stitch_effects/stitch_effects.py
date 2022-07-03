@@ -7,7 +7,7 @@ from stitch_generator.collection.motifs.collection import zigzag_rectangle
 from stitch_generator.collection.motifs.square_spiral import square_spiral
 from stitch_generator.collection.sampling.tatami_sampling import tatami_3_1, tatami
 from stitch_generator.framework.path import get_inset_path
-from stitch_generator.functions.function_modifiers import repeat
+from stitch_generator.functions.function_modifiers import repeat, chain
 from stitch_generator.functions.functions_1d import square, constant, arc
 from stitch_generator.functions.motif_generators import repeat_motif_mirrored
 from stitch_generator.sampling.sample_by_length import regular
@@ -30,6 +30,7 @@ from stitch_generator.stitch_effects.shape_effects.motif_to_points import motif_
 from stitch_generator.stitch_effects.shape_effects.motif_to_segments import motif_to_segments
 from stitch_generator.stitch_effects.shape_effects.running_stitch import running_stitch
 from stitch_generator.stitch_effects.shape_effects.variable_running_stitch import variable_running_stitch
+from stitch_generator.stitch_operations.remove_duplicates import remove_duplicates
 
 
 def stitch_effect_contour(path):
@@ -117,7 +118,7 @@ def stitch_effect_tile_motif_spiral(path):
     motif = square_spiral(level=spiral_level, step_size=(1 / spiral_level)) * motif_scale + motif_translation
 
     # create stitch effect
-    effect = tile_motif(motif=motif, motif_length=15)
+    effect = chain(tile_motif(motif=motif, motif_length=15), remove_duplicates)
     return effect(path)
 
 
@@ -128,7 +129,7 @@ def stitch_effect_tile_motif_zigzag(path):
     motif = np.concatenate((line((0, 1), (1, 0))(sample_by_number(4)[:-1]), motif))
 
     # create stitch effect
-    effect = tile_motif(motif=motif, motif_length=5)
+    effect = chain(tile_motif(motif=motif, motif_length=5), remove_duplicates)
     return effect(path)
 
 
