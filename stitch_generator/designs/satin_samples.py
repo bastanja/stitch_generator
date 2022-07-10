@@ -1,8 +1,7 @@
 import numpy as np
 
 from stitch_generator.collection.sampling.collection import sampling_functions
-from stitch_generator.collection.stitch_effects.underlay_contour_zigzag import underlay_contour_zigzag
-from stitch_generator.collection.stitch_effects.underlay_dense import underlay_dense
+from stitch_generator.collection.stitch_effects.underlays import underlay_contour_zigzag, underlay_dense
 from stitch_generator.framework.embroidery_design import EmbroideryDesign
 from stitch_generator.framework.palette import palette
 from stitch_generator.framework.parameter import FloatParameter, BoolParameter
