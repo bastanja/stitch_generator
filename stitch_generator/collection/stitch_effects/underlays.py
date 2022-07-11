@@ -5,7 +5,7 @@ from stitch_generator.framework.path import Path, get_inset_path, inset_sides
 from stitch_generator.framework.stitch_effect import StitchEffect
 from stitch_generator.framework.types import Array2D
 from stitch_generator.sampling.sample_by_length import regular
-from stitch_generator.sampling.sampling_modifiers import add_start, alternate_direction
+from stitch_generator.sampling.sampling_modifiers import add_start, alternate_direction, remove_end
 from stitch_generator.stitch_effects.path_effects.contour import contour_along
 from stitch_generator.stitch_effects.path_effects.satin import double_satin_along
 from stitch_generator.stitch_effects.path_effects.variable_underlay import variable_underlay_along
@@ -18,7 +18,7 @@ def underlay_contour_zigzag(inset: float, stitch_length: float, spacing: float) 
         contour = contour_along(path, stitch_length=stitch_length)
 
         zigzag = double_satin_along(path=path, spacing_function=regular(spacing),
-                                    line_sampling_function=regular(segment_length=stitch_length))
+                                    line_sampling_function=remove_end(regular(segment_length=stitch_length)))
 
         return np.concatenate((contour[:-1], zigzag))
 
