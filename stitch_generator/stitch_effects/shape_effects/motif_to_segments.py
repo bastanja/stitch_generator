@@ -5,9 +5,10 @@ import numpy as np
 from stitch_generator.framework.stitch_effect import StitchEffect
 from stitch_generator.framework.types import SamplingFunction, Array2D, Function2D
 from stitch_generator.functions.estimate_length import estimate_length
-from stitch_generator.stitch_effects.utilities.place_motif import place_motif_between
+from stitch_generator.sampling.sample_by_number import sample_by_number
 from stitch_generator.sampling.samples_between import samples_between
 from stitch_generator.sampling.sampling_modifiers import free_start, free_end, remove_start, remove_end
+from stitch_generator.stitch_effects.utilities.place_motif import place_motif_between
 
 
 def motif_to_segments(motif_position_sampling: SamplingFunction, line_sampling: SamplingFunction,
@@ -25,13 +26,18 @@ def motif_to_segments_on_shape(shape: Function2D, motif_position_sampling: Sampl
 
     total_length = estimate_length(shape)
 
+    # if the shape has no length, return start and end point
+    if np.isclose(total_length, 0):
+        return shape(sample_by_number(1))
+
     # middle positions of the motifs
     motif_locations = motif_position_sampling(total_length)
 
-    if len(motif_locations) == 0:
+    # if there is no motif or the motif has no length, sample the shape with the line sampling function
+    if len(motif_locations) == 0 or np.isclose(motif_length, 0):
         return shape(line_sampling(total_length))
 
-    # calculate motif start samples and ed samples
+    # calculate motif start samples and end samples
     relative_motif_length = half_motif_length / total_length
     starts = motif_locations - relative_motif_length
     ends = motif_locations + relative_motif_length
@@ -54,7 +60,8 @@ def motif_to_segments_on_shape(shape: Function2D, motif_position_sampling: Sampl
     fills = [shape(samples_between(total_length, s1, s2, inner_line_sampling)) for s1, s2 in zip(ends, starts)]
 
     # interleave the fills and motifs
-    combined = [i for i in itertools.chain.from_iterable(itertools.zip_longest(fills, motifs)) if i is not None]
+    combined = [i for i in itertools.chain.from_iterable(itertools.zip_longest(fills, motifs)) if
+                i is not None and len(i) > 0]
     combined = [shape(0)] + combined + [shape(1)]
 
     return np.concatenate(combined)

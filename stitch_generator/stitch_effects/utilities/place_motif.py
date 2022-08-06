@@ -40,7 +40,7 @@ def place_motif_between(p1, p2, motif, include_endpoint=False, width_scale=None)
 
 
 def _normalize_motif(motif):
-    motif = motif.copy()
+    motif = np.asarray(motif, dtype=float).copy()
     p1, p2 = motif[0], motif[-1]
     d = p2 - p1
     size = np.linalg.norm(d)
