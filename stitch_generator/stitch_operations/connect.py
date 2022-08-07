@@ -19,6 +19,8 @@ def connect(stitch_blocks, line_sampling_function: SamplingFunction):
         A single stitch block containing all stitches from the stitch_blocks, connected with intermediate stitches
         between them
     """
+    if len(stitch_blocks) < 1:
+        return []
     pairs = zip(stitch_blocks, stitch_blocks[1:])
     fills = [sample_line(p1[-1], p2[0], remove_start(remove_end(line_sampling_function))) for p1, p2 in pairs]
 
