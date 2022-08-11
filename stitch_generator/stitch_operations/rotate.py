@@ -50,3 +50,15 @@ def rotate_by_sin_cos(stitches: Array2D, sin, cos) -> Array2D:
     x = stitches[:, 0]
     y = stitches[:, 1]
     return np.array([cos * x - sin * y, sin * x + cos * y]).T
+
+
+def rotate_90(stitches: Array2D):
+    return rotate_by_sin_cos(stitches, sin=1, cos=0)
+
+
+def rotate_180(stitches: Array2D):
+    return rotate_by_sin_cos(stitches, sin=0, cos=-1)
+
+
+def rotate_270(stitches: Array2D):
+    return rotate_by_sin_cos(stitches, sin=-1, cos=0)
