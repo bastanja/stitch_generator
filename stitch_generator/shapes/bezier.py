@@ -4,7 +4,7 @@ import numpy as np
 
 from stitch_generator.framework.types import Function2D
 from stitch_generator.functions.ensure_shape import ensure_1d_shape
-from stitch_generator.stitch_operations.rotate import rotate_by_degrees
+from stitch_generator.stitch_operations.rotate import rotate_by_degrees, rotate_270
 
 
 def bezier(control_points: Sequence) -> Function2D:
@@ -22,7 +22,7 @@ def bezier_normals(control_points: Sequence) -> Function2D:
 
     def f(v):
         points, tangents = de_casteljau(control_points, np.array(v, ndmin=1, dtype=float))
-        return rotate_by_degrees(tangents, -90)
+        return rotate_270(tangents)
 
     return f
 

@@ -14,7 +14,7 @@ from stitch_generator.stitch_effects.path_effects.tile_motif import tile_motif
 from stitch_generator.stitch_effects.shape_effects.motif_chain import motif_chain
 from stitch_generator.stitch_effects.shape_effects.motif_to_points import motif_to_points
 from stitch_generator.stitch_effects.shape_effects.motif_to_segments import motif_to_segments
-from stitch_generator.stitch_operations.rotate import rotate_by_degrees
+from stitch_generator.stitch_operations.rotate import rotate_by_degrees, rotate_270
 
 
 def alternating_triangles(spacing: float, line_length: float, width: float, repetitions: int):
@@ -158,7 +158,7 @@ def rhomb_motif_stitch(spacing: float, width: float, length: float):
         width: The total width of the resulting stitch pattern
         length: The length of a rhomb along the path
     """
-    motif = rotate_by_degrees(rhomb_motif(width, length), -90)
+    motif = rotate_270(rhomb_motif(width, length))
     motif_gen = repeat_motif(motif)
     sampling = sampling_by_length(spacing)
     return motif_chain(sampling, motif_gen, constant(0))
