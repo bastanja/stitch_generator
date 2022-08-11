@@ -7,6 +7,19 @@ from stitch_generator.sampling.sample_by_length import sample_by_length, samplin
 from stitch_generator.shapes.line import line
 
 
+def polyline(points, smooth: bool = False):
+    accumulated = accumulate_lengths(points)
+    total_length = accumulated[-1]
+    accumulated /= total_length
+
+    kind = 'quadratic' if smooth and len(points) > 2 else 'linear'
+
+    # create interpolation function between points
+    interpolation = interp1d(accumulated, points, kind=kind, axis=0)
+
+    return interpolation, total_length
+
+
 def resample(points, segment_length: float, smooth: bool = False):
     """
     Returns points which lie on the polyline defined by the parameter points. The newly calculated points have
@@ -20,14 +33,7 @@ def resample_with_sampling_function(points, sampling_function: SamplingFunction,
     """
     Returns points which lie on the polyline defined by the parameter points.
     """
-    accumulated = accumulate_lengths(points)
-    total_length = accumulated[-1]
-    accumulated /= total_length
-
-    kind = 'quadratic' if smooth and len(points) > 2 else 'linear'
-
-    # create interpolation function between points
-    interpolation = interp1d(accumulated, points, kind=kind, axis=0)
+    interpolation, total_length = polyline(points, smooth)
 
     samples = sampling_function(total_length)
     return interpolation(samples)
