@@ -49,5 +49,7 @@ def motif_to_points_on_shape(shape: Function2D, direction: Function2D, motif_pos
     fills = [first_fill] + fills + [last_fill]
 
     # interleave fills and motifs
-    combined = [i for i in itertools.chain.from_iterable(itertools.zip_longest(fills, motifs)) if i is not None]
+    combined = [i for i in itertools.chain.from_iterable(itertools.zip_longest(fills, motifs)) if
+                i is not None and len(i) > 0]
+
     return np.concatenate(combined)
