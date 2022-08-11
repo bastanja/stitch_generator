@@ -1,7 +1,5 @@
 from typing import Tuple
 
-import numpy as np
-
 from stitch_generator.collection.functions.functions_1d import half_circle
 from stitch_generator.collection.sampling.tatami_sampling import tatami_3_1
 from stitch_generator.collection.stitch_effects.underlays import underlay_contour_zigzag
@@ -12,11 +10,10 @@ from stitch_generator.functions.functions_2d import constant_direction
 from stitch_generator.sampling.sample_by_length import sample_by_length, sampling_by_length_with_offset, regular
 from stitch_generator.sampling.sampling_modifiers import add_end, add_start, alternate_direction
 from stitch_generator.shapes.line import line
-from stitch_generator.stitch_effects.path_effects.contour import contour_along, contour
 from stitch_generator.stitch_effects.path_effects.meander import meander
 from stitch_generator.stitch_effects.path_effects.zigzag import zigzag, double_zigzag
 from stitch_generator.stitch_operations.connect import connect
-from stitch_generator.stitch_operations.rotate import rotate_by_degrees, rotate_90
+from stitch_generator.stitch_operations.rotate import rotate_90
 
 
 def satin_ellipse(width: float, height: float, stitch_length: float, pull_compensation: float = 0,
@@ -31,7 +28,7 @@ def satin_ellipse(width: float, height: float, stitch_length: float, pull_compen
                           underlay_effect=underlay_effect, top_effect=zigzag_effect)
 
 
-def satin_circle(diameter: float, stitch_length: float, pull_compensation: float = 0, underlay_inset: float = 0.5,
+def satin_circle(diameter: float, stitch_length: float = 3, pull_compensation: float = 0, underlay_inset: float = 0.5,
                  underlay_spacing: float = 1.5, satin_spacing: float = 0.2, return_to_start: bool = True):
     return satin_ellipse(width=diameter, height=diameter, stitch_length=stitch_length,
                          pull_compensation=pull_compensation, underlay_inset=underlay_inset,
@@ -39,7 +36,7 @@ def satin_circle(diameter: float, stitch_length: float, pull_compensation: float
                          return_to_start=return_to_start)
 
 
-def tatami_ellipse(width: float, height: float, stitch_length: float, pull_compensation: float = 0,
+def tatami_ellipse(width: float, height: float, stitch_length: float = 3, pull_compensation: float = 0,
                    underlay_inset: float = 0.5, underlay_spacing: float = 1.5, satin_spacing: float = 0.2,
                    return_to_start: bool = False):
     # create stitch effects
