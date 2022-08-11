@@ -13,6 +13,7 @@ from stitch_generator.sampling.sampling_modifiers import free_start_end, remove_
 from stitch_generator.shapes.circle import circle
 from stitch_generator.shapes.spiral import spiral
 from stitch_generator.stitch_effects.shape_effects.motif_to_points import motif_to_points
+from stitch_generator.stitch_operations.rotate import rotate_90
 
 
 class Design(EmbroideryDesign):
@@ -52,6 +53,7 @@ class Design(EmbroideryDesign):
 
         dot = satin_circle(diameter=parameters.dot_diameter, stitch_length=parameters.stitch_length,
                            pull_compensation=0.1 * parameters.dot_diameter, return_to_start=True)
+        dot = rotate_90(dot)
         motif_gen = repeat_motif_mirrored(dot - dot[0])
 
         sampling = free_start_end(parameters.start_spacing, parameters.end_spacing, regular(parameters.dot_spacing))
