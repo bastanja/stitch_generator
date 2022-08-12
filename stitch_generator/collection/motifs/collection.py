@@ -2,6 +2,8 @@ import numpy as np
 
 from stitch_generator.functions.ensure_shape import ensure_2d_shape
 from stitch_generator.sampling.sample_by_number import sampling_by_number
+from stitch_generator.sampling.sampling_modifiers import remove_end
+from stitch_generator.shapes.circle import circle
 from stitch_generator.shapes.line import line
 from stitch_generator.stitch_effects.path_effects.zigzag import zigzag_between
 from stitch_generator.stitch_operations.rotate import rotate_90
@@ -58,3 +60,10 @@ def line_motif(length: float, repetitions: int):
 def overlock_stitch_motif(width: float, height: float, loop_ratio: float):
     stem_height = height * loop_ratio
     return np.array([(0, height), (0, 0), (width, 0), (width / 10, height - stem_height), (0, height)])
+
+
+def star_motif(num_spikes: int, inner_radius: float, outer_radius: float):
+    inner = circle(inner_radius)
+    outer = circle(outer_radius)
+    result = zigzag_between(outer, inner, spacing_function=remove_end(sampling_by_number((num_spikes * 2))), length=1)
+    return np.vstack((result[-1], result))
