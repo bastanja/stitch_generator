@@ -15,7 +15,8 @@ def smooth(stitches: np.ndarray, iterations: int, neighbor_weight: float = 0.5, 
     Returns:
         The smoothed stitches
     """
-    assert len(stitches) > 2, "smooth requires at least three stitches"
+    if len(stitches) < 3:
+        return stitches
 
     closed = np.allclose(stitches[0], stitches[-1])
 
