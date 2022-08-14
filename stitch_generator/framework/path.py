@@ -66,10 +66,10 @@ class Path:
         Returns:
             A Path where the function_modifier is applied to all members
         """
-        shape = function_modifier(function=self.shape)
-        direction = function_modifier(function=self.direction)
-        width = function_modifier(function=self.width)
-        stroke_alignment = function_modifier(function=self.stroke_alignment)
+        shape = function_modifier(self.shape)
+        direction = function_modifier(self.direction)
+        width = function_modifier(self.width)
+        stroke_alignment = function_modifier(self.stroke_alignment)
         return Path(shape, direction, width, stroke_alignment)
 
     @property
