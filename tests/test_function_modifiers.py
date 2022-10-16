@@ -8,13 +8,13 @@ from stitch_generator.collection.functions.functions_1d import linear_0_1
 from stitch_generator.functions.function_modifiers import repeat, reflect, wrap, nearest, chain, inverse, mix, add, \
     multiply, split
 from stitch_generator.functions.functions_1d import smootherstep, arc, square, sinus
-from stitch_generator.shapes.bezier import bezier
+from stitch_generator.shapes.bezier import bezier_shape
 from tests.functions import all_functions
 
 offsets = [t / 10 for t in range(10)]
 
 test_functions_positive = (linear_0_1, arc, smootherstep)
-test_functions = (bezier(((0, 0), (10, -10), (20, 0))), square, sinus)
+test_functions = (bezier_shape(((0, 0), (10, -10), (20, 0))), square, sinus)
 
 
 def test_repeat():

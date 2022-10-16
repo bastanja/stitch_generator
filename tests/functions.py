@@ -5,10 +5,10 @@ from stitch_generator.functions.functions_1d import linear_interpolation, consta
     smootherstep, circular_arc, sinus, cosinus, pchip_interpolation
 from stitch_generator.functions.functions_2d import function_2d
 from stitch_generator.functions.noise import noise
-from stitch_generator.shapes.bezier import bezier
-from stitch_generator.shapes.circle import circle
-from stitch_generator.shapes.line import line
-from stitch_generator.shapes.spiral import spiral
+from stitch_generator.shapes.bezier import bezier_shape
+from stitch_generator.shapes.circle import circle_shape
+from stitch_generator.shapes.line import line_shape
+from stitch_generator.shapes.spiral import spiral_shape
 
 functions_1d_positive = {
     'linear_0_1': linear_0_1,
@@ -42,13 +42,14 @@ functions_1d_negative = {
 functions_1d = {**functions_1d_positive, **functions_1d_negative}
 
 functions_2d = {
-    'circle': circle(),
-    'line': line((0, 0), (10, 0)),
-    'spiral': spiral(10, 20, 2),
-    'bezier': bezier(((0, 0), (10, -10), (20, 0))),
+    'circle': circle_shape(),
+    'line': line_shape((0, 0), (10, 0)),
+    'spiral': spiral_shape(10, 20, 2),
+    'bezier': bezier_shape(((0, 0), (10, -10), (20, 0))),
     '2dconst': function_2d(constant(1), constant(0)),
-    'bezier_seq': function_sequence((bezier(((0, 0), (10, -10), (20, 0))), bezier(((20, 0), (30, 10), (40, 0)))),
-                                    (1, 1))
+    'bezier_seq': function_sequence(
+        (bezier_shape(((0, 0), (10, -10), (20, 0))), bezier_shape(((20, 0), (30, 10), (40, 0)))),
+        (1, 1))
 }
 
 all_functions = {**functions_1d, **functions_2d}

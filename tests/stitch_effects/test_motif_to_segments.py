@@ -3,7 +3,6 @@ import itertools
 import numpy as np
 
 from stitch_generator.framework.path import Path
-from stitch_generator.functions.functions_2d import constant_direction
 from stitch_generator.sampling.sample_by_fixed_length import sampling_by_fixed_length
 from stitch_generator.sampling.sample_by_length import regular
 from stitch_generator.sampling.sampling_modifiers import remove_end, remove_start
@@ -15,11 +14,7 @@ v_motif_array = np.array(v_motif)
 
 
 def line_path(origin, to) -> Path:
-    shape = line(origin, to)
-    delta = np.asarray(to, dtype=float) - np.asarray(origin)
-    length = np.linalg.norm(delta)
-    direction_vector = np.array([delta[1] / length, -delta[0] / length]) if length > 0 else np.array((0, 1))
-    direction = constant_direction(direction_vector[0], direction_vector[1])
+    shape, direction = line(origin, to)
     return Path(shape=shape, direction=direction)
 
 

@@ -3,8 +3,8 @@ import numpy as np
 from stitch_generator.functions.function_sequence import function_sequence
 from stitch_generator.functions.functions_1d import constant, linear_interpolation
 from stitch_generator.sampling.sample_by_number import sample_by_number
-from stitch_generator.shapes.bezier import bezier
-from stitch_generator.shapes.line import line
+from stitch_generator.shapes.bezier import bezier_shape
+from stitch_generator.shapes.line import line_shape
 
 
 def test_function_sequence_1d():
@@ -33,7 +33,7 @@ def test_function_sequence_1d():
 
 def test_function_sequence_2d():
     t = sample_by_number(5)
-    functions = (line((0, 0), (0, 10)), line((0, 10), (10, 10)), line((10, 10), (20, 10)))
+    functions = (line_shape((0, 0), (0, 10)), line_shape((0, 10), (10, 10)), line_shape((10, 10), (20, 10)))
     sequence = function_sequence(functions)
     single_value = sequence(0.0)
     array_values = sequence(t)
@@ -53,7 +53,7 @@ def test_function_sequence_bezier():
     t = sample_by_number(5)
     points_1 = ((0, 0), (10, 10), (20, 10))
     points_2 = ((20, 10), (30, -10), (40, 0))
-    functions = (bezier(points_1), bezier(points_2))
+    functions = (bezier_shape(points_1), bezier_shape(points_2))
     sequence = function_sequence(functions)
     single_value = sequence(0.0)
     array_values = sequence(t)

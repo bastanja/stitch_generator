@@ -1,7 +1,6 @@
 import itertools
 
 import numpy as np
-
 from stitch_generator.collection.functions.functions_1d import linear_0_1
 from stitch_generator.collection.motifs.collection import zigzag_rectangle
 from stitch_generator.collection.motifs.square_spiral import square_spiral
@@ -14,8 +13,8 @@ from stitch_generator.sampling.sample_by_length import regular
 from stitch_generator.sampling.sample_by_number import sample_by_number
 from stitch_generator.sampling.sample_by_pattern import pattern_from_spaces, sampling_by_pattern
 from stitch_generator.sampling.sampling_modifiers import alternate_direction, add_end, add_start, free_start, free_end
-from stitch_generator.shapes.circle import circle
-from stitch_generator.shapes.line import line
+from stitch_generator.shapes.circle import circle_shape
+from stitch_generator.shapes.line import line_shape
 from stitch_generator.stitch_effects.path_effects.contour import contour
 from stitch_generator.stitch_effects.path_effects.lattice import lattice
 from stitch_generator.stitch_effects.path_effects.meander import meander
@@ -126,7 +125,7 @@ def stitch_effect_tile_motif_zigzag(path):
     # create motif for tiling
     motif_translation = (0.5, 0.5)  # move it into the range [0,1] in x and y direction
     motif = zigzag_rectangle(width=1, height=1, repetitions=8, horizontal=False) + motif_translation
-    motif = np.concatenate((line((0, 1), (1, 0))(sample_by_number(4)[:-1]), motif))
+    motif = np.concatenate((line_shape((0, 1), (1, 0))(sample_by_number(4)[:-1]), motif))
 
     # create stitch effect
     effect = chain(tile_motif(motif=motif, motif_length=5), remove_duplicates)
@@ -197,7 +196,7 @@ def stitch_effect_motif_to_points(path):
 
 
 def stitch_effect_motif_to_segments(path):
-    motif = repeat(0.5, circle(radius=7))(sample_by_number(8))
+    motif = repeat(0.5, circle_shape(radius=7))(sample_by_number(8))
     position_sampling = free_start(10, free_end(10, regular(25)))
     effect = motif_to_segments(motif_position_sampling=position_sampling, line_sampling=regular(3),
                                motif_generator=itertools.repeat(motif), motif_length=14)

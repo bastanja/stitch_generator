@@ -4,11 +4,11 @@ from stitch_generator.sampling.resample import resample, resample_with_sampling_
 from stitch_generator.sampling.sample_by_fixed_length import sampling_by_fixed_length
 from stitch_generator.sampling.sample_by_length import sampling_by_length
 from stitch_generator.sampling.sample_by_number import sample_by_number, sampling_by_number
-from stitch_generator.shapes.line import line
+from stitch_generator.shapes.line import line, line_shape
 
 
 def test_resample():
-    f = line((0, 0), (10, 0))
+    f = line_shape((0, 0), (10, 0))
     stitches = f(sample_by_number(10))
 
     resampled = resample(stitches, 2)
@@ -29,7 +29,7 @@ def sampling_functions():
 def test_resample_with_sampling_function():
     total_length = 10
 
-    f = line((0, 0), (total_length, 0))
+    f = line_shape((0, 0), (total_length, 0))
     stitches = f(sample_by_number(100))
 
     for sampling_function in iter(sampling_functions()):

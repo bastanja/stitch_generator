@@ -6,7 +6,6 @@ from stitch_generator.collection.stitch_effects.underlays import underlay_contou
 from stitch_generator.framework.path import Path
 from stitch_generator.functions.function_modifiers import scale
 from stitch_generator.functions.functions_1d import constant
-from stitch_generator.functions.functions_2d import constant_direction
 from stitch_generator.sampling.sample_by_length import sample_by_length, sampling_by_length_with_offset, regular
 from stitch_generator.sampling.sampling_modifiers import add_end, add_start, alternate_direction
 from stitch_generator.shapes.line import line
@@ -60,8 +59,8 @@ def tatami_circle(diameter: float, stitch_length: float, pull_compensation: floa
 
 def ellipse_path(width: float, height: float):
     half_length = height / 2
-    return Path(shape=line((0, -half_length), (0, half_length)), direction=constant_direction(1, 0),
-                width=scale(width, half_circle), stroke_alignment=constant(0.5))
+    shape, direction = line((0, -half_length), (0, half_length))
+    return Path(shape=shape, direction=direction, width=scale(width, half_circle), stroke_alignment=constant(0.5))
 
 
 def _paths(width: float, height: float, underlay_inset: float, pull_compensation: float) -> Tuple[Path, Path]:

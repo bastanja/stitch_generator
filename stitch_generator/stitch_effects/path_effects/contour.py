@@ -6,7 +6,7 @@ from stitch_generator.framework.path import Path, get_boundaries
 from stitch_generator.framework.stitch_effect import StitchEffect
 from stitch_generator.framework.types import Array2D
 from stitch_generator.functions.function_modifiers import inverse
-from stitch_generator.shapes.line import line
+from stitch_generator.shapes.line import line_shape
 from stitch_generator.stitch_effects.shape_effects.running_stitch import running_stitch_on_shape
 
 
@@ -27,9 +27,9 @@ def contour_between(boundary_left, boundary_right, stitch_length: float) -> Arra
 
     # four sides of the contour
     shapes = [boundary_left,
-              line(left_1, right_1) if not np.allclose(left_1, right_1) else None,
+              line_shape(left_1, right_1) if not np.allclose(left_1, right_1) else None,
               inverse(boundary_right),
-              line(right_0, left_0) if not np.allclose(left_0, right_0) else None]
+              line_shape(right_0, left_0) if not np.allclose(left_0, right_0) else None]
 
     # collect stitches for all four sides
     stitches = [running_stitch(shape) for shape in shapes if shape is not None]

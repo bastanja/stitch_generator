@@ -1,39 +1,32 @@
 import itertools
+from typing import Sequence, Tuple
 
+from stitch_generator.framework.types import Function2D
 from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.function_modifiers import repeat, multiply, inverse, shift
 from stitch_generator.functions.function_sequence import function_sequence
 from stitch_generator.functions.functions_2d import constant_direction
-from stitch_generator.shapes.circle import circle
-from stitch_generator.shapes.ellipse import ellipse
+from stitch_generator.shapes.ellipse import ellipse_shape
 from stitch_generator.shapes.line import line
-from stitch_generator.stitch_operations.rotate import rotate_270
 
 
-def corner(x, y, w, h):
-    result = repeat(0.25, ellipse(w, h, center=(x - w, y - h)))
-    return result
+def simple_rounded_rect(width: float, height: float, corner_radius) -> Tuple[Function2D, Function2D]:
+    return rounded_rect(width, height, [(corner_radius, corner_radius)] * 4)
 
 
-def rounded_rect_with_radius(width: float, height: float, corner_radius_x: float, corner_radius_y: float):
-    return rounded_rect(width, height, [(corner_radius_x, corner_radius_y)] * 4)
+def rounded_rect_with_corner_radii(width: float, height: float, corner_radii: Sequence[float]) \
+        -> Tuple[Function2D, Function2D]:
+    return rounded_rect(width, height, [(r, r) for r in corner_radii])
 
 
 def rounded_rect(width: float, height: float, corner_radii):
-    corners = [corner(width / 2, height / 2, *radius) for radius in corner_radii]
-
-    corner_scale_factors = itertools.cycle((lambda x: x, inverse))
-    scale_x = (1, -1, -1, 1)
-    scale_y = (1, 1, -1, -1)
-    corners = [d(multiply(c, constant_direction(x, y))) for d, c, x, y in
-               zip(corner_scale_factors, corners, scale_x, scale_y)]
-    connections = [line(a(1), b(0)) for a, b in zip([corners[-1]] + corners[:-1], corners)]
-    functions = list(itertools.chain.from_iterable(zip(connections, corners)))
-
-    return function_sequence(functions)
+    shapes = _shape_parts(width=width, height=height, corner_radii=corner_radii)
+    directions = _direction_parts(corner_radii=corner_radii)
+    lengths = [estimate_length(s) for s in shapes]
+    return function_sequence(shapes, lengths), function_sequence(directions, lengths)
 
 
-def rounded_rect_with_direction(width: float, height: float, corner_radii):
+def _shape_parts(width: float, height: float, corner_radii):
     # alternating inverse of function direction
     corner_forward_backward = itertools.cycle((lambda function: function, inverse))
 
@@ -42,23 +35,27 @@ def rounded_rect_with_direction(width: float, height: float, corner_radii):
     scale_y = (1, 1, -1, -1)
 
     # corner functions
-    corners = [corner(width / 2, height / 2, *radius) for radius in corner_radii]
+    corners = [_corner(width / 2, height / 2, *radius) for radius in corner_radii]
     corners = [d(multiply(c, constant_direction(x, y))) for d, c, x, y in
                zip(corner_forward_backward, corners, scale_x, scale_y)]
 
-    corner_directions = [shift(i, (repeat(0.25, circle(), mode='wrap'))) for i in range(4)]
-
     # connecting line functions
     connection_points = [(a(1), b(0)) for a, b in zip([corners[-1]] + corners[:-1], corners)]
-
-    connections = [line(a, b) for a, b in connection_points]
-    connection_directions = [(b - a) for a, b in connection_points]
-    connection_directions = [rotate_270(x)[0] for x in connection_directions]
-    connection_directions = [constant_direction(d[0], d[1], normalized=True) for d in connection_directions]
+    connections = [line(a, b)[0] for a, b in connection_points]
 
     shapes = list(itertools.chain.from_iterable(zip(connections, corners)))
+
+    return shapes
+
+
+def _direction_parts(corner_radii):
+    corner_directions = [(repeat(0.25, ellipse_shape(rx=x, ry=y), mode='wrap')) for x, y in corner_radii]
+    corner_directions = [shift(i, f) for i, f in zip(range(4), corner_directions)]
+    connection_directions = [constant_direction(x, y) for x, y in ((1, 0), (0, 1), (-1, 0), (0, -1))]
     directions = list(itertools.chain.from_iterable(zip(connection_directions, corner_directions)))
+    return directions
 
-    lengths = [estimate_length(s) for s in shapes]
 
-    return function_sequence(shapes, lengths), function_sequence(directions, lengths)
+def _corner(x, y, w, h):
+    result = repeat(0.25, ellipse_shape(w, h, center=(x - w, y - h)))
+    return result
