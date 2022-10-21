@@ -15,7 +15,7 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 requires-python = ">=3.7"
-dependencies = ["pyembroidery", "scipy", "numpy", "noise"]
+dependencies = ["scipy", "numpy", "noise"]
 
 [project.urls]
 "Homepage" = "https://github.com/bastanja/stitch_generator"
