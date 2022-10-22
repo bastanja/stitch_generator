@@ -4,7 +4,7 @@ from scipy.interpolate import interp1d
 from stitch_generator.framework.types import SamplingFunction
 from stitch_generator.functions.estimate_length import accumulate_lengths
 from stitch_generator.sampling.sample_by_length import sample_by_length, sampling_by_length
-from stitch_generator.shapes.line import line
+from stitch_generator.shapes.line import line_shape
 
 
 def polyline(points, smooth: bool = False):
@@ -41,8 +41,10 @@ def resample_with_sampling_function(points, sampling_function: SamplingFunction,
 
 def resample_by_segment(points, segment_length):
     result = []
+    points = np.asarray(points)
     for p1, p2 in zip(points, points[1:]):
-        f = line(p1, p2)
-        result.append(f(sample_by_length(np.linalg.norm(p2 - p1), segment_length)[:-1]))
+        shape = line_shape(p1, p2)
+        samples = sample_by_length(np.linalg.norm(p2 - p1), segment_length)[:-1]
+        result.append(shape(samples))
     result.append([points[-1]])
     return np.concatenate(result)
