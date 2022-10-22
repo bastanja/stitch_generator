@@ -1,10 +1,10 @@
 import numpy as np
 
-from stitch_generator.sampling.resample import resample, resample_with_sampling_function
+from stitch_generator.sampling.resample import resample, resample_with_sampling_function, resample_by_segment
 from stitch_generator.sampling.sample_by_fixed_length import sampling_by_fixed_length
 from stitch_generator.sampling.sample_by_length import sampling_by_length
 from stitch_generator.sampling.sample_by_number import sample_by_number, sampling_by_number
-from stitch_generator.shapes.line import line, line_shape
+from stitch_generator.shapes.line import line_shape
 
 
 def test_resample():
@@ -36,3 +36,13 @@ def test_resample_with_sampling_function():
         direct_samples = f(sampling_function(total_length))
         resampled = resample_with_sampling_function(stitches, sampling_function)
         assert np.allclose(direct_samples, resampled)
+
+
+def test_resample_by_segment():
+    polyline = ((0, 50), (0, 0), (50, 0))
+    result = resample_by_segment(points=polyline, segment_length=10)
+    length = result.shape[0]
+    assert length == 11
+    assert np.allclose(result[0], polyline[0])
+    assert np.allclose(result[5], polyline[1])
+    assert np.allclose(result[-1], polyline[-1])
