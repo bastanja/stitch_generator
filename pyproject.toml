@@ -17,5 +17,11 @@ classifiers = [
 requires-python = ">=3.7"
 dependencies = ["scipy", "numpy", "noise"]
 
+[project.optional-dependencies]
+test = [
+  "pytest",
+  "coverage",
+]
+
 [project.urls]
 "Homepage" = "https://github.com/bastanja/stitch_generator"
