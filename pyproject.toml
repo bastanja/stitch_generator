@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "stitch_generator"
-version = "0.0.7"
+version = "0.0.8"
 description = "Stitch generator for machine embroidery"
 readme = "README.md"
 authors = [{ name = "Tanja Bast", email = "tanja.s.bast@gmail.com" }]
