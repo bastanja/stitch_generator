@@ -41,11 +41,11 @@ regular = sampling_by_length
 def regular_even(segment_length: float) -> SamplingFunction:
     """
     Returns a sampling function which spaces the samples equally with a segment length that is close to segment_length.
-    Ensures that the number of segments is an even number.
+    Ensures that the number of samples is an even number.
     """
 
     def f(total_length: float):
-        number_of_segments = (round(total_length / (2 * segment_length)) * 2)
+        number_of_segments = (round(total_length / (2 * segment_length)) * 2) + 1
         return sample_by_number(number_of_segments=number_of_segments)
 
     return f
@@ -54,11 +54,11 @@ def regular_even(segment_length: float) -> SamplingFunction:
 def regular_odd(segment_length: float) -> SamplingFunction:
     """
     Returns a sampling function which spaces the samples equally with a segment length that is close to segment_length.
-    Ensures that the number of segments is an odd (uneven) number.
+    Ensures that the number of samples is an odd (uneven) number.
     """
 
     def f(total_length: float):
-        number_of_segments = (round(total_length / (2 * segment_length)) * 2) + 1
+        number_of_segments = (round(total_length / (2 * segment_length)) * 2)
         return sample_by_number(number_of_segments=number_of_segments)
 
     return f
