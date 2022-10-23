@@ -140,6 +140,9 @@ def get_inset_path(path: Path, inset: float) -> Path:
 
 
 def cut_start_end(path: Path, inset: float) -> Path:
+    # if the shape is too short to subtract the inset, return the path itself
+    if path.length < 2 * inset:
+        return path
     cut = inset / path.length
     return path.apply_modifier(lambda function: repeat(1 - 2 * cut, (shift(cut, function))))
 
