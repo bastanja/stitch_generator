@@ -7,26 +7,6 @@ from stitch_generator.functions.ensure_shape import ensure_1d_shape
 from stitch_generator.functions.functions_1d import linear_interpolation
 
 
-def free_start_end(start_length: float, end_length: float, sampling_function: SamplingFunction):
-    """
-    Returns samples where the start and end part are free of samples. Fills the inner part with samples from the
-    sampling function
-    """
-
-    def f(total_length: float):
-        cut_length = start_length + end_length
-        if total_length > cut_length:
-            start_offset = linear_interpolation(0, 1, 0, total_length)(start_length)
-            sampled_part = total_length - cut_length
-            scale = sampled_part / total_length
-            samples = sampling_function(total_length - cut_length) * scale
-            return samples + start_offset
-        else:
-            return np.array((), ndmin=2)
-
-    return f
-
-
 def alternate_direction(sampling_function: SamplingFunction):
     """
     Returns the samples from the sampling_function in alternating direction by reversing it on every second call

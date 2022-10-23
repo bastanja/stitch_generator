@@ -5,6 +5,7 @@ import numpy as np
 from stitch_generator.functions.ensure_shape import ensure_1d_shape
 from stitch_generator.sampling.alignment_to_offset import alignment_to_offset
 from stitch_generator.sampling.sample_by_fixed_length import sample_by_fixed_length
+from stitch_generator.sampling.sample_by_number import sample_by_number
 
 
 def sampling_by_pattern(pattern,
@@ -13,11 +14,6 @@ def sampling_by_pattern(pattern,
                         offset: float):
     return partial(sample_by_pattern, pattern=pattern, pattern_length=pattern_length, alignment=alignment,
                    offset=offset)
-
-
-def apply_pattern_offset(pattern, offset):
-    # Make sure the pattern stays in the range between 0 and 1, sort the pattern in ascending order
-    return np.sort((pattern + offset) % 1)
 
 
 def sample_by_pattern(total_length: float,
@@ -37,8 +33,8 @@ def sample_by_pattern(total_length: float,
     Returns:
         The samples which subdivide the total length in segments
     """
-    if np.isclose(total_length, 0):
-        return ensure_1d_shape([0, 1])
+    if np.isclose(total_length, 0)  or np.isclose(pattern_length, 0):
+        return sample_by_number(1)
 
     # The length of the pattern relative to the total length
     relative_pattern_length = pattern_length / total_length
@@ -48,7 +44,7 @@ def sample_by_pattern(total_length: float,
                                                    offset=offset, alignment=alignment)
 
     # Apply the pattern offset
-    pattern = apply_pattern_offset(np.asarray(pattern, dtype=float), effective_pattern_offset)
+    pattern = _apply_pattern_offset(np.asarray(pattern, dtype=float), effective_pattern_offset)
 
     # Scale the pattern relative to the total length
     pattern *= relative_pattern_length
@@ -85,3 +81,8 @@ def pattern_from_spaces(spaces, with_start, with_end):
     if not with_end:
         positions = positions[:-1]
     return positions
+
+
+def _apply_pattern_offset(pattern, offset):
+    # Make sure the pattern stays in the range between 0 and 1, sort the pattern in ascending order
+    return np.sort((pattern + offset) % 1)
