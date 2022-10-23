@@ -9,12 +9,29 @@ from stitch_generator.functions.function_modifiers import mix, inverse
 from stitch_generator.functions.functions_1d import constant
 from stitch_generator.functions.motif_generators import repeat_motif, alternate_direction
 from stitch_generator.sampling.sample_by_length import sampling_by_length, sampling_by_length_with_offset, regular
-from stitch_generator.sampling.sampling_modifiers import remove_end, free_start_end, add_end, add_start
+from stitch_generator.sampling.sampling_modifiers import remove_end, add_end, add_start, free_end, free_start
 from stitch_generator.stitch_effects.path_effects.tile_motif import tile_motif
 from stitch_generator.stitch_effects.shape_effects.motif_chain import motif_chain
 from stitch_generator.stitch_effects.shape_effects.motif_to_points import motif_to_points
 from stitch_generator.stitch_effects.shape_effects.motif_to_segments import motif_to_segments
 from stitch_generator.stitch_operations.rotate import rotate_by_degrees, rotate_270
+
+
+def decorative_stitches_collection(spacing: float = 2.5, stitch_width: float = 5, pattern_spacing: float = 20):
+    yield alternating_triangles(spacing=spacing, line_length=4, width=stitch_width, repetitions=3)
+    yield arrow_chain(arrow_width=stitch_width, arrow_length=2, arrow_spacing=spacing)
+    yield chevron_stitch(spacing=spacing * 2, line_length=3, width=stitch_width, repetitions=5)
+    yield cretan_stitch(spacing=spacing * 2, stitch_width=0.1, stitch_length=3, repetitions=4, zigzag_width=2)
+    yield cretan_stitch(spacing=spacing * 2, stitch_width=0.1, stitch_length=3.5, repetitions=4)
+    yield e_stitch(spacing=spacing, line_length=4, stitch_length=10, angle=45)
+    yield feather_stitch(spacing=spacing, stitch_width=0, stitch_length=3.5, repetitions=2)
+    yield overlock_stitch(length=spacing, width=stitch_width)
+    yield rhomb_motif_stitch(spacing=spacing, width=stitch_width, length=4)
+    yield stem_stitch(spacing=spacing, stitch_width=0.6, stitch_length=5, repetitions=5, angle=-25)
+    yield stem_stitch(spacing=spacing, stitch_width=stitch_width, stitch_length=4, repetitions=5, angle=0)
+    yield three_arrows(arrow_spacing=2, group_spacing=pattern_spacing, start_end_spacing=pattern_spacing / 2,
+                       stitch_length=3)
+    yield x_motif_stitch(spacing=spacing, width=stitch_width, length=4)
 
 
 def alternating_triangles(spacing: float, line_length: float, width: float, repetitions: int):
@@ -198,7 +215,7 @@ def three_arrows(arrow_spacing: float, group_spacing: float, start_end_spacing: 
     """
     single_arrow = np.array(((0, 0.0), (-3, -3), (0, 0), (-3, 3), (0, 0)))
     combined = np.concatenate((single_arrow, single_arrow + (arrow_spacing, 0), single_arrow + (arrow_spacing * 2, 0)))
-    motif_sampling = free_start_end(start_end_spacing, start_end_spacing, regular(group_spacing))
+    motif_sampling = free_start(start_end_spacing, free_end(start_end_spacing, regular(group_spacing)))
     return motif_to_segments(motif_sampling, regular(stitch_length), repeat_motif(combined), motif_length=3)
 
 
