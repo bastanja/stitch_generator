@@ -89,36 +89,3 @@ array([[  1.,   5.],
        [ 99.,   5.],
        [100.,  -5.]])
 ```
-
-## Writing Embroidery Files
-Stitch Generator uses pyembroidery to export the generated stitch coordinates to machine embroidery
-files.
-
-To write stitches to an embroidery file, add them to an EmbroideryPattern and export the pattern:
-
-``` python
-from stitch_generator.framework.embroidery_pattern import EmbroideryPattern
-from stitch_generator.file_io.embroidery_export import export_pattern
-
-pattern = EmbroideryPattern()
-pattern.add_stitches(stitches)
-export_pattern(pattern, "embroidery.dst")
-```
-
-The function `export_pattern` expects a file name with a file extension supported by pyembroidery.
-pyembroidery will select the correct writer for the file format automatically.
-
-
-### Embroidery file formats
-
-See `stitch_generator.file_io.embroidery_export.writable_formats` for a list of supported file
-formats:
-
-``` python
-from stitch_generator.file_io.embroidery_export import writable_formats
-
-print(writable_formats())
-```
-
-Or use `pyembroidery.EmbPattern.supported_formats()` directly for a more detailed list of file
-formats.
