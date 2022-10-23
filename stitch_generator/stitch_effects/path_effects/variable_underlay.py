@@ -18,6 +18,10 @@ def variable_underlay(stroke_spacing: float, sampling_function: SamplingFunction
 
 
 def variable_underlay_along(path: Path, stroke_spacing: float, sampling_function: SamplingFunction) -> Array2D:
+    # if the shape has no length, return start and end point
+    if np.isclose(path.length, 0):
+        return path.shape(sample_by_number(1))
+
     pos1 = add(path.shape, multiply(path.direction, multiply(path.width, path.stroke_alignment)))
     width1 = multiply(path.width, path.stroke_alignment)
     path1 = Path(shape=pos1, direction=path.direction, width=width1, stroke_alignment=constant(0))
