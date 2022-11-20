@@ -18,19 +18,26 @@ stitch effects.
 
 ## Decorative Stitches
 
-Stitch Generator provides some pre-defined stitch effects called decorative stitches. These are mostly created with
-the stitch effects motif_chain or motif_to_points and a fixed motif.
+Stitch Generator provides some pre-defined stitch effects called decorative stitches. These are
+mostly created with the stitch effects motif_chain or motif_to_points and a fixed motif.
 
-![decorative stitches](doc/images/list_of_decorative_stitches.svg "Examples of decorative stitches" )
+![decorative stitches](doc/images/list_of_decorative_stitches.svg "Examples of decorative stitches")
 
-The decorative stitches demonstrate how to use stitch effects and can be copied and adapted in order to create own
-stitch effects.
+The decorative stitches demonstrate how to use stitch effects and can be copied and adapted in order
+to create own stitch effects.
 
-See [List of Decorative Stitches](doc/list_of_decorative_stitches.md) for an overview over the available decorative
-stitches.
+See [List of Decorative Stitches](doc/list_of_decorative_stitches.md) for an overview over the
+available decorative stitches.
 
-## Satin Patterns
-Stitch generator supports various stitch patterns for satin stitches.
+## Stitch Patterns
+Stitch Generator provides multiple sampling functions that can be used to create stitch patterns.
+
+In this example sampling functions are used in combination with a meander stitch effect:
+
+![sampling](doc/images/meander_sampling_example.svg "Examples of decorative stitches")
+
+See [Sampling Functions](doc/sampling_functions.md) for an overview over the available sampling
+functions.
 
 # Usage
 ## Creating Paths
