@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" baseProfile="full" height="10mm" version="1.1" viewBox="0,0,60,10" width="60mm">
+    <defs>
+        <style type="text/css"><![CDATA[
+.stitch_line {
+    stroke-width: 0.3;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    fill: none;
+}
+.path_center_line {
+    stroke-width: 0.2;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    fill: none;
+    stroke:#333;
+}
+.path_contour {
+    stroke: #ddd;
+    fill-opacity: 1;
+    fill: #eee;
+    stroke-width: 0.3;
+}
+.text{
+    text-anchor: middle;
+    dominant-baseline: middle;
+    font-family: sans-serif;
+    font-size: 1.5mm;
+}
+.smalltext{
+    text-anchor: middle;
+    dominant-baseline: middle;
+    font-family: sans-serif;
+    font-size: 1mm;
+}
+.color_0 {
+    stroke:#148983;
+}
+.dot_0 {
+    marker-start:url(#dot_0);
+    marker-mid:url(#dot_0);
+    marker-end:url(#dot_0);
+}
+]]></style>
+        <marker id="dot_0" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
+            <circle cx="1.5" cy="1.5" fill="#148983" r="1.5"/>
+        </marker>
+    </defs>
+    <g>
+        <path class="stitch_line color_0 dot_0" d="M 4.500, 7.500  L 8.500, 6.500  L 4.500, 5.500  L 8.500, 4.500  L 4.500, 3.500  L 8.500, 2.500  L 7.441, 7.500  L 11.441, 6.500  L 7.441, 5.500  L 11.441, 4.500  L 7.441, 3.500  L 11.441, 2.500  L 10.382, 7.500  L 14.382, 6.500  L 10.382, 5.500  L 14.382, 4.500  L 10.382, 3.500  L 14.382, 2.500  L 13.324, 7.500  L 17.324, 6.500  L 13.324, 5.500  L 17.324, 4.500  L 13.324, 3.500  L 17.324, 2.500  L 16.265, 7.500  L 20.265, 6.500  L 16.265, 5.500  L 20.265, 4.500  L 16.265, 3.500  L 20.265, 2.500  L 19.206, 7.500  L 23.206, 6.500  L 19.206, 5.500  L 23.206, 4.500  L 19.206, 3.500  L 23.206, 2.500  L 22.147, 7.500  L 26.147, 6.500  L 22.147, 5.500  L 26.147, 4.500  L 22.147, 3.500  L 26.147, 2.500  L 25.088, 7.500  L 29.088, 6.500  L 25.088, 5.500  L 29.088, 4.500  L 25.088, 3.500  L 29.088, 2.500  L 28.029, 7.500  L 32.029, 6.500  L 28.029, 5.500  L 32.029, 4.500  L 28.029, 3.500  L 32.029, 2.500  L 30.971, 7.500  L 34.971, 6.500  L 30.971, 5.500  L 34.971, 4.500  L 30.971, 3.500  L 34.971, 2.500  L 33.912, 7.500  L 37.912, 6.500  L 33.912, 5.500  L 37.912, 4.500  L 33.912, 3.500  L 37.912, 2.500  L 36.853, 7.500  L 40.853, 6.500  L 36.853, 5.500  L 40.853, 4.500  L 36.853, 3.500  L 40.853, 2.500  L 39.794, 7.500  L 43.794, 6.500  L 39.794, 5.500  L 43.794, 4.500  L 39.794, 3.500  L 43.794, 2.500  L 42.735, 7.500  L 46.735, 6.500  L 42.735, 5.500  L 46.735, 4.500  L 42.735, 3.500  L 46.735, 2.500  L 45.676, 7.500  L 49.676, 6.500  L 45.676, 5.500  L 49.676, 4.500  L 45.676, 3.500  L 49.676, 2.500  L 48.618, 7.500  L 52.618, 6.500  L 48.618, 5.500  L 52.618, 4.500  L 48.618, 3.500  L 52.618, 2.500  L 51.559, 7.500  L 55.559, 6.500  L 51.559, 5.500  L 55.559, 4.500  L 51.559, 3.500  L 55.559, 2.500 "/>
+    </g>
+</svg>

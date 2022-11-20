@@ -1,5 +1,19 @@
 # List of Decorative Stitches
 
+| Name                                            | Example                                                                                                               |
+| :---------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- |
+| [Alternating Triangles](#alternating-triangles) | ![](images/small_decorative_stitch_alternating_triangles.svg)                                                         |
+| [Arrow Chain](#arrow-chain)                     | ![](images/small_decorative_stitch_arrow_chain.svg)                                                                   |
+| [Chevron Stitch](#chevron-stitch)               | ![](images/small_decorative_stitch_chevron_stitch.svg)                                                                |
+| [Cretan Stitch](#cretan-stitch)                 | ![](images/small_decorative_stitch_cretan_stitch_1.svg) <br/> ![](images/small_decorative_stitch_cretan_stitch_2.svg) |
+| [E-Stitch](#e-stitch)                           | ![](images/small_decorative_stitch_e_stitch_1.svg) <br/> ![](images/small_decorative_stitch_e_stitch_2.svg)           |
+| [Feather Stitch](#feather-stitch)               | ![](images/small_decorative_stitch_feather_stitch.svg)                                                                |
+| [Overlock Stitch](#overlock-stitch)             | ![](images/small_decorative_stitch_overlock_stitch.svg)                                                               |
+| [Rhomb Motif Stitch](#rhomb-motif-stitch)       | ![](images/small_decorative_stitch_rhomb_motif_stitch.svg)                                                            |
+| [Stem Stitch](#stem-stitch)                     | ![](images/small_decorative_stitch_stem_stitch_1.svg) <br/> ![](images/small_decorative_stitch_stem_stitch_2.svg)     |
+| [Three Arrows](#three-arrows)                   | ![](images/small_decorative_stitch_three_arrows.svg)                                                                  |
+| [X-Motif Stitch](#x-motif-stitch)               | ![](images/small_decorative_stitch_x_motif_stitch.svg)                                                                |
+
 ## Alternating Triangles
 
 Example:
@@ -122,8 +136,16 @@ effect = stem_stitch(spacing=3, stitch_width=0.6, stitch_length=5, repetitions=5
 stitches = effect(path)
 ```
 
-![Decorative Stitch Stem Stitch](images/decorative_stitch_stem_stitch_1.svg)
+![Decorative Stitch Stem Stitch 1](images/decorative_stitch_stem_stitch_1.svg)
 
+Example:
+```python
+from stitch_generator.collection.stitch_effects.decorative_stitches import stem_stitch
+effect = stem_stitch(spacing=3, stitch_width=5, stitch_length=4, repetitions=5, angle=0)
+stitches = effect(path)
+```
+
+![Decorative Stitch Stem Stitch 2](images/decorative_stitch_stem_stitch_2.svg)
 ## Three Arrows
 
 Example:

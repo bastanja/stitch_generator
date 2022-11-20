@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" baseProfile="full" height="10mm" version="1.1" viewBox="0,0,60,10" width="60mm">
+    <defs>
+        <style type="text/css"><![CDATA[
+.stitch_line {
+    stroke-width: 0.3;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    fill: none;
+}
+.path_center_line {
+    stroke-width: 0.2;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    fill: none;
+    stroke:#333;
+}
+.path_contour {
+    stroke: #ddd;
+    fill-opacity: 1;
+    fill: #eee;
+    stroke-width: 0.3;
+}
+.text{
+    text-anchor: middle;
+    dominant-baseline: middle;
+    font-family: sans-serif;
+    font-size: 1.5mm;
+}
+.smalltext{
+    text-anchor: middle;
+    dominant-baseline: middle;
+    font-family: sans-serif;
+    font-size: 1mm;
+}
+.color_0 {
+    stroke:#148983;
+}
+.dot_0 {
+    marker-start:url(#dot_0);
+    marker-mid:url(#dot_0);
+    marker-end:url(#dot_0);
+}
+]]></style>
+        <marker id="dot_0" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
+            <circle cx="1.5" cy="1.5" fill="#148983" r="1.5"/>
+        </marker>
+    </defs>
+    <g>
+        <path class="stitch_line color_0 dot_0" d="M 4.107, 4.215  L 8.690, 6.220  L 4.209, 3.998  L 8.791, 6.002  L 4.310, 3.780  L 8.893, 5.785  L 7.049, 4.215  L 11.631, 6.220  L 7.150, 3.998  L 11.732, 6.002  L 7.251, 3.780  L 11.834, 5.785  L 9.990, 4.215  L 14.572, 6.220  L 10.091, 3.998  L 14.673, 6.002  L 10.193, 3.780  L 14.775, 5.785  L 12.931, 4.215  L 17.513, 6.220  L 13.032, 3.998  L 17.615, 6.002  L 13.134, 3.780  L 17.716, 5.785  L 15.872, 4.215  L 20.454, 6.220  L 15.974, 3.998  L 20.556, 6.002  L 16.075, 3.780  L 20.657, 5.785  L 18.813, 4.215  L 23.396, 6.220  L 18.915, 3.998  L 23.497, 6.002  L 19.016, 3.780  L 23.598, 5.785  L 21.755, 4.215  L 26.337, 6.220  L 21.856, 3.998  L 26.438, 6.002  L 21.957, 3.780  L 26.540, 5.785  L 24.696, 4.215  L 29.278, 6.220  L 24.797, 3.998  L 29.379, 6.002  L 24.899, 3.780  L 29.481, 5.785  L 27.637, 4.215  L 32.219, 6.220  L 27.738, 3.998  L 32.321, 6.002  L 27.840, 3.780  L 32.422, 5.785  L 30.578, 4.215  L 35.160, 6.220  L 30.679, 3.998  L 35.262, 6.002  L 30.781, 3.780  L 35.363, 5.785  L 33.519, 4.215  L 38.101, 6.220  L 33.621, 3.998  L 38.203, 6.002  L 33.722, 3.780  L 38.304, 5.785  L 36.460, 4.215  L 41.043, 6.220  L 36.562, 3.998  L 41.144, 6.002  L 36.663, 3.780  L 41.245, 5.785  L 39.402, 4.215  L 43.984, 6.220  L 39.503, 3.998  L 44.085, 6.002  L 39.604, 3.780  L 44.187, 5.785  L 42.343, 4.215  L 46.925, 6.220  L 42.444, 3.998  L 47.026, 6.002  L 42.546, 3.780  L 47.128, 5.785  L 45.284, 4.215  L 49.866, 6.220  L 45.385, 3.998  L 49.968, 6.002  L 45.487, 3.780  L 50.069, 5.785  L 48.225, 4.215  L 52.807, 6.220  L 48.327, 3.998  L 52.909, 6.002  L 48.428, 3.780  L 53.010, 5.785  L 51.166, 4.215  L 55.749, 6.220  L 51.268, 3.998  L 55.850, 6.002  L 51.369, 3.780  L 55.951, 5.785 "/>
+    </g>
+</svg>
