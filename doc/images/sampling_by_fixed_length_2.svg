@@ -39,44 +39,44 @@
     </defs>
     <g>
         <g transform="translate(0,5)">
+            <path class="stitch_line color_0" d="M 0.000, 0.000 L 40.000, 0.000 M 0.000, 1.000 L 0.000, -1.000 M 20.000, 1.000 L 20.000, -1.000" transform="translate(15,0)"/>
+            <text class="smalltext" x="7" y="0">40</text>
+        </g>
+        <g transform="translate(0,10)">
+            <path class="stitch_line color_0" d="M 0.000, 0.000 L 44.000, 0.000 M 4.000, 1.000 L 4.000, -1.000 M 24.000, 1.000 L 24.000, -1.000" transform="translate(15,0)"/>
+            <text class="smalltext" x="7" y="0">44</text>
+        </g>
+        <g transform="translate(0,15)">
+            <path class="stitch_line color_0" d="M 0.000, 0.000 L 48.000, 0.000 M 8.000, 1.000 L 8.000, -1.000 M 28.000, 1.000 L 28.000, -1.000" transform="translate(15,0)"/>
+            <text class="smalltext" x="7" y="0">48</text>
+        </g>
+        <g transform="translate(0,20)">
+            <path class="stitch_line color_0" d="M 0.000, 0.000 L 52.000, 0.000 M 12.000, 1.000 L 12.000, -1.000 M 32.000, 1.000 L 32.000, -1.000" transform="translate(15,0)"/>
+            <text class="smalltext" x="7" y="0">52</text>
+        </g>
+        <g transform="translate(0,25)">
+            <path class="stitch_line color_0" d="M 0.000, 0.000 L 56.000, 0.000 M 16.000, 1.000 L 16.000, -1.000 M 36.000, 1.000 L 36.000, -1.000" transform="translate(15,0)"/>
+            <text class="smalltext" x="7" y="0">56</text>
+        </g>
+        <g transform="translate(0,30)">
             <path class="stitch_line color_0" d="M 0.000, 0.000 L 60.000, 0.000 M 0.000, 1.000 L 0.000, -1.000 M 20.000, 1.000 L 20.000, -1.000 M 40.000, 1.000 L 40.000, -1.000" transform="translate(15,0)"/>
             <text class="smalltext" x="7" y="0">60</text>
         </g>
-        <g transform="translate(0,10)">
-            <path class="stitch_line color_0" d="M 0.000, 0.000 L 62.000, 0.000 M 2.000, 1.000 L 2.000, -1.000 M 22.000, 1.000 L 22.000, -1.000 M 42.000, 1.000 L 42.000, -1.000" transform="translate(15,0)"/>
-            <text class="smalltext" x="7" y="0">62</text>
-        </g>
-        <g transform="translate(0,15)">
+        <g transform="translate(0,35)">
             <path class="stitch_line color_0" d="M 0.000, 0.000 L 64.000, 0.000 M 4.000, 1.000 L 4.000, -1.000 M 24.000, 1.000 L 24.000, -1.000 M 44.000, 1.000 L 44.000, -1.000" transform="translate(15,0)"/>
             <text class="smalltext" x="7" y="0">64</text>
         </g>
-        <g transform="translate(0,20)">
-            <path class="stitch_line color_0" d="M 0.000, 0.000 L 66.000, 0.000 M 6.000, 1.000 L 6.000, -1.000 M 26.000, 1.000 L 26.000, -1.000 M 46.000, 1.000 L 46.000, -1.000" transform="translate(15,0)"/>
-            <text class="smalltext" x="7" y="0">66</text>
-        </g>
-        <g transform="translate(0,25)">
+        <g transform="translate(0,40)">
             <path class="stitch_line color_0" d="M 0.000, 0.000 L 68.000, 0.000 M 8.000, 1.000 L 8.000, -1.000 M 28.000, 1.000 L 28.000, -1.000 M 48.000, 1.000 L 48.000, -1.000" transform="translate(15,0)"/>
             <text class="smalltext" x="7" y="0">68</text>
         </g>
-        <g transform="translate(0,30)">
-            <path class="stitch_line color_0" d="M 0.000, 0.000 L 70.000, 0.000 M 10.000, 1.000 L 10.000, -1.000 M 30.000, 1.000 L 30.000, -1.000 M 50.000, 1.000 L 50.000, -1.000" transform="translate(15,0)"/>
-            <text class="smalltext" x="7" y="0">70</text>
-        </g>
-        <g transform="translate(0,35)">
+        <g transform="translate(0,45)">
             <path class="stitch_line color_0" d="M 0.000, 0.000 L 72.000, 0.000 M 12.000, 1.000 L 12.000, -1.000 M 32.000, 1.000 L 32.000, -1.000 M 52.000, 1.000 L 52.000, -1.000" transform="translate(15,0)"/>
             <text class="smalltext" x="7" y="0">72</text>
         </g>
-        <g transform="translate(0,40)">
-            <path class="stitch_line color_0" d="M 0.000, 0.000 L 74.000, 0.000 M 14.000, 1.000 L 14.000, -1.000 M 34.000, 1.000 L 34.000, -1.000 M 54.000, 1.000 L 54.000, -1.000" transform="translate(15,0)"/>
-            <text class="smalltext" x="7" y="0">74</text>
-        </g>
-        <g transform="translate(0,45)">
+        <g transform="translate(0,50)">
             <path class="stitch_line color_0" d="M 0.000, 0.000 L 76.000, 0.000 M 16.000, 1.000 L 16.000, -1.000 M 36.000, 1.000 L 36.000, -1.000 M 56.000, 1.000 L 56.000, -1.000" transform="translate(15,0)"/>
             <text class="smalltext" x="7" y="0">76</text>
-        </g>
-        <g transform="translate(0,50)">
-            <path class="stitch_line color_0" d="M 0.000, 0.000 L 78.000, 0.000 M 18.000, 1.000 L 18.000, -1.000 M 38.000, 1.000 L 38.000, -1.000 M 58.000, 1.000 L 58.000, -1.000" transform="translate(15,0)"/>
-            <text class="smalltext" x="7" y="0">78</text>
         </g>
         <g transform="translate(0,55)">
             <path class="stitch_line color_0" d="M 0.000, 0.000 L 80.000, 0.000 M 0.000, 1.000 L 0.000, -1.000 M 20.000, 1.000 L 20.000, -1.000 M 40.000, 1.000 L 40.000, -1.000 M 60.000, 1.000 L 60.000, -1.000" transform="translate(15,0)"/>

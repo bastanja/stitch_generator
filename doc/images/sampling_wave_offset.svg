@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" baseProfile="full" height="110mm" version="1.1" viewBox="0,0,100,110" width="100mm">
+    <defs>
+        <style type="text/css"><![CDATA[
+.stitch_line {
+    stroke-width: 0.3;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    fill: none;
+}
+.path_center_line {
+    stroke-width: 0.2;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    fill: none;
+    stroke:#333;
+}
+.path_contour {
+    stroke: #ddd;
+    fill-opacity: 1;
+    fill: #eee;
+    stroke-width: 0.3;
+}
+.text{
+    text-anchor: middle;
+    dominant-baseline: middle;
+    font-family: sans-serif;
+    font-size: 1.5mm;
+}
+.smalltext{
+    text-anchor: middle;
+    dominant-baseline: middle;
+    font-family: sans-serif;
+    font-size: 1mm;
+}
+.color_0 {
+    stroke:#148983;
+}]]></style>
+    </defs>
+    <g>
+        <g transform="translate(0,5)">
+            <path class="stitch_line color_0" d="M 0.000, 0.000 L 80.000, 0.000 M 4.000, 1.000 L 4.000, -1.000 M 24.000, 1.000 L 24.000, -1.000 M 44.000, 1.000 L 44.000, -1.000 M 64.000, 1.000 L 64.000, -1.000" transform="translate(15,0)"/>
+            <text class="smalltext" x="7" y="0">80</text>
+        </g>
+        <g transform="translate(0,10)">
+            <path class="stitch_line color_0" d="M 0.000, 0.000 L 80.000, 0.000 M 7.708, 1.000 L 7.708, -1.000 M 27.708, 1.000 L 27.708, -1.000 M 47.708, 1.000 L 47.708, -1.000 M 67.708, 1.000 L 67.708, -1.000" transform="translate(15,0)"/>
+            <text class="smalltext" x="7" y="0">80</text>
+        </g>
+        <g transform="translate(0,15)">
+            <path class="stitch_line color_0" d="M 0.000, 0.000 L 80.000, 0.000 M 11.053, 1.000 L 11.053, -1.000 M 31.053, 1.000 L 31.053, -1.000 M 51.053, 1.000 L 51.053, -1.000 M 71.053, 1.000 L 71.053, -1.000" transform="translate(15,0)"/>
+            <text class="smalltext" x="7" y="0">80</text>
+        </g>
+        <g transform="translate(0,20)">
+            <path class="stitch_line color_0" d="M 0.000, 0.000 L 80.000, 0.000 M 13.708, 1.000 L 13.708, -1.000 M 33.708, 1.000 L 33.708, -1.000 M 53.708, 1.000 L 53.708, -1.000 M 73.708, 1.000 L 73.708, -1.000" transform="translate(15,0)"/>
+            <text class="smalltext" x="7" y="0">80</text>
+        </g>
+        <g transform="translate(0,25)">
+            <path class="stitch_line color_0" d="M 0.000, 0.000 L 80.000, 0.000 M 15.413, 1.000 L 15.413, -1.000 M 35.413, 1.000 L 35.413, -1.000 M 55.413, 1.000 L 55.413, -1.000 M 75.413, 1.000 L 75.413, -1.000" transform="translate(15,0)"/>
+            <text class="smalltext" x="7" y="0">80</text>
+        </g>
+        <g transform="translate(0,30)">
+            <path class="stitch_line color_0" d="M 0.000, 0.000 L 80.000, 0.000 M 16.000, 1.000 L 16.000, -1.000 M 36.000, 1.000 L 36.000, -1.000 M 56.000, 1.000 L 56.000, -1.000 M 76.000, 1.000 L 76.000, -1.000" transform="translate(15,0)"/>
+            <text class="smalltext" x="7" y="0">80</text>
+        </g>
+        <g transform="translate(0,35)">
+            <path class="stitch_line color_0" d="M 0.000, 0.000 L 80.000, 0.000 M 15.413, 1.000 L 15.413, -1.000 M 35.413, 1.000 L 35.413, -1.000 M 55.413, 1.000 L 55.413, -1.000 M 75.413, 1.000 L 75.413, -1.000" transform="translate(15,0)"/>
+            <text class="smalltext" x="7" y="0">80</text>
+        </g>
+        <g transform="translate(0,40)">
+            <path class="stitch_line color_0" d="M 0.000, 0.000 L 80.000, 0.000 M 13.708, 1.000 L 13.708, -1.000 M 33.708, 1.000 L 33.708, -1.000 M 53.708, 1.000 L 53.708, -1.000 M 73.708, 1.000 L 73.708, -1.000" transform="translate(15,0)"/>
+            <text class="smalltext" x="7" y="0">80</text>
+        </g>
+        <g transform="translate(0,45)">
+            <path class="stitch_line color_0" d="M 0.000, 0.000 L 80.000, 0.000 M 11.053, 1.000 L 11.053, -1.000 M 31.053, 1.000 L 31.053, -1.000 M 51.053, 1.000 L 51.053, -1.000 M 71.053, 1.000 L 71.053, -1.000" transform="translate(15,0)"/>
+            <text class="smalltext" x="7" y="0">80</text>
+        </g>
+        <g transform="translate(0,50)">
+            <path class="stitch_line color_0" d="M 0.000, 0.000 L 80.000, 0.000 M 7.708, 1.000 L 7.708, -1.000 M 27.708, 1.000 L 27.708, -1.000 M 47.708, 1.000 L 47.708, -1.000 M 67.708, 1.000 L 67.708, -1.000" transform="translate(15,0)"/>
+            <text class="smalltext" x="7" y="0">80</text>
+        </g>
+        <g transform="translate(0,55)">
+            <path class="stitch_line color_0" d="M 0.000, 0.000 L 80.000, 0.000 M 4.000, 1.000 L 4.000, -1.000 M 24.000, 1.000 L 24.000, -1.000 M 44.000, 1.000 L 44.000, -1.000 M 64.000, 1.000 L 64.000, -1.000" transform="translate(15,0)"/>
+            <text class="smalltext" x="7" y="0">80</text>
+        </g>
+        <g transform="translate(0,60)">
+            <path class="stitch_line color_0" d="M 0.000, 0.000 L 80.000, 0.000 M 0.292, 1.000 L 0.292, -1.000 M 20.292, 1.000 L 20.292, -1.000 M 40.292, 1.000 L 40.292, -1.000 M 60.292, 1.000 L 60.292, -1.000" transform="translate(15,0)"/>
+            <text class="smalltext" x="7" y="0">80</text>
+        </g>
+        <g transform="translate(0,65)">
+            <path class="stitch_line color_0" d="M 0.000, 0.000 L 80.000, 0.000 M 16.947, 1.000 L 16.947, -1.000 M 36.947, 1.000 L 36.947, -1.000 M 56.947, 1.000 L 56.947, -1.000 M 76.947, 1.000 L 76.947, -1.000" transform="translate(15,0)"/>
+            <text class="smalltext" x="7" y="0">80</text>
+        </g>
+        <g transform="translate(0,70)">
+            <path class="stitch_line color_0" d="M 0.000, 0.000 L 80.000, 0.000 M 14.292, 1.000 L 14.292, -1.000 M 34.292, 1.000 L 34.292, -1.000 M 54.292, 1.000 L 54.292, -1.000 M 74.292, 1.000 L 74.292, -1.000" transform="translate(15,0)"/>
+            <text class="smalltext" x="7" y="0">80</text>
+        </g>
+        <g transform="translate(0,75)">
+            <path class="stitch_line color_0" d="M 0.000, 0.000 L 80.000, 0.000 M 12.587, 1.000 L 12.587, -1.000 M 32.587, 1.000 L 32.587, -1.000 M 52.587, 1.000 L 52.587, -1.000 M 72.587, 1.000 L 72.587, -1.000" transform="translate(15,0)"/>
+            <text class="smalltext" x="7" y="0">80</text>
+        </g>
+        <g transform="translate(0,80)">
+            <path class="stitch_line color_0" d="M 0.000, 0.000 L 80.000, 0.000 M 12.000, 1.000 L 12.000, -1.000 M 32.000, 1.000 L 32.000, -1.000 M 52.000, 1.000 L 52.000, -1.000 M 72.000, 1.000 L 72.000, -1.000" transform="translate(15,0)"/>
+            <text class="smalltext" x="7" y="0">80</text>
+        </g>
+        <g transform="translate(0,85)">
+            <path class="stitch_line color_0" d="M 0.000, 0.000 L 80.000, 0.000 M 12.587, 1.000 L 12.587, -1.000 M 32.587, 1.000 L 32.587, -1.000 M 52.587, 1.000 L 52.587, -1.000 M 72.587, 1.000 L 72.587, -1.000" transform="translate(15,0)"/>
+            <text class="smalltext" x="7" y="0">80</text>
+        </g>
+        <g transform="translate(0,90)">
+            <path class="stitch_line color_0" d="M 0.000, 0.000 L 80.000, 0.000 M 14.292, 1.000 L 14.292, -1.000 M 34.292, 1.000 L 34.292, -1.000 M 54.292, 1.000 L 54.292, -1.000 M 74.292, 1.000 L 74.292, -1.000" transform="translate(15,0)"/>
+            <text class="smalltext" x="7" y="0">80</text>
+        </g>
+        <g transform="translate(0,95)">
+            <path class="stitch_line color_0" d="M 0.000, 0.000 L 80.000, 0.000 M 16.947, 1.000 L 16.947, -1.000 M 36.947, 1.000 L 36.947, -1.000 M 56.947, 1.000 L 56.947, -1.000 M 76.947, 1.000 L 76.947, -1.000" transform="translate(15,0)"/>
+            <text class="smalltext" x="7" y="0">80</text>
+        </g>
+        <g transform="translate(0,100)">
+            <path class="stitch_line color_0" d="M 0.000, 0.000 L 80.000, 0.000 M 0.292, 1.000 L 0.292, -1.000 M 20.292, 1.000 L 20.292, -1.000 M 40.292, 1.000 L 40.292, -1.000 M 60.292, 1.000 L 60.292, -1.000" transform="translate(15,0)"/>
+            <text class="smalltext" x="7" y="0">80</text>
+        </g>
+        <g transform="translate(0,105)">
+            <path class="stitch_line color_0" d="M 0.000, 0.000 L 80.000, 0.000 M 4.000, 1.000 L 4.000, -1.000 M 24.000, 1.000 L 24.000, -1.000 M 44.000, 1.000 L 44.000, -1.000 M 64.000, 1.000 L 64.000, -1.000" transform="translate(15,0)"/>
+            <text class="smalltext" x="7" y="0">80</text>
+        </g>
+    </g>
+</svg>
