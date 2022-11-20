@@ -8,39 +8,18 @@
     stroke-linecap: round;
     fill: none;
 }
-.sampling_line {
-    stroke:#148983;
-    stroke-width: 0.5;
-    fill: none;
-}
-.path_handle {
-    stroke-width: 0.5;
-    stroke-linejoin: round;
-    stroke-linecap: round;
-    fill:none;
-    stroke: #808080;
-    marker-start: url(#handles);
-    marker-mid: url(#handles);
-    marker-end: url(#handles);
-}
 .path_center_line {
-    stroke-width: 0.5;
+    stroke-width: 0.2;
     stroke-linejoin: round;
     stroke-linecap: round;
     fill: none;
-    stroke:#148983;
-    stroke-dasharray: 2,1.5;
-    stroke-dashoffset: 1;
+    stroke:#333;
 }
 .path_contour {
-    stroke: #85c4c1;
-    fill-opacity: 0;
+    stroke: #ddd;
+    fill-opacity: 1;
+    fill: #eee;
     stroke-width: 0.3;
-}
-.path_direction_line {
-    stroke-width: 0.05;
-    fill: none;
-    stroke: #85c4c1;
 }
 .text{
     text-anchor: middle;
@@ -56,97 +35,18 @@
 }
 .color_0 {
     stroke:#148983;
+}
+.dot_0 {
     marker-start:url(#dot_0);
     marker-mid:url(#dot_0);
     marker-end:url(#dot_0);
-}
-.color_1 {
-    stroke:#1873ac;
-    marker-start:url(#dot_1);
-    marker-mid:url(#dot_1);
-    marker-end:url(#dot_1);
-}
-.color_2 {
-    stroke:#8c5290;
-    marker-start:url(#dot_2);
-    marker-mid:url(#dot_2);
-    marker-end:url(#dot_2);
-}
-.color_3 {
-    stroke:#61a09c;
-    marker-start:url(#dot_3);
-    marker-mid:url(#dot_3);
-    marker-end:url(#dot_3);
-}
-.color_4 {
-    stroke:#5ad2f4;
-    marker-start:url(#dot_4);
-    marker-mid:url(#dot_4);
-    marker-end:url(#dot_4);
-}
-.color_5 {
-    stroke:#0f6460;
-    marker-start:url(#dot_5);
-    marker-mid:url(#dot_5);
-    marker-end:url(#dot_5);
-}
-.color_6 {
-    stroke:#0f4668;
-    marker-start:url(#dot_6);
-    marker-mid:url(#dot_6);
-    marker-end:url(#dot_6);
-}
-.color_7 {
-    stroke:#543156;
-    marker-start:url(#dot_7);
-    marker-mid:url(#dot_7);
-    marker-end:url(#dot_7);
-}
-.color_8 {
-    stroke:#487673;
-    marker-start:url(#dot_8);
-    marker-mid:url(#dot_8);
-    marker-end:url(#dot_8);
-}
-.color_9 {
-    stroke:#0c8baf;
-    marker-start:url(#dot_9);
-    marker-mid:url(#dot_9);
-    marker-end:url(#dot_9);
 }
 ]]></style>
         <marker id="dot_0" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
             <circle cx="1.5" cy="1.5" fill="#148983" r="1.5"/>
         </marker>
-        <marker id="dot_1" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
-            <circle cx="1.5" cy="1.5" fill="#1873ac" r="1.5"/>
-        </marker>
-        <marker id="dot_2" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
-            <circle cx="1.5" cy="1.5" fill="#8c5290" r="1.5"/>
-        </marker>
-        <marker id="dot_3" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
-            <circle cx="1.5" cy="1.5" fill="#61a09c" r="1.5"/>
-        </marker>
-        <marker id="dot_4" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
-            <circle cx="1.5" cy="1.5" fill="#5ad2f4" r="1.5"/>
-        </marker>
-        <marker id="dot_5" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
-            <circle cx="1.5" cy="1.5" fill="#0f6460" r="1.5"/>
-        </marker>
-        <marker id="dot_6" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
-            <circle cx="1.5" cy="1.5" fill="#0f4668" r="1.5"/>
-        </marker>
-        <marker id="dot_7" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
-            <circle cx="1.5" cy="1.5" fill="#543156" r="1.5"/>
-        </marker>
-        <marker id="dot_8" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
-            <circle cx="1.5" cy="1.5" fill="#487673" r="1.5"/>
-        </marker>
-        <marker id="dot_9" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
-            <circle cx="1.5" cy="1.5" fill="#0c8baf" r="1.5"/>
-        </marker>
     </defs>
     <g>
-        <path class="stitch_line color_0" d="M 10.000, 25.000  L 13.147, 26.492  L 16.294, 27.824  L 19.440, 29.003  L 22.587, 30.035  L 25.734, 30.924  L 28.881, 31.677  L 29.752, 29.132  L 31.530, 27.114  L 33.946, 25.930  L 36.631, 25.760  L 39.176, 26.631  L 41.194, 28.410  L 42.378, 30.825  L 42.548, 33.510  L 45.560, 33.630  L 48.571, 33.659  L 51.583, 33.601  L 54.595, 33.462  L 54.825, 30.789  L 56.061, 28.408  L 58.114, 26.681  L 60.671, 25.871  L 63.344, 26.102  L 65.725, 27.338  L 67.452, 29.390  L 68.262, 31.948  L 71.274, 31.450  L 74.286, 30.904  L 77.298, 30.314  L 80.309, 29.687  L 80.220, 26.951  L 81.184, 24.388  L 83.055, 22.390  L 85.549, 21.260  L 88.285, 21.170  L 90.848, 22.134  L 92.846, 24.005  L 93.976, 26.499  L 96.988, 25.752  L 100.000, 25.000  L 103.012, 24.248  L 106.024, 23.501  L 105.934, 20.764  L 106.898, 18.202  L 108.769, 16.204  L 111.263, 15.073  L 114.000, 14.984  L 116.562, 15.948  L 118.561, 17.819  L 119.691, 20.313  L 122.702, 19.686  L 125.714, 19.096  L 128.726, 18.550  L 131.738, 18.052  L 131.968, 15.380  L 133.204, 12.998  L 135.257, 11.271  L 137.814, 10.462  L 140.487, 10.692  L 142.868, 11.928  L 144.595, 13.980  L 145.405, 16.538  L 148.417, 16.399  L 151.429, 16.341  L 154.440, 16.370  L 157.452, 16.490  L 158.323, 13.945  L 160.102, 11.926  L 162.517, 10.742  L 165.202, 10.573  L 167.747, 11.444  L 169.766, 13.222  L 170.950, 15.638  L 171.119, 18.323  L 174.266, 19.076  L 177.413, 19.965  L 180.560, 20.997  L 183.706, 22.176  L 186.853, 23.508  L 190.000, 25.000 "/>
+        <path class="stitch_line color_0 dot_0" d="M 10.000, 25.000  L 13.147, 26.492  L 16.294, 27.824  L 19.440, 29.003  L 22.587, 30.035  L 25.734, 30.924  L 28.881, 31.677  L 29.752, 29.132  L 31.530, 27.114  L 33.946, 25.930  L 36.631, 25.760  L 39.176, 26.631  L 41.194, 28.410  L 42.378, 30.825  L 42.548, 33.510  L 45.560, 33.630  L 48.571, 33.659  L 51.583, 33.601  L 54.595, 33.462  L 54.825, 30.789  L 56.061, 28.408  L 58.114, 26.681  L 60.671, 25.871  L 63.344, 26.102  L 65.725, 27.338  L 67.452, 29.390  L 68.262, 31.948  L 71.274, 31.450  L 74.286, 30.904  L 77.298, 30.314  L 80.309, 29.687  L 80.220, 26.951  L 81.184, 24.388  L 83.055, 22.390  L 85.549, 21.260  L 88.285, 21.170  L 90.848, 22.134  L 92.846, 24.005  L 93.976, 26.499  L 96.988, 25.752  L 100.000, 25.000  L 103.012, 24.248  L 106.024, 23.501  L 105.934, 20.764  L 106.898, 18.202  L 108.769, 16.204  L 111.263, 15.073  L 114.000, 14.984  L 116.562, 15.948  L 118.561, 17.819  L 119.691, 20.313  L 122.702, 19.686  L 125.714, 19.096  L 128.726, 18.550  L 131.738, 18.052  L 131.968, 15.380  L 133.204, 12.998  L 135.257, 11.271  L 137.814, 10.462  L 140.487, 10.692  L 142.868, 11.928  L 144.595, 13.980  L 145.405, 16.538  L 148.417, 16.399  L 151.429, 16.341  L 154.440, 16.370  L 157.452, 16.490  L 158.323, 13.945  L 160.102, 11.926  L 162.517, 10.742  L 165.202, 10.573  L 167.747, 11.444  L 169.766, 13.222  L 170.950, 15.638  L 171.119, 18.323  L 174.266, 19.076  L 177.413, 19.965  L 180.560, 20.997  L 183.706, 22.176  L 186.853, 23.508  L 190.000, 25.000 "/>
     </g>
 </svg>
