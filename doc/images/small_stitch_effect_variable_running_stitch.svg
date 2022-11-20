@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" baseProfile="full" height="15mm" version="1.1" viewBox="0,0,80,15" width="80mm">
+    <defs>
+        <style type="text/css"><![CDATA[
+.stitch_line {
+    stroke-width: 0.3;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    fill: none;
+}
+.path_center_line {
+    stroke-width: 0.2;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    fill: none;
+    stroke:#333;
+}
+.path_contour {
+    stroke: #ddd;
+    fill-opacity: 1;
+    fill: #eee;
+    stroke-width: 0.3;
+}
+.text{
+    text-anchor: middle;
+    dominant-baseline: middle;
+    font-family: sans-serif;
+    font-size: 1.5mm;
+}
+.smalltext{
+    text-anchor: middle;
+    dominant-baseline: middle;
+    font-family: sans-serif;
+    font-size: 1mm;
+}
+.color_0 {
+    stroke:#148983;
+}
+.dot_0 {
+    marker-start:url(#dot_0);
+    marker-mid:url(#dot_0);
+    marker-end:url(#dot_0);
+}
+]]></style>
+        <marker id="dot_0" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
+            <circle cx="1.5" cy="1.5" fill="#148983" r="1.5"/>
+        </marker>
+    </defs>
+    <g>
+        <path class="stitch_line color_0 dot_0" d="M 5.000, 7.500  L 8.043, 7.500  L 11.087, 7.500  L 14.130, 7.516  L 17.174, 7.532  L 20.217, 7.547  L 23.261, 7.563  L 26.304, 7.579  L 29.348, 7.595  L 32.391, 7.611  L 35.435, 7.626  L 38.478, 7.642  L 41.522, 7.658  L 44.565, 7.674  L 47.609, 7.689  L 50.652, 7.705  L 53.696, 7.721  L 56.739, 7.737  L 59.783, 7.753  L 62.826, 7.768  L 65.870, 7.784  L 68.913, 7.800  L 65.870, 7.800  L 62.826, 7.800  L 59.783, 7.820  L 56.739, 7.840  L 53.696, 7.860  L 50.652, 7.880  L 47.609, 7.900  L 44.565, 7.920  L 41.522, 7.940  L 38.478, 7.960  L 35.435, 7.980  L 32.391, 8.000  L 29.348, 8.020  L 26.304, 8.040  L 23.261, 8.060  L 20.217, 8.080  L 17.174, 8.100  L 20.217, 8.100  L 23.261, 8.100  L 26.304, 8.127  L 29.348, 8.155  L 32.391, 8.182  L 35.435, 8.209  L 38.478, 8.236  L 41.522, 8.264  L 44.565, 8.291  L 47.609, 8.318  L 50.652, 8.345  L 53.696, 8.373  L 56.739, 8.400  L 53.696, 8.400  L 50.652, 8.400  L 47.609, 8.400  L 44.565, 8.400  L 41.522, 8.400  L 38.478, 8.400  L 35.435, 8.400  L 32.391, 8.400  L 29.348, 8.400  L 26.304, 8.400  L 23.261, 8.400  L 26.304, 8.373  L 29.348, 8.345  L 32.391, 8.318  L 35.435, 8.291  L 38.478, 8.264  L 41.522, 8.236  L 44.565, 8.209  L 47.609, 8.182  L 50.652, 8.155  L 53.696, 8.127  L 56.739, 8.100  L 59.783, 8.100  L 62.826, 8.100  L 59.783, 8.080  L 56.739, 8.060  L 53.696, 8.040  L 50.652, 8.020  L 47.609, 8.000  L 44.565, 7.980  L 41.522, 7.960  L 38.478, 7.940  L 35.435, 7.920  L 32.391, 7.900  L 29.348, 7.880  L 26.304, 7.860  L 23.261, 7.840  L 20.217, 7.820  L 17.174, 7.800  L 14.130, 7.800  L 11.087, 7.800  L 14.130, 7.784  L 17.174, 7.768  L 20.217, 7.753  L 23.261, 7.737  L 26.304, 7.721  L 29.348, 7.705  L 32.391, 7.689  L 35.435, 7.674  L 38.478, 7.658  L 41.522, 7.642  L 44.565, 7.626  L 47.609, 7.611  L 50.652, 7.595  L 53.696, 7.579  L 56.739, 7.563  L 59.783, 7.547  L 62.826, 7.532  L 65.870, 7.516  L 68.913, 7.500  L 71.957, 7.500  L 75.000, 7.500 "/>
+    </g>
+</svg>

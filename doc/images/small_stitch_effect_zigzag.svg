@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" baseProfile="full" height="15mm" version="1.1" viewBox="0,0,80,15" width="80mm">
+    <defs>
+        <style type="text/css"><![CDATA[
+.stitch_line {
+    stroke-width: 0.3;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    fill: none;
+}
+.path_center_line {
+    stroke-width: 0.2;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    fill: none;
+    stroke:#333;
+}
+.path_contour {
+    stroke: #ddd;
+    fill-opacity: 1;
+    fill: #eee;
+    stroke-width: 0.3;
+}
+.text{
+    text-anchor: middle;
+    dominant-baseline: middle;
+    font-family: sans-serif;
+    font-size: 1.5mm;
+}
+.smalltext{
+    text-anchor: middle;
+    dominant-baseline: middle;
+    font-family: sans-serif;
+    font-size: 1mm;
+}
+.color_0 {
+    stroke:#148983;
+}
+.dot_0 {
+    marker-start:url(#dot_0);
+    marker-mid:url(#dot_0);
+    marker-end:url(#dot_0);
+}
+]]></style>
+        <marker id="dot_0" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
+            <circle cx="1.5" cy="1.5" fill="#148983" r="1.5"/>
+        </marker>
+    </defs>
+    <g>
+        <path class="stitch_line color_0 dot_0" d="M 5.000, 1.500  L 8.043, 13.500  L 11.087, 1.500  L 14.130, 13.500  L 17.174, 1.500  L 20.217, 13.500  L 23.261, 1.500  L 26.304, 13.500  L 29.348, 1.500  L 32.391, 13.500  L 35.435, 1.500  L 38.478, 13.500  L 41.522, 1.500  L 44.565, 13.500  L 47.609, 1.500  L 50.652, 13.500  L 53.696, 1.500  L 56.739, 13.500  L 59.783, 1.500  L 62.826, 13.500  L 65.870, 1.500  L 68.913, 13.500  L 71.957, 1.500  L 75.000, 13.500 "/>
+    </g>
+</svg>

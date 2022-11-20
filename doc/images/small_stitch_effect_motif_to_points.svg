@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" baseProfile="full" height="15mm" version="1.1" viewBox="0,0,80,15" width="80mm">
+    <defs>
+        <style type="text/css"><![CDATA[
+.stitch_line {
+    stroke-width: 0.3;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    fill: none;
+}
+.path_center_line {
+    stroke-width: 0.2;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    fill: none;
+    stroke:#333;
+}
+.path_contour {
+    stroke: #ddd;
+    fill-opacity: 1;
+    fill: #eee;
+    stroke-width: 0.3;
+}
+.text{
+    text-anchor: middle;
+    dominant-baseline: middle;
+    font-family: sans-serif;
+    font-size: 1.5mm;
+}
+.smalltext{
+    text-anchor: middle;
+    dominant-baseline: middle;
+    font-family: sans-serif;
+    font-size: 1mm;
+}
+.color_0 {
+    stroke:#148983;
+}
+.dot_0 {
+    marker-start:url(#dot_0);
+    marker-mid:url(#dot_0);
+    marker-end:url(#dot_0);
+}
+]]></style>
+        <marker id="dot_0" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
+            <circle cx="1.5" cy="1.5" fill="#148983" r="1.5"/>
+        </marker>
+    </defs>
+    <g>
+        <path class="stitch_line color_0 dot_0" d="M 5.000, 7.500  L 7.976, 7.500  L 10.952, 7.500  L 13.929, 7.500  L 16.905, 7.500  L 19.881, 7.500  L 22.857, 7.500  L 19.857, 4.500  L 22.857, 7.500  L 19.857, 10.500  L 22.857, 7.500  L 25.000, 7.500  L 22.000, 4.500  L 25.000, 7.500  L 22.000, 10.500  L 25.000, 7.500  L 27.143, 7.500  L 24.143, 4.500  L 27.143, 7.500  L 24.143, 10.500  L 27.143, 7.500  L 30.000, 7.500  L 32.857, 7.500  L 35.714, 7.500  L 38.571, 7.500  L 41.429, 7.500  L 44.286, 7.500  L 47.143, 7.500  L 50.000, 7.500  L 52.857, 7.500  L 49.857, 4.500  L 52.857, 7.500  L 49.857, 10.500  L 52.857, 7.500  L 55.000, 7.500  L 52.000, 4.500  L 55.000, 7.500  L 52.000, 10.500  L 55.000, 7.500  L 57.143, 7.500  L 54.143, 4.500  L 57.143, 7.500  L 54.143, 10.500  L 57.143, 7.500  L 60.119, 7.500  L 63.095, 7.500  L 66.071, 7.500  L 69.048, 7.500  L 72.024, 7.500  L 75.000, 7.500 "/>
+    </g>
+</svg>

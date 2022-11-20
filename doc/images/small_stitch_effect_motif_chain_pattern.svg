@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xlink="http://www.w3.org/1999/xlink" baseProfile="full" height="15mm" version="1.1" viewBox="0,0,80,15" width="80mm">
+    <defs>
+        <style type="text/css"><![CDATA[
+.stitch_line {
+    stroke-width: 0.3;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    fill: none;
+}
+.path_center_line {
+    stroke-width: 0.2;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    fill: none;
+    stroke:#333;
+}
+.path_contour {
+    stroke: #ddd;
+    fill-opacity: 1;
+    fill: #eee;
+    stroke-width: 0.3;
+}
+.text{
+    text-anchor: middle;
+    dominant-baseline: middle;
+    font-family: sans-serif;
+    font-size: 1.5mm;
+}
+.smalltext{
+    text-anchor: middle;
+    dominant-baseline: middle;
+    font-family: sans-serif;
+    font-size: 1mm;
+}
+.color_0 {
+    stroke:#148983;
+}
+.dot_0 {
+    marker-start:url(#dot_0);
+    marker-mid:url(#dot_0);
+    marker-end:url(#dot_0);
+}
+]]></style>
+        <marker id="dot_0" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
+            <circle cx="1.5" cy="1.5" fill="#148983" r="1.5"/>
+        </marker>
+    </defs>
+    <g>
+        <path class="stitch_line color_0 dot_0" d="M 5.700, 7.500  L 5.700, 1.500  L 5.700, 7.500  L 11.300, 7.500  L 11.300, 1.500  L 11.300, 7.500  L 12.700, 7.500  L 12.700, 1.500  L 12.700, 7.500  L 18.300, 7.500  L 18.300, 1.500  L 18.300, 7.500  L 19.700, 7.500  L 19.700, 1.500  L 19.700, 7.500  L 25.300, 7.500  L 25.300, 1.500  L 25.300, 7.500  L 26.700, 7.500  L 26.700, 1.500  L 26.700, 7.500  L 32.300, 7.500  L 32.300, 1.500  L 32.300, 7.500  L 33.700, 7.500  L 33.700, 1.500  L 33.700, 7.500  L 39.300, 7.500  L 39.300, 1.500  L 39.300, 7.500  L 40.700, 7.500  L 40.700, 1.500  L 40.700, 7.500  L 46.300, 7.500  L 46.300, 1.500  L 46.300, 7.500  L 47.700, 7.500  L 47.700, 1.500  L 47.700, 7.500  L 53.300, 7.500  L 53.300, 1.500  L 53.300, 7.500  L 54.700, 7.500  L 54.700, 1.500  L 54.700, 7.500  L 60.300, 7.500  L 60.300, 1.500  L 60.300, 7.500  L 61.700, 7.500  L 61.700, 1.500  L 61.700, 7.500  L 67.300, 7.500  L 67.300, 1.500  L 67.300, 7.500  L 68.700, 7.500  L 68.700, 1.500  L 68.700, 7.500  L 74.300, 7.500  L 74.300, 1.500  L 74.300, 7.500 "/>
+    </g>
+</svg>
