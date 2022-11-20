@@ -1,3 +1,0 @@
-# Paths
-
-## Creating Paths
