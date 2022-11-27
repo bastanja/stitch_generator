@@ -1,6 +1,6 @@
 # Stitch Effects
 
-Stitch effects are functions that receive a path as parameter and return stitches. See section [Paths](doc/paths.md) to
+Stitch effects are functions that receive a path as parameter and return stitches. See section [Paths](paths.md) to
 learn about creating paths.
 
 stitch_generator distinguishes between path effects and shape effects:
@@ -14,19 +14,19 @@ and stitches may exceed the boundaries of the path.
 
 Path effects use the width and alignment of the path. Stitches lie between the boundaries of the path.
 
-| Name                    | Example                                                                                                                                                                                                                             |
-| :---------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Contour](#contour)                 | ![](images/small_stitch_effect_contour.svg)                                                                                                                                                                                         |
-| [Lattice](#lattice)                 | ![](images/small_stitch_effect_lattice_linear.svg) <br/> ![](images/small_stitch_effect_lattice_peaks.svg)                                                                                                                          |
-| [Meander](#meander)                 | ![](images/small_stitch_effect_meander.svg) <br/> ![](images/small_stitch_effect_meander_join_ends.svg) <br/> ![](images/small_stitch_effect_meander_pattern.svg) <br/> ![](images/small_stitch_effect_meander_spacing_pattern.svg) |
-| [Satin](#satin)                   | ![](images/small_stitch_effect_satin.svg)                                                                                                                                                                                           |
-| [Scribble](#scribble)                | ![](images/small_stitch_effect_scribble.svg) <br/> ![](images/small_stitch_effect_scribble_dense.svg)                                                                                                                               |
-| [Stripes](#stripes)                 | ![](images/small_stitch_effect_stripes.svg)                                                                                                                                                                                         |
-| [Parallel Stripes](#parallel-stripes)        | ![](images/small_stitch_effect_parallel_stripes.svg) <br/> ![](images/small_stitch_effect_parallel_stripes_pattern.svg)                                                                                                             |
-| [Tile Motif](#tile-motif)              | ![](images/small_stitch_effect_tile_motif_spiral.svg) <br/> ![](images/small_stitch_effect_tile_motif_zigzag.svg)                                                                                                                   |
-| [Variable Underlay](#variable-underlay)       | ![](images/small_stitch_effect_variable_underlay.svg)                                                                                                                                                                               |
-| [ZigZag](#zigzag)                  | ![](images/small_stitch_effect_zigzag.svg)                                                                                                                                                                                          |
-| [Double ZigZag](#double-zigzag)           | ![](images/small_stitch_effect_double_zigzag.svg)                                                                                                                                                                                   |
+| Name                                    | Example                                                                                                                                                                                                                             |
+|:----------------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [Contour](#contour)                     | ![](images/small_stitch_effect_contour.svg)                                                                                                                                                                                         |
+| [Lattice](#lattice)                     | ![](images/small_stitch_effect_lattice_linear.svg) <br/> ![](images/small_stitch_effect_lattice_peaks.svg)                                                                                                                          |
+| [Meander](#meander)                     | ![](images/small_stitch_effect_meander.svg) <br/> ![](images/small_stitch_effect_meander_join_ends.svg) <br/> ![](images/small_stitch_effect_meander_pattern.svg) <br/> ![](images/small_stitch_effect_meander_spacing_pattern.svg) |
+| [Satin](#satin)                         | ![](images/small_stitch_effect_satin.svg)                                                                                                                                                                                           |
+| [Scribble](#scribble)                   | ![](images/small_stitch_effect_scribble.svg) <br/> ![](images/small_stitch_effect_scribble_dense.svg)                                                                                                                               |
+| [Stripes](#stripes)                     | ![](images/small_stitch_effect_stripes.svg)                                                                                                                                                                                         |
+| [Parallel Stripes](#parallel-stripes)   | ![](images/small_stitch_effect_parallel_stripes.svg) <br/> ![](images/small_stitch_effect_parallel_stripes_pattern.svg)                                                                                                             |
+| [Tile Motif](#tile-motif)               | ![](images/small_stitch_effect_tile_motif_spiral.svg) <br/> ![](images/small_stitch_effect_tile_motif_zigzag.svg)                                                                                                                   |
+| [Variable Underlay](#variable-underlay) | ![](images/small_stitch_effect_variable_underlay.svg)                                                                                                                                                                               |
+| [ZigZag](#zigzag)                       | ![](images/small_stitch_effect_zigzag.svg)                                                                                                                                                                                          |
+| [Double ZigZag](#double-zigzag)         | ![](images/small_stitch_effect_double_zigzag.svg)                                                                                                                                                                                   |
 
 ## Contour
 
@@ -144,7 +144,7 @@ stitches = effect(path)
 
 ## Satin
 
-A zig-zag line between the left and right boundary of the path with intermediate stitches based on a sampling function.
+A zigzag line between the left and right boundary of the path with intermediate stitches based on a sampling function.
 
 Example:
 
@@ -167,7 +167,7 @@ stitches = effect(path)
 
 ## Scribble
 
-A zig-zag line along the Path with random offsets to the side to simulate a hand-drawn scribble line.
+A zigzag line along the Path with random offsets to the side to simulate a hand-drawn scribble line.
 
 Example:
 
@@ -199,7 +199,7 @@ stitches = effect(path)
 
 ## Stripes
 
-A zig-zag line along the path with intermediate stitches based on a sampling function.
+A zigzag line along the path with intermediate stitches based on a sampling function.
 
 Example:
 
@@ -276,13 +276,13 @@ Example:
 import numpy as np
 from stitch_generator.collection.motifs.collection import zigzag_rectangle
 from stitch_generator.sampling.sample_by_number import sample_by_number
-from stitch_generator.shapes.line import line
+from stitch_generator.shapes.line import line_shape
 from stitch_generator.stitch_effects.path_effects.tile_motif import tile_motif
 
 # create motif for tiling
 motif_translation = (0.5, 0.5)  # move it into the range [0,1] in x and y direction
 motif = zigzag_rectangle(width=1, height=1, repetitions=8, horizontal=False) + motif_translation
-motif = np.concatenate((line((0, 1), (1, 0))(sample_by_number(4)[:-1]), motif))
+motif = np.concatenate((line_shape((0, 1), (1, 0))(sample_by_number(4)[:-1]), motif))
 
 # create stitch effect
 effect = tile_motif(motif=motif, motif_length=5)
@@ -306,7 +306,6 @@ such a Path.
 Example:
 
 ```python
-import numpy as np
 from stitch_generator.framework.path import get_inset_path
 from stitch_generator.sampling.sample_by_length import regular
 from stitch_generator.stitch_effects.path_effects.variable_underlay import variable_underlay
@@ -354,7 +353,7 @@ stitches = effect(path)
 **NOTE**
 
 zigzag and double_zigzag have no intermediate stitches. Therefore, they may produce very long stitches which are not
-possible to use with an embroidery machine. Take care to keep the paths narrow enough for zigag stitches.
+possible to use with an embroidery machine. Take care to keep the paths narrow enough for zigzag stitches.
 
 ---
 
@@ -364,7 +363,7 @@ Shape Effects ignore the width and alignment of the path. Stitches are placed ba
 path.
 
 | Name                                                | Example                                                                                                                                                                         |
-| :-------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+|:----------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | [Motif Chain](#motif-chain)                         | ![](images/small_stitch_effect_motif_chain_arrow.svg) <br/> ![](images/small_stitch_effect_motif_chain_loops.svg) <br/> ![](images/small_stitch_effect_motif_chain_pattern.svg) |
 | [Motif To Points](#motif-to-points)                 | ![](images/small_stitch_effect_motif_to_points.svg)                                                                                                                             |
 | [Motif To Segments](#motif-to-segments)             | ![](images/small_stitch_effect_motif_to_segments.svg)                                                                                                                           |

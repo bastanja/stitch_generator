@@ -1,7 +1,7 @@
 # List of Decorative Stitches
 
 | Name                                            | Example                                                                                                               |
-| :---------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------- |
+|:------------------------------------------------|:----------------------------------------------------------------------------------------------------------------------|
 | [Alternating Triangles](#alternating-triangles) | ![](images/small_decorative_stitch_alternating_triangles.svg)                                                         |
 | [Arrow Chain](#arrow-chain)                     | ![](images/small_decorative_stitch_arrow_chain.svg)                                                                   |
 | [Chevron Stitch](#chevron-stitch)               | ![](images/small_decorative_stitch_chevron_stitch.svg)                                                                |
