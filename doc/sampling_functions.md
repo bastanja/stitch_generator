@@ -36,7 +36,7 @@ again:
 Sampling by length does not guarantee the exact segment lengt,h but it guarantees that all samples
 are equally spaced.
 
-## Sampling by Fixed Length
+## Sampling by fixed length
 The `sampling_by_fixed_length` keeps the segment length fixed and fits as many segments as possible
 into the total length.
 
@@ -94,7 +94,7 @@ Example:
 
 ![Sampling by number](images/sampling_by_number.svg)
 
-## Sampling by Pattern
+## Sampling by pattern
 
 The `sampling_by_pattern` creates samples with a repeating pattern. The pattern is an array of values
 between in the range from 0 to 1. The pattern_length defines how long one repetition of the pattern
@@ -113,6 +113,19 @@ Example:
     sampling_by_pattern(pattern=[0.4, 0.5, 0.6], pattern_length=15, alignment=0.5, offset=0.5)
 
 ![Sampling by pattern 2](images/sampling_by_pattern_2.svg)
+
+## Sampling by number
+The `sampling_by_number` always returns the same number of segments, independend of the total
+length.
+
+
+Example: 
+
+    sampling_by_number(number_of_segments=4)
+
+
+![Sampling by number](images/sampling_by_number.svg)
+
 
 ## Tatami sampling
 
