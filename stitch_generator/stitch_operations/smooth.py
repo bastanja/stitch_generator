@@ -1,7 +1,9 @@
 import numpy as np
 
+from stitch_generator.framework.types import Array2D
 
-def smooth(stitches: np.ndarray, iterations: int, neighbor_weight: float = 0.5, circular=False):
+
+def smooth(stitches: Array2D, iterations: int, neighbor_weight: float = 0.5, circular=False):
     """
     Applies Laplacian smoothing to the stitches, i.e. moves each one closer to the center between its predecessor and
     successor
@@ -18,17 +20,20 @@ def smooth(stitches: np.ndarray, iterations: int, neighbor_weight: float = 0.5, 
     if len(stitches) < 3:
         return stitches
 
-    closed = np.allclose(stitches[0], stitches[-1])
+    # copy is necessary to avoid changing the original stitches
+    result = stitches.copy()
+
+    closed = np.allclose(result[0], result[-1])
 
     # if the first and last stitch are equal, remove the last one
     if circular and closed:
-        stitches = stitches[0:-1]
+        result = result[0:-1]
 
     for _ in range(iterations):
 
         # move stitches to the right and left by one
-        right = np.roll(stitches, 1, 0)
-        left = np.roll(stitches, -1, 0)
+        right = np.roll(result, 1, 0)
+        left = np.roll(result, -1, 0)
 
         if not circular:
             # avoid movement of the start and end stitch by setting the left and
@@ -40,13 +45,13 @@ def smooth(stitches: np.ndarray, iterations: int, neighbor_weight: float = 0.5, 
 
         # target is the center between predecessor and successor
         target = (left + right) / 2
-        target -= stitches
+        target -= result
 
         # move stitches closer to the target by the amount defined by neighbor_weight
-        stitches += target * neighbor_weight
+        result += target * neighbor_weight
 
     # if the first and last stitch were equal, add the last one again
     if circular and closed:
-        stitches = np.append(stitches, [stitches[0]], 0)
+        result = np.append(result, [result[0]], 0)
 
-    return stitches
+    return result

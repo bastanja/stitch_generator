@@ -15,7 +15,7 @@ def remove_duplicates(points: Array2D, threshold: float = 0.01) -> Array2D:
     Returns:
         The points without duplicates
     """
-    if len(points) < 1:
+    if len(points) <= 1:
         return points
 
     to_previous = points - np.roll(points, 1, 0)
