@@ -1,15 +1,19 @@
 import numpy as np
 from noise import pnoise2
 
-from stitch_generator.framework.types import Function1D, Function2D
-from stitch_generator.functions.function_modifiers import shift, rotate_degrees, repeat, chain
-from stitch_generator.functions.functions_1d import linear_interpolation, constant, function_1d, smootherstep
+from stitch_generator.framework.types import Function1D, Function2D, Array2D
+from stitch_generator.functions.ensure_shape import ensure_2d_shape
+from stitch_generator.functions.function_modifiers import shift, repeat, chain
+from stitch_generator.functions.functions_1d import linear_interpolation, function_1d, smootherstep
 from stitch_generator.functions.functions_2d import function_2d
+from stitch_generator.shapes.line import line_shape
+from stitch_generator.stitch_operations.rotate import rotate_by_degrees
 
 
 def noise(octaves: int = 4, angle=20, scale=1) -> Function1D:
     """
-    Returns a 1D noise function
+    Returns a 1D noise function (input 1D, output 1D)
+
     Args:
         octaves: the number of passes for generating fBm noise, see pnoise2
         angle: rotation angle which is applied to avoid the zero-values at integer grid of perlin noise
@@ -20,18 +24,20 @@ def noise(octaves: int = 4, angle=20, scale=1) -> Function1D:
 
     """
 
+    end_point = rotate_by_degrees(ensure_2d_shape((scale, 1)), angle_deg=angle)
+    to_texture_space = line_shape(to=end_point)
+
     def f(v):
-        to_2d = function_2d(linear_interpolation(0, scale), constant(0))
-        rotated = rotate_degrees(to_2d, constant(angle))
-        v2d = rotated(v)
-        return np.array([pnoise2(p[0], p[1], octaves=octaves) for p in v2d])
+        request_positions = to_texture_space(v)
+        return _noise_2d_texture_space(positions_texture_space=request_positions, octaves=octaves)
 
     return function_1d(f)
 
 
-def noise_2d(x_offset=0, y_offset=0, octaves: int = 4, angle=30, scale=1) -> Function2D:
+def noise_vectors(x_offset=0, y_offset=0, octaves: int = 4, angle=30, scale=1) -> Function2D:
     """
     Returns a 2D noise function (input 1D, output 2D)
+
     Args:
         x_offset: shift amount along the noise in x-direction
         y_offset: shift amount along the noise in y-direction
@@ -40,12 +46,43 @@ def noise_2d(x_offset=0, y_offset=0, octaves: int = 4, angle=30, scale=1) -> Fun
         scale: lower values decrease the density of the noise, higher values increase it
 
     Returns:
-        A Function2D that maps the input value to its 2D noise value
+        A Function2D that maps the input value to its 2D noise vector
 
     """
     fx = shift(x_offset, noise(octaves, angle, scale))
     fy = shift(y_offset, noise(octaves, -angle, scale))
     return function_2d(fx, fy)
+
+
+def noise_field(left, top, right, bottom, octaves: int):
+    """
+    Returns a noise field function (input 2D, output 1D)
+
+    Args:
+        left: left coordinate of the noise field
+        top: top coordinate of the noise field
+        right: right coordinate of the noise field
+        bottom: bottom coordinate of the noise field
+        octaves: the number of passes for generating fBm noise, see pnoise2
+
+    Returns:
+        A Function2D that maps the input coordinate value to its noise value in the noise
+
+    """
+
+    def f(positions: Array2D):
+        """
+        Returns a noise value for each position in positions_normalized
+        Args:
+            positions: Request positions with x and y coordinates in the range [0,1]
+
+        Returns:
+            A float value for each request position
+        """
+        request_positions = _scale_request_positions(positions, left, top, right, bottom)
+        return _noise_2d_texture_space(positions_texture_space=request_positions, octaves=octaves)
+
+    return f
 
 
 def fix_distribution(noise_function: Function1D, noise_range: float = 0.35, target_low=-1, target_high=1):
@@ -87,3 +124,16 @@ def fix_distribution(noise_function: Function1D, noise_range: float = 0.35, targ
 
     # combine the original noise function with the distribution modification
     return chain(noise_function, distribution_interpolation)
+
+
+def _noise_2d_texture_space(positions_texture_space: Array2D, octaves: int):
+    return np.array([pnoise2(x=p[0], y=p[1], octaves=octaves) for p in positions_texture_space])
+
+
+def _scale_request_positions(uv, left, top, right, bottom):
+    x_interpolation = linear_interpolation(left, right)
+    y_interpolation = linear_interpolation(top, bottom)
+    result = uv.copy()
+    result[:, 0] = x_interpolation(uv[:, 0])
+    result[:, 1] = y_interpolation(uv[:, 1])
+    return result
