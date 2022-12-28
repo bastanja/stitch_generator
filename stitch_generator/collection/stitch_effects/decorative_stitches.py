@@ -7,7 +7,7 @@ from stitch_generator.framework.path import Path, get_boundaries
 from stitch_generator.framework.stitch_effect import StitchEffect
 from stitch_generator.functions.function_modifiers import mix, inverse
 from stitch_generator.functions.functions_1d import constant
-from stitch_generator.functions.motif_generators import repeat_motif, alternate_direction
+from stitch_generator.functions.motif_generators import repeat_motif, repeat_motif_mirrored
 from stitch_generator.sampling.sample_by_length import sampling_by_length, sampling_by_length_with_offset, regular
 from stitch_generator.sampling.sampling_modifiers import remove_end, add_end, add_start, free_end, free_start
 from stitch_generator.stitch_effects.path_effects.tile_motif import tile_motif
@@ -46,7 +46,7 @@ def alternating_triangles(spacing: float, line_length: float, width: float, repe
     """
     motif = zigzag_rectangle(width=0.1, height=-line_length, repetitions=repetitions, horizontal=True, flip=True)
     motif += (width / 2, 0)
-    motif_gen = alternate_direction(repeat_motif(motif))
+    motif_gen = repeat_motif_mirrored(motif)
     sampling = sampling_by_length(spacing)
     return motif_chain(sampling, motif_gen, constant(0))
 
@@ -61,7 +61,7 @@ def arrow_chain(arrow_width: float, arrow_length: float, arrow_spacing: float) -
         arrow_spacing: The spacing between two arrows
     """
     single_arrow = np.array(((-arrow_width / 2, -arrow_length), (0, 0), (arrow_width / 2, -arrow_length)))
-    motif_gen = alternate_direction(repeat_motif(single_arrow))
+    motif_gen = repeat_motif_mirrored(single_arrow)
     sampling = sampling_by_length(arrow_spacing)
     return motif_chain(sampling, motif_gen, constant(0))
 
@@ -78,7 +78,7 @@ def chevron_stitch(spacing: float, line_length: float, repetitions: int, width: 
         width: The total width of the resulting stitch pattern
     """
     motif = line_motif(line_length, repetitions) + (width / 2, 0)
-    motif_gen = alternate_direction(repeat_motif(motif))
+    motif_gen = repeat_motif_mirrored(motif)
     sampling = sampling_by_length(spacing / 2)
     return motif_chain(sampling, motif_gen, constant(0))
 
@@ -96,7 +96,7 @@ def cretan_stitch(spacing: float, stitch_width: float, stitch_length: float, rep
         zigzag_width: The width of the middle zigzag line
     """
     motif = zigzag_motif(stitch_width, stitch_length, repetitions) + (zigzag_width / 2, 0)
-    motif_gen = alternate_direction(repeat_motif(motif))
+    motif_gen = repeat_motif_mirrored(motif)
     sampling = sampling_by_length(spacing / 2)
     return motif_chain(sampling, motif_gen, constant(0))
 
@@ -134,7 +134,7 @@ def feather_stitch(spacing: float, stitch_width: float, stitch_length: float, re
         repetitions: How often a line pointing to the side is repeated.
     """
     motif = rotate_by_degrees(zigzag_motif(stitch_width, stitch_length, repetitions), 45) + (1, 0)
-    motif_gen = alternate_direction(repeat_motif(motif))
+    motif_gen = repeat_motif_mirrored(motif)
     sampling = sampling_by_length(spacing)
     return motif_chain(sampling, motif_gen, constant(0))
 
