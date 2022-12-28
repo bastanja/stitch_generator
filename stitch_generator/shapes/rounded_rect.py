@@ -6,7 +6,7 @@ from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.function_modifiers import repeat, multiply, inverse, shift
 from stitch_generator.functions.function_sequence import function_sequence
 from stitch_generator.functions.functions_2d import constant_direction
-from stitch_generator.shapes.ellipse import ellipse_shape
+from stitch_generator.shapes.ellipse import ellipse_shape, ellipse_direction
 from stitch_generator.shapes.line import line
 
 
@@ -49,7 +49,7 @@ def _shape_parts(width: float, height: float, corner_radii):
 
 
 def _direction_parts(corner_radii):
-    corner_directions = [(repeat(0.25, ellipse_shape(rx=x, ry=y), mode='wrap')) for x, y in corner_radii]
+    corner_directions = [(repeat(0.25, ellipse_direction(rx=x, ry=y), mode='wrap')) for x, y in corner_radii]
     corner_directions = [shift(i, f) for i, f in zip(range(4), corner_directions)]
     connection_directions = [constant_direction(x, y) for x, y in ((1, 0), (0, 1), (-1, 0), (0, -1))]
     directions = list(itertools.chain.from_iterable(zip(connection_directions, corner_directions)))
