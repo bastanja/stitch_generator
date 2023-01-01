@@ -2,7 +2,7 @@ import numpy as np
 import pytest
 
 from stitch_generator.sampling.sample_by_number import sample_by_number
-from stitch_generator.shapes.circle import circle
+from stitch_generator.shapes.circle import circle, circle_shape
 from tests.shapes.normal_length import normal_length_one
 
 
@@ -26,3 +26,23 @@ def test_circle(center, radius):
     distances = positions - center
     lengths = np.linalg.norm(distances, axis=1)
     assert np.allclose(lengths, radius)
+
+
+def test_circle_shape():
+    f = circle_shape()
+    assert np.allclose(f(0), (1, 0))
+    assert np.allclose(f(0.25), (0, 1))
+    assert np.allclose(f(0.5), (-1, 0))
+    assert np.allclose(f(0.75), (0, -1))
+    assert np.allclose(f(1), (1, 0))
+
+    radii = [3, 4, -1, 1]
+    centers = [(0, 0), (1, 1), (10, -10), (-5, 0)]
+    for radius in radii:
+        for center in centers:
+            f = circle_shape(radius, center)
+            assert np.allclose(f(0), (radius + center[0], 0 + center[1]))
+            assert np.allclose(f(0.25), (0 + center[0], radius + center[1]))
+            assert np.allclose(f(0.5), (-radius + center[0], 0 + center[1]))
+            assert np.allclose(f(0.75), (0 + center[0], -radius + center[1]))
+            assert np.allclose(f(1), (radius + center[0], 0 + center[1]))

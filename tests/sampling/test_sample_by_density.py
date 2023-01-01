@@ -3,7 +3,7 @@ import numpy as np
 from stitch_generator.functions.functions_1d import constant
 from stitch_generator.sampling.sample_by_density import sampling_by_density
 from stitch_generator.sampling.sample_by_length import sampling_by_length
-from tests.functions import functions_1d_positive
+from tests.functions.functions import functions_1d_positive
 
 lengths = [0, 0.5, 1, 1.7, 2, 5, 10, 100, 100.5]
 

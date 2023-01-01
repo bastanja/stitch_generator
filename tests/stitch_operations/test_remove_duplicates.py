@@ -20,6 +20,11 @@ def test_remove_duplicates():
     result = remove_duplicates(stitches)
     assert np.allclose(result, ((0, 0), (10, 0), (20, 0)))
 
+    # multiple duplicates
+    stitches = np.array(((0, 0), (10, 0), (10, 0), (10, 0), (10, 0), (20, 0)))
+    result = remove_duplicates(stitches)
+    assert np.allclose(result, ((0, 0), (10, 0), (20, 0)))
+
     # no duplicate
     stitches = np.array(((0, 0), (10, 0), (20, 0)))
     result = remove_duplicates(stitches)

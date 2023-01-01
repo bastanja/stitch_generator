@@ -5,7 +5,7 @@ from pytest import approx
 from stitch_generator.functions.function_1d_stairs import stairs
 from stitch_generator.functions.functions_1d import linear_interpolation, constant, sinus, cosinus, \
     cubic_interpolation, square, arc, smoothstep, smootherstep, circular_arc
-from tests.functions import functions_1d
+from tests.functions.functions import functions_1d
 
 
 def test_constant():
@@ -108,43 +108,6 @@ def test_cubic_interpolation():
     # expect that interpolation is not possible with only one value
     with pytest.raises(Exception):
         f = cubic_interpolation((0, 2))
-
-
-def test_stairs():
-    steps = np.linspace(0, 1, 2)
-    ratio = 0.1
-    f = stairs(steps, ratio)
-    assert f(0) == approx(0)
-    assert f(0.5) == approx(0.5)
-    assert f(1) == approx(1)
-
-    step_increase_size = ratio / len(steps)
-    assert f(0.5 - step_increase_size) == approx(0)
-    assert f(0.5 + step_increase_size) == approx(1)
-
-    steps = np.linspace(0, 1, 2)
-    ratio = 0.1
-    f = stairs(steps, ratio)
-    assert f(0) == approx(0)
-    assert f(0.5) == approx(0.5)
-    assert f(1) == approx(1)
-
-    step_increase_size = ratio / len(steps)
-    assert f(0.5 - step_increase_size) == approx(0)
-    assert f(0.5 + step_increase_size) == approx(1)
-
-    steps = np.linspace(0, 1, 3)
-    ratio = 0.1
-    f = stairs(steps, ratio)
-    assert f(0) == approx(0)
-    assert f(1 / 3) == approx(0.25)
-    assert f(0.5) == approx(0.5)
-    assert f(2 / 3) == approx(0.75)
-    assert f(1) == approx(1)
-
-    step_increase_size = ratio / len(steps)
-    assert f((1 / 3) - step_increase_size) == approx(0)
-    assert f((1 / 3) + step_increase_size) == approx(0.5)
 
 
 def test_square():

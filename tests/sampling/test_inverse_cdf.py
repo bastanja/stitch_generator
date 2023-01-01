@@ -1,7 +1,7 @@
 import numpy as np
 
 from stitch_generator.sampling.sample_by_density import _inverse_cdf
-from tests.functions import functions_1d_positive
+from tests.functions.functions import functions_1d_positive
 
 
 def test_inverse_cdf():

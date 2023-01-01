@@ -9,7 +9,7 @@ from stitch_generator.functions.function_modifiers import repeat, reflect, wrap,
     multiply, split
 from stitch_generator.functions.functions_1d import smootherstep, arc, square, sinus
 from stitch_generator.shapes.bezier import bezier_shape
-from tests.functions import all_functions
+from tests.functions.functions import all_functions
 
 offsets = [t / 10 for t in range(10)]
 

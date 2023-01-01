@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from tests.functions import functions_2d, functions_1d
+from tests.functions.functions import functions_2d, functions_1d
 
 single_value = 0.4
 single_value_parameters = [

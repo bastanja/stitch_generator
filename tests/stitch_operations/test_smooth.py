@@ -3,7 +3,7 @@ import numpy as np
 from stitch_generator.sampling.sample_by_number import sample_by_number
 from stitch_generator.shapes.circle import circle_shape
 from stitch_generator.stitch_operations.smooth import smooth
-from tests.functions import all_functions
+from tests.functions.functions import all_functions
 
 
 def test_smooth():
