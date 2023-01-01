@@ -1,12 +1,12 @@
 import numpy as np
-
 from stitch_generator.framework.path import Path
 from stitch_generator.framework.stitch_effect import StitchEffect
 from stitch_generator.framework.types import Array2D, Function2D, Function1D
 from stitch_generator.functions.estimate_length import estimate_length
+from stitch_generator.functions.function_modifiers import mix
 from stitch_generator.functions.functions_1d import constant, linear_interpolation
-from stitch_generator.stitch_effects.utilities.motif_to_path import motif_to_path
 from stitch_generator.sampling.sample_by_length import sample_by_length
+from stitch_generator.stitch_effects.utilities.motif_to_path import motif_to_path
 from stitch_generator.stitch_effects.utilities.range_tree import make_range_tree, tree_to_indices_and_offsets
 
 
@@ -56,8 +56,13 @@ def variable_running_stitch_on_shape(shape: Function2D, direction: Function2D, s
     if max_level > 0:
         motif[:, 1] /= max_level
 
+    min_level = _to_level_rounding_down(min_strokes)
+    max_level = _to_level_rounding_up(max_strokes)
+    min_alignment = (min_level / max_level if max_level > 0 else 0) * 0.5
+    alignment = mix(constant(min_alignment), constant(0.5), factor=width_profile)
+
     path = Path(shape=shape, direction=direction, width=constant(max_level * stroke_spacing),
-                stroke_alignment=constant(0))
+                stroke_alignment=alignment)
 
     return motif_to_path(motif=motif, path=path)
 
