@@ -9,16 +9,17 @@
     fill: none;
 }
 .path_center_line {
+    fill: none;
+    stroke:#808080;
     stroke-width: 0.2;
     stroke-linejoin: round;
     stroke-linecap: round;
-    fill: none;
-    stroke:#333;
 }
 .path_contour {
-    stroke: #ddd;
-    fill-opacity: 1;
-    fill: #eee;
+    fill: #808080;
+    fill-opacity: 0.3;
+    stroke: #808080;
+    stroke-opacity: 0.5;
     stroke-width: 0.3;
 }
 .text{
