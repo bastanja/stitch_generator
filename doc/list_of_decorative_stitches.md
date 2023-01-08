@@ -85,6 +85,7 @@ stitches = effect(path)
 ![Decorative Stitch E-Stitch 1](images/decorative_stitch_e_stitch_1.svg)
 
 Example:
+
 ```python
 from stitch_generator.collection.stitch_effects.decorative_stitches import e_stitch
 effect = e_stitch(spacing=3, line_length=4, stitch_length=10, angle=45)
@@ -96,6 +97,7 @@ stitches = effect(path)
 ## Feather Stitch
 
 Example:
+
 ```python
 from stitch_generator.collection.stitch_effects.decorative_stitches import feather_stitch
 effect = feather_stitch(spacing=3, stitch_width=0, stitch_length=3.5, repetitions=2)
@@ -130,6 +132,7 @@ stitches = effect(path)
 
 ## Stem Stitch
 Example:
+
 ```python
 from stitch_generator.collection.stitch_effects.decorative_stitches import stem_stitch
 effect = stem_stitch(spacing=3, stitch_width=0.6, stitch_length=5, repetitions=5, angle=25)
@@ -139,6 +142,7 @@ stitches = effect(path)
 ![Decorative Stitch Stem Stitch 1](images/decorative_stitch_stem_stitch_1.svg)
 
 Example:
+
 ```python
 from stitch_generator.collection.stitch_effects.decorative_stitches import stem_stitch
 effect = stem_stitch(spacing=3, stitch_width=5, stitch_length=4, repetitions=5, angle=0)
