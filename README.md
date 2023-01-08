@@ -9,8 +9,8 @@ Stitch Effects use a Path as input and return an array of stitch coordinates as 
 
 ![stitch effects](doc/images/path_stitch_effect_examples.svg "Examples of stitch effects" )
 
-On the left is an example of a path that consists of a cubic Bézier curve with a constant width.
-On the right there are examples of stitch effects applied to the path. The dots represent the
+On the left is an example of a path that consists of a cubic Bézier curve with a constant width. On
+the right there are examples of stitch effects applied to the path. The dots represent the
 coordinates of the stitches.
 
 See [List of Stitch Effects](doc/list_of_stitch_effects.md) for an overview over the available
@@ -30,6 +30,7 @@ See [List of Decorative Stitches](doc/list_of_decorative_stitches.md) for an ove
 available decorative stitches.
 
 ## Stitch Patterns
+
 Stitch Generator provides multiple sampling functions that can be used to create stitch patterns.
 
 In this example sampling functions are used in combination with a meander stitch effect:
@@ -40,52 +41,112 @@ See [Sampling Functions](doc/sampling_functions.md) for an overview over the ava
 functions.
 
 # Usage
-## Creating Paths
-A Path consist of:
-- a center line that defines the shape
-- a direction that defines in which direction the left and right boundary of the path go
-- a width that defines the distance between the left and right boundary of the path
-- a stroke alignment that defines how the left and right boundary are aligned relative to the center
-  line
 
-``` python
-from stitch_generator.framework.path import Path
-from stitch_generator.functions.functions_1d import constant
-from stitch_generator.functions.functions_2d import constant_direction
-from stitch_generator.shapes.line import line
+## Installation
 
-path = Path(shape=line((0, 0), (100, 0)),
-            direction=constant_direction(0, -1),
-            width=constant(10),
-            stroke_alignment=constant(0.5))
+### Install from pypi
+
+The recommended way to install stitch generator is using pypi:
+
+```
+> pip install stitch_generator
 ```
 
-See [Paths](doc/paths.md) for more details about Paths.
+### Install from local git checkout
+
+Alternatively, stitch generator can be installed from a local git checkout:
+
+```
+> git clone git@github.com:bastanja/stitch_generator.git
+> cd stitch_generator
+> pip install .
+```
+
+## Creating Paths
+
+In order to use stitch effects, you first need to create a path. See [Paths](doc/paths.md) for an
+overview over paths and how to create them. Example for creating a simple linear path:
+
+```python
+from stitch_generator.shapes.line import line
+from stitch_generator.framework.path import Path
+from stitch_generator.functions.functions_1d import constant
+
+path = Path(*line(origin=(-50, 0), to=(50, 0)), width=constant(15))
+```
 
 ## Using Stitch Effects
 
-See [List of Stitch Effects](doc/list_of_stitch_effects.md) for documentation of the stitch effects
-and their parameters.
+### Stitch effect from collection
 
-Example for creating a satin stitch effect with a regular spacing of 1 mm between the zig-zag lines:
+Example for using a stitch effect from the stitch generator collection
 
-``` python
-from stitch_generator.stitch_effects.satin import satin
-from stitch_generator.functions.connect_functions import simple_connect
-from stitch_generator.sampling.sample_by_length import regular
+```python
+from stitch_generator.collection.stitch_effects.stitch_effects import stitch_effect_meander
+from stitch_generator.shapes.line import line
+from stitch_generator.framework.path import Path
+from stitch_generator.functions.functions_1d import constant
 
-stitch_effect = satin(sampling_function=regular(1), connect_function=simple_connect)
+# create a path
+path = Path(*line(origin=(-50, 0), to=(50, 0)), width=constant(15))
+
+# apply the stitch effect
+stitches = stitch_effect_meander(path)
 ```
 
-A Stitch Effect is a function that expects a Path as parameter and returns stitch coordinates.
-To apply the stitch effect, call it with a path as parameter:
+### Custom stitch effect
 
-``` python
+Example for using a custom stitch effect
+
+```python
+from stitch_generator.stitch_effects.path_effects.satin import satin
+from stitch_generator.shapes.line import line
+from stitch_generator.framework.path import Path
+from stitch_generator.functions.functions_1d import constant
+from stitch_generator.sampling.sample_by_length import regular
+
+# create a path
+path = Path(*line(origin=(-50, 0), to=(50, 0)), width=constant(15))
+
+# create a satin stitch effect
+stitch_effect = satin(spacing_function=regular(2), line_sampling_function=regular(4))
+
+# apply the stitch effect
 stitches = stitch_effect(path)
 ```
 
-`stitches` is a two-dimensional numpy ndarray. Dimension 0 is the number of stitches. Dimension 1
-contains the x and y coordinate of each stitch:
+See [List of Stitch Effects](doc/list_of_stitch_effects.md) for an overview over the available
+stitch effects.
+
+### Decorative stitch from collection
+
+Example for using a decorative stitch from the stitch generator collection
+
+```python
+from stitch_generator.collection.stitch_effects.decorative_stitches import arrow_chain
+from stitch_generator.shapes.line import line
+from stitch_generator.framework.path import Path
+from stitch_generator.functions.functions_1d import constant
+
+# create a path
+path = Path(*line(origin=(-50, 0), to=(50, 0)), width=constant(15))
+
+# create the stitch_effect
+stitch_effect = arrow_chain(arrow_width=8, arrow_length=2, arrow_spacing=2)
+
+# apply the stitch effect
+stitches = stitch_effect(path)
+```
+
+See [List of Decorative Stitches](doc/list_of_decorative_stitches.md) for an overview over the
+available decorative stitches.
+
+## Using the stitches
+
+The result of applying a stitch effect to a path are stitch coordinates. `stitches` is a
+two-dimensional numpy ndarray. Dimension 0 is the number of stitches. Dimension 1 contains the x and
+y coordinate of each stitch:
+
 ```
 >>> stitches
 array([[  1.,   5.],
@@ -96,3 +157,23 @@ array([[  1.,   5.],
        [ 99.,   5.],
        [100.,  -5.]])
 ```
+
+Stitch Generator has no functionality to write embroidery files. For writing embroidery files,
+[pyembroidery](https://pypi.org/project/pyembroidery/) is recommended.
+
+Note that the stitches from StitchGenerator are in millimeters, but pyembroidery expects 1/10 mm.
+Therefore, the stitches need to be scaled.
+
+Example how to create a pyembroidery EmbPattern with stitches from Stitch Generator:
+
+```python
+from pyembroidery import EmbPattern
+
+scale_factor = 10  # convert from millimeters to embroidery file scale 1/10 mm
+
+scaled_stitches = stitches * scale_factor
+pattern = EmbPattern()
+pattern.add_block(scaled_stitches.tolist(), "red")
+```
+
+See pyembroidery documentation for information how to write an EmbPattern to different file formats.
