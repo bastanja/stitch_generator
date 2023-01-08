@@ -9,16 +9,17 @@
     fill: none;
 }
 .path_center_line {
+    fill: none;
+    stroke:#808080;
     stroke-width: 0.2;
     stroke-linejoin: round;
     stroke-linecap: round;
-    fill: none;
-    stroke:#333;
 }
 .path_contour {
-    stroke: #ddd;
-    fill-opacity: 1;
-    fill: #eee;
+    fill: #808080;
+    fill-opacity: 0.3;
+    stroke: #808080;
+    stroke-opacity: 1;
     stroke-width: 0.3;
 }
 .text{
@@ -34,7 +35,7 @@
     font-size: 1mm;
 }
 .color_0 {
-    stroke:#148983;
+    stroke:#2e9a69;
 }
 .dot_0 {
     marker-start:url(#dot_0);
@@ -74,7 +75,7 @@
     marker-end:url(#dot_4);
 }
 .color_5 {
-    stroke:#0f6460;
+    stroke:#23744f;
 }
 .dot_5 {
     marker-start:url(#dot_5);
@@ -99,7 +100,7 @@
 }
 ]]></style>
         <marker id="dot_0" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
-            <circle cx="1.5" cy="1.5" fill="#148983" r="1.5"/>
+            <circle cx="1.5" cy="1.5" fill="#2e9a69" r="1.5"/>
         </marker>
         <marker id="dot_1" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
             <circle cx="1.5" cy="1.5" fill="#1873ac" r="1.5"/>
@@ -114,7 +115,7 @@
             <circle cx="1.5" cy="1.5" fill="#5ad2f4" r="1.5"/>
         </marker>
         <marker id="dot_5" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
-            <circle cx="1.5" cy="1.5" fill="#0f6460" r="1.5"/>
+            <circle cx="1.5" cy="1.5" fill="#23744f" r="1.5"/>
         </marker>
         <marker id="dot_6" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
             <circle cx="1.5" cy="1.5" fill="#0f4668" r="1.5"/>

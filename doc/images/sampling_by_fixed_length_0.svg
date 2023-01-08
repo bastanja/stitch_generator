@@ -9,16 +9,17 @@
     fill: none;
 }
 .path_center_line {
+    fill: none;
+    stroke:#808080;
     stroke-width: 0.2;
     stroke-linejoin: round;
     stroke-linecap: round;
-    fill: none;
-    stroke:#333;
 }
 .path_contour {
-    stroke: #ddd;
-    fill-opacity: 1;
-    fill: #eee;
+    fill: #808080;
+    fill-opacity: 0.3;
+    stroke: #808080;
+    stroke-opacity: 1;
     stroke-width: 0.3;
 }
 .text{
@@ -34,8 +35,9 @@
     font-size: 1mm;
 }
 .color_0 {
-    stroke:#148983;
-}]]></style>
+    stroke:#2e9a69;
+}
+]]></style>
     </defs>
     <g>
         <g transform="translate(0,5)">

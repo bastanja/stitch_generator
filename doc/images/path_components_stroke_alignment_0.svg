@@ -19,7 +19,7 @@
     fill: #808080;
     fill-opacity: 0.3;
     stroke: #808080;
-    stroke-opacity: 0.5;
+    stroke-opacity: 1;
     stroke-width: 0.3;
 }
 .text{
@@ -36,13 +36,15 @@
 }
 .line_0 {
     fill: none;
-    stroke:#148983;
+    stroke:#2e9a69;
     stroke-width:0.8;
-}.line_1 {
+}
+.line_1 {
     fill: none;
     stroke:#1873ac;
     stroke-width:0.2;
-}]]></style>
+}
+]]></style>
     </defs>
     <g>
         <g transform="translate(70.0,20.0)">
