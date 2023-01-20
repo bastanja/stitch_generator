@@ -19,7 +19,7 @@
     fill: #808080;
     fill-opacity: 0.3;
     stroke: #808080;
-    stroke-opacity: 1;
+    stroke-opacity: 0.5;
     stroke-width: 0.3;
 }
 .text{
@@ -35,7 +35,7 @@
     font-size: 1mm;
 }
 .color_0 {
-    stroke:#2e9a69;
+    stroke:#3bb2d0;
 }
 .dot_0 {
     marker-start:url(#dot_0);
@@ -44,7 +44,7 @@
 }
 ]]></style>
         <marker id="dot_0" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
-            <circle cx="1.5" cy="1.5" fill="#2e9a69" r="1.5"/>
+            <circle cx="1.5" cy="1.5" fill="#3bb2d0" r="1.5"/>
         </marker>
     </defs>
     <g>

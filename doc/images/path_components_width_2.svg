@@ -19,7 +19,7 @@
     fill: #808080;
     fill-opacity: 0.3;
     stroke: #808080;
-    stroke-opacity: 1;
+    stroke-opacity: 0.5;
     stroke-width: 0.3;
 }
 .text{
@@ -36,7 +36,7 @@
 }
 .line_0 {
     fill: none;
-    stroke:#2e9a69;
+    stroke:#3bb2d0;
     stroke-width:0.8;
 }
 ]]></style>

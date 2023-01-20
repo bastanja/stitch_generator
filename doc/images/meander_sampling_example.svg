@@ -19,7 +19,7 @@
     fill: #808080;
     fill-opacity: 0.3;
     stroke: #808080;
-    stroke-opacity: 1;
+    stroke-opacity: 0.5;
     stroke-width: 0.3;
 }
 .text{
@@ -35,7 +35,7 @@
     font-size: 1mm;
 }
 .color_0 {
-    stroke:#2e9a69;
+    stroke:#3bb2d0;
 }
 .dot_0 {
     marker-start:url(#dot_0);
@@ -43,7 +43,7 @@
     marker-end:url(#dot_0);
 }
 .color_1 {
-    stroke:#1873ac;
+    stroke:#3887be;
 }
 .dot_1 {
     marker-start:url(#dot_1);
@@ -51,7 +51,7 @@
     marker-end:url(#dot_1);
 }
 .color_2 {
-    stroke:#8c5290;
+    stroke:#8a8acb;
 }
 .dot_2 {
     marker-start:url(#dot_2);
@@ -59,7 +59,7 @@
     marker-end:url(#dot_2);
 }
 .color_3 {
-    stroke:#61a09c;
+    stroke:#56b881;
 }
 .dot_3 {
     marker-start:url(#dot_3);
@@ -67,7 +67,7 @@
     marker-end:url(#dot_3);
 }
 .color_4 {
-    stroke:#5ad2f4;
+    stroke:#50667f;
 }
 .dot_4 {
     marker-start:url(#dot_4);
@@ -75,7 +75,7 @@
     marker-end:url(#dot_4);
 }
 .color_5 {
-    stroke:#23744f;
+    stroke:#41afa5;
 }
 .dot_5 {
     marker-start:url(#dot_5);
@@ -83,7 +83,7 @@
     marker-end:url(#dot_5);
 }
 .color_6 {
-    stroke:#0f4668;
+    stroke:#f9886c;
 }
 .dot_6 {
     marker-start:url(#dot_6);
@@ -91,7 +91,7 @@
     marker-end:url(#dot_6);
 }
 .color_7 {
-    stroke:#543156;
+    stroke:#e55e5e;
 }
 .dot_7 {
     marker-start:url(#dot_7);
@@ -100,28 +100,28 @@
 }
 ]]></style>
         <marker id="dot_0" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
-            <circle cx="1.5" cy="1.5" fill="#2e9a69" r="1.5"/>
+            <circle cx="1.5" cy="1.5" fill="#3bb2d0" r="1.5"/>
         </marker>
         <marker id="dot_1" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
-            <circle cx="1.5" cy="1.5" fill="#1873ac" r="1.5"/>
+            <circle cx="1.5" cy="1.5" fill="#3887be" r="1.5"/>
         </marker>
         <marker id="dot_2" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
-            <circle cx="1.5" cy="1.5" fill="#8c5290" r="1.5"/>
+            <circle cx="1.5" cy="1.5" fill="#8a8acb" r="1.5"/>
         </marker>
         <marker id="dot_3" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
-            <circle cx="1.5" cy="1.5" fill="#61a09c" r="1.5"/>
+            <circle cx="1.5" cy="1.5" fill="#56b881" r="1.5"/>
         </marker>
         <marker id="dot_4" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
-            <circle cx="1.5" cy="1.5" fill="#5ad2f4" r="1.5"/>
+            <circle cx="1.5" cy="1.5" fill="#50667f" r="1.5"/>
         </marker>
         <marker id="dot_5" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
-            <circle cx="1.5" cy="1.5" fill="#23744f" r="1.5"/>
+            <circle cx="1.5" cy="1.5" fill="#41afa5" r="1.5"/>
         </marker>
         <marker id="dot_6" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
-            <circle cx="1.5" cy="1.5" fill="#0f4668" r="1.5"/>
+            <circle cx="1.5" cy="1.5" fill="#f9886c" r="1.5"/>
         </marker>
         <marker id="dot_7" markerHeight="3.0" markerWidth="3.0" refX="1.5" refY="1.5">
-            <circle cx="1.5" cy="1.5" fill="#543156" r="1.5"/>
+            <circle cx="1.5" cy="1.5" fill="#e55e5e" r="1.5"/>
         </marker>
     </defs>
     <g>
