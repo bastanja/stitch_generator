@@ -1,10 +1,10 @@
 # Paths
 
-In StitchGenerator, a path is an object on which stitch effects can be applied.
+In Stitch Generator, a path is an object on which stitch effects can be applied.
 
 A path consist of:
 
-- A shape, which is the center line of the path. This can be any shape like e.g. a line, bezier curve, circle or a
+- A shape, which is the center line of the path. This can be any shape like e.g. a line, Bézier curve, circle or a
   sequence of multiple connected shapes.
 - A direction that defines in which direction the left and right boundary of the path go
 - A width that defines the distance between the left and right boundary of the path
@@ -19,7 +19,7 @@ five points along the path at the given offsets.
 
 The shape of a path is a Function2D. It returns a position along the center line of the path.
 
-Example: Positions along a bezier curve
+Example: Positions along a Bézier curve
 
 ![Path Shape](images/path_components_shape.svg)
 
@@ -115,9 +115,9 @@ from stitch_generator.framework.path import Path
 path = Path(*line(origin=(-50, 0), to=(50, 0)))
 ```
 
-## Create a path from a bezier curve
+## Create a path from a Bézier curve
 
-A path can be created from a bezier curve. The bezier curve can have three control points for a quadratic curve, four
+A path can be created from a Bézier curve. The Bézier curve can have three control points for a quadratic curve, four
 control points for a cubic curve or more points.
 
 ```python

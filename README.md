@@ -49,7 +49,7 @@ See [Subdivision Functions](doc/subdivision_functions.md) for an overview over t
 
 ### Install from pypi
 
-The recommended way to install stitch generator is using pypi:
+The recommended way to install Stitch Generator is using pypi:
 
 ```
 > pip install stitch_generator
@@ -57,7 +57,7 @@ The recommended way to install stitch generator is using pypi:
 
 ### Install from local git checkout
 
-Alternatively, stitch generator can be installed from a local git checkout:
+Alternatively, Stitch Generator can be installed from a local git checkout:
 
 ```
 > git clone git@github.com:bastanja/stitch_generator.git
@@ -82,7 +82,7 @@ path = Path(*line(origin=(-50, 0), to=(50, 0)), width=constant(15))
 
 ### Stitch effect from collection
 
-Example for using a stitch effect from the stitch generator collection
+Example for using a stitch effect from the Stitch Generator collection
 
 ```python
 from stitch_generator.collection.stitch_effects.stitch_effects import stitch_effect_meander
@@ -122,7 +122,7 @@ See [List of Stitch Effects](doc/list_of_stitch_effects.md) for an overview over
 
 ### Decorative stitch from collection
 
-Example for using a decorative stitch from the stitch generator collection
+Example for using a decorative stitch from the Stitch Generator collection
 
 ```python
 from stitch_generator.collection.stitch_effects.decorative_stitches import arrow_chain
