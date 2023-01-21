@@ -2,18 +2,20 @@ import numpy as np
 
 from stitch_generator.collection.motifs.collection import zigzag_rectangle, zigzag_motif, rhomb_motif, x_motif, \
     line_motif, overlock_stitch_motif
-from stitch_generator.collection.motifs.line import straight_line
 from stitch_generator.framework.path import Path, get_boundaries
 from stitch_generator.framework.stitch_effect import StitchEffect
 from stitch_generator.functions.function_modifiers import mix, inverse
 from stitch_generator.functions.functions_1d import constant
 from stitch_generator.functions.motif_generators import repeat_motif, repeat_motif_mirrored
-from stitch_generator.sampling.sample_by_length import sampling_by_length, sampling_by_length_with_offset, regular
+from stitch_generator.sampling.sample_by_length import sampling_by_length, sampling_by_length_with_offset, regular, \
+    sample_by_length
 from stitch_generator.sampling.sampling_modifiers import remove_end, add_end, add_start, free_end, free_start
+from stitch_generator.shapes.line import line_shape
 from stitch_generator.stitch_effects.path_effects.tile_motif import tile_motif
 from stitch_generator.stitch_effects.shape_effects.motif_chain import motif_chain
 from stitch_generator.stitch_effects.shape_effects.motif_to_points import motif_to_points
 from stitch_generator.stitch_effects.shape_effects.motif_to_segments import motif_to_segments
+from stitch_generator.stitch_operations.repeat_stitches import repeat_stitches
 from stitch_generator.stitch_operations.rotate import rotate_by_degrees, rotate_270
 
 
@@ -114,7 +116,8 @@ def e_stitch(spacing: float, line_length: float, stitch_length: float, angle: fl
         angle: The rotation angle in degrees by which the small lines are rotated relative to the direction of the path
 
     """
-    motif = rotate_by_degrees(straight_line(line_length, line_length), angle)
+    motif = line_shape((0, 0), (line_length, 0))(sample_by_length(line_length, stitch_length))
+    motif = rotate_by_degrees(repeat_stitches(motif, 2), angle)
     motif_generator = repeat_motif(motif)
     sampling = remove_end(sampling_by_length(stitch_length))
 
