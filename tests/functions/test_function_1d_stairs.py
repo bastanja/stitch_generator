@@ -1,11 +1,11 @@
 import numpy as np
 
 from stitch_generator.functions.function_1d_stairs import stairs
-from stitch_generator.sampling.sample_by_number import sample_by_number
+from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
 
 
 def test_stairs_two_steps():
-    steps = sample_by_number(1)
+    steps = subdivide_by_number(1)
     ratio = 0.1
     f = stairs(steps, ratio)
 
@@ -20,7 +20,7 @@ def test_stairs_two_steps():
 
 
 def test_stairs_three_steps():
-    steps = sample_by_number(2)
+    steps = subdivide_by_number(2)
     ratio = 0.2
     f = stairs(steps, ratio)
 

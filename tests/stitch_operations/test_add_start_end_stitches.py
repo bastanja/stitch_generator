@@ -1,6 +1,6 @@
 import pytest
 
-from stitch_generator.sampling.sample_by_number import sample_by_number
+from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
 from stitch_generator.shapes.line import line_shape
 from stitch_generator.stitch_operations.add_start_end_stitches import add_start_end_stitches
 from stitch_generator.stitch_operations.remove_duplicates import remove_duplicates
@@ -15,8 +15,7 @@ from stitch_generator.stitch_operations.remove_duplicates import remove_duplicat
 ])
 def test_add_start_end_stitches(number_of_segments, number_of_repeated_segments):
     shape = line_shape(origin=(0, 0), to=(10, 0))
-    samples = sample_by_number(number_of_segments)
-    stitches = shape(samples)
+    stitches = shape(subdivide_by_number(number_of_segments))
 
     # verify that we have the expected number of stitches before calling add_start_end_stitches
     number_of_stitches = number_of_segments + 1

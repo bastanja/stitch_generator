@@ -32,8 +32,8 @@ def cubic_interpolation(control_points) -> Function1D:
     control_points = np.asarray(control_points)
     assert len(control_points) > 1, "Interpolation function needs at least two values"
 
-    # Use cubic interpolation (3) if there are enough samples,
-    # otherwise reduce to len(samples) - 1, i.e. quadratic (2) or linear (1)
+    # Use cubic interpolation (3) if there are enough control points,
+    # otherwise reduce to len(control_points) - 1, i.e. quadratic (2) or linear (1)
     interpolation = min(len(control_points) - 1, 3)
 
     return interp1d(control_points[:, 0], control_points[:, 1], kind=interpolation)

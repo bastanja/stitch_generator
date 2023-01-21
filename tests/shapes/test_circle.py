@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from stitch_generator.sampling.sample_by_number import sample_by_number
+from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
 from stitch_generator.shapes.circle import circle, circle_shape
 from tests.shapes.normal_length import normal_length_one
 
@@ -21,8 +21,7 @@ def test_circle(center, radius):
     assert np.allclose(shape(0), shape(1))
 
     # check that the distance to the center is equal for each point
-    samples = sample_by_number(1000)
-    positions = shape(samples)
+    positions = shape(subdivide_by_number(1000))
     distances = positions - center
     lengths = np.linalg.norm(distances, axis=1)
     assert np.allclose(lengths, radius)

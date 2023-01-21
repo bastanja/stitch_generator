@@ -1,8 +1,8 @@
 import numpy as np
 
 from stitch_generator.functions.ensure_shape import ensure_2d_shape
-from stitch_generator.sampling.sample_by_number import sampling_by_number
-from stitch_generator.sampling.sampling_modifiers import remove_end
+from stitch_generator.subdivision.subdivide_by_number import subdivision_by_number
+from stitch_generator.subdivision.subdivision_modifiers import remove_end
 from stitch_generator.shapes.circle import circle_shape
 from stitch_generator.shapes.line import line_shape
 from stitch_generator.stitch_effects.path_effects.zigzag import zigzag_between
@@ -26,7 +26,7 @@ def _zigzag_rectangle(width: float, height: float, repetitions: int, flip: bool 
     f1 = line_shape((-half_width, -half_height), (half_width, -half_height))
     f2 = line_shape((-half_width, half_height), (half_width, half_height))
 
-    return zigzag_between(f1, f2, sampling_by_number(repetitions), width)
+    return zigzag_between(f1, f2, subdivision_by_number(repetitions), width)
 
 
 def zigzag_motif(width: float, height: float, repetitions: int):
@@ -35,7 +35,7 @@ def zigzag_motif(width: float, height: float, repetitions: int):
     f1 = line_shape((0, -half_width), (0, half_width))
     f2 = line_shape((height, -half_width), (height, half_width))
 
-    return zigzag_between(f1, f2, sampling_by_number(repetitions), width)
+    return zigzag_between(f1, f2, subdivision_by_number(repetitions), width)
 
 
 def rhomb_motif(width, height):
@@ -65,5 +65,5 @@ def overlock_stitch_motif(width: float, height: float, loop_ratio: float):
 def star_motif(num_spikes: int, inner_radius: float, outer_radius: float):
     inner = circle_shape(inner_radius)
     outer = circle_shape(outer_radius)
-    result = zigzag_between(outer, inner, spacing_function=remove_end(sampling_by_number((num_spikes * 2))), length=1)
+    result = zigzag_between(outer, inner, spacing_function=remove_end(subdivision_by_number((num_spikes * 2))), length=1)
     return np.vstack((result[-1], result))

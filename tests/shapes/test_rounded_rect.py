@@ -1,14 +1,13 @@
 import numpy as np
 import pytest
 
-from stitch_generator.sampling.sample_by_number import sample_by_number
 from stitch_generator.shapes.rounded_rect import simple_rounded_rect, rounded_rect_with_corner_radii
+from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
 from tests.shapes.normal_length import normal_length_one
 
 
 def position_not_zero(shape) -> bool:
-    samples = sample_by_number(1000)
-    positions = shape(samples)
+    positions = shape(subdivide_by_number(1000))
     non_zero = positions != (0, 0)
     return np.alltrue(non_zero)
 

@@ -1,7 +1,7 @@
 import numpy as np
 
 from stitch_generator.functions.functions_1d import linear_interpolation
-from stitch_generator.sampling.sample_by_number import sample_by_number
+from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
 
 
 def width_to_level(widths: np.ndarray, level_spacing: float):
@@ -89,8 +89,8 @@ def tree_to_indices_and_offsets(tree, level=0):
     # start to end, level up
     if level > 0:
         indices.extend(list(level_indices[0:-1]))
-        samples = sample_by_number(number_of_segments=len(level_indices) - 1)[:-1]
-        offsets.extend(linear_interpolation(level - 1, level)(samples))
+        values = subdivide_by_number(number_of_segments=len(level_indices) - 1)[:-1]
+        offsets.extend(linear_interpolation(level - 1, level)(values))
 
     children = tree.children
 
@@ -130,8 +130,8 @@ def tree_to_indices_and_offsets(tree, level=0):
         offsets.append(level)
     else:
         indices.extend(level_indices[0:-1])
-        samples = sample_by_number(number_of_segments=len(level_indices) - 1)[:-1]
-        offsets.extend(linear_interpolation(level, level - 1)(samples))
+        values = subdivide_by_number(number_of_segments=len(level_indices) - 1)[:-1]
+        offsets.extend(linear_interpolation(level, level - 1)(values))
 
     assert len(indices) == len(offsets)
     return indices, offsets

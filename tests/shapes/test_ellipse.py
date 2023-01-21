@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from stitch_generator.sampling.sample_by_number import sample_by_number
+from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
 from stitch_generator.shapes.ellipse import ellipse
 from tests.shapes.normal_length import normal_length_one
 

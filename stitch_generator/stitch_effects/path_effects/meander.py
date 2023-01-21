@@ -2,34 +2,34 @@ import numpy as np
 
 from stitch_generator.framework.path import Path, get_boundaries
 from stitch_generator.framework.stitch_effect import StitchEffect
-from stitch_generator.framework.types import SamplingFunction, Array2D
+from stitch_generator.framework.types import SubdivisionFunction, Array2D
 from stitch_generator.functions.ensure_shape import ensure_2d_shape
-from stitch_generator.sampling.sample_by_length import regular
-from stitch_generator.stitch_effects.utilities.sample_line import sample_line
+from stitch_generator.subdivision.subdivide_by_length import regular
+from stitch_generator.stitch_effects.utilities.subdivide_line import subdivide_line
 
 
-def meander(spacing_function: SamplingFunction, line_sampling_function: SamplingFunction,
+def meander(spacing_function: SubdivisionFunction, line_subdivision: SubdivisionFunction,
             join_ends: bool = False) -> StitchEffect:
-    return lambda path: meander_along(path=path, spacing_function=spacing_function,
-                                      line_sampling_function=line_sampling_function, join_ends=join_ends)
+    return lambda path: meander_along(path=path, spacing_function=spacing_function, line_subdivision=line_subdivision,
+                                      join_ends=join_ends)
 
 
 def simple_meander(spacing: float, stitch_length: float) -> StitchEffect:
     return lambda path: meander_along(path=path, spacing_function=regular(spacing),
-                                      line_sampling_function=regular(stitch_length), join_ends=False)
+                                      line_subdivision=regular(stitch_length), join_ends=False)
 
 
-def meander_along(path: Path, spacing_function: SamplingFunction, line_sampling_function: SamplingFunction,
+def meander_along(path: Path, spacing_function: SubdivisionFunction, line_subdivision: SubdivisionFunction,
                   join_ends: bool = False) -> Array2D:
-    return meander_between(*get_boundaries(path), spacing_function=spacing_function,
-                           line_sampling_function=line_sampling_function, join_ends=join_ends, length=path.length)
+    return meander_between(*get_boundaries(path), spacing_function=spacing_function, line_subdivision=line_subdivision,
+                           join_ends=join_ends, length=path.length)
 
 
-def meander_between(boundary_left, boundary_right, spacing_function: SamplingFunction,
-                    line_sampling_function: SamplingFunction, length: float, join_ends: bool = False) -> Array2D:
+def meander_between(boundary_left, boundary_right, spacing_function: SubdivisionFunction,
+                    line_subdivision: SubdivisionFunction, length: float, join_ends: bool = False) -> Array2D:
     points = _meander(boundary_left, boundary_right, spacing_function=spacing_function, length=length)
 
-    parts = [sample_line(points[i - 1], points[i], line_sampling_function) for i in range(1, len(points), 2)]
+    parts = [subdivide_line(points[i - 1], points[i], line_subdivision) for i in range(1, len(points), 2)]
 
     return _connect_parts(parts, join_ends)
 
@@ -58,7 +58,7 @@ def _connect_parts(parts, join_ends: bool):
     return np.concatenate([modify_part(p) for p in parts] + [ensure_2d_shape(last_point)])
 
 
-def _meander(boundary_left, boundary_right, spacing_function: SamplingFunction, length):
+def _meander(boundary_left, boundary_right, spacing_function: SubdivisionFunction, length):
     t = spacing_function(length)
 
     values_left_even = boundary_left(t[0::2])

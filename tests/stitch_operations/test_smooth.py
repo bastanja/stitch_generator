@@ -1,15 +1,15 @@
 import numpy as np
 
-from stitch_generator.sampling.sample_by_number import sample_by_number
+from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
 from stitch_generator.shapes.circle import circle_shape
 from stitch_generator.stitch_operations.smooth import smooth
 from tests.functions.functions import all_functions
 
 
 def test_smooth():
-    # apply smoothing on samples of 1d and 2d functions
+    # apply smoothing on values of 1d and 2d functions
     for name, f in all_functions.items():
-        stitches = f(sample_by_number(10))
+        stitches = f(subdivide_by_number(10))
         result = smooth(stitches=stitches, iterations=5, neighbor_weight=0.5)
 
         # check that smoothing preserves the start and end stitch
@@ -28,7 +28,7 @@ def test_smooth_special_cases():
 
     # circular
     shape = circle_shape(radius=10)
-    stitches = shape(sample_by_number(30))
+    stitches = shape(subdivide_by_number(30))
     result = smooth(stitches=stitches, iterations=5, neighbor_weight=0.5, circular=True)
 
     # check that start and end points have changed

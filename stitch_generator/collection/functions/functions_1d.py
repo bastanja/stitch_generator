@@ -2,7 +2,7 @@ from stitch_generator.functions.function_1d_stairs import stairs
 from stitch_generator.functions.function_modifiers import subtract, repeat, chain
 from stitch_generator.functions.functions_1d import constant, linear_interpolation, arc, circular_arc, sinus, \
     cubic_interpolation, smoothstep
-from stitch_generator.sampling.sample_by_number import sample_by_number
+from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
 
 linear_0_1 = linear_interpolation(0, 1)
 linear_1_0 = linear_interpolation(1, 0)
@@ -18,4 +18,4 @@ half_smoothstep = chain(repeat(0.5, smoothstep), linear_interpolation(0, 1, sour
 half_circle = repeat(2, circular_arc, mode='reflect')
 
 cubic_arc = cubic_interpolation(((0, 0), (0.5, 1), (1, 0)))
-three_stairs = stairs(values=sample_by_number(3), ascend_ratio=0.1)
+three_stairs = stairs(values=subdivide_by_number(3), ascend_ratio=0.1)

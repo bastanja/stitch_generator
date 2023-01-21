@@ -7,9 +7,6 @@ from stitch_generator.framework.stitch_effect import StitchEffect
 from stitch_generator.functions.function_modifiers import mix, inverse
 from stitch_generator.functions.functions_1d import constant
 from stitch_generator.functions.motif_generators import repeat_motif, repeat_motif_mirrored
-from stitch_generator.sampling.sample_by_length import sampling_by_length, sampling_by_length_with_offset, regular, \
-    sample_by_length
-from stitch_generator.sampling.sampling_modifiers import remove_end, add_end, add_start, free_end, free_start
 from stitch_generator.shapes.line import line_shape
 from stitch_generator.stitch_effects.path_effects.tile_motif import tile_motif
 from stitch_generator.stitch_effects.shape_effects.motif_chain import motif_chain
@@ -17,6 +14,9 @@ from stitch_generator.stitch_effects.shape_effects.motif_to_points import motif_
 from stitch_generator.stitch_effects.shape_effects.motif_to_segments import motif_to_segments
 from stitch_generator.stitch_operations.repeat_stitches import repeat_stitches
 from stitch_generator.stitch_operations.rotate import rotate_by_degrees, rotate_270
+from stitch_generator.subdivision.subdivide_by_length import subdivision_by_length, subdivision_by_length_with_offset, \
+    regular, subdivide_by_length
+from stitch_generator.subdivision.subdivision_modifiers import remove_end, add_end, add_start, free_end, free_start
 
 
 def decorative_stitches_collection(spacing: float = 2.5, stitch_width: float = 5, pattern_spacing: float = 20):
@@ -49,8 +49,8 @@ def alternating_triangles(spacing: float, line_length: float, width: float, repe
     motif = zigzag_rectangle(width=0.1, height=-line_length, repetitions=repetitions, horizontal=True, flip=True)
     motif += (width / 2, 0)
     motif_gen = repeat_motif_mirrored(motif)
-    sampling = sampling_by_length(spacing)
-    return motif_chain(sampling, motif_gen, constant(0))
+    subdivision = subdivision_by_length(spacing)
+    return motif_chain(subdivision, motif_gen, constant(0))
 
 
 def arrow_chain(arrow_width: float, arrow_length: float, arrow_spacing: float) -> StitchEffect:
@@ -64,8 +64,8 @@ def arrow_chain(arrow_width: float, arrow_length: float, arrow_spacing: float) -
     """
     single_arrow = np.array(((-arrow_width / 2, -arrow_length), (0, 0), (arrow_width / 2, -arrow_length)))
     motif_gen = repeat_motif_mirrored(single_arrow)
-    sampling = sampling_by_length(arrow_spacing)
-    return motif_chain(sampling, motif_gen, constant(0))
+    subdivision = subdivision_by_length(arrow_spacing)
+    return motif_chain(subdivision, motif_gen, constant(0))
 
 
 def chevron_stitch(spacing: float, line_length: float, repetitions: int, width: float):
@@ -81,8 +81,8 @@ def chevron_stitch(spacing: float, line_length: float, repetitions: int, width: 
     """
     motif = line_motif(line_length, repetitions) + (width / 2, 0)
     motif_gen = repeat_motif_mirrored(motif)
-    sampling = sampling_by_length(spacing / 2)
-    return motif_chain(sampling, motif_gen, constant(0))
+    subdivision = subdivision_by_length(spacing / 2)
+    return motif_chain(subdivision, motif_gen, constant(0))
 
 
 def cretan_stitch(spacing: float, stitch_width: float, stitch_length: float, repetitions: int,
@@ -99,8 +99,8 @@ def cretan_stitch(spacing: float, stitch_width: float, stitch_length: float, rep
     """
     motif = zigzag_motif(stitch_width, stitch_length, repetitions) + (zigzag_width / 2, 0)
     motif_gen = repeat_motif_mirrored(motif)
-    sampling = sampling_by_length(spacing / 2)
-    return motif_chain(sampling, motif_gen, constant(0))
+    subdivision = subdivision_by_length(spacing / 2)
+    return motif_chain(subdivision, motif_gen, constant(0))
 
 
 def e_stitch(spacing: float, line_length: float, stitch_length: float, angle: float) -> StitchEffect:
@@ -116,13 +116,13 @@ def e_stitch(spacing: float, line_length: float, stitch_length: float, angle: fl
         angle: The rotation angle in degrees by which the small lines are rotated relative to the direction of the path
 
     """
-    motif = line_shape((0, 0), (line_length, 0))(sample_by_length(line_length, stitch_length))
+    motif = line_shape((0, 0), (line_length, 0))(subdivide_by_length(line_length, stitch_length))
     motif = rotate_by_degrees(repeat_stitches(motif, 2), angle)
     motif_generator = repeat_motif(motif)
-    sampling = remove_end(sampling_by_length(stitch_length))
+    subdivision = remove_end(subdivision_by_length(stitch_length))
 
-    return motif_to_points(motif_position_sampling=sampling_by_length(spacing),
-                           line_sampling=sampling,
+    return motif_to_points(motif_placement=subdivision_by_length(spacing),
+                           line_subdivision=subdivision,
                            motif_generator=motif_generator)
 
 
@@ -138,8 +138,8 @@ def feather_stitch(spacing: float, stitch_width: float, stitch_length: float, re
     """
     motif = rotate_by_degrees(zigzag_motif(stitch_width, stitch_length, repetitions), 45) + (1, 0)
     motif_gen = repeat_motif_mirrored(motif)
-    sampling = sampling_by_length(spacing)
-    return motif_chain(sampling, motif_gen, constant(0))
+    subdivision = subdivision_by_length(spacing)
+    return motif_chain(subdivision, motif_gen, constant(0))
 
 
 def overlock_stitch(length: float, width: float):
@@ -153,16 +153,16 @@ def overlock_stitch(length: float, width: float):
     loop_ratio = 0.4
     motif = overlock_stitch_motif(width=1, height=1, loop_ratio=loop_ratio)
     stitch_effect = tile_motif(motif=motif, motif_length=length)
-    back_stitch_sampling = add_start(add_end(sampling_by_length_with_offset(segment_length=length, offset=0.5)))
+    back_stitch_subdivision = add_start(add_end(subdivision_by_length_with_offset(segment_length=length, offset=0.5)))
 
     def effect(path):
         constant_width_path = Path(path.shape, path.direction, constant(width), constant(0.5))
         left, right = get_boundaries(constant_width_path)
-        samples = back_stitch_sampling(constant_width_path.length)
+        back_stitch_offsets = back_stitch_subdivision(constant_width_path.length)
         back_stitch_line = inverse(mix(right, left, constant(loop_ratio)))
 
         stitches = stitch_effect(constant_width_path)
-        back_stitches = back_stitch_line(samples)
+        back_stitches = back_stitch_line(back_stitch_offsets)
 
         return np.concatenate((stitches, right(1), left(1), back_stitches, back_stitches[-2::-1]))
 
@@ -180,8 +180,8 @@ def rhomb_motif_stitch(spacing: float, width: float, length: float):
     """
     motif = rotate_270(rhomb_motif(width, length))
     motif_gen = repeat_motif(motif)
-    sampling = sampling_by_length(spacing)
-    return motif_chain(sampling, motif_gen, constant(0))
+    subdivision = subdivision_by_length(spacing)
+    return motif_chain(subdivision, motif_gen, constant(0))
 
 
 def stem_stitch(spacing: float, stitch_width: float, stitch_length: float, repetitions: int, angle: float):
@@ -198,9 +198,9 @@ def stem_stitch(spacing: float, stitch_width: float, stitch_length: float, repet
     """
     motif = zigzag_rectangle(stitch_width, stitch_length, repetitions, horizontal=True)
     motif_generator = repeat_motif(motif)
-    sampling = sampling_by_length_with_offset(segment_length=spacing, offset=0.5)
+    subdivision = subdivision_by_length_with_offset(segment_length=spacing, offset=0.5)
 
-    return motif_chain(motif_position_sampling=sampling,
+    return motif_chain(motif_placement=subdivision,
                        motif_generator=motif_generator,
                        motif_rotation_degrees=constant(angle))
 
@@ -218,8 +218,8 @@ def three_arrows(arrow_spacing: float, group_spacing: float, start_end_spacing: 
     """
     single_arrow = np.array(((0, 0.0), (-3, -3), (0, 0), (-3, 3), (0, 0)))
     combined = np.concatenate((single_arrow, single_arrow + (arrow_spacing, 0), single_arrow + (arrow_spacing * 2, 0)))
-    motif_sampling = free_start(start_end_spacing, free_end(start_end_spacing, regular(group_spacing)))
-    return motif_to_segments(motif_sampling, regular(stitch_length), repeat_motif(combined), motif_length=3)
+    motif_subdivision = free_start(start_end_spacing, free_end(start_end_spacing, regular(group_spacing)))
+    return motif_to_segments(motif_subdivision, regular(stitch_length), repeat_motif(combined), motif_length=3)
 
 
 def x_motif_stitch(spacing: float, width: float, length: float):
@@ -233,5 +233,5 @@ def x_motif_stitch(spacing: float, width: float, length: float):
     """
     motif = rotate_by_degrees(x_motif(width, length), -90)
     motif_gen = repeat_motif(motif)
-    sampling = sampling_by_length(spacing)
-    return motif_chain(sampling, motif_gen, constant(0))
+    subdivision = subdivision_by_length(spacing)
+    return motif_chain(subdivision, motif_gen, constant(0))

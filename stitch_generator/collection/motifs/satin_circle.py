@@ -1,18 +1,19 @@
 from typing import Tuple
 
 from stitch_generator.collection.functions.functions_1d import half_circle
-from stitch_generator.collection.sampling.tatami_sampling import tatami_3_1
 from stitch_generator.collection.stitch_effects.underlays import underlay_contour_zigzag
+from stitch_generator.collection.subdivision.tatami import tatami_3_1
 from stitch_generator.framework.path import Path
 from stitch_generator.functions.function_modifiers import scale
 from stitch_generator.functions.functions_1d import constant
-from stitch_generator.sampling.sample_by_length import sample_by_length, sampling_by_length_with_offset, regular
-from stitch_generator.sampling.sampling_modifiers import add_end, add_start, alternate_direction
 from stitch_generator.shapes.line import line
 from stitch_generator.stitch_effects.path_effects.meander import meander
 from stitch_generator.stitch_effects.path_effects.zigzag import zigzag, double_zigzag
 from stitch_generator.stitch_operations.connect import connect
 from stitch_generator.stitch_operations.rotate import rotate_90
+from stitch_generator.subdivision.subdivide_by_length import subdivide_by_length, subdivision_by_length_with_offset, \
+    regular
+from stitch_generator.subdivision.subdivision_modifiers import add_end, add_start, alternate_direction
 
 
 def satin_ellipse(width: float, height: float, stitch_length: float, pull_compensation: float = 0,
@@ -20,7 +21,7 @@ def satin_ellipse(width: float, height: float, stitch_length: float, pull_compen
                   return_to_start: bool = False):
     # create stitch effects
     underlay_effect = double_zigzag(spacing_function=regular(underlay_spacing))
-    zigzag_effect = zigzag(spacing_function=sampling_by_length_with_offset(segment_length=satin_spacing, offset=0.5))
+    zigzag_effect = zigzag(spacing_function=subdivision_by_length_with_offset(segment_length=satin_spacing, offset=0.5))
 
     return _satin_ellipse(width=width, height=height, stitch_length=stitch_length, pull_compensation=pull_compensation,
                           underlay_inset=underlay_inset, return_to_start=return_to_start,
@@ -40,9 +41,9 @@ def tatami_ellipse(width: float, height: float, stitch_length: float = 3, pull_c
                    return_to_start: bool = False):
     # create stitch effects
     underlay_effect = _underlay_effect(stitch_length=stitch_length, line_spacing=underlay_spacing)
-    line_sampling = add_start(add_end(alternate_direction(tatami_3_1(segment_length=5))))
-    satin_effect = meander(spacing_function=sampling_by_length_with_offset(segment_length=satin_spacing, offset=0.5),
-                           line_sampling_function=line_sampling, join_ends=True)
+    line_subdivision = add_start(add_end(alternate_direction(tatami_3_1(segment_length=5))))
+    satin_effect = meander(spacing_function=subdivision_by_length_with_offset(segment_length=satin_spacing, offset=0.5),
+                           line_subdivision=line_subdivision, join_ends=True)
 
     return _satin_ellipse(width=width, height=height, stitch_length=stitch_length, pull_compensation=pull_compensation,
                           underlay_inset=underlay_inset, return_to_start=return_to_start,
@@ -83,7 +84,7 @@ def _satin_ellipse(width: float, height: float, stitch_length: float, pull_compe
 
     if return_to_start:
         # add line to the end of the outer shape and inverse the outer path in order to stitch it backwards
-        stitches.append(outer_path.shape(sample_by_length(height, stitch_length)))
+        stitches.append(outer_path.shape(subdivide_by_length(height, stitch_length)))
         outer_path = outer_path.inverse()
     else:
         # add the first point of the outer path
@@ -94,4 +95,4 @@ def _satin_ellipse(width: float, height: float, stitch_length: float, pull_compe
     stitches.append(outer_path.shape(1))
 
     # combine collected stitches
-    return connect(stitches, line_sampling_function=regular(stitch_length))
+    return connect(stitches, line_subdivision=regular(stitch_length))

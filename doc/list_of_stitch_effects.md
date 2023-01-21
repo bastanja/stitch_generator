@@ -5,10 +5,9 @@ learn about creating paths.
 
 stitch_generator distinguishes between path effects and shape effects:
 
-[Path Effects](#list-of-path-effects) use the full width of the path. All stitches lie within the
-boundaries of the path. [Shape Effects](#list-of-shape-effects) only use the shape (middle line) and
-the direction of the path. Their stitches may not fill the area between the boundaries of the path
-and stitches may exceed the boundaries of the path.
+[Path Effects](#list-of-path-effects) use the full width of the path. All stitches lie within the boundaries of the
+path. [Shape Effects](#list-of-shape-effects) only use the shape (middle line) and the direction of the path. Their
+stitches may not fill the area between the boundaries of the path and stitches may exceed the boundaries of the path.
 
 ## List of Path Effects
 
@@ -87,10 +86,10 @@ A line that meanders back and forth between the left and right boundary of the P
 Example:
 
 ```python
-from stitch_generator.sampling.sample_by_length import regular
+from stitch_generator.subdivision.subdivide_by_length import regular
 from stitch_generator.stitch_effects.path_effects.meander import meander
 
-effect = meander(spacing_function=regular(3), line_sampling_function=regular(3))
+effect = meander(spacing_function=regular(3), line_subdivision=regular(3))
 stitches = effect(path)
 ```
 
@@ -99,11 +98,11 @@ stitches = effect(path)
 Example:
 
 ```python
-from stitch_generator.sampling.sample_by_length import regular
+from stitch_generator.subdivision.subdivide_by_length import regular
 from stitch_generator.stitch_effects.path_effects.meander import meander
 
 effect = meander(spacing_function=regular(2),
-                 line_sampling_function=regular(3),
+                 line_subdivision=regular(3),
                  join_ends=True)
 stitches = effect(path)
 ```
@@ -113,16 +112,14 @@ stitches = effect(path)
 Example:
 
 ```python
-from stitch_generator.collection.sampling.tatami_sampling import tatami_3_1
-from stitch_generator.sampling.sample_by_length import regular
-from stitch_generator.sampling.sampling_modifiers import alternate_direction, add_start, add_end
+from stitch_generator.collection.subdivision.tatami import tatami_3_1
+from stitch_generator.subdivision.subdivide_by_length import regular
+from stitch_generator.subdivision.subdivision_modifiers import alternate_direction, add_start, add_end
 from stitch_generator.stitch_effects.path_effects.meander import meander
 
-line_sampling_function = alternate_direction(
-    add_start(add_end(tatami_3_1(segment_length=3))))
+line_subdivision = alternate_direction(add_start(add_end(tatami_3_1(segment_length=3))))
+effect = meander(spacing_function=regular(2), line_subdivision=line_subdivision)
 
-effect = meander(spacing_function=regular(2),
-                 line_sampling_function=line_sampling_function)
 stitches = effect(path)
 ```
 
@@ -131,12 +128,13 @@ stitches = effect(path)
 Example:
 
 ```python
-from stitch_generator.sampling.sample_by_length import regular
-from stitch_generator.sampling.sample_by_pattern import sampling_by_pattern
+from stitch_generator.subdivision.subdivide_by_length import regular
+from stitch_generator.subdivision.subdivide_by_pattern import subdivision_by_pattern
 from stitch_generator.stitch_effects.path_effects.meander import meander
 
-spacing_function = sampling_by_pattern(pattern=(0, 0.7), pattern_length=5, alignment=0.5, offset=0)
-effect = meander(spacing_function=spacing_function, line_sampling_function=regular(3))
+spacing_function = subdivision_by_pattern(pattern=(0, 0.7), pattern_length=5, alignment=0.5,
+                                          offset=0)
+effect = meander(spacing_function=spacing_function, line_subdivision=regular(3))
 stitches = effect(path)
 ```
 
@@ -144,21 +142,22 @@ stitches = effect(path)
 
 ## Satin
 
-A zigzag line between the left and right boundary of the path with intermediate stitches based on a sampling function.
+A zigzag line between the left and right boundary of the path with intermediate stitches based on a subdivision
+function.
 
 Example:
 
 ```python
-from stitch_generator.collection.sampling.tatami_sampling import tatami
-from stitch_generator.sampling.sample_by_length import regular
-from stitch_generator.sampling.sampling_modifiers import alternate_direction, add_start
+from stitch_generator.collection.subdivision.tatami import tatami
+from stitch_generator.subdivision.subdivide_by_length import regular
+from stitch_generator.subdivision.subdivision_modifiers import alternate_direction, add_start
 from stitch_generator.stitch_effects.path_effects.satin import satin
 
-line_sampling_function = add_start(alternate_direction(
+line_subdivision = add_start(alternate_direction(
     tatami(segment_length=3, steps=5, repetitions=1, minimal_segment_size=2)))
 
 effect = satin(spacing_function=regular(2),
-               line_sampling_function=line_sampling_function)
+               line_subdivision=line_subdivision)
 
 stitches = effect(path)
 ```
@@ -172,12 +171,12 @@ A zigzag line along the Path with random offsets to the side to simulate a hand-
 Example:
 
 ```python
-from stitch_generator.collection.sampling.tatami_sampling import tatami_3_1
-from stitch_generator.sampling.sampling_modifiers import alternate_direction, add_start, add_end
+from stitch_generator.collection.subdivision.tatami import tatami_3_1
+from stitch_generator.subdivision.subdivision_modifiers import alternate_direction, add_start, add_end
 from stitch_generator.stitch_effects.path_effects.scribble import scribble
 
-line_sampling_function = alternate_direction(add_start(add_end(tatami_3_1(segment_length=3))))
-effect = scribble(repetitions=4, sampling_function=line_sampling_function, noise_scale=0.25)
+line_subdivision = alternate_direction(add_start(add_end(tatami_3_1(segment_length=3))))
+effect = scribble(repetitions=4, line_subdivision=line_subdivision, noise_scale=0.25)
 stitches = effect(path)
 ```
 
@@ -186,12 +185,12 @@ stitches = effect(path)
 Example:
 
 ```python
-from stitch_generator.collection.sampling.tatami_sampling import tatami_3_1
-from stitch_generator.sampling.sampling_modifiers import alternate_direction
+from stitch_generator.collection.subdivision.tatami import tatami_3_1
+from stitch_generator.subdivision.subdivision_modifiers import alternate_direction
 from stitch_generator.stitch_effects.path_effects.scribble import scribble
 
-line_sampling_function = alternate_direction(tatami_3_1(segment_length=3))
-effect = scribble(repetitions=10, sampling_function=line_sampling_function)
+line_subdivision = alternate_direction(tatami_3_1(segment_length=3))
+effect = scribble(repetitions=10, line_subdivision=line_subdivision)
 stitches = effect(path)
 ```
 
@@ -199,16 +198,16 @@ stitches = effect(path)
 
 ## Stripes
 
-A zigzag line along the path with intermediate stitches based on a sampling function.
+A zigzag line along the path with intermediate stitches based on a subdivision function.
 
 Example:
 
 ```python
-from stitch_generator.sampling.sample_by_length import regular
-from stitch_generator.sampling.sample_by_number import sample_by_number
+from stitch_generator.subdivision.subdivide_by_length import regular
+from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
 from stitch_generator.stitch_effects.path_effects.stripes import stripes
 
-effect = stripes(steps=sample_by_number(6), sampling_function=regular(3))
+effect = stripes(steps=subdivide_by_number(6), line_subdivision=regular(3))
 stitches = effect(path)
 ```
 
@@ -219,11 +218,11 @@ stitches = effect(path)
 Example:
 
 ```python
-from stitch_generator.sampling.sample_by_length import regular
-from stitch_generator.sampling.sample_by_number import sample_by_number
+from stitch_generator.subdivision.subdivide_by_length import regular
+from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
 from stitch_generator.stitch_effects.path_effects.stripes import parallel_stripes
 
-effect = parallel_stripes(steps=sample_by_number(3), sampling_function=regular(3))
+effect = parallel_stripes(steps=subdivide_by_number(3), line_subdivision=regular(3))
 stitches = effect(path)
 ```
 
@@ -232,12 +231,12 @@ stitches = effect(path)
 Example:
 
 ```python
-from stitch_generator.sampling.sample_by_length import regular
-from stitch_generator.sampling.sample_by_pattern import pattern_from_spaces
+from stitch_generator.subdivision.subdivide_by_length import regular
+from stitch_generator.subdivision.subdivide_by_pattern import pattern_from_spaces
 from stitch_generator.stitch_effects.path_effects.stripes import parallel_stripes
 
 steps = pattern_from_spaces((1, 2, 1, 2, 1), with_start=True, with_end=True)
-effect = parallel_stripes(steps=steps, sampling_function=regular(3))
+effect = parallel_stripes(steps=steps, line_subdivision=regular(3))
 stitches = effect(path)
 ```
 
@@ -261,7 +260,8 @@ from stitch_generator.stitch_effects.path_effects.tile_motif import tile_motif
 spiral_level = 5
 motif_scale = (1, spiral_level / (spiral_level - 1))  # make it square
 motif_translation = (0.5, 0.5)  # move it into the range [0,1] in x and y direction
-motif = square_spiral(level=spiral_level, step_size=(1 / spiral_level)) * motif_scale + motif_translation
+motif = square_spiral(level=spiral_level,
+                      step_size=(1 / spiral_level)) * motif_scale + motif_translation
 
 # create stitch effect
 effect = tile_motif(motif=motif, motif_length=15)
@@ -275,14 +275,14 @@ Example:
 ```python
 import numpy as np
 from stitch_generator.collection.motifs.collection import zigzag_rectangle
-from stitch_generator.sampling.sample_by_number import sample_by_number
+from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
 from stitch_generator.shapes.line import line_shape
 from stitch_generator.stitch_effects.path_effects.tile_motif import tile_motif
 
 # create motif for tiling
 motif_translation = (0.5, 0.5)  # move it into the range [0,1] in x and y direction
 motif = zigzag_rectangle(width=1, height=1, repetitions=8, horizontal=False) + motif_translation
-motif = np.concatenate((line_shape((0, 1), (1, 0))(sample_by_number(4)[:-1]), motif))
+motif = np.concatenate((line_shape((0, 1), (1, 0))(subdivide_by_number(4)[:-1]), motif))
 
 # create stitch effect
 effect = tile_motif(motif=motif, motif_length=5)
@@ -307,11 +307,11 @@ Example:
 
 ```python
 from stitch_generator.framework.path import get_inset_path
-from stitch_generator.sampling.sample_by_length import regular
+from stitch_generator.subdivision.subdivide_by_length import regular
 from stitch_generator.stitch_effects.path_effects.variable_underlay import variable_underlay
 
 path = get_inset_path(path, inset=1)
-effect = variable_underlay(stroke_spacing=3, sampling_function=regular(3))
+effect = variable_underlay(stroke_spacing=3, line_subdivision=regular(3))
 
 stitches = effect(path)
 ```
@@ -326,7 +326,7 @@ stitches.
 Example:
 
 ```python
-from stitch_generator.sampling.sample_by_length import regular
+from stitch_generator.subdivision.subdivide_by_length import regular
 from stitch_generator.stitch_effects.path_effects.zigzag import zigzag
 
 effect = zigzag(spacing_function=regular(3))
@@ -340,7 +340,7 @@ stitches = effect(path)
 Example:
 
 ```python
-from stitch_generator.sampling.sample_by_length import regular
+from stitch_generator.subdivision.subdivide_by_length import regular
 from stitch_generator.stitch_effects.path_effects.zigzag import double_zigzag
 
 effect = double_zigzag(spacing_function=regular(3))
@@ -372,11 +372,11 @@ path.
 
 ## Motif Chain
 
-Places a motif at every sampling position of the path. Positions are defined by the motif_position_sampling parameter.
-The motifs are connected by a simple straight line segment without intermediate stitches.
+Places a motif at positions along the path. The motif locations are defined by the motif placement function. The motifs
+are connected by a simple straight line segment without intermediate stitches.
 
 Motifs are not scaled. They should have the size which they have in the resulting stitches, i.e. motifs should not be in
-the range [0;1], but rather several millimeters big. The motiv is rotated so that the positive X-Axis of the motif
+the range [0;1], but rather several millimeters big. The motiv is rotated so that the positive X-axis of the motif
 points into the same direction as the direction of the path at the location where the motif is placed.
 
 Example:
@@ -385,12 +385,12 @@ Example:
 import numpy as np
 from stitch_generator.functions.functions_1d import constant
 from stitch_generator.functions.motif_generators import repeat_motif_mirrored
-from stitch_generator.sampling.sample_by_length import regular
+from stitch_generator.subdivision.subdivide_by_length import regular
 from stitch_generator.stitch_effects.shape_effects.motif_chain import motif_chain
 
 arrow = np.array(((-3, -2), (0, 0), (3, -2)))
 motif_generator = repeat_motif_mirrored(arrow)
-effect = motif_chain(motif_position_sampling=regular(3), motif_generator=motif_generator,
+effect = motif_chain(motif_placement=regular(3), motif_generator=motif_generator,
                      motif_rotation_degrees=constant(0))
 
 stitches = effect(path)
@@ -404,14 +404,15 @@ Example:
 import numpy as np
 from stitch_generator.functions.functions_1d import constant
 from stitch_generator.functions.motif_generators import repeat_motif_mirrored
-from stitch_generator.sampling.sample_by_length import regular
+from stitch_generator.subdivision.subdivide_by_length import regular
 from stitch_generator.stitch_effects.shape_effects.motif_chain import motif_chain
 
 length = 7
 half_width = 2
-loop = np.array(((-1, 0), (length - 3, half_width), (length - 1, 0), (length - 3, -half_width), (-1, 0)))
+loop = np.array(
+    ((-1, 0), (length - 3, half_width), (length - 1, 0), (length - 3, -half_width), (-1, 0)))
 motif_generator = repeat_motif_mirrored(loop)
-effect = motif_chain(motif_position_sampling=regular(5), motif_generator=motif_generator,
+effect = motif_chain(motif_placement=regular(5), motif_generator=motif_generator,
                      motif_rotation_degrees=constant(0))
 
 stitches = effect(path)
@@ -425,7 +426,7 @@ Example:
 import itertools
 import numpy as np
 from stitch_generator.functions.functions_1d import constant
-from stitch_generator.sampling.sample_by_pattern import pattern_from_spaces, sampling_by_pattern
+from stitch_generator.subdivision.subdivide_by_pattern import pattern_from_spaces, subdivision_by_pattern
 from stitch_generator.stitch_effects.shape_effects.motif_chain import motif_chain
 
 # create line motif
@@ -433,10 +434,11 @@ motif = np.array(((0, 0), (6, 0), (0, 0)))
 
 # create pattern for line placement
 pattern = pattern_from_spaces((1, 8, 1), with_start=False, with_end=False)
-position_sampling = sampling_by_pattern(pattern=pattern, pattern_length=7, alignment=0.5, offset=0)
+motif_placement = subdivision_by_pattern(pattern=pattern, pattern_length=7, alignment=0.5, offset=0)
 
 # create stitch effect
-effect = motif_chain(motif_position_sampling=position_sampling, motif_generator=itertools.repeat(motif),
+effect = motif_chain(motif_placement=motif_placement,
+                     motif_generator=itertools.repeat(motif),
                      motif_rotation_degrees=constant(0))
 
 stitches = effect(path)
@@ -446,9 +448,9 @@ stitches = effect(path)
 
 ## Motif to Points
 
-Places a motif at every sampling position of the path. Positions are defined by the motif_position_sampling parameter.
-Between the motifs, the shape of the path is sampled with the line_sampling function to create intermediate stitches.
-This effect is similar to motif_chain, but allows bigger distances between the motifs by inserting intermediate stitches
+Places a motif at positions along the path. The motif locations are defined by the motif placement function. Between the
+motifs, the shape of the path is subdivided with the line_subdivision function to create intermediate stitches. This
+effect is similar to motif_chain, but allows bigger distances between the motifs by inserting intermediate stitches
 along the path.
 
 Motifs are not scaled. They should have the size which they have in the resulting stitch pattern.
@@ -458,9 +460,9 @@ Example:
 ```python
 import itertools
 import numpy as np
-from stitch_generator.sampling.sample_by_length import regular
-from stitch_generator.sampling.sample_by_pattern import pattern_from_spaces, sampling_by_pattern
-from stitch_generator.sampling.sampling_modifiers import free_start, free_end
+from stitch_generator.subdivision.subdivide_by_length import regular
+from stitch_generator.subdivision.subdivide_by_pattern import pattern_from_spaces, subdivision_by_pattern
+from stitch_generator.subdivision.subdivision_modifiers import free_start, free_end
 from stitch_generator.stitch_effects.shape_effects.motif_to_points import motif_to_points
 
 # create arrow motif
@@ -468,11 +470,11 @@ motif = np.array(((0, 0.0), (3, -3), (0, 0), (-3, -3), (0, 0)))
 
 # create pattern for arrow placement
 pattern = pattern_from_spaces((6, 1, 1, 6), with_start=False, with_end=False)
-position_sampling = sampling_by_pattern(pattern=pattern, pattern_length=30, alignment=0.5, offset=0)
-position_sampling = free_start(10, free_end(10, position_sampling))
+motif_placement = subdivision_by_pattern(pattern=pattern, pattern_length=30, alignment=0.5, offset=0)
+motif_placement = free_start(10, free_end(10, motif_placement))
 
 # create stitch effect
-effect = motif_to_points(motif_position_sampling=position_sampling, line_sampling=regular(3),
+effect = motif_to_points(motif_placement=motif_placement, line_subdivision=regular(3),
                          motif_generator=itertools.repeat(motif))
 
 stitches = effect(path)
@@ -482,14 +484,14 @@ stitches = effect(path)
 
 ## Motif to Segments
 
-Places a motif at every sampling position of the path. Positions are defined by the motif_position_sampling parameter.
-At each motif position, a segment of the path is cut out and replaced by the motif. The size of the cut-out segment is
-defined by the parameter motif_length.
+Places a motif at positions along the path. The motif locations are defined by the motif placement function. At each
+motif position, a segment of the path is cut out and replaced by the motif. The size of the cut-out segment is defined
+by the parameter motif_length.
 
-Between the motifs, the shape of the path is sampled with the line_sampling function to create intermediate stitches.
-This effect is similar to motif_to_points, but requires a motif where start- and endpoint are different. The motif is
-scaled and rotated so that the start point lies at the start of a cut-out and the end point lies at the end of the
-cut-out.
+Between the motifs, the shape of the path is subdivided with the line_subdivision function to create intermediate
+stitches. This effect is similar to motif_to_points, but requires a motif where start- and endpoint are different. The
+motif is scaled and rotated so that the start point lies at the start of a cut-out and the end point lies at the end of
+the cut-out.
 
 Motifs are scaled to fit into the cut-outs. The original size of the motif is not relevant i.e. it can be in the
 range [0;1], but does not need to be.
@@ -499,15 +501,15 @@ Example:
 ```python
 import itertools
 from stitch_generator.functions.function_modifiers import repeat
-from stitch_generator.sampling.sample_by_length import regular
-from stitch_generator.sampling.sample_by_number import sample_by_number
-from stitch_generator.sampling.sampling_modifiers import free_end, free_start
+from stitch_generator.subdivision.subdivide_by_length import regular
+from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
+from stitch_generator.subdivision.subdivision_modifiers import free_end, free_start
 from stitch_generator.shapes.circle import circle
 from stitch_generator.stitch_effects.shape_effects.motif_to_segments import motif_to_segments
 
-motif = repeat(0.5, circle(radius=7))(sample_by_number(8))
-position_sampling = free_start(10, free_end(10, regular(25)))
-effect = motif_to_segments(motif_position_sampling=position_sampling, line_sampling=regular(3),
+motif = repeat(0.5, circle(radius=7))(subdivide_by_number(8))
+motif_placement = free_start(10, free_end(10, regular(25)))
+effect = motif_to_segments(motif_placement=motif_placement, line_subdivision=regular(3),
                            motif_generator=itertools.repeat(motif), motif_length=14)
 
 stitches = effect(path)

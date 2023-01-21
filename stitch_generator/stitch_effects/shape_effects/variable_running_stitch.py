@@ -5,7 +5,7 @@ from stitch_generator.framework.types import Array2D, Function2D, Function1D
 from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.function_modifiers import mix
 from stitch_generator.functions.functions_1d import constant, linear_interpolation
-from stitch_generator.sampling.sample_by_length import sample_by_length
+from stitch_generator.subdivision.subdivide_by_length import subdivide_by_length
 from stitch_generator.stitch_effects.utilities.motif_to_path import motif_to_path
 from stitch_generator.stitch_effects.utilities.range_tree import make_range_tree, tree_to_indices_and_offsets
 
@@ -38,7 +38,7 @@ def variable_running_stitch_on_shape(shape: Function2D, direction: Function2D, s
                                      width_profile: Function1D, min_strokes: int, max_strokes: int,
                                      stroke_spacing: float = 0.2) -> Array2D:
     total_length = estimate_length(shape)
-    t = sample_by_length(total_length=total_length, segment_length=stitch_length)
+    t = subdivide_by_length(total_length=total_length, segment_length=stitch_length)
 
     widths = width_profile(t)
     widths = np.minimum(widths[0:-1], widths[1:])

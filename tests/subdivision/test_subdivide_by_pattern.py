@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from stitch_generator.sampling.sample_by_pattern import pattern_from_spaces, sampling_by_pattern
+from stitch_generator.subdivision.subdivide_by_pattern import pattern_from_spaces, subdivision_by_pattern
 
 test_values = [([2, 8], [0, 0.2, 1], True, True),
                ([2, 2], [0, 0.5], True, False),
@@ -23,26 +23,26 @@ def to_tuple(
         total_length: float,
         alignment: float,
         offset: float,
-        expected_samples: list[float]):
-    return pattern, pattern_length, total_length, alignment, offset, expected_samples
+        expected_values: list[float]):
+    return pattern, pattern_length, total_length, alignment, offset, expected_values
 
 
 test_values = [to_tuple(pattern=[0], pattern_length=1, total_length=5, alignment=0, offset=0,
-                        expected_samples=[0, 0.2, 0.4, 0.6, 0.8]),
+                        expected_values=[0, 0.2, 0.4, 0.6, 0.8]),
                to_tuple(pattern=[0, 0.25], pattern_length=2, total_length=10, alignment=0, offset=0,
-                        expected_samples=[0, 0.05, 0.2, 0.25, 0.4, 0.45, 0.6, 0.65, 0.8, 0.85]),
+                        expected_values=[0, 0.05, 0.2, 0.25, 0.4, 0.45, 0.6, 0.65, 0.8, 0.85]),
                to_tuple(pattern=[0, 0.25], pattern_length=2, total_length=10, alignment=0, offset=0.5,
-                        expected_samples=[0.1, 0.15, 0.3, 0.35, 0.5, 0.55, 0.7, 0.75, 0.9, 0.95]),
+                        expected_values=[0.1, 0.15, 0.3, 0.35, 0.5, 0.55, 0.7, 0.75, 0.9, 0.95]),
                to_tuple(pattern=[0, 0.25], pattern_length=2, total_length=5, alignment=0, offset=0.5,
-                        expected_samples=[0.2, 0.3, 0.6, 0.7, 1]),
+                        expected_values=[0.2, 0.3, 0.6, 0.7, 1]),
                to_tuple(pattern=[0, 0.25], pattern_length=2, total_length=0, alignment=0, offset=0,
-                        expected_samples=[0, 1]),
-               to_tuple(pattern=[0], pattern_length=0, total_length=5, alignment=0, offset=0, expected_samples=[0, 1])]
+                        expected_values=[0, 1]),
+               to_tuple(pattern=[0], pattern_length=0, total_length=5, alignment=0, offset=0, expected_values=[0, 1])]
 
 
-@pytest.mark.parametrize("pattern, pattern_length, total_length, alignment, offset, expected_samples", test_values)
-def test_sampling_by_pattern(pattern, pattern_length, total_length, alignment, offset, expected_samples):
-    sampling_function = sampling_by_pattern(pattern=pattern, pattern_length=pattern_length,
-                                            alignment=alignment, offset=offset)
-    samples = sampling_function(total_length)
-    assert (np.allclose(samples, expected_samples))
+@pytest.mark.parametrize("pattern, pattern_length, total_length, alignment, offset, expected_values", test_values)
+def test_subdivision_by_pattern(pattern, pattern_length, total_length, alignment, offset, expected_values):
+    subdivision_function = subdivision_by_pattern(pattern=pattern, pattern_length=pattern_length, alignment=alignment,
+                                                  offset=offset)
+    values = subdivision_function(total_length)
+    assert (np.allclose(values, expected_values))

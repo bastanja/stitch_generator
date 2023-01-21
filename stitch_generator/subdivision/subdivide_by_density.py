@@ -1,24 +1,22 @@
 import numpy as np
 from scipy.interpolate import interp1d
 
-from stitch_generator.framework.types import SamplingFunction, Array1D, Function1D
+from stitch_generator.framework.types import SubdivisionFunction, Array1D, Function1D
 from stitch_generator.functions.functions_1d import linear_interpolation
-from stitch_generator.sampling.sample_by_length import sample_by_length
+from stitch_generator.subdivision.subdivide_by_length import subdivide_by_length
 
 
-def sample_by_density(total_length: float, segment_length: float, density_distribution: Function1D) -> Array1D:
-    density_function, sample_ratio = _inverse_cdf(density_distribution)
+def subdivide_by_density(total_length: float, segment_length: float, density_distribution: Function1D) -> Array1D:
+    density_function, fill_ratio = _inverse_cdf(density_distribution)
 
-    samples = density_function(
-        sample_by_length(total_length=total_length * sample_ratio, segment_length=segment_length))
-
-    return samples
+    values = subdivide_by_length(total_length=total_length * fill_ratio, segment_length=segment_length)
+    return density_function(values)
 
 
-def sampling_by_density(segment_length: float, density_distribution: Function1D) -> SamplingFunction:
+def subdivision_by_density(segment_length: float, density_distribution: Function1D) -> SubdivisionFunction:
     def f(total_length: float):
-        return sample_by_density(total_length=total_length, segment_length=segment_length,
-                                 density_distribution=density_distribution)
+        return subdivide_by_density(total_length=total_length, segment_length=segment_length,
+                                    density_distribution=density_distribution)
 
     return f
 
@@ -50,12 +48,12 @@ def _inverse_cdf(f, num_approximation_samples: int = 200):
     # Divide by the highest value to map all y_values to [epsilon, 1] again
     y_values /= y_values[-1]
 
-    # Add a new sample at (0,0) again. Otherwise, the function returned by interp1d is not defined over the whole
+    # Add a new value at (0,0) again. Otherwise, the function returned by interp1d is not defined over the whole
     # range [0,1]
     y_values = np.insert(y_values, 0, 0)
 
     # The area covered is the area below the graph of f. It is in the range [0,1] and can be used as factor for the
-    # number of samples when sampling the returned cdf
+    # number of values when sampling the returned cdf
     area_covered = area_covered / num_approximation_samples
 
     x_values = np.linspace(0.0, 1, len(y_values))

@@ -2,7 +2,7 @@ from stitch_generator.framework.path import Path, get_boundaries
 from stitch_generator.framework.stitch_effect import StitchEffect
 from stitch_generator.framework.types import Array2D
 from stitch_generator.functions.function_modifiers import add, repeat, multiply
-from stitch_generator.sampling.sample_by_number import sampling_by_number
+from stitch_generator.subdivision.subdivide_by_number import subdivision_by_number
 
 
 def lattice(strands, pattern_f, pattern_length) -> StitchEffect:
@@ -30,7 +30,7 @@ def _lattice(path: Path, strands, length, pattern_f, pattern_length, stitch_leng
             multiply(repeat(strands, path.direction, mode=repetition_mode), pattern_f))
 
     stitches = int(round(pattern_length / stitch_length))
-    points = f(sampling_by_number(stitches * times)(1))
+    points = f(subdivision_by_number(stitches * times)(1))
     return points
 
 
