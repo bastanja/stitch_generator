@@ -1,3 +1,5 @@
+from typing import List
+
 import numpy as np
 import pytest
 
@@ -18,12 +20,12 @@ def test_pattern_from_spaces(spaces, expected_result, with_start: bool, with_end
 
 
 def to_tuple(
-        pattern: list[float],
+        pattern: List[float],
         pattern_length: float,
         total_length: float,
         alignment: float,
         offset: float,
-        expected_values: list[float]):
+        expected_values: List[float]):
     return pattern, pattern_length, total_length, alignment, offset, expected_values
 
 
