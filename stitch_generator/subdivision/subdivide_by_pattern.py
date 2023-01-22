@@ -1,4 +1,5 @@
 from functools import partial
+from typing import List
 
 import numpy as np
 
@@ -17,7 +18,7 @@ def subdivision_by_pattern(pattern,
 
 def subdivide_by_pattern(total_length: float,
                          pattern_length: float,
-                         pattern: list[float],
+                         pattern: List[float],
                          alignment: float,
                          offset: float):
     """
