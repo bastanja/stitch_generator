@@ -7,22 +7,23 @@ circles to decorative stitch patterns like satin stitches or motif stitches.
 
 Stitch Effects use a Path as input and return an array of stitch coordinates as output.
 
-![stitch effects](doc/images/path_stitch_effect_examples.svg "Examples of stitch effects" )
+![stitch effects](https://github.com/bastanja/stitch_generator/raw/main/doc/images/path_stitch_effect_examples.svg "Examples of stitch effects" )
 
 On the left is an example of a path that consists of a cubic Bézier curve with a constant width. On the right there are
 examples of stitch effects applied to the path. The dots represent the coordinates of the stitches.
 
-See [List of Stitch Effects](doc/list_of_stitch_effects.md) for an overview over the available stitch effects.
+See [List of Stitch Effects](https://github.com/bastanja/stitch_generator/blob/main/doc/list_of_stitch_effects.md)
+for an overview over the available stitch effects.
 
 ## Decorative Stitches
 
 Stitch Generator provides a collection of decorative stitches. Decorative stitches are stitch effects, too. But they
 mostly have a fixed width instead of using the width of the path.
 
-![decorative stitches](doc/images/list_of_decorative_stitches.svg "Examples of decorative stitches")
+![decorative stitches](https://github.com/bastanja/stitch_generator/raw/main/doc/images/list_of_decorative_stitches.svg "Examples of decorative stitches")
 
-See [List of Decorative Stitches](doc/list_of_decorative_stitches.md) for an overview over the available decorative
-stitches.
+See [List of Decorative Stitches](https://github.com/bastanja/stitch_generator/blob/main/doc/list_of_decorative_stitches.md)
+for an overview over the available decorative stitches.
 
 ## Subdivision Functions
 
@@ -36,9 +37,10 @@ varying lengths, and they can be shifted by an offset in each line.
 In this example subdivision functions are used in combination with a meander stitch effect to create different stitch
 patterns:
 
-![subdivision](doc/images/meander_subdivision_example.svg "Examples of subdivision patterns")
+![subdivision](https://github.com/bastanja/stitch_generator/raw/main/doc/images/meander_subdivision_example.svg "Examples of subdivision patterns")
 
-See [Subdivision Functions](doc/subdivision_functions.md) for an overview over the available subdivision functions.
+See [Subdivision Functions](https://github.com/bastanja/stitch_generator/blob/main/doc/subdivision_functions.md) for an
+overview over the available subdivision functions.
 
 # Usage
 
@@ -64,8 +66,9 @@ Alternatively, Stitch Generator can be installed from a local git checkout:
 
 ## Creating Paths
 
-In order to use stitch effects, you first need to create a path. See [Paths](doc/paths.md) for an overview over paths
-and how to create them. Example for creating a simple linear path:
+In order to use stitch effects, you first need to create a path.
+See [Paths](https://github.com/bastanja/stitch_generator/blob/main/doc/paths.md) for an overview over paths and how to
+create them. Example for creating a simple linear path:
 
 ```python
 from stitch_generator.shapes.line import line
@@ -115,7 +118,8 @@ stitch_effect = satin(spacing_function=regular(2), line_subdivision=regular(4))
 stitches = stitch_effect(path)
 ```
 
-See [List of Stitch Effects](doc/list_of_stitch_effects.md) for an overview over the available stitch effects.
+See [List of Stitch Effects](https://github.com/bastanja/stitch_generator/blob/main/doc/list_of_stitch_effects.md) for
+an overview over the available stitch effects.
 
 ### Decorative stitch from collection
 
@@ -137,8 +141,8 @@ stitch_effect = arrow_chain(arrow_width=8, arrow_length=2, arrow_spacing=2)
 stitches = stitch_effect(path)
 ```
 
-See [List of Decorative Stitches](doc/list_of_decorative_stitches.md) for an overview over the available decorative
-stitches.
+See [List of Decorative Stitches](https://github.com/bastanja/stitch_generator/blob/main/doc/list_of_decorative_stitches.md)
+for an overview over the available decorative stitches.
 
 ## Using the stitches
 
