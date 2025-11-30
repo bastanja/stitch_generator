@@ -94,7 +94,7 @@ def test_free_start(subdivision_function):
         values = modified(length)
         lower_bound = free_start_length / length
         if len(values) > 1:
-            assert (np.alltrue(values >= lower_bound))
+            assert (np.all(values >= lower_bound))
 
 
 @pytest.mark.parametrize("subdivision_function", subdivision_functions)
@@ -106,7 +106,7 @@ def test_free_end(subdivision_function):
         values = modified(length)
         upper_bound = 1 - (free_end_length / length)
         if len(values) > 1:
-            assert (np.alltrue(values <= upper_bound))
+            assert (np.all(values <= upper_bound))
 
 
 def test_cycle_offsets():

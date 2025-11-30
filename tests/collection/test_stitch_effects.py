@@ -66,7 +66,7 @@ def test_stitch_in_rectangle_bounds(effect):
 
     # check that all stitches lie inside the rectangle
     stitches_inside = in_rectangle(stitches, left=0, top=0, right=width, bottom=height)
-    assert (np.alltrue(stitches_inside))
+    assert (np.all(stitches_inside))
 
 
 def in_circle(points, center, radius: float):

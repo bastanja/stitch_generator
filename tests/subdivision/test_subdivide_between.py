@@ -17,6 +17,6 @@ def test_subdivide_between():
     # test subdivision of partial range
     values = subdivide_between(total_length=total_length, start_offset=0.25, end_offset=0.75,
                                subdivision_function=subdivision)
-    assert (np.alltrue(values >= 0.25))
-    assert (np.alltrue(values <= 0.75))
+    assert (np.all(values >= 0.25))
+    assert (np.all(values <= 0.75))
     assert (len(values) >= 2)

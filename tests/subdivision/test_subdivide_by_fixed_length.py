@@ -19,10 +19,10 @@ def test_subdivision_by_fixed_length(total_length, segment_length):
     values = subdivision(total_length)
 
     # expect that all values are above or equal to zero
-    assert np.alltrue(values >= 0)
+    assert np.all(values >= 0)
 
     # expect that all values are below or equal to one
-    assert np.alltrue(values <= 1)
+    assert np.all(values <= 1)
 
     # if there are multiple values, check that their distance is always segment_length
     if len(values) > 1:

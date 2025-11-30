@@ -9,7 +9,7 @@ from tests.shapes.normal_length import normal_length_one
 def position_not_zero(shape) -> bool:
     positions = shape(subdivide_by_number(1000))
     non_zero = positions != (0, 0)
-    return np.alltrue(non_zero)
+    return np.all(non_zero)
 
 
 @pytest.mark.parametrize("width, height, corner_radius", [
