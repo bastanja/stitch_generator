@@ -2,7 +2,7 @@ import itertools
 
 import numpy as np
 
-from stitch_generator.framework import StitchEffect
+from stitch_generator.framework import StitchEffect, Coordinates
 from stitch_generator.framework import SubdivisionFunction, Array2D, Function2D
 from stitch_generator.functions import estimate_length
 from ..utilities import place_motif_at
@@ -15,6 +15,54 @@ def motif_to_points(
     line_subdivision: SubdivisionFunction,
     motif_generator,
 ) -> StitchEffect:
+    """Creates a motif-to-points effect that places motifs with intermediate stitches.
+
+    Places a motif at specified positions along the path. Between the motifs, the shape of the
+    path is subdivided using a line subdivision function to create intermediate stitches. This
+    effect is similar to `motif_chain`, but allows for larger distances between motifs by
+    inserting intermediate stitches along the path.
+
+    Args:
+        motif_placement: Defines the positions along the path where motifs should be placed.
+            This is typically a subdivision function like `regular()` or a pattern-based
+            subdivision.
+        line_subdivision: Defines how the path segments between motifs should be subdivided
+            to create intermediate stitches. Typically `regular(stitch_length)` is used.
+        motif_generator: An iterator that yields motifs. Each motif should be a numpy array
+            of coordinates. Common generators include `itertools.repeat(motif)` for repeating
+            the same motif.
+
+    Returns:
+        A StitchEffect function that takes a Path and returns Coordinates.
+
+    Example:
+        ```python
+        import itertools
+        import numpy as np
+        from stitch_generator.subdivision import regular
+        from stitch_generator.subdivision import pattern_from_spaces, subdivision_by_pattern
+        from stitch_generator.subdivision import free_start, free_end
+        from stitch_generator.stitch_effects.shape_effects import motif_to_points
+
+        motif = np.array(((0, 0.0), (3, -3), (0, 0), (-3, -3), (0, 0)))
+        pattern = pattern_from_spaces((6, 1, 1, 6), with_start=False, with_end=False)
+        motif_placement = subdivision_by_pattern(pattern=pattern, pattern_length=30, alignment=0.5, offset=0)
+        motif_placement = free_start(10, free_end(10, motif_placement))
+
+        effect = motif_to_points(
+            motif_placement=motif_placement,
+            line_subdivision=regular(3),
+            motif_generator=itertools.repeat(motif)
+        )
+        stitches = effect(path)
+        ```
+
+    Note:
+        - Motifs are **not scaled**. They should have the size which they will have in the
+          resulting stitch pattern.
+        - Unlike `motif_chain`, this effect fills the gaps between motifs with stitches
+          following the path shape, making it suitable for paths with larger gaps between motifs.
+    """
     return lambda path: motif_to_points_on_shape(
         path.shape,
         path.direction,
@@ -30,7 +78,24 @@ def motif_to_points_on_shape(
     motif_placement: SubdivisionFunction,
     line_subdivision: SubdivisionFunction,
     motif_generator,
-) -> Array2D:
+) -> Coordinates:
+    """Creates a motif-to-points effect directly on shape and direction functions.
+
+    This is the low-level function that works directly with shape and direction functions,
+    without requiring a full Path object.
+
+    Args:
+        shape: A CoordinateFunction that defines the center line of the path.
+        direction: A CoordinateFunction that defines the direction vectors along the path.
+        motif_placement: Defines the positions along the path where motifs should be placed.
+        line_subdivision: Defines how the path segments between motifs should be subdivided
+            to create intermediate stitches.
+        motif_generator: An iterator that yields motifs. Each motif should be a numpy array
+            of coordinates.
+
+    Returns:
+        An array of stitch coordinates.
+    """
     total_length = estimate_length(shape)
     motif_locations = motif_placement(total_length)
 

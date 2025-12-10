@@ -2,18 +2,18 @@ import itertools
 
 import numpy as np
 
-from stitch_generator.framework import StitchEffect
-from stitch_generator.framework import SubdivisionFunction, Array2D, Function2D
+from stitch_generator.framework import StitchEffect, Coordinates
+from stitch_generator.framework import SubdivisionFunction, Function2D
 from stitch_generator.functions import estimate_length
-from ..utilities import place_motif_between
-from stitch_generator.subdivision import subdivide_by_number
-from stitch_generator.subdivision import subdivide_between
 from stitch_generator.subdivision import (
     free_start,
     free_end,
     remove_start,
     remove_end,
 )
+from stitch_generator.subdivision import subdivide_between
+from stitch_generator.subdivision import subdivide_by_number
+from ..utilities import place_motif_between
 
 
 def motif_to_segments(
@@ -22,6 +22,59 @@ def motif_to_segments(
     motif_generator,
     motif_length,
 ) -> StitchEffect:
+    """Creates a motif-to-segments effect that replaces path segments with scaled motifs.
+
+    Places a motif at specified positions along the path. At each motif position, a segment
+    of the path is cut out and replaced by the motif. The size of the cut-out segment is
+    defined by the `motif_length` parameter. Between the motifs, the shape of the path is
+    subdivided using a line subdivision function to create intermediate stitches.
+
+    Args:
+        motif_placement: Defines the positions along the path where motifs should be placed
+            (these are the center points of the segments to be replaced). This is typically
+            a subdivision function like `regular()` or a pattern-based subdivision.
+        line_subdivision: Defines how the path segments between motifs should be subdivided
+            to create intermediate stitches. Typically `regular(stitch_length)` is used.
+        motif_generator: An iterator that yields motifs. Each motif should be a numpy array
+            of coordinates. Common generators include `itertools.repeat(motif)` for repeating
+            the same motif.
+        motif_length: The length of the path segment that will be replaced by each motif.
+            The motif will be scaled and rotated to fit this segment.
+
+    Returns:
+        A StitchEffect function that takes a Path and returns Coordinates.
+
+    Example:
+        ```python
+        import itertools
+        from stitch_generator.functions import repeat
+        from stitch_generator.subdivision import regular
+        from stitch_generator.subdivision import subdivide_by_number
+        from stitch_generator.subdivision import free_end, free_start
+        from stitch_generator.shapes import circle
+        from stitch_generator.stitch_effects.shape_effects import motif_to_segments
+
+        motif = repeat(0.5, circle(radius=7))(subdivide_by_number(8))
+        motif_placement = regular(25)
+        effect = motif_to_segments(
+            motif_placement=motif_placement,
+            line_subdivision=regular(3),
+            motif_generator=itertools.repeat(motif),
+            motif_length=14
+        )
+        stitches = effect(path)
+        ```
+
+    Note:
+        - Motifs **are scaled** to fit into the cut-out segments. The original size of the
+          motif is not relevant, i.e. it can be in the range [0;1], but does not need to be.
+        - The motif must have different start and end points. The motif is scaled and rotated
+          so that the start point of the motif lies at the start of the cut-out segment and
+          the end point lies at the end of the cut-out segment.
+        - The effect automatically keeps the start and end of the path free of motifs to
+          ensure only full-length motifs are placed. The `free_start` and `free_end` modifiers
+          are applied internally.
+    """
     return lambda path: motif_to_segments_on_shape(
         path.shape,
         motif_placement=motif_placement,
@@ -37,7 +90,25 @@ def motif_to_segments_on_shape(
     line_subdivision: SubdivisionFunction,
     motif_generator,
     motif_length,
-) -> Array2D:
+) -> Coordinates:
+    """Creates a motif-to-segments effect directly on a shape function.
+
+    This is the low-level function that works directly with shapefunctions, without requiring a
+    full Path object.
+
+    Args:
+        shape: A CoordinateFunction that defines the center line of the path.
+        motif_placement: Defines the positions along the path where motifs should be placed
+            (these are the center points of the segments to be replaced).
+        line_subdivision: Defines how the path segments between motifs should be subdivided
+            to create intermediate stitches.
+        motif_generator: An iterator that yields motifs. Each motif should be a numpy array
+            of coordinates.
+        motif_length: The length of the path segment that will be replaced by each motif.
+
+    Returns:
+        An array of stitch coordinates.
+    """
     half_motif_length = motif_length / 2
     # keep start and end free of motifs, to make sure only full length motifs are placed
     motif_placement = free_start(

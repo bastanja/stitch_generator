@@ -1,10 +1,11 @@
 import numpy as np
+
+from stitch_generator.framework import Array2D, Function2D, Function1D
 from stitch_generator.framework import Path
 from stitch_generator.framework import StitchEffect
-from stitch_generator.framework import Array2D, Function2D, Function1D
+from stitch_generator.functions import constant, linear_interpolation
 from stitch_generator.functions import estimate_length
 from stitch_generator.functions import mix
-from stitch_generator.functions import constant, linear_interpolation
 from stitch_generator.subdivision import subdivide_by_length
 from ..utilities.motif_to_path import motif_to_path
 from ..utilities.range_tree import (
@@ -20,23 +21,50 @@ def variable_running_stitch(
     max_strokes: int,
     stroke_spacing: float,
 ) -> StitchEffect:
-    """
+    """Creates a variable running stitch effect with variable thickness along the path.
+
+    A running stitch along the shape of the path that is repeated multiple times using
+    back-and-forth movement. The number of repetitions varies along the path based on a
+    width profile function, creating a visually thicker line at locations with more repetitions.
 
     Args:
-        stitch_length: The stitch length of the stitch effect
-        width_profile: defines how wide the stitch line should. width values should be between 0 and 1. Where the width
-            is 0, the resulting stitch line will be repeated `min_strokes` times. Where width is 1, the resulting stitch
-            line will be repeated `max_strokes` times.
-        min_strokes: defines how often the stitch line is repeated at its thinnest locations. Should be an odd number.
-             If it is an even number, the line will be repeated at least min_strokes + 1 times.
-        max_strokes: defines how often the stitch line is repeated at its widest locations. Should be an odd number.
-             If it is an even number, the line will be repeated at most max_strokes - 1 times.
-        stroke_spacing: The distance between two stokes. Should be small, e.g. 0.2
+        stitch_length: The length of each stitch segment along the path.
+        width_profile: Defines the thickness of the running stitch line along the path.
+            Width values should be between 0 and 1. Where the width is 0, the resulting
+            stitch line will be repeated `min_strokes` times. Where width is 1, the resulting
+            stitch line will be repeated `max_strokes` times.
+        min_strokes: Defines how often the stitch line is repeated at its thinnest locations.
+            Should be an odd number. If it is an even number, the line will be repeated at
+            least min_strokes + 1 times.
+        max_strokes: Defines how often the stitch line is repeated at its widest locations.
+            Should be an odd number. If it is an even number, the line will be repeated at
+            most max_strokes - 1 times.
+        stroke_spacing: The distance between two strokes. Should be small, e.g. 0.2 or 0.3.
 
     Returns:
-        A StitchEffect
+        A StitchEffect function that takes a Path and returns Coordinates.
 
+    Example:
+        ```python
+        from stitch_generator.functions import arc
+        from stitch_generator.stitch_effects.shape_effects import variable_running_stitch
+
+        effect = variable_running_stitch(
+            stitch_length=3,
+            width_profile=arc,
+            min_strokes=1,
+            max_strokes=7,
+            stroke_spacing=0.3
+        )
+        stitches = effect(path)
+        ```
+
+    Note:
+        Common width profile functions include `arc`, `linear_interpolation`, or custom
+        functions. The stroke spacing should be kept small to create a cohesive thick
+        line appearance.
     """
+
     return lambda path: variable_running_stitch_on_shape(
         path.shape,
         path.direction,
@@ -92,16 +120,18 @@ def variable_running_stitch_on_shape(
 
 
 def width_to_level(width, min_strokes: int, max_strokes: int):
-    """
-    Converts a width values in the range [0, 1] to their corresponding thickness level
+    """Converts width values in the range [0, 1] to their corresponding thickness level.
+
+    This is a helper function used internally by `variable_running_stitch_on_shape` to
+    convert width profile values to stroke repetition levels.
 
     Args:
-        width: An array of width values
-        min_strokes: The minimum amount of strokes the resulting running stitch should have
-        max_strokes: The maximum amount of strokes the resulting running stitch should have
+        width: An array of width values in the range [0, 1].
+        min_strokes: The minimum number of strokes the resulting running stitch should have.
+        max_strokes: The maximum number of strokes the resulting running stitch should have.
 
     Returns:
-        An array of levels
+        An array of integer levels corresponding to the number of stroke repetitions.
     """
 
     # clamp width between 0 and 1
