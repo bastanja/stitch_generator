@@ -7,7 +7,7 @@ from stitch_generator.framework.types import Function2D, SubdivisionFunction
 from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.helpers.path_operations import get_boundaries
 from stitch_generator.stitch_effects.path_effects.zigzag import zigzag_between, double_zigzag_between
-from stitch_generator.stitch_effects.utilities.subdivide_line import subdivide_line
+from stitch_generator.helpers.subdivide_line import subdivide_line
 from stitch_generator.subdivision.subdivide_by_length import regular
 
 

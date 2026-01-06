@@ -5,7 +5,7 @@ import numpy as np
 
 from stitch_generator.framework.types import SubdivisionFunction, Array2D
 from stitch_generator.subdivision.subdivision_modifiers import remove_end, remove_start
-from stitch_generator.stitch_effects.utilities.subdivide_line import subdivide_line
+from stitch_generator.helpers.subdivide_line import subdivide_line
 
 
 def connect(stitch_blocks: List[Array2D], line_subdivision: SubdivisionFunction) -> Array2D:
