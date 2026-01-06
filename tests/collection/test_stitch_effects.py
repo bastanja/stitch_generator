@@ -14,13 +14,13 @@ from stitch_generator.stitch_operations.remove_duplicates import remove_duplicat
 
 test_paths = [
     # regular linear path with constant width
-    Path(*line(origin=(0, 0), to=(100, 0)), width=constant(10)),
+    Path(*line(origin=(0, 0), to=(100, 0)), width=constant(10), stroke_alignment=constant(0.5)),
     # path with bezier shape and a width of zero at the start and end
-    Path(*bezier(control_points=((0, 0), (50, 50), (100, 0))), width=chain(arc, linear_interpolation(0, 15))),
+    Path(*bezier(control_points=((0, 0), (50, 50), (100, 0))), width=chain(arc, linear_interpolation(0, 15)), stroke_alignment=constant(0.5)),
     # circular path
     Path(*circle(radius=30), width=constant(5), stroke_alignment=constant(0.5)),
     # path with zero length
-    Path(*line(origin=(0, 0), to=(0, 0)), width=constant(10))
+    Path(*line(origin=(0, 0), to=(0, 0)), width=constant(10), stroke_alignment=constant(0.5))
 ]
 
 test_values = list(product(test_paths, stitch_effect_collection()))
