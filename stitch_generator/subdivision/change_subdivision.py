@@ -2,8 +2,8 @@ import numpy as np
 from scipy.interpolate import interp1d
 
 from stitch_generator.framework.types import SubdivisionFunction
+from stitch_generator.functions.ensure_shape import ensure_2d_shape
 from stitch_generator.functions.estimate_length import accumulate_lengths
-from stitch_generator.shapes.line import line_shape
 from stitch_generator.subdivision.subdivide_by_length import subdivide_by_length, subdivision_by_length
 
 
@@ -43,8 +43,8 @@ def change_subdivision_by_segment(points, segment_length):
     result = []
     points = np.asarray(points)
     for p1, p2 in zip(points, points[1:]):
-        shape = line_shape(p1, p2)
+        interpolation = interp1d(np.array([0, 1]), np.vstack((p1, p2)), fill_value="extrapolate", axis=0)
         values = subdivide_by_length(np.linalg.norm(p2 - p1), segment_length)[:-1]
-        result.append(shape(values))
+        result.append(ensure_2d_shape(interpolation(values)))
     result.append([points[-1]])
     return np.concatenate(result)
