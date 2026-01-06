@@ -2,11 +2,12 @@ import numpy as np
 
 from stitch_generator.collection.motifs.collection import zigzag_rectangle, zigzag_motif, rhomb_motif, x_motif, \
     line_motif, overlock_stitch_motif
-from stitch_generator.framework.path import Path, get_boundaries
+from stitch_generator.framework.path import Path
 from stitch_generator.framework.stitch_effect import StitchEffect
 from stitch_generator.functions.function_modifiers import mix, inverse
 from stitch_generator.functions.functions_1d import constant
 from stitch_generator.functions.motif_generators import repeat_motif, repeat_motif_mirrored
+from stitch_generator.helpers.path_operations import get_boundaries
 from stitch_generator.shapes.line import line_shape
 from stitch_generator.stitch_effects.path_effects.tile_motif import tile_motif
 from stitch_generator.stitch_effects.shape_effects.motif_chain import motif_chain

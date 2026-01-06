@@ -1,7 +1,12 @@
 import numpy as np
 
 from stitch_generator.collection.subdivision.tatami import tatami_3_1
-from stitch_generator.framework.path import Path, get_inset_path, inset_sides
+from stitch_generator.framework.path import Path
+from stitch_generator.helpers.path_operations import (
+    get_inset_path,
+    inset_sides,
+    path_is_circular,
+)
 from stitch_generator.framework.stitch_effect import StitchEffect
 from stitch_generator.framework.types import Array2D
 from stitch_generator.subdivision.subdivide_by_length import regular

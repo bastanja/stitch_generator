@@ -1,11 +1,12 @@
 import numpy as np
 
-from stitch_generator.framework.path import Path, get_boundaries
+from stitch_generator.framework.path import Path
 from stitch_generator.framework.stitch_effect import StitchEffect
 from stitch_generator.framework.types import SubdivisionFunction, Array2D
 from stitch_generator.functions.ensure_shape import ensure_2d_shape
-from stitch_generator.subdivision.subdivide_by_length import regular
+from stitch_generator.helpers.path_operations import get_boundaries
 from stitch_generator.stitch_effects.utilities.subdivide_line import subdivide_line
+from stitch_generator.subdivision.subdivide_by_length import regular
 
 
 def meander(spacing_function: SubdivisionFunction, line_subdivision: SubdivisionFunction,

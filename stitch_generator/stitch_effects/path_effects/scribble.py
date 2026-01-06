@@ -1,10 +1,11 @@
 import numpy as np
 
-from stitch_generator.framework.path import Path, get_boundaries
+from stitch_generator.framework.path import Path
 from stitch_generator.framework.stitch_effect import StitchEffect
 from stitch_generator.framework.types import SubdivisionFunction
 from stitch_generator.functions.function_modifiers import repeat, mix, shift
 from stitch_generator.functions.noise import noise, fix_distribution
+from stitch_generator.helpers.path_operations import get_boundaries
 from stitch_generator.subdivision.subdivision_modifiers import remove_end
 
 

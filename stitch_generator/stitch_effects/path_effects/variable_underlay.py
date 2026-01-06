@@ -1,15 +1,16 @@
 import numpy as np
 
-from stitch_generator.framework.path import Path, get_boundaries
+from stitch_generator.framework.path import Path
 from stitch_generator.framework.stitch_effect import StitchEffect
 from stitch_generator.framework.types import Array2D, Function1D, SubdivisionFunction
 from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.function_modifiers import multiply, add, subtract, inverse, scale
 from stitch_generator.functions.functions_1d import constant, linear_interpolation
-from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
-from stitch_generator.subdivision.subdivision_modifiers import remove_end
+from stitch_generator.helpers.path_operations import get_boundaries
 from stitch_generator.stitch_effects.utilities.range_tree import width_to_level, make_range_tree, \
     tree_to_indices_and_offsets_basic
+from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
+from stitch_generator.subdivision.subdivision_modifiers import remove_end
 
 
 def variable_underlay(stroke_spacing: float, line_subdivision: SubdivisionFunction) -> StitchEffect:

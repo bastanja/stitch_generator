@@ -1,8 +1,9 @@
 import numpy as np
 
-from stitch_generator.framework.path import Path, get_boundaries
+from stitch_generator.framework.path import Path
 from stitch_generator.framework.stitch_effect import StitchEffect
 from stitch_generator.framework.types import Function2D, SubdivisionFunction, Array2D
+from stitch_generator.helpers.path_operations import get_boundaries
 from stitch_generator.subdivision.subdivide_by_length import regular
 
 

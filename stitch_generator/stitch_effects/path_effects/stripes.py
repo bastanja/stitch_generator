@@ -2,12 +2,13 @@ import itertools
 
 import numpy as np
 
-from stitch_generator.framework.path import Path, get_boundaries
+from stitch_generator.framework.path import Path
 from stitch_generator.framework.stitch_effect import StitchEffect
 from stitch_generator.framework.types import SubdivisionFunction, Array1D
 from stitch_generator.functions.function_1d_stairs import stairs
 from stitch_generator.functions.function_modifiers import repeat, mix, inverse
 from stitch_generator.functions.functions_1d import constant
+from stitch_generator.helpers.path_operations import get_boundaries
 from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
 from stitch_generator.subdivision.subdivision_modifiers import remove_end, alternate_direction
 

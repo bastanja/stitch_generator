@@ -4,13 +4,9 @@ from stitch_generator.collection.functions.functions_1d import linear_0_1
 from stitch_generator.collection.motifs.collection import zigzag_rectangle
 from stitch_generator.collection.motifs.square_spiral import square_spiral
 from stitch_generator.collection.subdivision.tatami import tatami_3_1, tatami
-from stitch_generator.framework.path import get_inset_path
 from stitch_generator.functions.function_modifiers import chain
 from stitch_generator.functions.functions_1d import square
-from stitch_generator.subdivision.subdivide_by_length import regular
-from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
-from stitch_generator.subdivision.subdivide_by_pattern import pattern_from_spaces, subdivision_by_pattern
-from stitch_generator.subdivision.subdivision_modifiers import alternate_direction, add_end, add_start
+from stitch_generator.helpers.path_operations import get_inset_path
 from stitch_generator.shapes.line import line_shape
 from stitch_generator.stitch_effects.path_effects.contour import contour
 from stitch_generator.stitch_effects.path_effects.lattice import lattice
@@ -22,6 +18,10 @@ from stitch_generator.stitch_effects.path_effects.tile_motif import tile_motif
 from stitch_generator.stitch_effects.path_effects.variable_underlay import variable_underlay
 from stitch_generator.stitch_effects.path_effects.zigzag import zigzag, double_zigzag
 from stitch_generator.stitch_operations.remove_duplicates import remove_duplicates
+from stitch_generator.subdivision.subdivide_by_length import regular
+from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
+from stitch_generator.subdivision.subdivide_by_pattern import pattern_from_spaces, subdivision_by_pattern
+from stitch_generator.subdivision.subdivision_modifiers import alternate_direction, add_end, add_start
 
 
 def stitch_effect_collection():
