@@ -2,7 +2,11 @@ import numpy as np
 
 from stitch_generator.framework.path import Path
 from stitch_generator.framework.stitch_effect import StitchEffect
-from stitch_generator.framework.types import Array2D, Function1D, SubdivisionFunction
+from stitch_generator.framework.types import (
+    Function1D,
+    SubdivisionFunction,
+    Coordinates,
+)
 from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.function_modifiers import multiply_functions, add_functions, subtract_functions, inverse, scale
 from stitch_generator.functions.functions_1d import constant, linear_interpolation
@@ -14,10 +18,49 @@ from stitch_generator.subdivision.subdivision_modifiers import remove_end
 
 
 def variable_underlay(stroke_spacing: float, line_subdivision: SubdivisionFunction) -> StitchEffect:
+    """Creates a variable underlay stitch effect.
+
+    A pattern of lines to be used below satin stitches. It raises the satin stitches and gives
+    them a firm foundation. The underlay adapts to the width of the path: Where the path is
+    wider, there are more repetitions of the underlay. Where the path is narrower, the underlay
+    only has fewer repetitions.
+
+    To avoid that the underlay sticks out below the satin stitches, the path for the underlay
+    should have a smaller width and be a bit shorter than the path of the Satin stitches. Use
+    `stitch_generator.helpers.path_operations.get_inset_path` to create such a Path.
+
+    Args:
+        stroke_spacing: The spacing between underlay strokes.
+        line_subdivision: Function that subdivides each underlay line to create stitches.
+
+    Returns:
+        A StitchEffect function that takes a Path and returns Coordinates.
+
+    Example:
+        ```python
+        from stitch_generator.helpers.path_operations import get_inset_path
+        from stitch_generator.subdivision.subdivide_by_length import regular
+        from stitch_generator.stitch_effects.path_effects.variable_underlay import variable_underlay
+
+        path = get_inset_path(path, inset=1)
+        effect = variable_underlay(stroke_spacing=3, line_subdivision=regular(3))
+        stitches = effect(path)
+        ```
+    """
     return lambda path: variable_underlay_along(path, stroke_spacing=stroke_spacing, line_subdivision=line_subdivision)
 
 
-def variable_underlay_along(path: Path, stroke_spacing: float, line_subdivision: SubdivisionFunction) -> Array2D:
+def variable_underlay_along(path: Path, stroke_spacing: float, line_subdivision: SubdivisionFunction) -> Coordinates:
+    """Creates variable underlay stitches along a path.
+
+    Args:
+        path: The path to create variable underlay stitches along.
+        stroke_spacing: The spacing between underlay strokes.
+        line_subdivision: Function that subdivides each underlay line to create stitches.
+
+    Returns:
+        Coordinates representing the variable underlay stitches.
+    """
     path_length = estimate_length(path.shape)
     # if the shape has no length, return start and end point
     if np.isclose(path_length, 0):
@@ -40,7 +83,18 @@ def variable_underlay_along(path: Path, stroke_spacing: float, line_subdivision:
 
 
 def _variable_underlay(path: Path, stroke_spacing: float, line_subdivision: SubdivisionFunction,
-                       step_function: Function1D):
+                       step_function: Function1D) -> Coordinates:
+    """Creates variable underlay stitches for a single path side.
+
+    Args:
+        path: The path to create variable underlay stitches along.
+        stroke_spacing: The spacing between underlay strokes.
+        line_subdivision: Function that subdivides each underlay line to create stitches.
+        step_function: Function that defines the step pattern along the path.
+
+    Returns:
+        Coordinates representing the variable underlay stitches for one side.
+    """
     precision = 10
     path_length = estimate_length(path.shape)
     segments = int(round(path_length * precision))

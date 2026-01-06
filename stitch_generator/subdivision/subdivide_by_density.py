@@ -5,6 +5,7 @@ from stitch_generator.framework.types import SubdivisionFunction, Array1D, Funct
 from stitch_generator.functions.functions_1d import linear_interpolation
 from stitch_generator.subdivision.subdivide_by_length import subdivide_by_length
 
+EPSILON = 1.0e-10
 
 def subdivide_by_density(total_length: float, segment_length: float, density_distribution: Function1D) -> Array1D:
     density_function, fill_ratio = _inverse_cdf(density_distribution)
@@ -15,8 +16,9 @@ def subdivide_by_density(total_length: float, segment_length: float, density_dis
 
 def subdivision_by_density(segment_length: float, density_distribution: Function1D) -> SubdivisionFunction:
     def f(total_length: float):
-        return subdivide_by_density(total_length=total_length, segment_length=segment_length,
-                                    density_distribution=density_distribution)
+        return subdivide_by_density(
+            total_length=total_length, segment_length=segment_length, density_distribution=density_distribution
+        )
 
     return f
 
@@ -32,7 +34,6 @@ def _inverse_cdf(f, num_approximation_samples: int = 200):
 
     # The cumulative distribution function can only be reversed, when it is strictly monotonic increasing. Therefore,
     # we map the y-values to a range [epsilon, 1] and avoid the value 0.
-    epsilon = 1.0e-10
 
     # Evaluate the function at fixed intervals and accumulate the values
     y_values = f(np.linspace(0.0, 1, num_approximation_samples))
@@ -41,7 +42,7 @@ def _inverse_cdf(f, num_approximation_samples: int = 200):
     if np.allclose(y_values, 0):
         return linear_interpolation(0, 1), 0
 
-    y_values[y_values < epsilon] = epsilon
+    y_values[y_values < EPSILON] = EPSILON
     y_values = np.cumsum(y_values)
     area_covered = y_values[-1]  # remember the last value for calculation of the covered area
 

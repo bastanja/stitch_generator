@@ -2,7 +2,7 @@ import numpy as np
 
 from stitch_generator.framework.path import Path
 from stitch_generator.framework.stitch_effect import StitchEffect
-from stitch_generator.framework.types import SubdivisionFunction
+from stitch_generator.framework.types import SubdivisionFunction, CoordinateFunction
 from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.function_modifiers import repeat, mix, shift
 from stitch_generator.functions.noise import noise, fix_distribution
@@ -12,12 +12,49 @@ from stitch_generator.subdivision.subdivision_modifiers import remove_end
 
 def scribble(repetitions: int, line_subdivision: SubdivisionFunction, noise_scale: float = 1,
              noise_offset: float = 0) -> StitchEffect:
+    """Creates a scribble stitch effect.
+
+    A zigzag line along the Path with random offsets to the side to simulate a hand-drawn scribble
+    line.
+
+    Args:
+        repetitions: Number of times to repeat the path for the scribble effect.
+        line_subdivision: Function that subdivides the path to create stitches.
+        noise_scale: Scale factor for the noise function. Defaults to 1.
+        noise_offset: Offset for the noise function. Defaults to 0.
+
+    Returns:
+        A StitchEffect function that takes a Path and returns Coordinates.
+
+    Example:
+        ```python
+        from stitch_generator.collection.subdivision.tatami import tatami_3_1
+        from stitch_generator.subdivision.subdivision_modifiers import alternate_direction, add_start, add_end
+        from stitch_generator.stitch_effects.path_effects.scribble import scribble
+
+        line_subdivision = alternate_direction(add_start(add_end(tatami_3_1(segment_length=3))))
+        effect = scribble(repetitions=4, line_subdivision=line_subdivision, noise_scale=0.25)
+        stitches = effect(path)
+        ```
+    """
     return lambda path: scribble_along(path, repetitions=repetitions, line_subdivision=line_subdivision,
                                        noise_scale=noise_scale, noise_offset=noise_offset)
 
 
 def scribble_along(path: Path, repetitions: int, line_subdivision: SubdivisionFunction, noise_scale: float,
                    noise_offset: float):
+    """Creates scribble stitches along a path.
+
+    Args:
+        path: The path to create scribble stitches along.
+        repetitions: Number of times to repeat the path for the scribble effect.
+        line_subdivision: Function that subdivides the path to create stitches.
+        noise_scale: Scale factor for the noise function.
+        noise_offset: Offset for the noise function.
+
+    Returns:
+        Coordinates representing the scribble stitches.
+    """
     repetition_mode = "wrap" if path_is_circular(path) else "reflect"
     path_length = estimate_length(path.shape)
     return scribble_between(*get_boundaries(path), repetitions=repetitions, line_subdivision=line_subdivision,
@@ -25,8 +62,23 @@ def scribble_along(path: Path, repetitions: int, line_subdivision: SubdivisionFu
                             repetition_mode=repetition_mode)
 
 
-def scribble_between(boundary_left, boundary_right, repetitions: int, line_subdivision: SubdivisionFunction,
+def scribble_between(boundary_left: CoordinateFunction, boundary_right: CoordinateFunction, repetitions: int, line_subdivision: SubdivisionFunction,
                      length: float, noise_scale: float, noise_offset: float, repetition_mode: str):
+    """Creates scribble stitches between two boundaries.
+
+    Args:
+        boundary_left: Function representing the left boundary of the path.
+        boundary_right: Function representing the right boundary of the path.
+        repetitions: Number of times to repeat the path for the scribble effect.
+        line_subdivision: Function that subdivides the path to create stitches.
+        length: The length of the path.
+        noise_scale: Scale factor for the noise function.
+        noise_offset: Offset for the noise function.
+        repetition_mode: Mode for repeating boundaries ('wrap' or 'reflect').
+
+    Returns:
+        Coordinates representing the scribble stitches.
+    """
     boundary_left = repeat(r=repetitions, function=boundary_left, mode=repetition_mode)
     boundary_right = repeat(r=repetitions, function=boundary_right, mode=repetition_mode)
 

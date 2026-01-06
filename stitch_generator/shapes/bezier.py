@@ -2,15 +2,51 @@ from typing import Sequence, Tuple
 
 import numpy as np
 
-from stitch_generator.framework.types import Function2D
+from stitch_generator.framework.types import CoordinateFunction
 from stitch_generator.functions.ensure_shape import ensure_1d_shape
 
 
-def bezier(control_points: Sequence) -> Tuple[Function2D, Function2D]:
+def bezier(control_points: Sequence) -> Tuple[CoordinateFunction, CoordinateFunction]:
+    """Creates a Bézier curve path.
+
+    Creates a Bézier curve from the given control points. Supports quadratic
+    (3 points), cubic (4 points), or higher-degree curves. The dimension of the
+    curve (2D or 3D) is determined by the dimension of the control points.
+
+    Args:
+        control_points: A sequence of coordinate points. Must have at least
+            2 points. The curve passes through the first and last points and is
+            influenced by the intermediate control points. Each point should have
+            the same dimension (2D or 3D).
+
+    Returns:
+        A tuple (shape, direction) containing:
+        - shape: A function that returns points on the Bézier curve
+        - direction: A function that returns normalized direction vectors
+          perpendicular to the curve (pointing to the left)
+
+    Example:
+        >>> # Cubic Bézier curve (2D)
+        >>> points = [(0, 0), (25, 50), (75, -50), (100, 0)]
+        >>> shape, direction = bezier(points)
+        >>> shape(0)  # Returns array([[0., 0.]])
+        >>> shape(1)  # Returns array([[100., 0.]])
+    """
     return bezier_shape(control_points), bezier_direction(control_points)
 
 
-def bezier_shape(control_points: Sequence) -> Function2D:
+def bezier_shape(control_points: Sequence) -> CoordinateFunction:
+    """Creates a function representing a Bézier curve shape.
+
+    Args:
+        control_points: A sequence of coordinate points. Must have at least 2.
+            The dimension of the points (2D or 3D) determines the dimension
+            of the returned function.
+
+    Returns:
+        A function that returns points on the Bézier curve. Parameter 0 returns
+        the first control point, parameter 1 returns the last control point.
+    """
     control_points = np.asarray(control_points, dtype=float)
 
     def f(v):
@@ -20,7 +56,18 @@ def bezier_shape(control_points: Sequence) -> Function2D:
     return f
 
 
-def bezier_direction(control_points: Sequence) -> Function2D:
+def bezier_direction(control_points: Sequence) -> CoordinateFunction:
+    """Creates a function representing Bézier curve direction.
+
+    Args:
+        control_points: A sequence of coordinate points. Must have at least 2.
+            The dimension of the points determines the dimension of the returned
+            function.
+
+    Returns:
+        A function that returns normalized direction vectors perpendicular to
+        the curve (rotated 270 degrees from the tangent).
+    """
     control_points = np.asarray(control_points, dtype=float)
 
     def f(v):

@@ -14,8 +14,8 @@ def simple_rounded_rect(width: float, height: float, corner_radius) -> Tuple[Fun
     return rounded_rect(width, height, [(corner_radius, corner_radius)] * 4)
 
 
-def rounded_rect_with_corner_radii(width: float, height: float, corner_radii: Sequence[float]) \
-        -> Tuple[Function2D, Function2D]:
+def rounded_rect_with_corner_radii(width: float, height: float, corner_radii: Sequence[float]) -> Tuple[
+    Function2D, Function2D]:
     return rounded_rect(width, height, [(r, r) for r in corner_radii])
 
 
