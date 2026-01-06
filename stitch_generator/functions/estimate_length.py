@@ -1,7 +1,5 @@
 import numpy as np
 
-from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
-
 
 def accumulate_lengths(points):
     """
@@ -27,6 +25,6 @@ def estimate_length(function, number_of_samples=100):
     Returns:
         The approximate length ot the function
     """
-    samples = subdivide_by_number(number_of_samples)
+    samples = np.linspace(0, 1, num=number_of_samples, endpoint=True)
     lengths = accumulate_lengths(function(samples))
     return lengths[-1]

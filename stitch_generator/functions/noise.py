@@ -1,13 +1,12 @@
 import numpy as np
 from noise import pnoise2
+from scipy.interpolate import interp1d
 
 from stitch_generator.framework.types import Function1D, Function2D, Array2D
 from stitch_generator.functions.ensure_shape import ensure_2d_shape
 from stitch_generator.functions.function_modifiers import shift, repeat, chain
 from stitch_generator.functions.functions_1d import linear_interpolation, function_1d, smootherstep
 from stitch_generator.functions.functions_2d import function_2d
-from stitch_generator.shapes.line import line_shape
-from stitch_generator.stitch_operations.rotate import rotate_by_degrees
 
 
 def noise(octaves: int = 4, angle=20, scale=1) -> Function1D:
@@ -24,11 +23,18 @@ def noise(octaves: int = 4, angle=20, scale=1) -> Function1D:
 
     """
 
-    end_point = rotate_by_degrees(ensure_2d_shape((scale, 1)), angle_deg=angle)
-    to_texture_space = line_shape(to=end_point)
+    # calculate coordinate of a point which is at distance scale and angle from the origin
+    x = scale * np.cos(angle * np.pi / 180)
+    y = scale * np.sin(angle * np.pi / 180)
+    end_point = (x, y)
+
+    origin = (0, 0)
+
+    # linear interpolation between the origin and the end point
+    to_texture_space = interp1d(np.array([0, 1]), np.vstack((origin, end_point)), fill_value="extrapolate", axis=0)
 
     def f(v):
-        request_positions = to_texture_space(v)
+        request_positions = ensure_2d_shape(to_texture_space(v))
         return _noise_2d_texture_space(positions_texture_space=request_positions, octaves=octaves)
 
     return function_1d(f)
