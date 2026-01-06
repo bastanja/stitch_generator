@@ -4,6 +4,7 @@ from stitch_generator.collection.motifs.collection import zigzag_rectangle, zigz
     line_motif, overlock_stitch_motif
 from stitch_generator.framework.path import Path
 from stitch_generator.framework.stitch_effect import StitchEffect
+from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.function_modifiers import mix, inverse
 from stitch_generator.functions.functions_1d import constant
 from stitch_generator.functions.motif_generators import repeat_motif, repeat_motif_mirrored
@@ -159,7 +160,8 @@ def overlock_stitch(length: float, width: float):
     def effect(path):
         constant_width_path = Path(path.shape, path.direction, constant(width), constant(0.5))
         left, right = get_boundaries(constant_width_path)
-        back_stitch_offsets = back_stitch_subdivision(constant_width_path.length)
+        constant_width_path_length = estimate_length(constant_width_path.shape)
+        back_stitch_offsets = back_stitch_subdivision(constant_width_path_length)
         back_stitch_line = inverse(mix(right, left, constant(loop_ratio)))
 
         stitches = stitch_effect(constant_width_path)

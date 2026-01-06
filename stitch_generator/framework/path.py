@@ -1,13 +1,4 @@
-from typing import Tuple
-
-import numpy as np
-
 from stitch_generator.framework.types import Function1D, Function2D
-from stitch_generator.functions.arc_length_mapping import arc_length_mapping
-from stitch_generator.functions.estimate_length import estimate_length
-from stitch_generator.functions.function_modifiers import split, inverse, mix, multiply, subtract, add, repeat, shift, \
-    maximum, divide, chain
-from stitch_generator.functions.functions_1d import constant
 
 
 class Path:
@@ -28,61 +19,3 @@ class Path:
         self.direction = direction
         self.width = width
         self.stroke_alignment = stroke_alignment
-        self._length = None
-
-    def split(self, offsets):
-        """
-        Splits a path at the given offsets
-
-        Args:
-            offsets: Split locations in the range [0, 1]
-
-        Returns:
-            A list of paths, from which each one represents the section of the original path between two offsets
-        """
-        shapes = split(self.shape, offsets)
-        directions = split(self.direction, offsets)
-        widths = split(self.width, offsets)
-        stroke_alignments = split(self.stroke_alignment, offsets)
-        return [Path(*params) for params in zip(shapes, directions, widths, stroke_alignments)]
-
-    def inverse(self):
-        """
-        Reverses the direction of the path
-
-        Returns:
-            The reversed path
-        """
-        return self.apply_modifier(inverse)
-
-    def apply_modifier(self, function_modifier):
-        """
-        Applies a function modifier to all members of the Path
-        Args:
-            function_modifier: A function that can be applied to 1DFunctions and 2DFunctions and returns a function of
-                               the same type
-
-        Returns:
-            A Path where the function_modifier is applied to all members
-        """
-        shape = function_modifier(self.shape)
-        direction = function_modifier(self.direction)
-        width = function_modifier(self.width)
-        stroke_alignment = function_modifier(self.stroke_alignment)
-        return Path(shape, direction, width, stroke_alignment)
-
-    @property
-    def length(self):
-        if self._length:
-            return self._length
-        return estimate_length(self.shape)
-
-    @length.setter
-    def length(self, value):
-        self._length = value
-
-    @property
-    def is_circular(self):
-        shape_start_end_equal = np.all(np.isclose(self.shape(0), self.shape(1)))
-        direction_start_end_equal = np.all(np.isclose(self.direction(0), self.direction(1)))
-        return shape_start_end_equal and direction_start_end_equal

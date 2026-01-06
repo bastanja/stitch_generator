@@ -6,7 +6,7 @@ from stitch_generator.framework.types import Array2D, Function1D, SubdivisionFun
 from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.function_modifiers import multiply, add, subtract, inverse, scale
 from stitch_generator.functions.functions_1d import constant, linear_interpolation
-from stitch_generator.helpers.path_operations import get_boundaries
+from stitch_generator.helpers.path_operations import get_boundaries, split_path
 from stitch_generator.stitch_effects.utilities.range_tree import width_to_level, make_range_tree, \
     tree_to_indices_and_offsets_basic
 from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
@@ -18,8 +18,9 @@ def variable_underlay(stroke_spacing: float, line_subdivision: SubdivisionFuncti
 
 
 def variable_underlay_along(path: Path, stroke_spacing: float, line_subdivision: SubdivisionFunction) -> Array2D:
+    path_length = estimate_length(path.shape)
     # if the shape has no length, return start and end point
-    if np.isclose(path.length, 0):
+    if np.isclose(path_length, 0):
         return path.shape(subdivide_by_number(1))
 
     pos1 = add(path.shape, multiply(path.direction, multiply(path.width, path.stroke_alignment)))
@@ -41,7 +42,8 @@ def variable_underlay_along(path: Path, stroke_spacing: float, line_subdivision:
 def _variable_underlay(path: Path, stroke_spacing: float, line_subdivision: SubdivisionFunction,
                        step_function: Function1D):
     precision = 10
-    segments = int(round(path.length * precision))
+    path_length = estimate_length(path.shape)
+    segments = int(round(path_length * precision))
     t = subdivide_by_number(number_of_segments=segments)
 
     widths = path.width(t)
@@ -62,7 +64,7 @@ def _variable_underlay(path: Path, stroke_spacing: float, line_subdivision: Subd
         i2, o2 = p2
 
         t1, t2 = t[i1], t[i2]
-        path_part = path.split([t1, t2])[1]
+        path_part = split_path(path, [t1, t2])[1]
         _, baseline = get_boundaries(path_part)
         level_step = add(constant(o1 * stroke_spacing), scale((o2 - o1) * stroke_spacing, step_function))
         direction = multiply(path_part.direction, level_step)

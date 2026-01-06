@@ -3,6 +3,7 @@ import numpy as np
 from stitch_generator.framework.path import Path
 from stitch_generator.framework.stitch_effect import StitchEffect
 from stitch_generator.framework.types import Function2D, SubdivisionFunction, Array2D
+from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.helpers.path_operations import get_boundaries
 from stitch_generator.subdivision.subdivide_by_length import regular
 
@@ -16,7 +17,8 @@ def simple_zigzag(spacing: float):
 
 
 def zigzag_along(path: Path, spacing_function: SubdivisionFunction) -> Array2D:
-    return zigzag_between(*get_boundaries(path), spacing_function=spacing_function, length=path.length)
+    path_length = estimate_length(path.shape)
+    return zigzag_between(*get_boundaries(path), spacing_function=spacing_function, length=path_length)
 
 
 def zigzag_between(boundary_left: Function2D, boundary_right: Function2D, spacing_function: SubdivisionFunction,
@@ -34,7 +36,8 @@ def double_zigzag(spacing_function: SubdivisionFunction) -> StitchEffect:
 
 
 def double_zigzag_along(path: Path, spacing_function: SubdivisionFunction) -> Array2D:
-    return double_zigzag_between(*get_boundaries(path), spacing_function=spacing_function, length=path.length)
+    path_length = estimate_length(path.shape)
+    return double_zigzag_between(*get_boundaries(path), spacing_function=spacing_function, length=path_length)
 
 
 def double_zigzag_between(boundary_left: Function2D, boundary_right: Function2D, spacing_function: SubdivisionFunction,

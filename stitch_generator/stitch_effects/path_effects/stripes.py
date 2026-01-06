@@ -5,10 +5,11 @@ import numpy as np
 from stitch_generator.framework.path import Path
 from stitch_generator.framework.stitch_effect import StitchEffect
 from stitch_generator.framework.types import SubdivisionFunction, Array1D
+from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.function_1d_stairs import stairs
 from stitch_generator.functions.function_modifiers import repeat, mix, inverse
 from stitch_generator.functions.functions_1d import constant
-from stitch_generator.helpers.path_operations import get_boundaries
+from stitch_generator.helpers.path_operations import get_boundaries, path_is_circular
 from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
 from stitch_generator.subdivision.subdivision_modifiers import remove_end, alternate_direction
 
@@ -22,9 +23,12 @@ def simple_stripes(repetitions: int, line_subdivision: SubdivisionFunction, step
                                       step_ratio=step_ratio)
 
 
-def stripes_along(path: Path, steps: Array1D, line_subdivision: SubdivisionFunction, step_ratio: float):
-    return stripes_between(*get_boundaries(path), steps=steps, line_subdivision=line_subdivision, length=path.length,
-                           step_ratio=step_ratio, circular=path.is_circular)
+def stripes_along(
+    path: Path, steps: Array1D, line_subdivision: SubdivisionFunction, step_ratio: float
+):
+    path_length = estimate_length(path.shape)
+    return stripes_between(*get_boundaries(path), steps=steps, line_subdivision=line_subdivision, length=path_length,
+                           step_ratio=step_ratio, circular=path_is_circular(path))
 
 
 def stripes_between(boundary_left, boundary_right, steps: Array1D, line_subdivision: SubdivisionFunction, length: float,
@@ -53,7 +57,8 @@ def parallel_stripes(steps: Array1D, line_subdivision: SubdivisionFunction) -> S
 
 
 def parallel_stripes_along(path: Path, steps: Array1D, line_subdivision: SubdivisionFunction):
-    return parallel_stripes_between(*get_boundaries(path), length=path.length, steps=steps,
+    path_length = estimate_length(path.shape)
+    return parallel_stripes_between(*get_boundaries(path), length=path_length, steps=steps,
                                     line_subdivision=line_subdivision)
 
 

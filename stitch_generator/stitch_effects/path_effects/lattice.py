@@ -1,8 +1,9 @@
 from stitch_generator.framework.path import Path
 from stitch_generator.framework.stitch_effect import StitchEffect
 from stitch_generator.framework.types import Array2D
+from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.function_modifiers import add, repeat, multiply
-from stitch_generator.helpers.path_operations import get_boundaries
+from stitch_generator.helpers.path_operations import get_boundaries, path_is_circular
 from stitch_generator.subdivision.subdivide_by_number import subdivision_by_number
 
 
@@ -12,7 +13,8 @@ def lattice(strands, pattern_f, pattern_length) -> StitchEffect:
 
 def lattice_along(path: Path, strands, pattern_f, pattern_length) -> Array2D:
     stitch_length = _calculate_stitch_length(pattern_length, strands)
-    return _lattice(path=path, strands=strands, length=path.length, pattern_f=pattern_f,
+    path_length = estimate_length(path.shape)
+    return _lattice(path=path, strands=strands, length=path_length, pattern_f=pattern_f,
                     pattern_length=pattern_length, stitch_length=stitch_length)
 
 
@@ -20,7 +22,7 @@ def _lattice(path: Path, strands, length, pattern_f, pattern_length, stitch_leng
     pattern_repetition = int(round(length / pattern_length))
     times = pattern_repetition * strands + 1
 
-    repetition_mode = 'wrap' if path.is_circular else 'reflect'
+    repetition_mode = 'wrap' if path_is_circular(path) else 'reflect'
 
     pattern_f = repeat(times, pattern_f, mode='reflect')
     pattern_f = multiply(pattern_f, repeat(strands, path.width, mode=repetition_mode))

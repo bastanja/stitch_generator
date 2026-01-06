@@ -4,6 +4,7 @@ from stitch_generator.framework.path import Path
 from stitch_generator.framework.stitch_effect import StitchEffect
 from stitch_generator.framework.types import SubdivisionFunction, Array2D
 from stitch_generator.functions.ensure_shape import ensure_2d_shape
+from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.helpers.path_operations import get_boundaries
 from stitch_generator.stitch_effects.utilities.subdivide_line import subdivide_line
 from stitch_generator.subdivision.subdivide_by_length import regular
@@ -22,8 +23,9 @@ def simple_meander(spacing: float, stitch_length: float) -> StitchEffect:
 
 def meander_along(path: Path, spacing_function: SubdivisionFunction, line_subdivision: SubdivisionFunction,
                   join_ends: bool = False) -> Array2D:
+    path_length = estimate_length(path.shape)
     return meander_between(*get_boundaries(path), spacing_function=spacing_function, line_subdivision=line_subdivision,
-                           join_ends=join_ends, length=path.length)
+                           join_ends=join_ends, length=path_length)
 
 
 def meander_between(boundary_left, boundary_right, spacing_function: SubdivisionFunction,

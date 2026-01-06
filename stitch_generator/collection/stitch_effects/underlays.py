@@ -46,7 +46,7 @@ def underlay_dense(inset: float, stitch_length: float, spacing: float) -> Stitch
 
 def _apply_inset(path: Path, inset: float) -> Path:
     if inset > 0:
-        if path.is_circular:
+        if path_is_circular(path):
             path = inset_sides(path, inset)
         else:
             path = get_inset_path(path, inset)

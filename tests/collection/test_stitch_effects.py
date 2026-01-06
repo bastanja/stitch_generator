@@ -7,6 +7,7 @@ from stitch_generator.collection.stitch_effects.stitch_effects import stitch_eff
 from stitch_generator.framework.path import Path
 from stitch_generator.functions.function_modifiers import chain
 from stitch_generator.functions.functions_1d import constant, linear_interpolation, arc
+from stitch_generator.helpers.path_operations import path_is_circular
 from stitch_generator.shapes.bezier import bezier
 from stitch_generator.shapes.circle import circle
 from stitch_generator.shapes.line import line
@@ -83,7 +84,7 @@ def test_stitch_in_circle_bounds(effect):
     path = Path(*circle(radius=radius), width=constant(width), stroke_alignment=constant(0.5))
 
     # check that the path is circular, because some stitch effects have special handling for circular paths
-    assert path.is_circular
+    assert path_is_circular(path)
 
     # apply the stitch effect
     stitches = effect(path)

@@ -3,6 +3,7 @@ from stitch_generator.framework.types import Function2D
 from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.function_modifiers import repeat, shift, chain
 from stitch_generator.functions.functions_1d import linear_interpolation
+from stitch_generator.helpers.path_operations import apply_modifier_to_path
 
 
 def add_gap_to_shape(function: Function2D, gap_offset_mm, gap_length_mm) -> Function2D:
@@ -34,7 +35,7 @@ def add_gap_to_path(path: Path, gap_offset_mm, gap_length_mm) -> Path:
         A path that starts after the end of the gap, goes around the shape and ends at the start of the gap
     """
     modifier = _get_modifier(estimate_length(path.shape), gap_offset_mm, gap_length_mm)
-    return path.apply_modifier(modifier)
+    return apply_modifier_to_path(path, modifier)
 
 
 def _get_modifier(shape_length, gap_offset_mm, gap_length_mm):
@@ -43,7 +44,7 @@ def _get_modifier(shape_length, gap_offset_mm, gap_length_mm):
 
     # create function to make the path circular
     def make_circular(f):
-        return repeat(r=1, function=f, mode='wrap')
+        return repeat(r=1, function=f, mode="wrap")
 
     # shift start by the gap length and the additional offset from parameters
     def apply_shift(f):

@@ -3,9 +3,10 @@ import numpy as np
 from stitch_generator.framework.path import Path
 from stitch_generator.framework.stitch_effect import StitchEffect
 from stitch_generator.framework.types import SubdivisionFunction
+from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.function_modifiers import repeat, mix, shift
 from stitch_generator.functions.noise import noise, fix_distribution
-from stitch_generator.helpers.path_operations import get_boundaries
+from stitch_generator.helpers.path_operations import get_boundaries, path_is_circular
 from stitch_generator.subdivision.subdivision_modifiers import remove_end
 
 
@@ -17,9 +18,10 @@ def scribble(repetitions: int, line_subdivision: SubdivisionFunction, noise_scal
 
 def scribble_along(path: Path, repetitions: int, line_subdivision: SubdivisionFunction, noise_scale: float,
                    noise_offset: float):
-    repetition_mode = 'wrap' if path.is_circular else 'reflect'
+    repetition_mode = "wrap" if path_is_circular(path) else "reflect"
+    path_length = estimate_length(path.shape)
     return scribble_between(*get_boundaries(path), repetitions=repetitions, line_subdivision=line_subdivision,
-                            length=path.length, noise_scale=noise_scale, noise_offset=noise_offset,
+                            length=path_length, noise_scale=noise_scale, noise_offset=noise_offset,
                             repetition_mode=repetition_mode)
 
 
