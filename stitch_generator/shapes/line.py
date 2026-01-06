@@ -6,7 +6,6 @@ from scipy.interpolate import interp1d
 from stitch_generator.framework.types import Function2D
 from stitch_generator.functions.ensure_shape import ensure_2d_shape
 from stitch_generator.functions.functions_2d import constant_direction
-from stitch_generator.stitch_operations.rotate import rotate_270
 
 
 def line(origin: Sequence[float] = (0, 0), to: Sequence[float] = (100, 0)) -> Tuple[Function2D, Function2D]:
@@ -29,5 +28,6 @@ def line_direction(origin: Sequence[float] = (0, 0), to: Sequence[float] = (100,
     delta = ensure_2d_shape(np.asarray(to) - np.asarray(origin))
     length = np.linalg.norm(delta)
     delta = (delta / length) if length > 0 else delta
-    direction = rotate_270(delta)
+    # Rotate 270 degrees clockwise: (x, y) -> (y, -x)
+    direction = np.array([[delta[0, 1], -delta[0, 0]]])
     return constant_direction(direction[0][0], direction[0][1])
