@@ -5,7 +5,7 @@ import pytest
 
 from stitch_generator.collection.stitch_effects.stitch_effects import stitch_effect_collection
 from stitch_generator.framework.path import Path
-from stitch_generator.functions.function_modifiers import chain
+from stitch_generator.functions.function_modifiers import compose
 from stitch_generator.functions.functions_1d import constant, linear_interpolation, arc
 from stitch_generator.helpers.path_operations import path_is_circular
 from stitch_generator.shapes.bezier import bezier
@@ -17,7 +17,7 @@ test_paths = [
     # regular linear path with constant width
     Path(*line(origin=(0, 0), to=(100, 0)), width=constant(10), stroke_alignment=constant(0.5)),
     # path with bezier shape and a width of zero at the start and end
-    Path(*bezier(control_points=((0, 0), (50, 50), (100, 0))), width=chain(arc, linear_interpolation(0, 15)), stroke_alignment=constant(0.5)),
+    Path(*bezier(control_points=((0, 0), (50, 50), (100, 0))), width=compose(arc, linear_interpolation(0, 15)), stroke_alignment=constant(0.5)),
     # circular path
     Path(*circle(radius=30), width=constant(5), stroke_alignment=constant(0.5)),
     # path with zero length

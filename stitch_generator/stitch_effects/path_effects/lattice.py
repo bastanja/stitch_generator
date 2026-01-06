@@ -2,7 +2,7 @@ from stitch_generator.framework.path import Path
 from stitch_generator.framework.stitch_effect import StitchEffect
 from stitch_generator.framework.types import Array2D
 from stitch_generator.functions.estimate_length import estimate_length
-from stitch_generator.functions.function_modifiers import add, repeat, multiply
+from stitch_generator.functions.function_modifiers import add_functions, repeat, multiply_functions
 from stitch_generator.helpers.path_operations import get_boundaries, path_is_circular
 from stitch_generator.subdivision.subdivide_by_number import subdivision_by_number
 
@@ -25,12 +25,12 @@ def _lattice(path: Path, strands, length, pattern_f, pattern_length, stitch_leng
     repetition_mode = 'wrap' if path_is_circular(path) else 'reflect'
 
     pattern_f = repeat(times, pattern_f, mode='reflect')
-    pattern_f = multiply(pattern_f, repeat(strands, path.width, mode=repetition_mode))
+    pattern_f = multiply_functions(pattern_f, repeat(strands, path.width, mode=repetition_mode))
 
     left, right = get_boundaries(path)
 
-    f = add(repeat(strands, right, mode=repetition_mode),
-            multiply(repeat(strands, path.direction, mode=repetition_mode), pattern_f))
+    f = add_functions(repeat(strands, right, mode=repetition_mode),
+                      multiply_functions(repeat(strands, path.direction, mode=repetition_mode), pattern_f))
 
     stitches = int(round(pattern_length / stitch_length))
     points = f(subdivision_by_number(stitches * times)(1))

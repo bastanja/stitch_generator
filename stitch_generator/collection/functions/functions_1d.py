@@ -1,5 +1,5 @@
 from stitch_generator.functions.function_1d_stairs import stairs
-from stitch_generator.functions.function_modifiers import subtract, repeat, chain
+from stitch_generator.functions.function_modifiers import subtract_functions, repeat, compose
 from stitch_generator.functions.functions_1d import constant, linear_interpolation, arc, circular_arc, sinus, \
     cubic_interpolation, smoothstep
 from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
@@ -7,13 +7,13 @@ from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
 linear_0_1 = linear_interpolation(0, 1)
 linear_1_0 = linear_interpolation(1, 0)
 
-positive_sine = chain(sinus, linear_interpolation(0, 1, source_low=-1, source_high=1))
-positive_cosine = chain(sinus, linear_interpolation(0, 1, source_low=-1, source_high=1))
+positive_sine = compose(sinus, linear_interpolation(0, 1, source_low=-1, source_high=1))
+positive_cosine = compose(sinus, linear_interpolation(0, 1, source_low=-1, source_high=1))
 half_positive_sine = repeat(0.5, positive_sine)
 half_positive_cosine = repeat(0.5, positive_cosine)
 
-half_peak = subtract(constant(1.0), repeat(0.5, arc, mode='reflect'))
-half_smoothstep = chain(repeat(0.5, smoothstep), linear_interpolation(0, 1, source_low=0, source_high=0.5))
+half_peak = subtract_functions(constant(1.0), repeat(0.5, arc, mode='reflect'))
+half_smoothstep = compose(repeat(0.5, smoothstep), linear_interpolation(0, 1, source_low=0, source_high=0.5))
 
 half_circle = repeat(2, circular_arc, mode='reflect')
 

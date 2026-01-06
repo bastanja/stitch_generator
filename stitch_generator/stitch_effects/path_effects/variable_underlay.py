@@ -4,7 +4,7 @@ from stitch_generator.framework.path import Path
 from stitch_generator.framework.stitch_effect import StitchEffect
 from stitch_generator.framework.types import Array2D, Function1D, SubdivisionFunction
 from stitch_generator.functions.estimate_length import estimate_length
-from stitch_generator.functions.function_modifiers import multiply, add, subtract, inverse, scale
+from stitch_generator.functions.function_modifiers import multiply_functions, add_functions, subtract_functions, inverse, scale
 from stitch_generator.functions.functions_1d import constant, linear_interpolation
 from stitch_generator.helpers.path_operations import get_boundaries, split_path
 from stitch_generator.stitch_effects.utilities.range_tree import width_to_level, make_range_tree, \
@@ -23,14 +23,14 @@ def variable_underlay_along(path: Path, stroke_spacing: float, line_subdivision:
     if np.isclose(path_length, 0):
         return path.shape(subdivide_by_number(1))
 
-    pos1 = add(path.shape, multiply(path.direction, multiply(path.width, path.stroke_alignment)))
-    width1 = multiply(path.width, path.stroke_alignment)
+    pos1 = add_functions(path.shape, multiply_functions(path.direction, multiply_functions(path.width, path.stroke_alignment)))
+    width1 = multiply_functions(path.width, path.stroke_alignment)
     path1 = Path(shape=pos1, direction=path.direction, width=width1, stroke_alignment=constant(0))
 
-    pos2 = inverse(add(path.shape,
-                       multiply(path.direction, multiply(path.width, subtract(path.stroke_alignment, constant(1))))))
-    width2 = inverse(multiply(path.width, subtract(constant(1), path.stroke_alignment)))
-    dir2 = inverse(multiply(path.direction, constant(-1)))
+    pos2 = inverse(add_functions(path.shape,
+                                 multiply_functions(path.direction, multiply_functions(path.width, subtract_functions(path.stroke_alignment, constant(1))))))
+    width2 = inverse(multiply_functions(path.width, subtract_functions(constant(1), path.stroke_alignment)))
+    dir2 = inverse(multiply_functions(path.direction, constant(-1)))
     path2 = Path(shape=pos2, direction=dir2, width=width2, stroke_alignment=constant(0))
 
     step_function = linear_interpolation(0, 1)
@@ -66,9 +66,9 @@ def _variable_underlay(path: Path, stroke_spacing: float, line_subdivision: Subd
         t1, t2 = t[i1], t[i2]
         path_part = split_path(path, [t1, t2])[1]
         _, baseline = get_boundaries(path_part)
-        level_step = add(constant(o1 * stroke_spacing), scale((o2 - o1) * stroke_spacing, step_function))
-        direction = multiply(path_part.direction, level_step)
-        baseline = add(baseline, direction)
+        level_step = add_functions(constant(o1 * stroke_spacing), scale((o2 - o1) * stroke_spacing, step_function))
+        direction = multiply_functions(path_part.direction, level_step)
+        baseline = add_functions(baseline, direction)
         part_length = estimate_length(baseline)
         stitches.append(baseline(line_subdivision(part_length)))
 

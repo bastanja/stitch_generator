@@ -2,7 +2,7 @@ from functools import partial
 
 from stitch_generator.collection.functions.functions_1d import linear_0_1
 from stitch_generator.framework.types import Function1D, SubdivisionFunction
-from stitch_generator.functions.function_modifiers import repeat, chain
+from stitch_generator.functions.function_modifiers import repeat, compose
 from stitch_generator.functions.functions_1d import sinus, arc, linear_interpolation
 from stitch_generator.subdivision.subdivide_by_fixed_length import subdivide_by_fixed_length
 from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
@@ -25,7 +25,7 @@ def subdivision_with_triangle_offset(segment_length: float, steps: int, function
 
 
 def to_range(offset_function, function_range):
-    return chain(offset_function, linear_interpolation(function_range[0], function_range[1]))
+    return compose(offset_function, linear_interpolation(function_range[0], function_range[1]))
 
 
 def subdivision_with_varying_offset(segment_length: float, steps: int, offset_function: Function1D,

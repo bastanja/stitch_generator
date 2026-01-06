@@ -12,14 +12,14 @@ from stitch_generator.functions.function_modifiers import (
     split,
     inverse,
     mix,
-    multiply,
-    subtract,
-    add,
+    multiply_functions,
+    subtract_functions,
+    add_functions,
     repeat,
     shift,
-    maximum,
-    divide,
-    chain,
+    max_functions,
+    divide_functions,
+    compose,
 )
 from stitch_generator.functions.functions_1d import constant
 
@@ -104,11 +104,11 @@ def path_from_boundaries(
     position = mix(left, right, alignment)
 
     def width(t):
-        delta = subtract(right, left)(t)
+        delta = subtract_functions(right, left)(t)
         return np.linalg.norm(delta, axis=1)
 
     def direction(t):
-        return divide(subtract(right, left), width)(t)
+        return divide_functions(subtract_functions(right, left), width)(t)
 
     return Path(shape=position, direction=direction, width=width, stroke_alignment=alignment)
 
@@ -128,11 +128,11 @@ def get_boundaries(path: Path) -> Tuple[CoordinateFunction, CoordinateFunction]:
         - left: A function defining the left boundary, returning coordinate arrays
         - right: A function defining the right boundary, returning coordinate arrays
     """
-    positive_width = multiply(path.width, path.stroke_alignment)
-    negative_width = multiply(path.width, subtract(constant(1), path.stroke_alignment))
+    positive_width = multiply_functions(path.width, path.stroke_alignment)
+    negative_width = multiply_functions(path.width, subtract_functions(constant(1), path.stroke_alignment))
 
-    left = add(path.shape, multiply(path.direction, positive_width))
-    right = subtract(path.shape, multiply(path.direction, negative_width))
+    left = add_functions(path.shape, multiply_functions(path.direction, positive_width))
+    right = subtract_functions(path.shape, multiply_functions(path.direction, negative_width))
 
     return left, right
 
@@ -166,24 +166,24 @@ def cut_start_end(path: Path, inset: float) -> Path:
 
 def inset_sides(path: Path, inset: float) -> Path:
     # calculate the middle of the stroke, relative to the center line 'underlay.shape'
-    to_middle = add(path.stroke_alignment, constant(-0.5))
-    middle_relative_to_old_width = multiply(to_middle, path.width)
+    to_middle = add_functions(path.stroke_alignment, constant(-0.5))
+    middle_relative_to_old_width = multiply_functions(to_middle, path.width)
 
     # subtract inset * 2 from the width and make sure it stays positive
-    new_width = maximum(subtract(path.width, constant(inset * 2)), constant(0))
+    new_width = max_functions(subtract_functions(path.width, constant(inset * 2)), constant(0))
 
     # calculate offset of the new center line relative to middle of the stroke
-    offset = multiply(to_middle, multiply(constant(-1), new_width))
-    new_pos_offset = add(middle_relative_to_old_width, offset)
+    offset = multiply_functions(to_middle, multiply_functions(constant(-1), new_width))
+    new_pos_offset = add_functions(middle_relative_to_old_width, offset)
 
-    new_shape = add(path.shape, multiply(path.direction, new_pos_offset))
+    new_shape = add_functions(path.shape, multiply_functions(path.direction, new_pos_offset))
 
     return Path(shape=new_shape, direction=path.direction, width=new_width, stroke_alignment=path.stroke_alignment)
 
 
 def parameterize_path_by_arc_length(path: Path, samples: int = 200):
     mapping = arc_length_mapping(path.shape, approximation_samples=samples)
-    return apply_modifier_to_path(path, lambda function: chain(mapping, function))
+    return apply_modifier_to_path(path, lambda function: compose(mapping, function))
 
 def path_is_circular(path: Path):
     shape_start_end_equal = np.all(np.isclose(path.shape(0), path.shape(1)))

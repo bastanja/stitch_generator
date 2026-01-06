@@ -4,7 +4,7 @@ import numpy as np
 
 from stitch_generator.framework.types import SubdivisionFunction
 from stitch_generator.functions.ensure_shape import ensure_1d_shape
-from stitch_generator.functions.function_modifiers import chain
+from stitch_generator.functions.function_modifiers import compose
 
 
 def alternate_direction(subdivision_function: SubdivisionFunction):
@@ -19,7 +19,7 @@ def alternate_direction(subdivision_function: SubdivisionFunction):
 
         return values
 
-    return chain(subdivision_function, modify)
+    return compose(subdivision_function, modify)
 
 
 def ensure_value_at(subdivision_function: SubdivisionFunction, position: float):
@@ -33,7 +33,7 @@ def ensure_value_at(subdivision_function: SubdivisionFunction, position: float):
         values[nearest_index] = position
         return values
 
-    return chain(subdivision_function, modify)
+    return compose(subdivision_function, modify)
 
 
 def add_start(subdivision_function: SubdivisionFunction) -> SubdivisionFunction:
@@ -47,7 +47,7 @@ def add_start(subdivision_function: SubdivisionFunction) -> SubdivisionFunction:
                 return values
         return ensure_1d_shape(0)
 
-    return chain(subdivision_function, modify)
+    return compose(subdivision_function, modify)
 
 
 def add_end(subdivision_function: SubdivisionFunction) -> SubdivisionFunction:
@@ -61,7 +61,7 @@ def add_end(subdivision_function: SubdivisionFunction) -> SubdivisionFunction:
                 return values
         return ensure_1d_shape(1)
 
-    return chain(subdivision_function, modify)
+    return compose(subdivision_function, modify)
 
 
 def remove_start(subdivision_function: SubdivisionFunction) -> SubdivisionFunction:
@@ -72,7 +72,7 @@ def remove_start(subdivision_function: SubdivisionFunction) -> SubdivisionFuncti
             return values[1:]
         return values
 
-    return chain(subdivision_function, modify)
+    return compose(subdivision_function, modify)
 
 
 def remove_end(subdivision_function: SubdivisionFunction) -> SubdivisionFunction:
@@ -83,7 +83,7 @@ def remove_end(subdivision_function: SubdivisionFunction) -> SubdivisionFunction
             return values[:-1]
         return values
 
-    return chain(subdivision_function, modify)
+    return compose(subdivision_function, modify)
 
 
 def free_start(start_length: float, subdivision_function: SubdivisionFunction):

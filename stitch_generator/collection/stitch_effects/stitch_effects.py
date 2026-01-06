@@ -4,7 +4,7 @@ from stitch_generator.collection.functions.functions_1d import linear_0_1
 from stitch_generator.collection.motifs.collection import zigzag_rectangle
 from stitch_generator.collection.motifs.square_spiral import square_spiral
 from stitch_generator.collection.subdivision.tatami import tatami_3_1, tatami
-from stitch_generator.functions.function_modifiers import chain
+from stitch_generator.functions.function_modifiers import compose
 from stitch_generator.functions.functions_1d import square
 from stitch_generator.helpers.path_operations import get_inset_path
 from stitch_generator.shapes.line import line_shape
@@ -128,7 +128,7 @@ def stitch_effect_tile_motif_spiral(path):
     motif = square_spiral(level=spiral_level, step_size=(1 / spiral_level)) * motif_scale + motif_translation
 
     # create stitch effect
-    effect = chain(tile_motif(motif=motif, motif_length=15), remove_duplicates)
+    effect = compose(tile_motif(motif=motif, motif_length=15), remove_duplicates)
     return effect(path)
 
 
@@ -139,7 +139,7 @@ def stitch_effect_tile_motif_zigzag(path):
     motif = np.concatenate((line_shape((0, 1), (1, 0))(subdivide_by_number(4)[:-1]), motif))
 
     # create stitch effect
-    effect = chain(tile_motif(motif=motif, motif_length=5), remove_duplicates)
+    effect = compose(tile_motif(motif=motif, motif_length=5), remove_duplicates)
     return effect(path)
 
 

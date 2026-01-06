@@ -5,8 +5,7 @@ import numpy as np
 
 from stitch_generator.framework.types import CoordinateFunction, Function1D
 from stitch_generator.functions.estimate_length import accumulate_lengths
-from stitch_generator.functions.function_modifiers import chain
-from stitch_generator.framework.types import Function2D, Function1D
+from stitch_generator.functions.function_modifiers import compose
 
 
 def parameterize_by_arc_length(function: CoordinateFunction, approximation_samples: int = 1000) -> CoordinateFunction:
@@ -24,7 +23,7 @@ def parameterize_by_arc_length(function: CoordinateFunction, approximation_sampl
         The re-parameterized 2D function
     """
     mapping = arc_length_mapping(function, approximation_samples)
-    return chain(mapping, function)
+    return compose(mapping, function)
 
 
 def arc_length_mapping(function: CoordinateFunction, approximation_samples: int = 1000) -> Function1D:

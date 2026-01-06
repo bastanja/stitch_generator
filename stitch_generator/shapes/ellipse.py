@@ -1,7 +1,7 @@
 from typing import Sequence, Tuple
 
 from stitch_generator.framework.types import Function2D
-from stitch_generator.functions.function_modifiers import scale, add
+from stitch_generator.functions.function_modifiers import scale, add_functions
 from stitch_generator.functions.functions_1d import cosinus, sinus, constant
 from stitch_generator.functions.functions_2d import function_2d
 
@@ -18,7 +18,7 @@ def ellipse_shape(rx: float, ry: float, center: Sequence[float] = (0, 0)) -> Fun
     shape = function_2d(fx, fy)
     if center != (0, 0):
         c = function_2d(constant(center[0]), constant(center[1]))
-        shape = add(shape, c)
+        shape = add_functions(shape, c)
 
     return shape
 

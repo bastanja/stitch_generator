@@ -4,7 +4,7 @@ from scipy.interpolate import interp1d
 
 from stitch_generator.framework.types import Function1D, Function2D, Array2D
 from stitch_generator.functions.ensure_shape import ensure_2d_shape
-from stitch_generator.functions.function_modifiers import shift, repeat, chain
+from stitch_generator.functions.function_modifiers import shift, repeat, compose
 from stitch_generator.functions.functions_1d import linear_interpolation, function_1d, smootherstep
 from stitch_generator.functions.functions_2d import function_2d
 
@@ -123,13 +123,13 @@ def fix_distribution(noise_function: Function1D, noise_range: float = 0.35, targ
     spread_distribution = repeat(r=1, function=smootherstep, mode='nearest')
 
     # combine the range mapping and the spreading of the distribution
-    distribution_modification = chain(map_range, spread_distribution)
+    distribution_modification = compose(map_range, spread_distribution)
 
     # map to the desired output range
-    distribution_interpolation = chain(distribution_modification, linear_interpolation(target_low, target_high))
+    distribution_interpolation = compose(distribution_modification, linear_interpolation(target_low, target_high))
 
     # combine the original noise function with the distribution modification
-    return chain(noise_function, distribution_interpolation)
+    return compose(noise_function, distribution_interpolation)
 
 
 def _noise_2d_texture_space(positions_texture_space: Array2D, octaves: int):

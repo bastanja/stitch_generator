@@ -3,7 +3,7 @@ from typing import Sequence, Tuple
 
 from stitch_generator.framework.types import Function2D
 from stitch_generator.functions.estimate_length import estimate_length
-from stitch_generator.functions.function_modifiers import repeat, multiply, inverse, shift
+from stitch_generator.functions.function_modifiers import repeat, multiply_functions, inverse, shift
 from stitch_generator.functions.function_sequence import function_sequence
 from stitch_generator.functions.functions_2d import constant_direction
 from stitch_generator.shapes.ellipse import ellipse_shape, ellipse_direction
@@ -36,7 +36,7 @@ def _shape_parts(width: float, height: float, corner_radii):
 
     # corner functions
     corners = [_corner(width / 2, height / 2, *radius) for radius in corner_radii]
-    corners = [d(multiply(c, constant_direction(x, y))) for d, c, x, y in
+    corners = [d(multiply_functions(c, constant_direction(x, y))) for d, c, x, y in
                zip(corner_forward_backward, corners, scale_x, scale_y)]
 
     # connecting line functions

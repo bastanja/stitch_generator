@@ -16,7 +16,7 @@ def wrap(function):
     return lambda v: function(v % 1)
 
 
-def nearest(function):
+def clamp(function):
     def f(v):
         v = np.asarray(v)
         v[v < 0] = 0.
@@ -32,7 +32,7 @@ def repeat(r, function, mode=''):
     if mode == 'wrap':
         function = wrap(function)
     if mode == 'nearest':
-        function = nearest(function)
+        function = clamp(function)
     return lambda v: function(np.asarray(v) * r)
 
 
@@ -46,23 +46,23 @@ def shift(amount, function):
     return lambda v: function(v + amount)
 
 
-def chain(f1, f2):
+def compose(f1, f2):
     return lambda v: f2(f1(v))
 
 
-def add(f1, f2):
+def add_functions(f1, f2):
     return _binary_operation(lambda a, b: a + b, f1, f2)
 
 
-def subtract(f1, f2):
+def subtract_functions(f1, f2):
     return _binary_operation(lambda a, b: a - b, f1, f2)
 
 
-def multiply(f1, f2):
+def multiply_functions(f1, f2):
     return _binary_operation(lambda a, b: a * b, f1, f2)
 
 
-def divide(f1, f2):
+def divide_functions(f1, f2):
     def f(a, b):
         notnull = b > 0
         b[notnull] = 1 / b[notnull]
@@ -76,8 +76,8 @@ def inverse(function):
 
 
 def mix(f1, f2, factor):
-    one_minus_factor = subtract(lambda v: np.ones_like(np.array(v), dtype=float), factor)
-    return add(multiply(f1, one_minus_factor), multiply(f2, factor))
+    one_minus_factor = subtract_functions(lambda v: np.ones_like(np.array(v), dtype=float), factor)
+    return add_functions(multiply_functions(f1, one_minus_factor), multiply_functions(f2, factor))
 
 
 def _binary_operation(operation, f1, f2):
@@ -97,11 +97,11 @@ def _binary_operation(operation, f1, f2):
     return f
 
 
-def maximum(f1, f2):
+def max_functions(f1, f2):
     return lambda v: np.maximum(f1(v), f2(v))
 
 
-def minimum(f1, f2):
+def min_functions(f1, f2):
     return lambda v: np.minimum(f1(v), f2(v))
 
 

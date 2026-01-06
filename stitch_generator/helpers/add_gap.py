@@ -1,7 +1,7 @@
 from stitch_generator.framework.path import Path
 from stitch_generator.framework.types import Function2D
 from stitch_generator.functions.estimate_length import estimate_length
-from stitch_generator.functions.function_modifiers import repeat, shift, chain
+from stitch_generator.functions.function_modifiers import repeat, shift, compose
 from stitch_generator.functions.functions_1d import linear_interpolation
 from stitch_generator.helpers.path_operations import apply_modifier_to_path
 
@@ -54,6 +54,6 @@ def _get_modifier(shape_length, gap_offset_mm, gap_length_mm):
     def shorten(f):
         return repeat(r=(1 - mm_to_offset(gap_length_mm)), function=f)
 
-    all_modifiers = chain(make_circular, chain(apply_shift, shorten))
+    all_modifiers = compose(make_circular, compose(apply_shift, shorten))
 
     return all_modifiers

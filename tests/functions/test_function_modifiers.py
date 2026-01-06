@@ -5,8 +5,8 @@ import pytest
 from pytest import approx
 
 from stitch_generator.collection.functions.functions_1d import linear_0_1
-from stitch_generator.functions.function_modifiers import repeat, reflect, wrap, nearest, chain, inverse, mix, add, \
-    multiply, split
+from stitch_generator.functions.function_modifiers import repeat, reflect, wrap, clamp, compose, inverse, mix, \
+    add_functions, multiply_functions, split
 from stitch_generator.functions.functions_1d import smootherstep, arc, square, sinus
 from stitch_generator.shapes.bezier import bezier_shape
 from tests.functions.functions import all_functions
@@ -54,7 +54,7 @@ def test_reflect():
 
 def test_nearest():
     for name, f in all_functions.items():
-        z = nearest(f)
+        z = clamp(f)
         for t in offsets:
             assert f(t) == approx(z(t))
             assert f(0) == approx(z(t - 1))
@@ -67,7 +67,7 @@ def test_chain():
     pairs = permutations(test_functions_positive, 2)
     v = np.linspace(0, 1, 10)
     for f1, f2 in pairs:
-        f_chained = chain(f1, f2)
+        f_chained = compose(f1, f2)
 
         v1 = f1(v)
         v2 = f2(v1)
@@ -106,7 +106,7 @@ def test_mix(f1, f2, factor):
 def test_add(f1, f2):
     float_values = (0.0, 0.3, 0.5, 1.0)
 
-    added = add(f1, f2)
+    added = add_functions(f1, f2)
     for v in float_values:
         assert np.allclose(added(v), f1(v) + f2(v))
     values = np.linspace(0, 1, 11)
@@ -117,7 +117,7 @@ def test_add(f1, f2):
 def test_multiply(f1, f2):
     float_values = (0.0, 0.3, 0.5, 1.0)
 
-    multiplied = multiply(f1, f2)
+    multiplied = multiply_functions(f1, f2)
     for v in float_values:
         assert np.allclose(multiplied(v), f1(v) * f2(v))
     values = np.linspace(0, 1, 11)
