@@ -3,7 +3,9 @@ import numpy as np
 from stitch_generator.framework.types import Array2D
 
 
-def smooth(stitches: Array2D, iterations: int, neighbor_weight: float = 0.5, circular=False):
+def smooth(
+    stitches: Array2D, iterations: int, neighbor_weight: float = 0.5, circular=False
+):
     """
     Applies Laplacian smoothing to the stitches, i.e. moves each one closer to the center between its predecessor and
     successor

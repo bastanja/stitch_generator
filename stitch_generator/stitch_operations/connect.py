@@ -8,7 +8,9 @@ from stitch_generator.subdivision.subdivision_modifiers import remove_end, remov
 from stitch_generator.helpers.subdivide_line import subdivide_line
 
 
-def connect(stitch_blocks: List[Array2D], line_subdivision: SubdivisionFunction) -> Array2D:
+def connect(
+    stitch_blocks: List[Array2D], line_subdivision: SubdivisionFunction
+) -> Array2D:
     """
     Connects stitch blocks to one continuous stitch block by inserting stitches in the gaps between the blocks.
     Args:
@@ -26,7 +28,10 @@ def connect(stitch_blocks: List[Array2D], line_subdivision: SubdivisionFunction)
         return stitch_blocks[0]
 
     pairs = zip(stitch_blocks, stitch_blocks[1:])
-    fills = [subdivide_line(p1[-1], p2[0], remove_start(remove_end(line_subdivision))) for p1, p2 in pairs]
+    fills = [
+        subdivide_line(p1[-1], p2[0], remove_start(remove_end(line_subdivision)))
+        for p1, p2 in pairs
+    ]
 
     parts = itertools.zip_longest(stitch_blocks, fills)
 

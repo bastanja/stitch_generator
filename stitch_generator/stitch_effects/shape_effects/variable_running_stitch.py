@@ -7,11 +7,19 @@ from stitch_generator.functions.function_modifiers import mix
 from stitch_generator.functions.functions_1d import constant, linear_interpolation
 from stitch_generator.subdivision.subdivide_by_length import subdivide_by_length
 from stitch_generator.stitch_effects.utilities.motif_to_path import motif_to_path
-from stitch_generator.stitch_effects.utilities.range_tree import make_range_tree, tree_to_indices_and_offsets
+from stitch_generator.stitch_effects.utilities.range_tree import (
+    make_range_tree,
+    tree_to_indices_and_offsets,
+)
 
 
-def variable_running_stitch(stitch_length: float, width_profile: Function1D, min_strokes: int, max_strokes: int,
-                            stroke_spacing: float) -> StitchEffect:
+def variable_running_stitch(
+    stitch_length: float,
+    width_profile: Function1D,
+    min_strokes: int,
+    max_strokes: int,
+    stroke_spacing: float,
+) -> StitchEffect:
     """
 
     Args:
@@ -29,14 +37,26 @@ def variable_running_stitch(stitch_length: float, width_profile: Function1D, min
         A StitchEffect
 
     """
-    return lambda path: variable_running_stitch_on_shape(path.shape, path.direction, stitch_length=stitch_length,
-                                                         width_profile=width_profile, min_strokes=min_strokes,
-                                                         max_strokes=max_strokes, stroke_spacing=stroke_spacing)
+    return lambda path: variable_running_stitch_on_shape(
+        path.shape,
+        path.direction,
+        stitch_length=stitch_length,
+        width_profile=width_profile,
+        min_strokes=min_strokes,
+        max_strokes=max_strokes,
+        stroke_spacing=stroke_spacing,
+    )
 
 
-def variable_running_stitch_on_shape(shape: Function2D, direction: Function2D, stitch_length: float,
-                                     width_profile: Function1D, min_strokes: int, max_strokes: int,
-                                     stroke_spacing: float = 0.2) -> Array2D:
+def variable_running_stitch_on_shape(
+    shape: Function2D,
+    direction: Function2D,
+    stitch_length: float,
+    width_profile: Function1D,
+    min_strokes: int,
+    max_strokes: int,
+    stroke_spacing: float = 0.2,
+) -> Array2D:
     total_length = estimate_length(shape)
     t = subdivide_by_length(total_length=total_length, segment_length=stitch_length)
 
@@ -61,8 +81,12 @@ def variable_running_stitch_on_shape(shape: Function2D, direction: Function2D, s
     min_alignment = (min_level / max_level if max_level > 0 else 0) * 0.5
     alignment = mix(constant(min_alignment), constant(0.5), factor=width_profile)
 
-    path = Path(shape=shape, direction=direction, width=constant(max_level * stroke_spacing),
-                stroke_alignment=alignment)
+    path = Path(
+        shape=shape,
+        direction=direction,
+        width=constant(max_level * stroke_spacing),
+        stroke_alignment=alignment,
+    )
 
     return motif_to_path(motif=motif, path=path)
 

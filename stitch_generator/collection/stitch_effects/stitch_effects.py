@@ -13,15 +13,27 @@ from stitch_generator.stitch_effects.path_effects.lattice import lattice
 from stitch_generator.stitch_effects.path_effects.meander import meander
 from stitch_generator.stitch_effects.path_effects.satin import satin
 from stitch_generator.stitch_effects.path_effects.scribble import scribble
-from stitch_generator.stitch_effects.path_effects.stripes import stripes, parallel_stripes
+from stitch_generator.stitch_effects.path_effects.stripes import (
+    stripes,
+    parallel_stripes,
+)
 from stitch_generator.stitch_effects.path_effects.tile_motif import tile_motif
-from stitch_generator.stitch_effects.path_effects.variable_underlay import variable_underlay
+from stitch_generator.stitch_effects.path_effects.variable_underlay import (
+    variable_underlay,
+)
 from stitch_generator.stitch_effects.path_effects.zigzag import zigzag, double_zigzag
 from stitch_generator.stitch_operations.remove_duplicates import remove_duplicates
 from stitch_generator.subdivision.subdivide_by_length import regular
 from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
-from stitch_generator.subdivision.subdivide_by_pattern import pattern_from_spaces, subdivision_by_pattern
-from stitch_generator.subdivision.subdivision_modifiers import alternate_direction, add_end, add_start
+from stitch_generator.subdivision.subdivide_by_pattern import (
+    pattern_from_spaces,
+    subdivision_by_pattern,
+)
+from stitch_generator.subdivision.subdivision_modifiers import (
+    alternate_direction,
+    add_end,
+    add_start,
+)
 
 
 def stitch_effect_collection():
@@ -66,35 +78,49 @@ def stitch_effect_meander(path):
 
 
 def stitch_effect_meander_join_ends(path):
-    effect = meander(spacing_function=regular(2),
-                     line_subdivision=regular(3),
-                     join_ends=True)
+    effect = meander(
+        spacing_function=regular(2), line_subdivision=regular(3), join_ends=True
+    )
     return effect(path)
 
 
 def stitch_effect_meander_pattern(path):
-    line_subdivision = alternate_direction(add_start(add_end(tatami_3_1(segment_length=3))))
-    effect = meander(spacing_function=regular(2), line_subdivision=line_subdivision, join_ends=False)
+    line_subdivision = alternate_direction(
+        add_start(add_end(tatami_3_1(segment_length=3)))
+    )
+    effect = meander(
+        spacing_function=regular(2), line_subdivision=line_subdivision, join_ends=False
+    )
     return effect(path)
 
 
 def stitch_effect_meander_spacing_pattern(path):
-    effect = meander(spacing_function=subdivision_by_pattern(pattern=(0, 0.7), pattern_length=5, alignment=0, offset=0),
-                     line_subdivision=regular(3))
+    effect = meander(
+        spacing_function=subdivision_by_pattern(
+            pattern=(0, 0.7), pattern_length=5, alignment=0, offset=0
+        ),
+        line_subdivision=regular(3),
+    )
     return effect(path)
 
 
 def stitch_effect_satin(path):
-    line_subdivision = add_start(alternate_direction(
-        tatami(segment_length=3, steps=5, repetitions=1, minimal_segment_size=2)))
-    effect = satin(spacing_function=regular(2),
-                   line_subdivision=line_subdivision)
+    line_subdivision = add_start(
+        alternate_direction(
+            tatami(segment_length=3, steps=5, repetitions=1, minimal_segment_size=2)
+        )
+    )
+    effect = satin(spacing_function=regular(2), line_subdivision=line_subdivision)
     return effect(path)
 
 
 def stitch_effect_scribble(path):
-    line_subdivision = alternate_direction(add_start(add_end(tatami_3_1(segment_length=3))))
-    effect = scribble(repetitions=4, line_subdivision=line_subdivision, noise_scale=0.25)
+    line_subdivision = alternate_direction(
+        add_start(add_end(tatami_3_1(segment_length=3)))
+    )
+    effect = scribble(
+        repetitions=4, line_subdivision=line_subdivision, noise_scale=0.25
+    )
     return effect(path)
 
 
@@ -115,8 +141,10 @@ def stitch_effect_parallel_stripes(path):
 
 
 def stitch_effect_parallel_stripes_pattern(path):
-    effect = parallel_stripes(steps=pattern_from_spaces((1, 2, 1, 2, 1), with_start=True, with_end=True),
-                              line_subdivision=regular(3))
+    effect = parallel_stripes(
+        steps=pattern_from_spaces((1, 2, 1, 2, 1), with_start=True, with_end=True),
+        line_subdivision=regular(3),
+    )
     return effect(path)
 
 
@@ -125,7 +153,10 @@ def stitch_effect_tile_motif_spiral(path):
     spiral_level = 5
     motif_scale = (1, spiral_level / (spiral_level - 1))  # make it square
     motif_translation = (0.5, 0.5)  # move it into the range [0,1] in x and y direction
-    motif = square_spiral(level=spiral_level, step_size=(1 / spiral_level)) * motif_scale + motif_translation
+    motif = (
+        square_spiral(level=spiral_level, step_size=(1 / spiral_level)) * motif_scale
+        + motif_translation
+    )
 
     # create stitch effect
     effect = compose(tile_motif(motif=motif, motif_length=15), remove_duplicates)
@@ -135,8 +166,13 @@ def stitch_effect_tile_motif_spiral(path):
 def stitch_effect_tile_motif_zigzag(path):
     # create motif for tiling
     motif_translation = (0.5, 0.5)  # move it into the range [0,1] in x and y direction
-    motif = zigzag_rectangle(width=1, height=1, repetitions=8, horizontal=False) + motif_translation
-    motif = np.concatenate((line_shape((0, 1), (1, 0))(subdivide_by_number(4)[:-1]), motif))
+    motif = (
+        zigzag_rectangle(width=1, height=1, repetitions=8, horizontal=False)
+        + motif_translation
+    )
+    motif = np.concatenate(
+        (line_shape((0, 1), (1, 0))(subdivide_by_number(4)[:-1]), motif)
+    )
 
     # create stitch effect
     effect = compose(tile_motif(motif=motif, motif_length=5), remove_duplicates)

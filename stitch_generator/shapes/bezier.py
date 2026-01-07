@@ -50,7 +50,9 @@ def bezier_shape(control_points: Sequence) -> CoordinateFunction:
     control_points = np.asarray(control_points, dtype=float)
 
     def f(v):
-        points, tangents = de_casteljau(control_points, np.array(v, ndmin=1, dtype=float))
+        points, tangents = de_casteljau(
+            control_points, np.array(v, ndmin=1, dtype=float)
+        )
         return points
 
     return f
@@ -71,14 +73,18 @@ def bezier_direction(control_points: Sequence) -> CoordinateFunction:
     control_points = np.asarray(control_points, dtype=float)
 
     def f(v):
-        points, tangents = de_casteljau(control_points, np.array(v, ndmin=1, dtype=float))
+        points, tangents = de_casteljau(
+            control_points, np.array(v, ndmin=1, dtype=float)
+        )
         # Rotate 270 degrees clockwise: (x, y) -> (y, -x)
         return np.column_stack([tangents[:, 1], -tangents[:, 0]])
 
     return f
 
 
-def de_casteljau(control_points: np.ndarray, parameters: np.ndarray) -> (np.ndarray, np.ndarray):
+def de_casteljau(
+    control_points: np.ndarray, parameters: np.ndarray
+) -> (np.ndarray, np.ndarray):
     """
     Subdivides a Bézier curve into segments using De Casteljau's algorithm
     Args:

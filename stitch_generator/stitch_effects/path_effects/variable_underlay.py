@@ -8,16 +8,27 @@ from stitch_generator.framework.types import (
     Coordinates,
 )
 from stitch_generator.functions.estimate_length import estimate_length
-from stitch_generator.functions.function_modifiers import multiply_functions, add_functions, subtract_functions, inverse, scale
+from stitch_generator.functions.function_modifiers import (
+    multiply_functions,
+    add_functions,
+    subtract_functions,
+    inverse,
+    scale,
+)
 from stitch_generator.functions.functions_1d import constant, linear_interpolation
 from stitch_generator.helpers.path_operations import get_boundaries, split_path
-from stitch_generator.stitch_effects.utilities.range_tree import width_to_level, make_range_tree, \
-    tree_to_indices_and_offsets_basic
+from stitch_generator.stitch_effects.utilities.range_tree import (
+    width_to_level,
+    make_range_tree,
+    tree_to_indices_and_offsets_basic,
+)
 from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
 from stitch_generator.subdivision.subdivision_modifiers import remove_end
 
 
-def variable_underlay(stroke_spacing: float, line_subdivision: SubdivisionFunction) -> StitchEffect:
+def variable_underlay(
+    stroke_spacing: float, line_subdivision: SubdivisionFunction
+) -> StitchEffect:
     """Creates a variable underlay stitch effect.
 
     A pattern of lines to be used below satin stitches. It raises the satin stitches and gives
@@ -47,10 +58,14 @@ def variable_underlay(stroke_spacing: float, line_subdivision: SubdivisionFuncti
         stitches = effect(path)
         ```
     """
-    return lambda path: variable_underlay_along(path, stroke_spacing=stroke_spacing, line_subdivision=line_subdivision)
+    return lambda path: variable_underlay_along(
+        path, stroke_spacing=stroke_spacing, line_subdivision=line_subdivision
+    )
 
 
-def variable_underlay_along(path: Path, stroke_spacing: float, line_subdivision: SubdivisionFunction) -> Coordinates:
+def variable_underlay_along(
+    path: Path, stroke_spacing: float, line_subdivision: SubdivisionFunction
+) -> Coordinates:
     """Creates variable underlay stitches along a path.
 
     Args:
@@ -66,24 +81,54 @@ def variable_underlay_along(path: Path, stroke_spacing: float, line_subdivision:
     if np.isclose(path_length, 0):
         return path.shape(subdivide_by_number(1))
 
-    pos1 = add_functions(path.shape, multiply_functions(path.direction, multiply_functions(path.width, path.stroke_alignment)))
+    pos1 = add_functions(
+        path.shape,
+        multiply_functions(
+            path.direction, multiply_functions(path.width, path.stroke_alignment)
+        ),
+    )
     width1 = multiply_functions(path.width, path.stroke_alignment)
-    path1 = Path(shape=pos1, direction=path.direction, width=width1, stroke_alignment=constant(0))
+    path1 = Path(
+        shape=pos1, direction=path.direction, width=width1, stroke_alignment=constant(0)
+    )
 
-    pos2 = inverse(add_functions(path.shape,
-                                 multiply_functions(path.direction, multiply_functions(path.width, subtract_functions(path.stroke_alignment, constant(1))))))
-    width2 = inverse(multiply_functions(path.width, subtract_functions(constant(1), path.stroke_alignment)))
+    pos2 = inverse(
+        add_functions(
+            path.shape,
+            multiply_functions(
+                path.direction,
+                multiply_functions(
+                    path.width, subtract_functions(path.stroke_alignment, constant(1))
+                ),
+            ),
+        )
+    )
+    width2 = inverse(
+        multiply_functions(
+            path.width, subtract_functions(constant(1), path.stroke_alignment)
+        )
+    )
     dir2 = inverse(multiply_functions(path.direction, constant(-1)))
     path2 = Path(shape=pos2, direction=dir2, width=width2, stroke_alignment=constant(0))
 
     step_function = linear_interpolation(0, 1)
 
-    return np.concatenate((_variable_underlay(path1, stroke_spacing, line_subdivision, step_function)[:-1],
-                           _variable_underlay(path2, stroke_spacing, line_subdivision, step_function)))
+    return np.concatenate(
+        (
+            _variable_underlay(path1, stroke_spacing, line_subdivision, step_function)[
+                :-1
+            ],
+            _variable_underlay(path2, stroke_spacing, line_subdivision, step_function),
+        )
+    )
 
 
-def _variable_underlay(path: Path, stroke_spacing: float, line_subdivision: SubdivisionFunction,
-                       step_function: Function1D) -> Coordinates:
+def _variable_underlay(
+    path: Path,
+    stroke_spacing: float,
+    line_subdivision: SubdivisionFunction,
+    step_function: Function1D,
+) -> Coordinates:
     """Creates variable underlay stitches for a single path side.
 
     Args:
@@ -120,7 +165,10 @@ def _variable_underlay(path: Path, stroke_spacing: float, line_subdivision: Subd
         t1, t2 = t[i1], t[i2]
         path_part = split_path(path, [t1, t2])[1]
         _, baseline = get_boundaries(path_part)
-        level_step = add_functions(constant(o1 * stroke_spacing), scale((o2 - o1) * stroke_spacing, step_function))
+        level_step = add_functions(
+            constant(o1 * stroke_spacing),
+            scale((o2 - o1) * stroke_spacing, step_function),
+        )
         direction = multiply_functions(path_part.direction, level_step)
         baseline = add_functions(baseline, direction)
         part_length = estimate_length(baseline)

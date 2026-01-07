@@ -4,23 +4,31 @@ from typing import List
 import numpy as np
 
 from stitch_generator.subdivision.alignment_to_offset import alignment_to_offset
-from stitch_generator.subdivision.subdivide_by_fixed_length import subdivide_by_fixed_length
+from stitch_generator.subdivision.subdivide_by_fixed_length import (
+    subdivide_by_fixed_length,
+)
 from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
 
 
-def subdivision_by_pattern(pattern,
-                           pattern_length: float,
-                           alignment: float,
-                           offset: float):
-    return partial(subdivide_by_pattern, pattern=pattern, pattern_length=pattern_length, alignment=alignment,
-                   offset=offset)
+def subdivision_by_pattern(
+    pattern, pattern_length: float, alignment: float, offset: float
+):
+    return partial(
+        subdivide_by_pattern,
+        pattern=pattern,
+        pattern_length=pattern_length,
+        alignment=alignment,
+        offset=offset,
+    )
 
 
-def subdivide_by_pattern(total_length: float,
-                         pattern_length: float,
-                         pattern: List[float],
-                         alignment: float,
-                         offset: float):
+def subdivide_by_pattern(
+    total_length: float,
+    pattern_length: float,
+    pattern: List[float],
+    alignment: float,
+    offset: float,
+):
     """
     Args:
         total_length: The total length to subdivide
@@ -40,17 +48,24 @@ def subdivide_by_pattern(total_length: float,
     relative_pattern_length = pattern_length / total_length
 
     # Calculate the offset which the pattern has at the start
-    effective_pattern_offset = alignment_to_offset(relative_segment_length=relative_pattern_length,
-                                                   offset=offset, alignment=alignment)
+    effective_pattern_offset = alignment_to_offset(
+        relative_segment_length=relative_pattern_length,
+        offset=offset,
+        alignment=alignment,
+    )
 
     # Apply the pattern offset
-    pattern = _apply_pattern_offset(np.asarray(pattern, dtype=float), effective_pattern_offset)
+    pattern = _apply_pattern_offset(
+        np.asarray(pattern, dtype=float), effective_pattern_offset
+    )
 
     # Scale the pattern relative to the total length
     pattern *= relative_pattern_length
 
     # Calculate start points for the pattern repetitions
-    start_points = subdivide_by_fixed_length(total_length=total_length, segment_length=pattern_length)
+    start_points = subdivide_by_fixed_length(
+        total_length=total_length, segment_length=pattern_length
+    )
 
     # Place one pattern repetition at each start point
     tiled_pattern = np.concatenate([pattern + p for p in start_points])

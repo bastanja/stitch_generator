@@ -1,4 +1,6 @@
-def alignment_to_offset(relative_segment_length: float, offset: float, alignment: float):
+def alignment_to_offset(
+    relative_segment_length: float, offset: float, alignment: float
+):
     # Map alignment into the range of one segment
     alignment = alignment % relative_segment_length
 

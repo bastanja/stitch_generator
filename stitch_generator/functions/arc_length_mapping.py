@@ -8,7 +8,9 @@ from stitch_generator.functions.estimate_length import accumulate_lengths
 from stitch_generator.functions.function_modifiers import compose
 
 
-def parameterize_by_arc_length(function: CoordinateFunction, approximation_samples: int = 1000) -> CoordinateFunction:
+def parameterize_by_arc_length(
+    function: CoordinateFunction, approximation_samples: int = 1000
+) -> CoordinateFunction:
     """
     Re-parameterizes a 2D function in such a way that the parameter 0.5 returns the geometrical middle point of the
     geometry defined by the 2D function. When calling the re-parameterized function with equally spaced offset values,
@@ -26,7 +28,9 @@ def parameterize_by_arc_length(function: CoordinateFunction, approximation_sampl
     return compose(mapping, function)
 
 
-def arc_length_mapping(function: CoordinateFunction, approximation_samples: int = 1000) -> Function1D:
+def arc_length_mapping(
+    function: CoordinateFunction, approximation_samples: int = 1000
+) -> Function1D:
     """
     Calculates the arc length parameterization for a given 2D function.
 
@@ -41,7 +45,9 @@ def arc_length_mapping(function: CoordinateFunction, approximation_samples: int 
     return arc_length_mapping_with_length(function, approximation_samples)[0]
 
 
-def arc_length_mapping_with_length(function: CoordinateFunction, approximation_samples: int = 1000) -> Tuple[Function1D, float]:
+def arc_length_mapping_with_length(
+    function: CoordinateFunction, approximation_samples: int = 1000
+) -> Tuple[Function1D, float]:
     """
     Calculates the arc length parameterization for a given coordinate function and the length of the geometry described by the
     coordinates function

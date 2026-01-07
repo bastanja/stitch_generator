@@ -10,8 +10,12 @@ from stitch_generator.helpers.path_operations import get_boundaries, path_is_cir
 from stitch_generator.subdivision.subdivision_modifiers import remove_end
 
 
-def scribble(repetitions: int, line_subdivision: SubdivisionFunction, noise_scale: float = 1,
-             noise_offset: float = 0) -> StitchEffect:
+def scribble(
+    repetitions: int,
+    line_subdivision: SubdivisionFunction,
+    noise_scale: float = 1,
+    noise_offset: float = 0,
+) -> StitchEffect:
     """Creates a scribble stitch effect.
 
     A zigzag line along the Path with random offsets to the side to simulate a hand-drawn scribble
@@ -37,12 +41,22 @@ def scribble(repetitions: int, line_subdivision: SubdivisionFunction, noise_scal
         stitches = effect(path)
         ```
     """
-    return lambda path: scribble_along(path, repetitions=repetitions, line_subdivision=line_subdivision,
-                                       noise_scale=noise_scale, noise_offset=noise_offset)
+    return lambda path: scribble_along(
+        path,
+        repetitions=repetitions,
+        line_subdivision=line_subdivision,
+        noise_scale=noise_scale,
+        noise_offset=noise_offset,
+    )
 
 
-def scribble_along(path: Path, repetitions: int, line_subdivision: SubdivisionFunction, noise_scale: float,
-                   noise_offset: float):
+def scribble_along(
+    path: Path,
+    repetitions: int,
+    line_subdivision: SubdivisionFunction,
+    noise_scale: float,
+    noise_offset: float,
+):
     """Creates scribble stitches along a path.
 
     Args:
@@ -57,13 +71,27 @@ def scribble_along(path: Path, repetitions: int, line_subdivision: SubdivisionFu
     """
     repetition_mode = "wrap" if path_is_circular(path) else "reflect"
     path_length = estimate_length(path.shape)
-    return scribble_between(*get_boundaries(path), repetitions=repetitions, line_subdivision=line_subdivision,
-                            length=path_length, noise_scale=noise_scale, noise_offset=noise_offset,
-                            repetition_mode=repetition_mode)
+    return scribble_between(
+        *get_boundaries(path),
+        repetitions=repetitions,
+        line_subdivision=line_subdivision,
+        length=path_length,
+        noise_scale=noise_scale,
+        noise_offset=noise_offset,
+        repetition_mode=repetition_mode,
+    )
 
 
-def scribble_between(boundary_left: CoordinateFunction, boundary_right: CoordinateFunction, repetitions: int, line_subdivision: SubdivisionFunction,
-                     length: float, noise_scale: float, noise_offset: float, repetition_mode: str):
+def scribble_between(
+    boundary_left: CoordinateFunction,
+    boundary_right: CoordinateFunction,
+    repetitions: int,
+    line_subdivision: SubdivisionFunction,
+    length: float,
+    noise_scale: float,
+    noise_offset: float,
+    repetition_mode: str,
+):
     """Creates scribble stitches between two boundaries.
 
     Args:
@@ -80,16 +108,23 @@ def scribble_between(boundary_left: CoordinateFunction, boundary_right: Coordina
         Coordinates representing the scribble stitches.
     """
     boundary_left = repeat(r=repetitions, function=boundary_left, mode=repetition_mode)
-    boundary_right = repeat(r=repetitions, function=boundary_right, mode=repetition_mode)
+    boundary_right = repeat(
+        r=repetitions, function=boundary_right, mode=repetition_mode
+    )
 
-    noise_function = shift(noise_offset, repeat(noise_scale * repetitions * length / 100, noise()))
+    noise_function = shift(
+        noise_offset, repeat(noise_scale * repetitions * length / 100, noise())
+    )
     mix_factor = fix_distribution(noise_function, target_low=0)
     mixed = mix(boundary_left, boundary_right, factor=mix_factor)
 
     subdivision_length = 1 / repetitions
 
     line_subdivision = remove_end(line_subdivision)
-    t = [line_subdivision(length) * subdivision_length + i * subdivision_length for i in range(repetitions)]
+    t = [
+        line_subdivision(length) * subdivision_length + i * subdivision_length
+        for i in range(repetitions)
+    ]
     t.append([1])
 
     t = np.concatenate(t)

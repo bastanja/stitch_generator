@@ -14,10 +14,10 @@ def add_start_end_stitches(stitches: Array2D, repeated_segments: int = 3) -> Arr
     Returns:
         The stitches with additional stitches at the start and end
     """
-    start_stitches = stitches[0:repeated_segments + 1]
+    start_stitches = stitches[0 : repeated_segments + 1]
     start = repeat_stitches(start_stitches, times=2)
 
-    end_stitches = stitches[-1:-(repeated_segments + 2):-1]
+    end_stitches = stitches[-1 : -(repeated_segments + 2) : -1]
     end = repeat_stitches(end_stitches, times=2)
 
     return np.concatenate((start[:-1], stitches, end[1:]))

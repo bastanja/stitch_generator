@@ -11,10 +11,15 @@ from stitch_generator.functions.function_modifiers import repeat, mix, inverse
 from stitch_generator.functions.functions_1d import constant
 from stitch_generator.helpers.path_operations import get_boundaries, path_is_circular
 from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
-from stitch_generator.subdivision.subdivision_modifiers import remove_end, alternate_direction
+from stitch_generator.subdivision.subdivision_modifiers import (
+    remove_end,
+    alternate_direction,
+)
 
 
-def stripes(steps: Array1D, line_subdivision: SubdivisionFunction, step_ratio: float = 0.1) -> StitchEffect:
+def stripes(
+    steps: Array1D, line_subdivision: SubdivisionFunction, step_ratio: float = 0.1
+) -> StitchEffect:
     """Creates a stripes stitch effect.
 
     Parallel lines along the path with intermediate stitches based on a subdivision function. The
@@ -39,10 +44,14 @@ def stripes(steps: Array1D, line_subdivision: SubdivisionFunction, step_ratio: f
         stitches = effect(path)
         ```
     """
-    return lambda path: stripes_along(path, steps=steps, line_subdivision=line_subdivision, step_ratio=step_ratio)
+    return lambda path: stripes_along(
+        path, steps=steps, line_subdivision=line_subdivision, step_ratio=step_ratio
+    )
 
 
-def simple_stripes(repetitions: int, line_subdivision: SubdivisionFunction, step_ratio: float = 0.1) -> StitchEffect:
+def simple_stripes(
+    repetitions: int, line_subdivision: SubdivisionFunction, step_ratio: float = 0.1
+) -> StitchEffect:
     """Creates a simple stripes stitch effect with regular spacing.
 
     Args:
@@ -54,11 +63,17 @@ def simple_stripes(repetitions: int, line_subdivision: SubdivisionFunction, step
     Returns:
         A StitchEffect function that takes a Path and returns Coordinates.
     """
-    return lambda path: stripes_along(path, steps=subdivide_by_number(repetitions), line_subdivision=line_subdivision,
-                                      step_ratio=step_ratio)
+    return lambda path: stripes_along(
+        path,
+        steps=subdivide_by_number(repetitions),
+        line_subdivision=line_subdivision,
+        step_ratio=step_ratio,
+    )
 
 
-def stripes_along(path: Path, steps: Array1D, line_subdivision: SubdivisionFunction, step_ratio: float):
+def stripes_along(
+    path: Path, steps: Array1D, line_subdivision: SubdivisionFunction, step_ratio: float
+):
     """Creates stripes stitches along a path.
 
     Args:
@@ -72,12 +87,25 @@ def stripes_along(path: Path, steps: Array1D, line_subdivision: SubdivisionFunct
         Coordinates representing the stripes stitches.
     """
     path_length = estimate_length(path.shape)
-    return stripes_between(*get_boundaries(path), steps=steps, line_subdivision=line_subdivision, length=path_length,
-                           step_ratio=step_ratio, circular=path_is_circular(path))
+    return stripes_between(
+        *get_boundaries(path),
+        steps=steps,
+        line_subdivision=line_subdivision,
+        length=path_length,
+        step_ratio=step_ratio,
+        circular=path_is_circular(path),
+    )
 
 
-def stripes_between(boundary_left, boundary_right, steps: Array1D, line_subdivision: SubdivisionFunction, length: float,
-                    step_ratio: float, circular: bool):
+def stripes_between(
+    boundary_left,
+    boundary_right,
+    steps: Array1D,
+    line_subdivision: SubdivisionFunction,
+    length: float,
+    step_ratio: float,
+    circular: bool,
+):
     """Creates stripes stitches between two boundaries.
 
     Args:
@@ -96,7 +124,9 @@ def stripes_between(boundary_left, boundary_right, steps: Array1D, line_subdivis
     repetition_mode = "wrap" if circular else "reflect"
     repetitions = len(steps)
     boundary_left = repeat(r=repetitions, function=boundary_left, mode=repetition_mode)
-    boundary_right = repeat(r=repetitions, function=boundary_right, mode=repetition_mode)
+    boundary_right = repeat(
+        r=repetitions, function=boundary_right, mode=repetition_mode
+    )
 
     mix_factor_stairs = stairs(steps, step_ratio)
     mixed = mix(boundary_left, boundary_right, factor=mix_factor_stairs)
@@ -105,14 +135,19 @@ def stripes_between(boundary_left, boundary_right, steps: Array1D, line_subdivis
 
     line_subdivision = remove_end(line_subdivision)
 
-    t = [line_subdivision(length) * subdivision_length + i * subdivision_length for i in range(repetitions)]
+    t = [
+        line_subdivision(length) * subdivision_length + i * subdivision_length
+        for i in range(repetitions)
+    ]
     t.append([1])
     t = np.concatenate(t)
 
     return mixed(t)
 
 
-def parallel_stripes(steps: Array1D, line_subdivision: SubdivisionFunction) -> StitchEffect:
+def parallel_stripes(
+    steps: Array1D, line_subdivision: SubdivisionFunction
+) -> StitchEffect:
     """Creates a parallel stripes stitch effect.
 
     Creates parallel lines between the boundaries, alternating direction.
@@ -137,7 +172,9 @@ def parallel_stripes(steps: Array1D, line_subdivision: SubdivisionFunction) -> S
     return lambda path: parallel_stripes_along(path, steps, line_subdivision)
 
 
-def parallel_stripes_along(path: Path, steps: Array1D, line_subdivision: SubdivisionFunction):
+def parallel_stripes_along(
+    path: Path, steps: Array1D, line_subdivision: SubdivisionFunction
+):
     """Creates parallel stripes stitches along a path.
 
     Args:
@@ -149,12 +186,21 @@ def parallel_stripes_along(path: Path, steps: Array1D, line_subdivision: Subdivi
         Coordinates representing the parallel stripes stitches.
     """
     path_length = estimate_length(path.shape)
-    return parallel_stripes_between(*get_boundaries(path), length=path_length, steps=steps,
-                                    line_subdivision=line_subdivision)
+    return parallel_stripes_between(
+        *get_boundaries(path),
+        length=path_length,
+        steps=steps,
+        line_subdivision=line_subdivision,
+    )
 
 
-def parallel_stripes_between(boundary_left, boundary_right, length: float, steps: Array1D,
-                             line_subdivision: SubdivisionFunction):
+def parallel_stripes_between(
+    boundary_left,
+    boundary_right,
+    length: float,
+    steps: Array1D,
+    line_subdivision: SubdivisionFunction,
+):
     """Creates parallel stripes stitches between two boundaries.
 
     Args:

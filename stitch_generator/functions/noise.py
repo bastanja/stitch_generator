@@ -5,7 +5,11 @@ from scipy.interpolate import interp1d
 from stitch_generator.framework.types import Function1D, Function2D, Array2D
 from stitch_generator.functions.ensure_shape import ensure_2d_shape
 from stitch_generator.functions.function_modifiers import shift, repeat, compose
-from stitch_generator.functions.functions_1d import linear_interpolation, function_1d, smootherstep
+from stitch_generator.functions.functions_1d import (
+    linear_interpolation,
+    function_1d,
+    smootherstep,
+)
 from stitch_generator.functions.functions_2d import function_2d
 
 
@@ -31,16 +35,25 @@ def noise(octaves: int = 4, angle=20, scale=1) -> Function1D:
     origin = (0, 0)
 
     # linear interpolation between the origin and the end point
-    to_texture_space = interp1d(np.array([0, 1]), np.vstack((origin, end_point)), fill_value="extrapolate", axis=0)
+    to_texture_space = interp1d(
+        np.array([0, 1]),
+        np.vstack((origin, end_point)),
+        fill_value="extrapolate",
+        axis=0,
+    )
 
     def f(v):
         request_positions = ensure_2d_shape(to_texture_space(v))
-        return _noise_2d_texture_space(positions_texture_space=request_positions, octaves=octaves)
+        return _noise_2d_texture_space(
+            positions_texture_space=request_positions, octaves=octaves
+        )
 
     return function_1d(f)
 
 
-def noise_vectors(x_offset=0, y_offset=0, octaves: int = 4, angle=30, scale=1) -> Function2D:
+def noise_vectors(
+    x_offset=0, y_offset=0, octaves: int = 4, angle=30, scale=1
+) -> Function2D:
     """
     Returns a 2D noise function (input 1D, output 2D)
 
@@ -85,13 +98,19 @@ def noise_field(left, top, right, bottom, octaves: int):
         Returns:
             A float value for each request position
         """
-        request_positions = _scale_request_positions(positions, left, top, right, bottom)
-        return _noise_2d_texture_space(positions_texture_space=request_positions, octaves=octaves)
+        request_positions = _scale_request_positions(
+            positions, left, top, right, bottom
+        )
+        return _noise_2d_texture_space(
+            positions_texture_space=request_positions, octaves=octaves
+        )
 
     return f
 
 
-def fix_distribution(noise_function: Function1D, noise_range: float = 0.35, target_low=-1, target_high=1):
+def fix_distribution(
+    noise_function: Function1D, noise_range: float = 0.35, target_low=-1, target_high=1
+):
     """
     Spreads the values of the noise function so that they are closer to a uniform distribution
 
@@ -114,26 +133,32 @@ def fix_distribution(noise_function: Function1D, noise_range: float = 0.35, targ
     """
 
     # map range where most values are to [0,1]
-    map_range = linear_interpolation(0, 1, source_low=-noise_range, source_high=noise_range)
+    map_range = linear_interpolation(
+        0, 1, source_low=-noise_range, source_high=noise_range
+    )
 
     # create a function that returns:
     # 0 for values lower than 0,
     # 1 for values above 1 and
     # smootherstep(t) for all values t between 0 and 1
-    spread_distribution = repeat(r=1, function=smootherstep, mode='nearest')
+    spread_distribution = repeat(r=1, function=smootherstep, mode="nearest")
 
     # combine the range mapping and the spreading of the distribution
     distribution_modification = compose(map_range, spread_distribution)
 
     # map to the desired output range
-    distribution_interpolation = compose(distribution_modification, linear_interpolation(target_low, target_high))
+    distribution_interpolation = compose(
+        distribution_modification, linear_interpolation(target_low, target_high)
+    )
 
     # combine the original noise function with the distribution modification
     return compose(noise_function, distribution_interpolation)
 
 
 def _noise_2d_texture_space(positions_texture_space: Array2D, octaves: int):
-    return np.array([pnoise2(x=p[0], y=p[1], octaves=octaves) for p in positions_texture_space])
+    return np.array(
+        [pnoise2(x=p[0], y=p[1], octaves=octaves) for p in positions_texture_space]
+    )
 
 
 def _scale_request_positions(uv, left, top, right, bottom):

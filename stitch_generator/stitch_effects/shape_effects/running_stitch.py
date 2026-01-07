@@ -6,11 +6,14 @@ from stitch_generator.subdivision.subdivision_modifiers import remove_end
 
 
 def running_stitch(stitch_length: float, include_endpoint: bool = True) -> StitchEffect:
-    return lambda path: running_stitch_on_shape(shape=path.shape, stitch_length=stitch_length,
-                                                include_endpoint=include_endpoint)
+    return lambda path: running_stitch_on_shape(
+        shape=path.shape, stitch_length=stitch_length, include_endpoint=include_endpoint
+    )
 
 
-def running_stitch_on_shape(shape: Function2D, stitch_length: float, include_endpoint: bool = True):
+def running_stitch_on_shape(
+    shape: Function2D, stitch_length: float, include_endpoint: bool = True
+):
     total_length = estimate_length(shape)
     subdivision = subdivision_by_length(segment_length=stitch_length)
     if not include_endpoint:

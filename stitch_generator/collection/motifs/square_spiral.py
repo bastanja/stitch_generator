@@ -20,7 +20,12 @@ def square_spiral(level: int, step_size: float) -> Array2D:
     """
 
     # step directions (north, east, south, west)
-    directions = (np.array((0, -1)), np.array((1, 0)), np.array((0, 1)), np.array((-1, 0)))
+    directions = (
+        np.array((0, -1)),
+        np.array((1, 0)),
+        np.array((0, 1)),
+        np.array((-1, 0)),
+    )
 
     # steps going inward
     direction_forward = itertools.cycle(directions)
@@ -28,7 +33,10 @@ def square_spiral(level: int, step_size: float) -> Array2D:
     points_forward = _make_steps(levels_forward, direction_forward)
 
     # steps going outward
-    direction_backward = (direction * flip for direction, flip in zip(direction_forward, itertools.cycle((-1, 1))))
+    direction_backward = (
+        direction * flip
+        for direction, flip in zip(direction_forward, itertools.cycle((-1, 1)))
+    )
     levels_backward = [i for i in range(1, level - 1)] + [level - 1]
     points_backward = _make_steps(levels_backward, direction_backward)
 

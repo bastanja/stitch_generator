@@ -24,10 +24,14 @@ def constant(c: float) -> Function1D:
     return lambda v: np.full_like(np.array(v), c, dtype=float)
 
 
-def linear_interpolation(target_low, target_high, source_low=0, source_high=1) -> Function1D:
+def linear_interpolation(
+    target_low, target_high, source_low=0, source_high=1
+) -> Function1D:
     if source_low == source_high:
         return constant(target_low)
-    return interp1d([source_low, source_high], [target_low, target_high], fill_value="extrapolate")
+    return interp1d(
+        [source_low, source_high], [target_low, target_high], fill_value="extrapolate"
+    )
 
 
 def cubic_interpolation(control_points) -> Function1D:
@@ -72,7 +76,9 @@ def smoothstep(v: Parameters) -> Array1D:
 
 
 def smootherstep(v: Parameters) -> Array1D:
-    return np.asarray(6 * np.asarray(v) ** 5 - 15 * np.asarray(v) ** 4 + 10 * np.asarray(v) ** 3)
+    return np.asarray(
+        6 * np.asarray(v) ** 5 - 15 * np.asarray(v) ** 4 + 10 * np.asarray(v) ** 3
+    )
 
 
 def circular_arc(v: Parameters) -> Array1D:

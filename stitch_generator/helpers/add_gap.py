@@ -6,7 +6,9 @@ from stitch_generator.functions.functions_1d import linear_interpolation
 from stitch_generator.helpers.path_operations import apply_modifier_to_path
 
 
-def add_gap_to_shape(function: CoordinateFunction, gap_offset_mm, gap_length_mm) -> CoordinateFunction:
+def add_gap_to_shape(
+    function: CoordinateFunction, gap_offset_mm, gap_length_mm
+) -> CoordinateFunction:
     """
     Takes a closed shape function and adds a gap to it. This can be used e.g. for turning openings
 
@@ -44,7 +46,7 @@ def _get_modifier(shape_length, gap_offset_mm, gap_length_mm):
 
     # create function to make the path circular
     def make_circular(f):
-        return repeat(r=1, function=f, mode='wrap')
+        return repeat(r=1, function=f, mode="wrap")
 
     # shift start by the gap length and the additional offset from parameters
     def apply_shift(f):

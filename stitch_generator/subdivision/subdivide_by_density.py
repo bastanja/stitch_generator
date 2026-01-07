@@ -7,17 +7,26 @@ from stitch_generator.subdivision.subdivide_by_length import subdivide_by_length
 
 EPSILON = 1.0e-10
 
-def subdivide_by_density(total_length: float, segment_length: float, density_distribution: Function1D) -> Array1D:
+
+def subdivide_by_density(
+    total_length: float, segment_length: float, density_distribution: Function1D
+) -> Array1D:
     density_function, fill_ratio = _inverse_cdf(density_distribution)
 
-    values = subdivide_by_length(total_length=total_length * fill_ratio, segment_length=segment_length)
+    values = subdivide_by_length(
+        total_length=total_length * fill_ratio, segment_length=segment_length
+    )
     return density_function(values)
 
 
-def subdivision_by_density(segment_length: float, density_distribution: Function1D) -> SubdivisionFunction:
+def subdivision_by_density(
+    segment_length: float, density_distribution: Function1D
+) -> SubdivisionFunction:
     def f(total_length: float):
         return subdivide_by_density(
-            total_length=total_length, segment_length=segment_length, density_distribution=density_distribution
+            total_length=total_length,
+            segment_length=segment_length,
+            density_distribution=density_distribution,
         )
 
     return f
@@ -44,7 +53,9 @@ def _inverse_cdf(f, num_approximation_samples: int = 200):
 
     y_values[y_values < EPSILON] = EPSILON
     y_values = np.cumsum(y_values)
-    area_covered = y_values[-1]  # remember the last value for calculation of the covered area
+    area_covered = y_values[
+        -1
+    ]  # remember the last value for calculation of the covered area
 
     # Divide by the highest value to map all y_values to [epsilon, 1] again
     y_values /= y_values[-1]

@@ -55,9 +55,7 @@ def validate_finite_array(
     """
     values_array = np.asarray(values)
     if np.any(np.isnan(values_array)) or np.any(np.isinf(values_array)):
-        raise InvalidParameterError(
-            f"{param_name} cannot contain NaN or Inf values"
-        )
+        raise InvalidParameterError(f"{param_name} cannot contain NaN or Inf values")
 
 
 def validate_range(
@@ -156,9 +154,7 @@ def validate_non_negative(
             )
     else:
         if value <= 0:
-            raise InvalidParameterError(
-                f"{param_name} must be positive, got {value}"
-            )
+            raise InvalidParameterError(f"{param_name} must be positive, got {value}")
 
 
 def validate_array_length(
@@ -258,9 +254,7 @@ def validate_sorted(
             )
 
 
-def validate_unit_range(
-    value: float, param_name: str = "parameter"
-) -> None:
+def validate_unit_range(value: float, param_name: str = "parameter") -> None:
     """Validates that a value is in the unit range [0, 1].
 
     Convenience function for validate_range(value, 0.0, 1.0, param_name).

@@ -36,7 +36,7 @@ def repeat_stitches(stitches: Array2D, times: int, reflect: bool = True) -> Arra
         stitch_coordinates = stitch_coordinates[:, 0:-1, :]
 
     # turn grid columns and rows into a single row
-    result = stitch_coordinates.reshape((-1, 1, 2), order='C')
+    result = stitch_coordinates.reshape((-1, 1, 2), order="C")
     result = result[:, 0]
     if reflect:
         result = np.vstack((result, last))

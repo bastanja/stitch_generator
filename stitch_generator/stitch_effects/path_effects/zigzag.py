@@ -2,7 +2,11 @@ import numpy as np
 
 from stitch_generator.framework.path import Path
 from stitch_generator.framework.stitch_effect import StitchEffect
-from stitch_generator.framework.types import Function2D, SubdivisionFunction, Coordinates
+from stitch_generator.framework.types import (
+    Function2D,
+    SubdivisionFunction,
+    Coordinates,
+)
 from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.helpers.path_operations import get_boundaries
 from stitch_generator.subdivision.subdivide_by_length import regular
@@ -62,11 +66,17 @@ def zigzag_along(path: Path, spacing_function: SubdivisionFunction) -> Coordinat
         Coordinates representing the zigzag stitches.
     """
     path_length = estimate_length(path.shape)
-    return zigzag_between(*get_boundaries(path), spacing_function=spacing_function, length=path_length)
+    return zigzag_between(
+        *get_boundaries(path), spacing_function=spacing_function, length=path_length
+    )
 
 
-def zigzag_between(boundary_left: Function2D, boundary_right: Function2D, spacing_function: SubdivisionFunction,
-                   length: float) -> Coordinates:
+def zigzag_between(
+    boundary_left: Function2D,
+    boundary_right: Function2D,
+    spacing_function: SubdivisionFunction,
+    length: float,
+) -> Coordinates:
     """Creates zigzag stitches between two boundaries.
 
     Args:
@@ -113,10 +123,14 @@ def double_zigzag(spacing_function: SubdivisionFunction) -> StitchEffect:
         stitches which are not possible to use with an embroidery machine. Take care to
         keep the paths narrow enough for zigzag stitches.
     """
-    return lambda path: double_zigzag_along(path=path, spacing_function=spacing_function)
+    return lambda path: double_zigzag_along(
+        path=path, spacing_function=spacing_function
+    )
 
 
-def double_zigzag_along(path: Path, spacing_function: SubdivisionFunction) -> Coordinates:
+def double_zigzag_along(
+    path: Path, spacing_function: SubdivisionFunction
+) -> Coordinates:
     """Creates double zigzag stitches along a path.
 
     Args:
@@ -128,11 +142,17 @@ def double_zigzag_along(path: Path, spacing_function: SubdivisionFunction) -> Co
         Coordinates representing the double zigzag stitches.
     """
     path_length = estimate_length(path.shape)
-    return double_zigzag_between(*get_boundaries(path), spacing_function=spacing_function, length=path_length)
+    return double_zigzag_between(
+        *get_boundaries(path), spacing_function=spacing_function, length=path_length
+    )
 
 
-def double_zigzag_between(boundary_left: Function2D, boundary_right: Function2D, spacing_function: SubdivisionFunction,
-                          length: float) -> Coordinates:
+def double_zigzag_between(
+    boundary_left: Function2D,
+    boundary_right: Function2D,
+    spacing_function: SubdivisionFunction,
+    length: float,
+) -> Coordinates:
     """Creates double zigzag stitches between two boundaries.
 
     Args:
@@ -145,8 +165,12 @@ def double_zigzag_between(boundary_left: Function2D, boundary_right: Function2D,
     Returns:
         Coordinates representing the double zigzag stitches.
     """
-    points_forward = zigzag_between(boundary_left, boundary_right, spacing_function, length)
-    points_backward = zigzag_between(boundary_right, boundary_left, spacing_function, length)
+    points_forward = zigzag_between(
+        boundary_left, boundary_right, spacing_function, length
+    )
+    points_backward = zigzag_between(
+        boundary_right, boundary_left, spacing_function, length
+    )
 
     if np.allclose(points_forward[-1], points_backward[-1]):
         points_backward = points_backward[:-1]
@@ -154,4 +178,6 @@ def double_zigzag_between(boundary_left: Function2D, boundary_right: Function2D,
     if np.allclose(points_forward[0], points_backward[0]):
         points_backward = points_backward[1:]
 
-    return np.concatenate((points_forward, np.flipud(points_backward), [points_forward[0]]))
+    return np.concatenate(
+        (points_forward, np.flipud(points_backward), [points_forward[0]])
+    )

@@ -8,7 +8,9 @@ from stitch_generator.functions.ensure_shape import ensure_2d_shape
 from stitch_generator.functions.functions_2d import constant_direction
 
 
-def line(origin: Sequence[float] = (0, 0), to: Sequence[float] = (100, 0)) -> Tuple[CoordinateFunction, CoordinateFunction]:
+def line(
+    origin: Sequence[float] = (0, 0), to: Sequence[float] = (100, 0)
+) -> Tuple[CoordinateFunction, CoordinateFunction]:
     """Creates a linear path.
 
     Creates a straight line from the origin point to the destination point.
@@ -37,7 +39,9 @@ def line(origin: Sequence[float] = (0, 0), to: Sequence[float] = (100, 0)) -> Tu
     return shape, direction
 
 
-def line_shape(origin: Sequence[float] = (0, 0), to: Sequence[float] = (100, 0)) -> CoordinateFunction:
+def line_shape(
+    origin: Sequence[float] = (0, 0), to: Sequence[float] = (100, 0)
+) -> CoordinateFunction:
     """Creates a function representing a line shape.
 
     Args:
@@ -48,7 +52,9 @@ def line_shape(origin: Sequence[float] = (0, 0), to: Sequence[float] = (100, 0))
         A function that returns points along the line. Parameter 0 returns
         the origin, parameter 1 returns the destination.
     """
-    interpolation = interp1d(np.array([0, 1]), np.vstack((origin, to)), fill_value="extrapolate", axis=0)
+    interpolation = interp1d(
+        np.array([0, 1]), np.vstack((origin, to)), fill_value="extrapolate", axis=0
+    )
 
     def f(v):
         result = interpolation(v)
@@ -57,7 +63,9 @@ def line_shape(origin: Sequence[float] = (0, 0), to: Sequence[float] = (100, 0))
     return f
 
 
-def line_direction(origin: Sequence[float] = (0, 0), to: Sequence[float] = (100, 0)) -> CoordinateFunction:
+def line_direction(
+    origin: Sequence[float] = (0, 0), to: Sequence[float] = (100, 0)
+) -> CoordinateFunction:
     """Creates a function representing line direction.
 
     Args:

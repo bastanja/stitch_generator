@@ -153,8 +153,6 @@ def scale(s: float, function):
     return lambda v: function(v) * s
 
 
-
-
 def shift(amount: float, function):
     """Shifts a function's input domain by a constant amount.
 
@@ -350,8 +348,12 @@ def mix(f1, f2, factor: Function1D):
         >>> mixed = mix(f1, f2, factor)
         >>> mixed(0.5)  # Returns 0.75 (0.5 * 0.5 + 1.0 * 0.5)
     """
-    one_minus_factor = subtract_functions(lambda v: np.ones_like(np.array(v), dtype=float), factor)
-    return add_functions(multiply_functions(f1, one_minus_factor), multiply_functions(f2, factor))
+    one_minus_factor = subtract_functions(
+        lambda v: np.ones_like(np.array(v), dtype=float), factor
+    )
+    return add_functions(
+        multiply_functions(f1, one_minus_factor), multiply_functions(f2, factor)
+    )
 
 
 def _binary_operation(operation: Callable, f1, f2):
@@ -480,4 +482,6 @@ def split(function, offsets: Union[List[float], Array1D]):
 
     combined = [0] + offsets + [1]
 
-    return [repeat(o2 - o1, shift(o1, function)) for o1, o2 in zip(combined, combined[1:])]
+    return [
+        repeat(o2 - o1, shift(o1, function)) for o1, o2 in zip(combined, combined[1:])
+    ]

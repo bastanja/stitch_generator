@@ -5,6 +5,7 @@ class Path:
     """
     A Path represents a parametric path with shape, direction, width, and stroke alignment.
     """
+
     def __init__(
         self,
         shape: CoordinateFunction,

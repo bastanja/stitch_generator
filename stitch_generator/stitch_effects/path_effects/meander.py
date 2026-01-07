@@ -2,7 +2,11 @@ import numpy as np
 
 from stitch_generator.framework.path import Path
 from stitch_generator.framework.stitch_effect import StitchEffect
-from stitch_generator.framework.types import Coordinates, SubdivisionFunction, CoordinateFunction
+from stitch_generator.framework.types import (
+    Coordinates,
+    SubdivisionFunction,
+    CoordinateFunction,
+)
 from stitch_generator.functions.ensure_shape import ensure_2d_shape
 from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.helpers.path_operations import get_boundaries
@@ -10,8 +14,11 @@ from stitch_generator.helpers.subdivide_line import subdivide_line
 from stitch_generator.subdivision.subdivide_by_length import regular
 
 
-def meander(spacing_function: SubdivisionFunction, line_subdivision: SubdivisionFunction,
-            join_ends: bool = False) -> StitchEffect:
+def meander(
+    spacing_function: SubdivisionFunction,
+    line_subdivision: SubdivisionFunction,
+    join_ends: bool = False,
+) -> StitchEffect:
     """Creates a meander stitch effect.
 
     A line that meanders back and forth between the left and right boundary of the Path.
@@ -34,8 +41,12 @@ def meander(spacing_function: SubdivisionFunction, line_subdivision: Subdivision
         stitches = effect(path)
         ```
     """
-    return lambda path: meander_along(path=path, spacing_function=spacing_function, line_subdivision=line_subdivision,
-                                      join_ends=join_ends)
+    return lambda path: meander_along(
+        path=path,
+        spacing_function=spacing_function,
+        line_subdivision=line_subdivision,
+        join_ends=join_ends,
+    )
 
 
 def simple_meander(spacing: float, stitch_length: float) -> StitchEffect:
@@ -48,13 +59,20 @@ def simple_meander(spacing: float, stitch_length: float) -> StitchEffect:
     Returns:
         A StitchEffect function that takes a Path and returns Coordinates.
     """
-    return lambda path: meander_along(path=path, spacing_function=regular(spacing),
-                                      line_subdivision=regular(stitch_length), join_ends=False)
+    return lambda path: meander_along(
+        path=path,
+        spacing_function=regular(spacing),
+        line_subdivision=regular(stitch_length),
+        join_ends=False,
+    )
 
 
-
-def meander_along(path: Path, spacing_function: SubdivisionFunction, line_subdivision: SubdivisionFunction,
-                  join_ends: bool = False) -> Coordinates:
+def meander_along(
+    path: Path,
+    spacing_function: SubdivisionFunction,
+    line_subdivision: SubdivisionFunction,
+    join_ends: bool = False,
+) -> Coordinates:
     """Creates meander stitches along a path.
 
     Args:
@@ -68,12 +86,23 @@ def meander_along(path: Path, spacing_function: SubdivisionFunction, line_subdiv
         Coordinates representing the meander stitches.
     """
     path_length = estimate_length(path.shape)
-    return meander_between(*get_boundaries(path), spacing_function=spacing_function, line_subdivision=line_subdivision,
-                           join_ends=join_ends, length=path_length)
+    return meander_between(
+        *get_boundaries(path),
+        spacing_function=spacing_function,
+        line_subdivision=line_subdivision,
+        join_ends=join_ends,
+        length=path_length,
+    )
 
 
-def meander_between(boundary_left, boundary_right, spacing_function: SubdivisionFunction,
-                    line_subdivision: SubdivisionFunction, length: float, join_ends: bool = False) -> Coordinates:
+def meander_between(
+    boundary_left,
+    boundary_right,
+    spacing_function: SubdivisionFunction,
+    line_subdivision: SubdivisionFunction,
+    length: float,
+    join_ends: bool = False,
+) -> Coordinates:
     """Creates meander stitches between two boundaries.
     Args:
         boundary_left: Function representing the left boundary of the path.
@@ -86,9 +115,14 @@ def meander_between(boundary_left, boundary_right, spacing_function: Subdivision
     Returns:
         Coordinates representing the meander stitches.
     """
-    points = _meander(boundary_left, boundary_right, spacing_function=spacing_function, length=length)
+    points = _meander(
+        boundary_left, boundary_right, spacing_function=spacing_function, length=length
+    )
 
-    parts = [subdivide_line(points[i - 1], points[i], line_subdivision) for i in range(1, len(points), 2)]
+    parts = [
+        subdivide_line(points[i - 1], points[i], line_subdivision)
+        for i in range(1, len(points), 2)
+    ]
 
     return _connect_parts(parts, join_ends)
 
@@ -123,10 +157,17 @@ def _connect_parts(parts, join_ends: bool):
         last_point = part[-1]
         return part[:-1]
 
-    return np.concatenate([modify_part(p) for p in parts] + [ensure_2d_shape(last_point)])
+    return np.concatenate(
+        [modify_part(p) for p in parts] + [ensure_2d_shape(last_point)]
+    )
 
 
-def _meander(boundary_left: CoordinateFunction, boundary_right: CoordinateFunction, spacing_function: SubdivisionFunction, length: float) -> Coordinates:
+def _meander(
+    boundary_left: CoordinateFunction,
+    boundary_right: CoordinateFunction,
+    spacing_function: SubdivisionFunction,
+    length: float,
+) -> Coordinates:
     """Generates the basic meander pattern coordinates.
 
     Args:

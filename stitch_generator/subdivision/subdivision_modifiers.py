@@ -23,7 +23,7 @@ def alternate_direction(subdivision_function: SubdivisionFunction):
 
 
 def ensure_value_at(subdivision_function: SubdivisionFunction, position: float):
-    """ Moves the value which is nearest to position exactly to position """
+    """Moves the value which is nearest to position exactly to position"""
 
     def modify(values):
         if len(values) == 0:
@@ -37,7 +37,7 @@ def ensure_value_at(subdivision_function: SubdivisionFunction, position: float):
 
 
 def add_start(subdivision_function: SubdivisionFunction) -> SubdivisionFunction:
-    """ Adds a value at the start if it is missing """
+    """Adds a value at the start if it is missing"""
 
     def modify(values):
         if len(values) > 0:
@@ -51,7 +51,7 @@ def add_start(subdivision_function: SubdivisionFunction) -> SubdivisionFunction:
 
 
 def add_end(subdivision_function: SubdivisionFunction) -> SubdivisionFunction:
-    """ Adds a value at the end if it is missing """
+    """Adds a value at the end if it is missing"""
 
     def modify(values):
         if len(values) > 0:
@@ -65,7 +65,7 @@ def add_end(subdivision_function: SubdivisionFunction) -> SubdivisionFunction:
 
 
 def remove_start(subdivision_function: SubdivisionFunction) -> SubdivisionFunction:
-    """ Removes the first value from the subdivision function if it is close to the start """
+    """Removes the first value from the subdivision function if it is close to the start"""
 
     def modify(values):
         if len(values) > 0 and np.isclose(values[0], 0):
@@ -76,7 +76,7 @@ def remove_start(subdivision_function: SubdivisionFunction) -> SubdivisionFuncti
 
 
 def remove_end(subdivision_function: SubdivisionFunction) -> SubdivisionFunction:
-    """ Removes the last value from the subdivision function if it is close to the end """
+    """Removes the last value from the subdivision function if it is close to the end"""
 
     def modify(values):
         if len(values) > 0 and np.isclose(values[-1], 1):
@@ -87,7 +87,7 @@ def remove_end(subdivision_function: SubdivisionFunction) -> SubdivisionFunction
 
 
 def free_start(start_length: float, subdivision_function: SubdivisionFunction):
-    """ Removes the values which are closer to the start than start_length """
+    """Removes the values which are closer to the start than start_length"""
 
     def f(total_length: float):
         relative_length = (start_length / total_length) if (total_length > 0) else 0
@@ -99,7 +99,7 @@ def free_start(start_length: float, subdivision_function: SubdivisionFunction):
 
 
 def free_end(end_length: float, subdivision_function: SubdivisionFunction):
-    """ Removes the values which are closer to the end than end_length """
+    """Removes the values which are closer to the end than end_length"""
 
     def f(total_length: float):
         relative_length = (end_length / total_length) if (total_length > 0) else 0
@@ -123,6 +123,8 @@ def cycle_alignments(partial_subdivision, alignments):
     alignment_gen = itertools.cycle(alignments)
 
     def f(total_length: float):
-        return partial_subdivision(alignment=next(alignment_gen), total_length=total_length)
+        return partial_subdivision(
+            alignment=next(alignment_gen), total_length=total_length
+        )
 
     return f

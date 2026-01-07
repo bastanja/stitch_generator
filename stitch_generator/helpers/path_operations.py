@@ -23,6 +23,7 @@ from stitch_generator.functions.function_modifiers import (
 )
 from stitch_generator.functions.functions_1d import constant
 
+
 def default_width_and_alignment_path(shape: Function2D, direction: Function2D) -> Path:
     return Path(shape, direction, constant(1), constant(0.5))
 
@@ -42,7 +43,9 @@ def split_path(path: Path, offsets) -> List[Path]:
     directions = split(path.direction, offsets)
     widths = split(path.width, offsets)
     stroke_alignments = split(path.stroke_alignment, offsets)
-    return [Path(*params) for params in zip(shapes, directions, widths, stroke_alignments)]
+    return [
+        Path(*params) for params in zip(shapes, directions, widths, stroke_alignments)
+    ]
 
 
 def inverse_path(path: Path) -> Path:
@@ -78,7 +81,9 @@ def apply_modifier_to_path(path: Path, function_modifier) -> Path:
 
 
 def path_from_boundaries(
-    left: CoordinateFunction, right: CoordinateFunction, alignment: Function1D = constant(0.5)
+    left: CoordinateFunction,
+    right: CoordinateFunction,
+    alignment: Function1D = constant(0.5),
 ) -> Path:
     """Creates a Path from left and right boundary functions.
 
@@ -110,7 +115,9 @@ def path_from_boundaries(
     def direction(t):
         return divide_functions(subtract_functions(right, left), width)(t)
 
-    return Path(shape=position, direction=direction, width=width, stroke_alignment=alignment)
+    return Path(
+        shape=position, direction=direction, width=width, stroke_alignment=alignment
+    )
 
 
 def get_boundaries(path: Path) -> Tuple[CoordinateFunction, CoordinateFunction]:
@@ -129,10 +136,14 @@ def get_boundaries(path: Path) -> Tuple[CoordinateFunction, CoordinateFunction]:
         - right: A function defining the right boundary, returning coordinate arrays
     """
     positive_width = multiply_functions(path.width, path.stroke_alignment)
-    negative_width = multiply_functions(path.width, subtract_functions(constant(1), path.stroke_alignment))
+    negative_width = multiply_functions(
+        path.width, subtract_functions(constant(1), path.stroke_alignment)
+    )
 
     left = add_functions(path.shape, multiply_functions(path.direction, positive_width))
-    right = subtract_functions(path.shape, multiply_functions(path.direction, negative_width))
+    right = subtract_functions(
+        path.shape, multiply_functions(path.direction, negative_width)
+    )
 
     return left, right
 
@@ -161,7 +172,9 @@ def cut_start_end(path: Path, inset: float) -> Path:
     if path_length < 2 * inset:
         return path
     cut = inset / path_length
-    return apply_modifier_to_path(path, lambda function: repeat(1 - 2 * cut, (shift(cut, function))))
+    return apply_modifier_to_path(
+        path, lambda function: repeat(1 - 2 * cut, (shift(cut, function)))
+    )
 
 
 def inset_sides(path: Path, inset: float) -> Path:
@@ -170,20 +183,30 @@ def inset_sides(path: Path, inset: float) -> Path:
     middle_relative_to_old_width = multiply_functions(to_middle, path.width)
 
     # subtract inset * 2 from the width and make sure it stays positive
-    new_width = max_functions(subtract_functions(path.width, constant(inset * 2)), constant(0))
+    new_width = max_functions(
+        subtract_functions(path.width, constant(inset * 2)), constant(0)
+    )
 
     # calculate offset of the new center line relative to middle of the stroke
     offset = multiply_functions(to_middle, multiply_functions(constant(-1), new_width))
     new_pos_offset = add_functions(middle_relative_to_old_width, offset)
 
-    new_shape = add_functions(path.shape, multiply_functions(path.direction, new_pos_offset))
+    new_shape = add_functions(
+        path.shape, multiply_functions(path.direction, new_pos_offset)
+    )
 
-    return Path(shape=new_shape, direction=path.direction, width=new_width, stroke_alignment=path.stroke_alignment)
+    return Path(
+        shape=new_shape,
+        direction=path.direction,
+        width=new_width,
+        stroke_alignment=path.stroke_alignment,
+    )
 
 
 def parameterize_path_by_arc_length(path: Path, samples: int = 200):
     mapping = arc_length_mapping(path.shape, approximation_samples=samples)
     return apply_modifier_to_path(path, lambda function: compose(mapping, function))
+
 
 def path_is_circular(path: Path):
     shape_start_end_equal = np.all(np.isclose(path.shape(0), path.shape(1)))
