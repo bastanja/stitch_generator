@@ -11,7 +11,7 @@ from stitch_generator.framework.validation import (
     validate_no_duplicates,
     validate_unit_range_array,
 )
-from stitch_generator.functions.ensure_shape import ensure_1d_shape
+from .ensure_shape import ensure_1d_shape
 
 
 def reflect(function):

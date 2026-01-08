@@ -1,12 +1,12 @@
-from stitch_generator.collection.subdivision.subdivision_with_varying_offset import (
+from .subdivision_with_varying_offset import (
     subdivision_with_triangle_offset,
     subdivision_with_arc_offset,
     subdivision_with_wave_offset,
 )
-from stitch_generator.collection.subdivision.subdivison_with_varying_alignment import (
+from .subdivison_with_varying_alignment import (
     subdivision_with_triangle_alignment,
 )
-from stitch_generator.collection.subdivision.tatami import tatami_3_1, tatami_4_2
+from .tatami import tatami_3_1, tatami_4_2
 from stitch_generator.subdivision.subdivision_modifiers import (
     free_start,
     free_end,

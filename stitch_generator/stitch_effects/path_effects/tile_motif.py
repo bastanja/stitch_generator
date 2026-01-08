@@ -4,7 +4,7 @@ from stitch_generator.framework.path import Path
 from stitch_generator.framework.stitch_effect import StitchEffect
 from stitch_generator.framework.types import Array2D, Coordinates
 from stitch_generator.functions.estimate_length import estimate_length
-from stitch_generator.stitch_effects.utilities.motif_to_path import motif_to_path
+from ..utilities.motif_to_path import motif_to_path
 from stitch_generator.stitch_operations.tile import tile_x
 from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
 

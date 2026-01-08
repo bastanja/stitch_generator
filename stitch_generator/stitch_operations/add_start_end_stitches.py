@@ -1,7 +1,7 @@
 import numpy as np
 
 from stitch_generator.framework.types import Array2D
-from stitch_generator.stitch_operations.repeat_stitches import repeat_stitches
+from .repeat_stitches import repeat_stitches
 
 
 def add_start_end_stitches(stitches: Array2D, repeated_segments: int = 3) -> Array2D:

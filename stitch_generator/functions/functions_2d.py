@@ -1,8 +1,8 @@
 import math
 import numpy as np
 
-from stitch_generator.functions.ensure_shape import ensure_1d_shape
-from stitch_generator.functions.functions_1d import constant
+from .ensure_shape import ensure_1d_shape
+from .functions_1d import constant
 from stitch_generator.framework.types import Function2D, Function1D
 
 

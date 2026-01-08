@@ -6,8 +6,8 @@ from stitch_generator.functions.estimate_length import estimate_length
 from stitch_generator.functions.function_modifiers import mix
 from stitch_generator.functions.functions_1d import constant, linear_interpolation
 from stitch_generator.subdivision.subdivide_by_length import subdivide_by_length
-from stitch_generator.stitch_effects.utilities.motif_to_path import motif_to_path
-from stitch_generator.stitch_effects.utilities.range_tree import (
+from ..utilities.motif_to_path import motif_to_path
+from ..utilities.range_tree import (
     make_range_tree,
     tree_to_indices_and_offsets,
 )

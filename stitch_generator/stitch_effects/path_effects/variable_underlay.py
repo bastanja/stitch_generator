@@ -17,7 +17,7 @@ from stitch_generator.functions.function_modifiers import (
 )
 from stitch_generator.functions.functions_1d import constant, linear_interpolation
 from stitch_generator.helpers.path_operations import get_boundaries, split_path
-from stitch_generator.stitch_effects.utilities.range_tree import (
+from ..utilities.range_tree import (
     width_to_level,
     make_range_tree,
     tree_to_indices_and_offsets_basic,

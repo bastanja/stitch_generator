@@ -11,8 +11,8 @@ from stitch_generator.functions.function_modifiers import (
 )
 from stitch_generator.functions.function_sequence import function_sequence
 from stitch_generator.functions.functions_2d import constant_direction
-from stitch_generator.shapes.ellipse import ellipse_shape, ellipse_direction
-from stitch_generator.shapes.line import line
+from .ellipse import ellipse_shape, ellipse_direction
+from .line import line
 
 
 def simple_rounded_rect(

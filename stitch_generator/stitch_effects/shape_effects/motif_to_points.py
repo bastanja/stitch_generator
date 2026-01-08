@@ -5,9 +5,9 @@ import numpy as np
 from stitch_generator.framework.stitch_effect import StitchEffect
 from stitch_generator.framework.types import SubdivisionFunction, Array2D, Function2D
 from stitch_generator.functions.estimate_length import estimate_length
+from ..utilities import place_motif_at
 from stitch_generator.subdivision.subdivide_between import subdivide_between
 from stitch_generator.subdivision.subdivision_modifiers import remove_start, remove_end
-from stitch_generator.stitch_effects.utilities.place_motif import place_motif_at
 
 
 def motif_to_points(

@@ -1,7 +1,7 @@
 import numpy as np
 
 from stitch_generator.framework.types import SubdivisionFunction, Array1D
-from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
+from .subdivide_by_number import subdivide_by_number
 
 
 def subdivide_by_length(total_length: float, segment_length: float) -> Array1D:

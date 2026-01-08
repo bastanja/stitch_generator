@@ -1,6 +1,6 @@
 from functools import partial
 
-from stitch_generator.collection.functions.functions_1d import linear_0_1
+from ..functions.functions_1d import linear_0_1
 from stitch_generator.framework.types import Function1D, SubdivisionFunction
 from stitch_generator.functions.function_modifiers import repeat, compose
 from stitch_generator.functions.functions_1d import sinus, arc, linear_interpolation

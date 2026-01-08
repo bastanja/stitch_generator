@@ -9,7 +9,7 @@ from stitch_generator.framework.types import (
 )
 from stitch_generator.functions.ensure_shape import ensure_1d_shape
 from stitch_generator.functions.estimate_length import estimate_length
-from stitch_generator.stitch_effects.utilities.place_motif import place_motif_at
+from ..utilities import place_motif_at
 from stitch_generator.stitch_operations.rotate import rotate_by_degrees
 
 

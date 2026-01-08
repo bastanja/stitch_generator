@@ -1,9 +1,7 @@
 from functools import partial
 
-from stitch_generator.collection.functions.functions_1d import linear_0_1, positive_sine
-from stitch_generator.collection.subdivision.subdivision_with_varying_offset import (
-    to_range,
-)
+from ..functions.functions_1d import linear_0_1, positive_sine
+from .subdivision_with_varying_offset import to_range
 from stitch_generator.framework.types import Function1D, SubdivisionFunction
 from stitch_generator.functions.function_modifiers import repeat
 from stitch_generator.functions.functions_1d import arc

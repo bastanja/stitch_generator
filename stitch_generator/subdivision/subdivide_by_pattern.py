@@ -3,11 +3,11 @@ from typing import List
 
 import numpy as np
 
-from stitch_generator.subdivision.alignment_to_offset import alignment_to_offset
-from stitch_generator.subdivision.subdivide_by_fixed_length import (
+from .alignment_to_offset import alignment_to_offset
+from .subdivide_by_fixed_length import (
     subdivide_by_fixed_length,
 )
-from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
+from .subdivide_by_number import subdivide_by_number
 
 
 def subdivision_by_pattern(

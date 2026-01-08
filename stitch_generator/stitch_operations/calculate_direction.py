@@ -1,6 +1,6 @@
 import numpy as np
 
-from stitch_generator.stitch_operations.rotate import rotate_90
+from .rotate import rotate_90
 
 
 def calculate_direction(stitches, circular: bool = False):

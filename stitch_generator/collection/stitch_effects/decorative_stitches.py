@@ -1,6 +1,6 @@
 import numpy as np
 
-from stitch_generator.collection.motifs.collection import (
+from ..motifs.collection import (
     zigzag_rectangle,
     zigzag_motif,
     rhomb_motif,

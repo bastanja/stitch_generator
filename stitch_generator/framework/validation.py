@@ -8,7 +8,7 @@ from typing import Union
 
 import numpy as np
 
-from stitch_generator.framework.exceptions import (
+from .exceptions import (
     InsufficientDataError,
     InvalidParameterError,
 )

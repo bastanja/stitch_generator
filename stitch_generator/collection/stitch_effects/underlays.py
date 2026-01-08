@@ -1,6 +1,6 @@
 import numpy as np
 
-from stitch_generator.collection.subdivision.tatami import tatami_3_1
+from ..subdivision.tatami import tatami_3_1
 from stitch_generator.framework.path import Path
 from stitch_generator.helpers.path_operations import (
     get_inset_path,

@@ -1,6 +1,6 @@
 import numpy as np
 
-from stitch_generator.functions.ensure_shape import ensure_1d_shape
+from .ensure_shape import ensure_1d_shape
 from stitch_generator.framework.types import Function3D, Function1D
 
 

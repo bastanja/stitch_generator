@@ -1,8 +1,8 @@
 from typing import Tuple
 
-from stitch_generator.collection.functions.functions_1d import half_circle
-from stitch_generator.collection.stitch_effects.underlays import underlay_contour_zigzag
-from stitch_generator.collection.subdivision.tatami import tatami_3_1
+from ..functions.functions_1d import half_circle
+from ..stitch_effects.underlays import underlay_contour_zigzag
+from ..subdivision.tatami import tatami_3_1
 from stitch_generator.framework.path import Path
 from stitch_generator.functions.function_modifiers import scale
 from stitch_generator.functions.functions_1d import constant

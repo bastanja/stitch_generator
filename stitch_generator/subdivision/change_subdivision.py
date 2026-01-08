@@ -4,7 +4,7 @@ from scipy.interpolate import interp1d
 from stitch_generator.framework.types import SubdivisionFunction
 from stitch_generator.functions.ensure_shape import ensure_2d_shape
 from stitch_generator.functions.estimate_length import accumulate_lengths
-from stitch_generator.subdivision.subdivide_by_length import (
+from .subdivide_by_length import (
     subdivide_by_length,
     subdivision_by_length,
 )

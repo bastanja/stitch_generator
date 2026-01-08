@@ -1,9 +1,9 @@
 import numpy as np
 
-from stitch_generator.collection.functions.functions_1d import linear_0_1
-from stitch_generator.collection.motifs.collection import zigzag_rectangle
-from stitch_generator.collection.motifs.square_spiral import square_spiral
-from stitch_generator.collection.subdivision.tatami import tatami_3_1, tatami
+from ..functions.functions_1d import linear_0_1
+from ..motifs.collection import zigzag_rectangle
+from ..motifs.square_spiral import square_spiral
+from ..subdivision.tatami import tatami_3_1, tatami
 from stitch_generator.functions.function_modifiers import compose
 from stitch_generator.functions.functions_1d import square
 from stitch_generator.helpers.path_operations import get_inset_path

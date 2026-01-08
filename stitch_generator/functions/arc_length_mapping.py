@@ -4,8 +4,8 @@ from typing import Tuple
 import numpy as np
 
 from stitch_generator.framework.types import CoordinateFunction, Function1D
-from stitch_generator.functions.estimate_length import accumulate_lengths
-from stitch_generator.functions.function_modifiers import compose
+from .estimate_length import accumulate_lengths
+from .function_modifiers import compose
 
 
 def parameterize_by_arc_length(

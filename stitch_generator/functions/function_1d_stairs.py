@@ -1,8 +1,8 @@
 import itertools
 
-from stitch_generator.functions.function_modifiers import compose
-from stitch_generator.functions.function_sequence import function_sequence
-from stitch_generator.functions.functions_1d import (
+from .function_modifiers import compose
+from .function_sequence import function_sequence
+from .functions_1d import (
     constant,
     linear_interpolation,
     smootherstep,

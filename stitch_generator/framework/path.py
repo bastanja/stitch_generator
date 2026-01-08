@@ -1,4 +1,4 @@
-from stitch_generator.framework.types import Function1D, CoordinateFunction
+from .types import Function1D, CoordinateFunction
 
 
 class Path:

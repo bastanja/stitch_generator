@@ -3,14 +3,14 @@ from noise import pnoise2
 from scipy.interpolate import interp1d
 
 from stitch_generator.framework.types import Function1D, Function2D, Array2D
-from stitch_generator.functions.ensure_shape import ensure_2d_shape
-from stitch_generator.functions.function_modifiers import shift, repeat, compose
-from stitch_generator.functions.functions_1d import (
+from .ensure_shape import ensure_2d_shape
+from .function_modifiers import shift, repeat, compose
+from .functions_1d import (
     linear_interpolation,
     function_1d,
     smootherstep,
 )
-from stitch_generator.functions.functions_2d import function_2d
+from .functions_2d import function_2d
 
 
 def noise(octaves: int = 4, angle=20, scale=1) -> Function1D:

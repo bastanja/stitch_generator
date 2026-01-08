@@ -1,9 +1,9 @@
 import numpy as np
 
-from stitch_generator.functions.ensure_shape import ensure_1d_shape
-from stitch_generator.functions.estimate_length import estimate_length
-from stitch_generator.functions.function_modifiers import compose
-from stitch_generator.functions.functions_1d import linear_interpolation
+from .ensure_shape import ensure_1d_shape
+from .estimate_length import estimate_length
+from .function_modifiers import compose
+from .functions_1d import linear_interpolation
 
 
 def function_sequence(functions, lengths=None):
