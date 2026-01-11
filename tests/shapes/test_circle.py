@@ -6,11 +6,14 @@ from stitch_generator.shapes.circle import circle, circle_shape
 from tests.shapes.normal_length import normal_length_one
 
 
-@pytest.mark.parametrize("center, radius", [
-    ((0, 0), 5),
-    ((10, 10), 5),  # center not zero
-    ((10, 10), 0),  # radius zerotest_circle.py
-])
+@pytest.mark.parametrize(
+    "center, radius",
+    [
+        ((0, 0), 5),
+        ((10, 10), 5),  # center not zero
+        ((10, 10), 0),  # radius zerotest_circle.py
+    ],
+)
 def test_circle(center, radius):
     shape, direction = circle(center=center, radius=radius)
 

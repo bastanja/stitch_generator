@@ -5,8 +5,18 @@ import pytest
 from pytest import approx
 
 from stitch_generator.collection.functions.functions_1d import linear_0_1
-from stitch_generator.functions.function_modifiers import repeat, reflect, wrap, clamp, compose, inverse, mix, \
-    add_functions, multiply_functions, split
+from stitch_generator.functions.function_modifiers import (
+    repeat,
+    reflect,
+    wrap,
+    clamp,
+    compose,
+    inverse,
+    mix,
+    add_functions,
+    multiply_functions,
+    split,
+)
 from stitch_generator.functions.functions_1d import smootherstep, arc, square, sinus
 from stitch_generator.shapes.bezier import bezier_shape
 from tests.functions.functions import all_functions
@@ -20,7 +30,7 @@ test_functions = (bezier_shape(((0, 0), (10, -10), (20, 0))), square, sinus)
 def test_repeat():
     times = 2
 
-    modes = ['reflect', 'wrap', 'nearest']
+    modes = ["reflect", "wrap", "nearest"]
 
     for name, f in all_functions.items():
         for m in modes:

@@ -5,13 +5,16 @@ from stitch_generator.shapes.spiral import spiral, spiral_shape
 from tests.shapes.normal_length import normal_length_one
 
 
-@pytest.mark.parametrize("inner_radius, outer_radius, turns, center", [
-    (0, 1.5, 5, (0, 0)),
-    (2.2, 10, 0.5, (0, 0)),
-    (1, 2, 3, (4, 5)),
-    (10, 2, 5, (10, 10)),
-    (1, 2, 0, (0, 0)),
-])
+@pytest.mark.parametrize(
+    "inner_radius, outer_radius, turns, center",
+    [
+        (0, 1.5, 5, (0, 0)),
+        (2.2, 10, 0.5, (0, 0)),
+        (1, 2, 3, (4, 5)),
+        (10, 2, 5, (10, 10)),
+        (1, 2, 0, (0, 0)),
+    ],
+)
 def test_spiral(inner_radius, outer_radius, turns, center):
     shape, direction = spiral(inner_radius, outer_radius, turns, center)
 

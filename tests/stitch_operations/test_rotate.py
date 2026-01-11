@@ -1,7 +1,12 @@
 import numpy as np
 
-from stitch_generator.stitch_operations.rotate import rotate_by_degrees, rotate_by_sin_cos, rotate_90, rotate_180, \
-    rotate_270
+from stitch_generator.stitch_operations.rotate import (
+    rotate_by_degrees,
+    rotate_by_sin_cos,
+    rotate_90,
+    rotate_180,
+    rotate_270,
+)
 
 
 def test_rotate_deg():

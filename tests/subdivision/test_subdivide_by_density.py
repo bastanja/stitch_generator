@@ -1,7 +1,10 @@
 import numpy as np
 
 from stitch_generator.functions.functions_1d import constant
-from stitch_generator.subdivision.subdivide_by_density import subdivision_by_density, _inverse_cdf
+from stitch_generator.subdivision.subdivide_by_density import (
+    subdivision_by_density,
+    _inverse_cdf,
+)
 from stitch_generator.subdivision.subdivide_by_length import subdivision_by_length
 from tests.functions.functions import functions_1d_positive
 
@@ -11,12 +14,14 @@ segment_lengths = [0, 0.1, 0.55, 1, 2, 6]
 
 
 def test_constant_density_one():
-    """ Test that subdivision with constant density of 1 is the same as regular subdivision """
+    """Test that subdivision with constant density of 1 is the same as regular subdivision"""
 
     density_function = constant(1)
 
     for segment_length in segment_lengths:
-        constant_density = subdivision_by_density(segment_length=segment_length, density_distribution=density_function)
+        constant_density = subdivision_by_density(
+            segment_length=segment_length, density_distribution=density_function
+        )
         regular_subdivision = subdivision_by_length(segment_length=segment_length)
 
         for length in lengths:
@@ -24,12 +29,14 @@ def test_constant_density_one():
 
 
 def test_constant_density_low():
-    """ Test that subdivision with constant density of 0 returns only the start point and the end point """
+    """Test that subdivision with constant density of 0 returns only the start point and the end point"""
 
     density_function = constant(0)
 
     for segment_length in segment_lengths:
-        subdivision = subdivision_by_density(segment_length=segment_length, density_distribution=density_function)
+        subdivision = subdivision_by_density(
+            segment_length=segment_length, density_distribution=density_function
+        )
 
         for length in lengths:
             values = subdivision(length)
@@ -37,11 +44,13 @@ def test_constant_density_low():
 
 
 def test_varying_density():
-    """ Test that subdivision with varying density results in fewer or equal values than regular subdivision """
+    """Test that subdivision with varying density results in fewer or equal values than regular subdivision"""
 
     for f in functions_1d_positive.values():
         for segment_length in segment_lengths:
-            varying_density = subdivision_by_density(segment_length=segment_length, density_distribution=f)
+            varying_density = subdivision_by_density(
+                segment_length=segment_length, density_distribution=f
+            )
             regular_subdivision = subdivision_by_length(segment_length=segment_length)
 
             for length in lengths:
@@ -51,11 +60,13 @@ def test_varying_density():
 
 
 def test_zero_and_one_included():
-    """ Test that density subdivision always includes 0 and 1 """
+    """Test that density subdivision always includes 0 and 1"""
 
     for name, f in functions_1d_positive.items():
         for segment_length in segment_lengths:
-            subdivision = subdivision_by_density(segment_length=segment_length, density_distribution=f)
+            subdivision = subdivision_by_density(
+                segment_length=segment_length, density_distribution=f
+            )
 
             for length in lengths:
                 values_varying_density = subdivision(length)

@@ -33,7 +33,11 @@ def test_function_sequence_1d():
 
 def test_function_sequence_2d():
     t = subdivide_by_number(5)
-    functions = (line_shape((0, 0), (0, 10)), line_shape((0, 10), (10, 10)), line_shape((10, 10), (20, 10)))
+    functions = (
+        line_shape((0, 0), (0, 10)),
+        line_shape((0, 10), (10, 10)),
+        line_shape((10, 10), (20, 10)),
+    )
     sequence = function_sequence(functions)
     single_value = sequence(0.0)
     array_values = sequence(t)

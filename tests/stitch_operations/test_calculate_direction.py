@@ -35,4 +35,3 @@ def test_calculate_direction():
     stitches = (0, 0)
     with pytest.raises(Exception):
         calculate_direction(stitches)
-

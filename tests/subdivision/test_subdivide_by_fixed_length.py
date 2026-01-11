@@ -3,7 +3,9 @@ from itertools import product
 import numpy as np
 import pytest
 
-from stitch_generator.subdivision.subdivide_by_fixed_length import subdivision_by_fixed_length
+from stitch_generator.subdivision.subdivide_by_fixed_length import (
+    subdivision_by_fixed_length,
+)
 
 segment_lengths = [0.01, 1, 2, 10]
 total_lengths = [0.5, 1, 5.5, 10, 99]
@@ -38,7 +40,7 @@ def test_subdivision_by_fixed_length(total_length, segment_length):
 
 @pytest.mark.parametrize("total_length", total_lengths)
 def test_subdivide_by_fixed_length_segment_zero(total_length):
-    """ Test subdividing with a segment length of zero """
+    """Test subdividing with a segment length of zero"""
     subdivision = subdivision_by_fixed_length(segment_length=0)
 
     # subdivide the total length
@@ -50,7 +52,7 @@ def test_subdivide_by_fixed_length_segment_zero(total_length):
 
 @pytest.mark.parametrize("segment_length", segment_lengths)
 def test_subdivide_by_fixed_length_total_zero(segment_length):
-    """ Test subdivision with a total length of zero """
+    """Test subdivision with a total length of zero"""
     subdivision = subdivision_by_fixed_length(segment_length=segment_length)
 
     # subdivide the total length

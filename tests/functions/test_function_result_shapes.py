@@ -7,7 +7,7 @@ single_value = 0.4
 single_value_parameters = [
     single_value,
     np.array(single_value, ndmin=1),
-    np.array(single_value, ndmin=2)
+    np.array(single_value, ndmin=2),
 ]
 
 multiple_values = (0, 0.3, 0.7, 1)
@@ -16,7 +16,7 @@ multiple_values_parameters = [
     multiple_values,
     np.array(multiple_values, ndmin=1),
     np.array(multiple_values, ndmin=2),
-    np.array(multiple_values, ndmin=2).T
+    np.array(multiple_values, ndmin=2).T,
 ]
 
 

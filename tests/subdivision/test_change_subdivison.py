@@ -1,10 +1,18 @@
 import numpy as np
 
-from stitch_generator.subdivision.change_subdivision import change_subdivision_by_length, change_subdivision, \
-    change_subdivision_by_segment
-from stitch_generator.subdivision.subdivide_by_fixed_length import subdivision_by_fixed_length
+from stitch_generator.subdivision.change_subdivision import (
+    change_subdivision_by_length,
+    change_subdivision,
+    change_subdivision_by_segment,
+)
+from stitch_generator.subdivision.subdivide_by_fixed_length import (
+    subdivision_by_fixed_length,
+)
 from stitch_generator.subdivision.subdivide_by_length import subdivision_by_length
-from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number, subdivision_by_number
+from stitch_generator.subdivision.subdivide_by_number import (
+    subdivide_by_number,
+    subdivision_by_number,
+)
 from stitch_generator.shapes.line import line_shape
 
 

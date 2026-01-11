@@ -9,9 +9,9 @@ def test_tile_x():
     spacing = 20
     result = tile_x(stitches, spacing=spacing, repetitions=3)
 
-    assert np.allclose(stitches, result[0: length])
-    assert np.allclose(stitches + (spacing, 0), result[length: length * 2])
-    assert np.allclose(stitches + (spacing * 2, 0), result[length * 2:])
+    assert np.allclose(stitches, result[0:length])
+    assert np.allclose(stitches + (spacing, 0), result[length : length * 2])
+    assert np.allclose(stitches + (spacing * 2, 0), result[length * 2 :])
 
 
 def test_tile_y():
@@ -20,6 +20,6 @@ def test_tile_y():
     spacing = 10
     result = tile_y(stitches, spacing=spacing, repetitions=3)
 
-    assert np.allclose(stitches, result[0: length])
-    assert np.allclose(stitches + (0, spacing), result[length: length * 2])
-    assert np.allclose(stitches + (0, spacing * 2), result[length * 2:])
+    assert np.allclose(stitches, result[0:length])
+    assert np.allclose(stitches + (0, spacing), result[length : length * 2])
+    assert np.allclose(stitches + (0, spacing * 2), result[length * 2 :])
