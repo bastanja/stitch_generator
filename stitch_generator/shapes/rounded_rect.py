@@ -1,16 +1,16 @@
 import itertools
 from typing import Sequence, Tuple
 
-from stitch_generator.framework.types import Function2D
-from stitch_generator.functions.estimate_length import estimate_length
-from stitch_generator.functions.function_modifiers import (
+from stitch_generator.framework import Function2D
+from stitch_generator.functions import estimate_length
+from stitch_generator.functions import (
     repeat,
     multiply_functions,
     inverse,
     shift,
 )
-from stitch_generator.functions.function_sequence import function_sequence
-from stitch_generator.functions.functions_2d import constant_direction
+from stitch_generator.functions import function_sequence
+from stitch_generator.functions import constant_direction
 from .ellipse import ellipse_shape, ellipse_direction
 from .line import line
 

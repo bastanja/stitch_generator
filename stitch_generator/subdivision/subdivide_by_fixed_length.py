@@ -1,6 +1,6 @@
 import numpy as np
 
-from stitch_generator.framework.types import Array1D, SubdivisionFunction
+from stitch_generator.framework import Array1D, SubdivisionFunction
 from .alignment_to_offset import alignment_to_offset
 from .subdivide_by_number import subdivide_by_number
 

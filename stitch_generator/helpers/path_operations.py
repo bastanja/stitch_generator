@@ -4,11 +4,11 @@ from typing import List, Tuple
 
 import numpy as np
 
-from stitch_generator.framework.path import Path
-from stitch_generator.framework.types import Function1D, CoordinateFunction, Function2D
-from stitch_generator.functions.arc_length_mapping import arc_length_mapping
-from stitch_generator.functions.estimate_length import estimate_length
-from stitch_generator.functions.function_modifiers import (
+from stitch_generator.framework import Path
+from stitch_generator.framework import Function1D, CoordinateFunction, Function2D
+from stitch_generator.functions import arc_length_mapping
+from stitch_generator.functions import estimate_length
+from stitch_generator.functions import (
     split,
     inverse,
     mix,
@@ -21,7 +21,7 @@ from stitch_generator.functions.function_modifiers import (
     divide_functions,
     compose,
 )
-from stitch_generator.functions.functions_1d import constant
+from stitch_generator.functions import constant
 
 
 def default_width_and_alignment_path(shape: Function2D, direction: Function2D) -> Path:

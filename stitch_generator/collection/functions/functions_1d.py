@@ -1,10 +1,10 @@
-from stitch_generator.functions.function_1d_stairs import stairs
-from stitch_generator.functions.function_modifiers import (
+from stitch_generator.functions import stairs
+from stitch_generator.functions import (
     subtract_functions,
     repeat,
     compose,
 )
-from stitch_generator.functions.functions_1d import (
+from stitch_generator.functions import (
     constant,
     linear_interpolation,
     arc,
@@ -13,7 +13,7 @@ from stitch_generator.functions.functions_1d import (
     cubic_interpolation,
     smoothstep,
 )
-from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
+from stitch_generator.subdivision import subdivide_by_number
 
 linear_0_1 = linear_interpolation(0, 1)
 linear_1_0 = linear_interpolation(1, 0)

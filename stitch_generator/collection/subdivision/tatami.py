@@ -2,12 +2,12 @@ from functools import partial
 
 import numpy as np
 
-from stitch_generator.framework.types import SubdivisionFunction
-from stitch_generator.subdivision.subdivide_by_fixed_length import (
+from stitch_generator.framework import SubdivisionFunction
+from stitch_generator.subdivision import (
     subdivide_by_fixed_length,
 )
-from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
-from stitch_generator.subdivision.subdivision_modifiers import (
+from stitch_generator.subdivision import subdivide_by_number
+from stitch_generator.subdivision import (
     free_start,
     free_end,
     cycle_offsets,

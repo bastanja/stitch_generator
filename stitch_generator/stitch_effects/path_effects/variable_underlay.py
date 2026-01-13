@@ -1,29 +1,29 @@
 import numpy as np
 
-from stitch_generator.framework.path import Path
-from stitch_generator.framework.stitch_effect import StitchEffect
-from stitch_generator.framework.types import (
+from stitch_generator.framework import Path
+from stitch_generator.framework import StitchEffect
+from stitch_generator.framework import (
     Function1D,
     SubdivisionFunction,
     Coordinates,
 )
-from stitch_generator.functions.estimate_length import estimate_length
-from stitch_generator.functions.function_modifiers import (
+from stitch_generator.functions import estimate_length
+from stitch_generator.functions import (
     multiply_functions,
     add_functions,
     subtract_functions,
     inverse,
     scale,
 )
-from stitch_generator.functions.functions_1d import constant, linear_interpolation
-from stitch_generator.helpers.path_operations import get_boundaries, split_path
+from stitch_generator.functions import constant, linear_interpolation
+from stitch_generator.helpers import get_boundaries, split_path
 from ..utilities.range_tree import (
     width_to_level,
     make_range_tree,
     tree_to_indices_and_offsets_basic,
 )
-from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
-from stitch_generator.subdivision.subdivision_modifiers import remove_end
+from stitch_generator.subdivision import subdivide_by_number
+from stitch_generator.subdivision import remove_end
 
 
 def variable_underlay(
@@ -49,9 +49,9 @@ def variable_underlay(
 
     Example:
         ```python
-        from stitch_generator.helpers.path_operations import get_inset_path
-        from stitch_generator.subdivision.subdivide_by_length import regular
-        from stitch_generator.stitch_effects.path_effects.variable_underlay import variable_underlay
+        from stitch_generator.helpers import get_inset_path
+        from stitch_generator.subdivision import regular
+        from stitch_generator.stitch_effects.path_effects import variable_underlay
 
         path = get_inset_path(path, inset=1)
         effect = variable_underlay(stroke_spacing=3, line_subdivision=regular(3))

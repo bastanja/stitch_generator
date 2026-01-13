@@ -1,12 +1,12 @@
 import numpy as np
 
-from stitch_generator.functions.ensure_shape import ensure_2d_shape
-from stitch_generator.subdivision.subdivide_by_number import subdivision_by_number
-from stitch_generator.subdivision.subdivision_modifiers import remove_end
-from stitch_generator.shapes.circle import circle_shape
-from stitch_generator.shapes.line import line_shape
-from stitch_generator.stitch_effects.path_effects.zigzag import zigzag_between
-from stitch_generator.stitch_operations.rotate import rotate_90
+from stitch_generator.functions import ensure_2d_shape
+from stitch_generator.subdivision import subdivision_by_number
+from stitch_generator.subdivision import remove_end
+from stitch_generator.shapes import circle_shape
+from stitch_generator.shapes import line_shape
+from stitch_generator.stitch_effects.path_effects import zigzag_between
+from stitch_generator.stitch_operations import rotate_90
 
 
 def zigzag_rectangle(

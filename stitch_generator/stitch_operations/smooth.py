@@ -1,6 +1,6 @@
 import numpy as np
 
-from stitch_generator.framework.types import Array2D
+from stitch_generator.framework import Array2D
 
 
 def smooth(

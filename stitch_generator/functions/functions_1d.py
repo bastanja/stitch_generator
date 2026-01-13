@@ -3,9 +3,9 @@ from typing import Callable
 import numpy as np
 from scipy.interpolate import interp1d, PchipInterpolator
 
-from stitch_generator.framework.exceptions import InsufficientDataError
-from stitch_generator.framework.types import Array1D, Function1D, Parameters
-from stitch_generator.framework.validation import validate_array_length
+from stitch_generator.framework import InsufficientDataError
+from stitch_generator.framework import Array1D, Function1D, Parameters
+from stitch_generator.framework import validate_array_length
 
 
 def function_1d(f: Callable[..., float]) -> Function1D:

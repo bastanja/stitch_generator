@@ -1,8 +1,8 @@
-from stitch_generator.framework.stitch_effect import StitchEffect
-from stitch_generator.framework.types import Function2D
-from stitch_generator.functions.estimate_length import estimate_length
-from stitch_generator.subdivision.subdivide_by_length import subdivision_by_length
-from stitch_generator.subdivision.subdivision_modifiers import remove_end
+from stitch_generator.framework import StitchEffect
+from stitch_generator.framework import Function2D
+from stitch_generator.functions import estimate_length
+from stitch_generator.subdivision import subdivision_by_length
+from stitch_generator.subdivision import remove_end
 
 
 def running_stitch(stitch_length: float, include_endpoint: bool = True) -> StitchEffect:

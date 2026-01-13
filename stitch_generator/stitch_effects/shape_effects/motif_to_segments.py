@@ -2,13 +2,13 @@ import itertools
 
 import numpy as np
 
-from stitch_generator.framework.stitch_effect import StitchEffect
-from stitch_generator.framework.types import SubdivisionFunction, Array2D, Function2D
-from stitch_generator.functions.estimate_length import estimate_length
+from stitch_generator.framework import StitchEffect
+from stitch_generator.framework import SubdivisionFunction, Array2D, Function2D
+from stitch_generator.functions import estimate_length
 from ..utilities import place_motif_between
-from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
-from stitch_generator.subdivision.subdivide_between import subdivide_between
-from stitch_generator.subdivision.subdivision_modifiers import (
+from stitch_generator.subdivision import subdivide_by_number
+from stitch_generator.subdivision import subdivide_between
+from stitch_generator.subdivision import (
     free_start,
     free_end,
     remove_start,

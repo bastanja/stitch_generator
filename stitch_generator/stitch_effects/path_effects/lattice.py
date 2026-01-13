@@ -1,14 +1,14 @@
-from stitch_generator.framework.path import Path
-from stitch_generator.framework.stitch_effect import StitchEffect
-from stitch_generator.framework.types import Coordinates, Function1D
-from stitch_generator.functions.estimate_length import estimate_length
-from stitch_generator.functions.function_modifiers import (
+from stitch_generator.framework import Path
+from stitch_generator.framework import StitchEffect
+from stitch_generator.framework import Coordinates, Function1D
+from stitch_generator.functions import estimate_length
+from stitch_generator.functions import (
     add_functions,
     repeat,
     multiply_functions,
 )
-from stitch_generator.helpers.path_operations import get_boundaries, path_is_circular
-from stitch_generator.subdivision.subdivide_by_number import subdivision_by_number
+from stitch_generator.helpers import get_boundaries, path_is_circular
+from stitch_generator.subdivision import subdivision_by_number
 
 
 def lattice(strands: int, pattern_f: Function1D, pattern_length: float) -> StitchEffect:
@@ -27,8 +27,8 @@ def lattice(strands: int, pattern_f: Function1D, pattern_length: float) -> Stitc
 
     Example:
         ```python
-        from stitch_generator.collection.functions.functions_1d import linear_0_1
-        from stitch_generator.stitch_effects.path_effects.lattice import lattice
+        from stitch_generator.collection.functions import linear_0_1
+        from stitch_generator.stitch_effects.path_effects import lattice
 
         effect = lattice(strands=7, pattern_f=linear_0_1, pattern_length=20)
         stitches = effect(path)

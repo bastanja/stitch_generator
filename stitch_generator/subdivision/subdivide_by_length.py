@@ -1,6 +1,6 @@
 import numpy as np
 
-from stitch_generator.framework.types import SubdivisionFunction, Array1D
+from stitch_generator.framework import SubdivisionFunction, Array1D
 from .subdivide_by_number import subdivide_by_number
 
 

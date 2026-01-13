@@ -1,13 +1,13 @@
 import numpy as np
 
-from stitch_generator.framework.path import Path
-from stitch_generator.framework.stitch_effect import StitchEffect
-from stitch_generator.framework.types import SubdivisionFunction, CoordinateFunction
-from stitch_generator.functions.estimate_length import estimate_length
-from stitch_generator.functions.function_modifiers import repeat, mix, shift
-from stitch_generator.functions.noise import noise, fix_distribution
-from stitch_generator.helpers.path_operations import get_boundaries, path_is_circular
-from stitch_generator.subdivision.subdivision_modifiers import remove_end
+from stitch_generator.framework import Path
+from stitch_generator.framework import StitchEffect
+from stitch_generator.framework import SubdivisionFunction, CoordinateFunction
+from stitch_generator.functions import estimate_length
+from stitch_generator.functions import repeat, mix, shift
+from stitch_generator.functions import noise, fix_distribution
+from stitch_generator.helpers import get_boundaries, path_is_circular
+from stitch_generator.subdivision import remove_end
 
 
 def scribble(
@@ -32,9 +32,9 @@ def scribble(
 
     Example:
         ```python
-        from stitch_generator.collection.subdivision.tatami import tatami_3_1
-        from stitch_generator.subdivision.subdivision_modifiers import alternate_direction, add_start, add_end
-        from stitch_generator.stitch_effects.path_effects.scribble import scribble
+        from stitch_generator.collection.subdivision import tatami_3_1
+        from stitch_generator.subdivision import alternate_direction, add_start, add_end
+        from stitch_generator.stitch_effects.path_effects import scribble
 
         line_subdivision = alternate_direction(add_start(add_end(tatami_3_1(segment_length=3))))
         effect = scribble(repetitions=4, line_subdivision=line_subdivision, noise_scale=0.25)

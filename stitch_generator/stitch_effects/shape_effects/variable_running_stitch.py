@@ -1,11 +1,11 @@
 import numpy as np
-from stitch_generator.framework.path import Path
-from stitch_generator.framework.stitch_effect import StitchEffect
-from stitch_generator.framework.types import Array2D, Function2D, Function1D
-from stitch_generator.functions.estimate_length import estimate_length
-from stitch_generator.functions.function_modifiers import mix
-from stitch_generator.functions.functions_1d import constant, linear_interpolation
-from stitch_generator.subdivision.subdivide_by_length import subdivide_by_length
+from stitch_generator.framework import Path
+from stitch_generator.framework import StitchEffect
+from stitch_generator.framework import Array2D, Function2D, Function1D
+from stitch_generator.functions import estimate_length
+from stitch_generator.functions import mix
+from stitch_generator.functions import constant, linear_interpolation
+from stitch_generator.subdivision import subdivide_by_length
 from ..utilities.motif_to_path import motif_to_path
 from ..utilities.range_tree import (
     make_range_tree,

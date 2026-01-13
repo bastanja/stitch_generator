@@ -3,9 +3,9 @@ from typing import List
 
 import numpy as np
 
-from stitch_generator.framework.types import SubdivisionFunction, Array2D
-from stitch_generator.subdivision.subdivision_modifiers import remove_end, remove_start
-from stitch_generator.helpers.subdivide_line import subdivide_line
+from stitch_generator.framework import SubdivisionFunction, Array2D
+from stitch_generator.subdivision import remove_end, remove_start
+from stitch_generator.helpers import subdivide_line
 
 
 def connect(

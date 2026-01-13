@@ -1,8 +1,8 @@
 import numpy as np
 from scipy.interpolate import interp1d
 
-from stitch_generator.framework.types import SubdivisionFunction, Array1D, Function1D
-from stitch_generator.functions.functions_1d import linear_interpolation
+from stitch_generator.framework import SubdivisionFunction, Array1D, Function1D
+from stitch_generator.functions import linear_interpolation
 from .subdivide_by_length import subdivide_by_length
 
 EPSILON = 1.0e-10

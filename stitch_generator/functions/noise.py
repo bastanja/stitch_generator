@@ -2,7 +2,7 @@ import numpy as np
 from noise import pnoise2
 from scipy.interpolate import interp1d
 
-from stitch_generator.framework.types import Function1D, Function2D, Array2D
+from stitch_generator.framework import Function1D, Function2D, Array2D
 from .ensure_shape import ensure_2d_shape
 from .function_modifiers import shift, repeat, compose
 from .functions_1d import (

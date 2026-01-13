@@ -1,6 +1,6 @@
 import numpy as np
 
-from stitch_generator.stitch_operations.rotate import rotate_by_sin_cos
+from stitch_generator.stitch_operations import rotate_by_sin_cos
 
 
 def place_motif_at(position, direction, scale, motif, include_endpoint=False):

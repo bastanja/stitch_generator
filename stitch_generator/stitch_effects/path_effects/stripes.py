@@ -2,16 +2,16 @@ import itertools
 
 import numpy as np
 
-from stitch_generator.framework.path import Path
-from stitch_generator.framework.stitch_effect import StitchEffect
-from stitch_generator.framework.types import SubdivisionFunction, Array1D
-from stitch_generator.functions.estimate_length import estimate_length
-from stitch_generator.functions.function_1d_stairs import stairs
-from stitch_generator.functions.function_modifiers import repeat, mix, inverse
-from stitch_generator.functions.functions_1d import constant
-from stitch_generator.helpers.path_operations import get_boundaries, path_is_circular
-from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
-from stitch_generator.subdivision.subdivision_modifiers import (
+from stitch_generator.framework import Path
+from stitch_generator.framework import StitchEffect
+from stitch_generator.framework import SubdivisionFunction, Array1D
+from stitch_generator.functions import estimate_length
+from stitch_generator.functions import stairs
+from stitch_generator.functions import repeat, mix, inverse
+from stitch_generator.functions import constant
+from stitch_generator.helpers import get_boundaries, path_is_circular
+from stitch_generator.subdivision import subdivide_by_number
+from stitch_generator.subdivision import (
     remove_end,
     alternate_direction,
 )
@@ -36,9 +36,9 @@ def stripes(
 
     Example:
         ```python
-        from stitch_generator.subdivision.subdivide_by_length import regular
-        from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
-        from stitch_generator.stitch_effects.path_effects.stripes import stripes
+        from stitch_generator.subdivision import regular
+        from stitch_generator.subdivision import subdivide_by_number
+        from stitch_generator.stitch_effects.path_effects import stripes
 
         effect = stripes(steps=subdivide_by_number(6), line_subdivision=regular(3))
         stitches = effect(path)
@@ -161,9 +161,9 @@ def parallel_stripes(
 
     Example:
         ```python
-        from stitch_generator.subdivision.subdivide_by_length import regular
-        from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
-        from stitch_generator.stitch_effects.path_effects.stripes import parallel_stripes
+        from stitch_generator.subdivision import regular
+        from stitch_generator.subdivision import subdivide_by_number
+        from stitch_generator.stitch_effects.path_effects import parallel_stripes
 
         effect = parallel_stripes(steps=subdivide_by_number(3), line_subdivision=regular(3))
         stitches = effect(path)

@@ -3,20 +3,20 @@ from typing import Tuple
 from ..functions.functions_1d import half_circle
 from ..stitch_effects.underlays import underlay_contour_zigzag
 from ..subdivision.tatami import tatami_3_1
-from stitch_generator.framework.path import Path
-from stitch_generator.functions.function_modifiers import scale
-from stitch_generator.functions.functions_1d import constant
-from stitch_generator.shapes.line import line
-from stitch_generator.stitch_effects.path_effects.meander import meander
-from stitch_generator.stitch_effects.path_effects.zigzag import zigzag, double_zigzag
-from stitch_generator.stitch_operations.connect import connect
-from stitch_generator.stitch_operations.rotate import rotate_90
-from stitch_generator.subdivision.subdivide_by_length import (
+from stitch_generator.framework import Path
+from stitch_generator.functions import scale
+from stitch_generator.functions import constant
+from stitch_generator.shapes import line
+from stitch_generator.stitch_effects.path_effects import meander
+from stitch_generator.stitch_effects.path_effects import zigzag, double_zigzag
+from stitch_generator.stitch_operations import connect
+from stitch_generator.stitch_operations import rotate_90
+from stitch_generator.subdivision import (
     subdivide_by_length,
     subdivision_by_length_with_offset,
     regular,
 )
-from stitch_generator.subdivision.subdivision_modifiers import (
+from stitch_generator.subdivision import (
     add_end,
     add_start,
     alternate_direction,

@@ -7,7 +7,7 @@ from .subdivison_with_varying_alignment import (
     subdivision_with_triangle_alignment,
 )
 from .tatami import tatami_3_1, tatami_4_2
-from stitch_generator.subdivision.subdivision_modifiers import (
+from stitch_generator.subdivision import (
     free_start,
     free_end,
     alternate_direction,

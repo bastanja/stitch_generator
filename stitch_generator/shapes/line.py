@@ -3,9 +3,9 @@ from typing import Sequence, Tuple
 import numpy as np
 from scipy.interpolate import interp1d
 
-from stitch_generator.framework.types import CoordinateFunction
-from stitch_generator.functions.ensure_shape import ensure_2d_shape
-from stitch_generator.functions.functions_2d import constant_direction
+from stitch_generator.framework import CoordinateFunction
+from stitch_generator.functions import ensure_2d_shape
+from stitch_generator.functions import constant_direction
 
 
 def line(

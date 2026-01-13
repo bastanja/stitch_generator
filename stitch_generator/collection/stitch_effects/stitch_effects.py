@@ -4,32 +4,32 @@ from ..functions.functions_1d import linear_0_1
 from ..motifs.collection import zigzag_rectangle
 from ..motifs.square_spiral import square_spiral
 from ..subdivision.tatami import tatami_3_1, tatami
-from stitch_generator.functions.function_modifiers import compose
-from stitch_generator.functions.functions_1d import square
-from stitch_generator.helpers.path_operations import get_inset_path
-from stitch_generator.shapes.line import line_shape
-from stitch_generator.stitch_effects.path_effects.contour import contour
-from stitch_generator.stitch_effects.path_effects.lattice import lattice
-from stitch_generator.stitch_effects.path_effects.meander import meander
-from stitch_generator.stitch_effects.path_effects.satin import satin
-from stitch_generator.stitch_effects.path_effects.scribble import scribble
-from stitch_generator.stitch_effects.path_effects.stripes import (
+from stitch_generator.functions import compose
+from stitch_generator.functions import square
+from stitch_generator.helpers import get_inset_path
+from stitch_generator.shapes import line_shape
+from stitch_generator.stitch_effects.path_effects import contour
+from stitch_generator.stitch_effects.path_effects import lattice
+from stitch_generator.stitch_effects.path_effects import meander
+from stitch_generator.stitch_effects.path_effects import satin
+from stitch_generator.stitch_effects.path_effects import scribble
+from stitch_generator.stitch_effects.path_effects import (
     stripes,
     parallel_stripes,
 )
-from stitch_generator.stitch_effects.path_effects.tile_motif import tile_motif
-from stitch_generator.stitch_effects.path_effects.variable_underlay import (
+from stitch_generator.stitch_effects.path_effects import tile_motif
+from stitch_generator.stitch_effects.path_effects import (
     variable_underlay,
 )
-from stitch_generator.stitch_effects.path_effects.zigzag import zigzag, double_zigzag
-from stitch_generator.stitch_operations.remove_duplicates import remove_duplicates
-from stitch_generator.subdivision.subdivide_by_length import regular
-from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
-from stitch_generator.subdivision.subdivide_by_pattern import (
+from stitch_generator.stitch_effects.path_effects import zigzag, double_zigzag
+from stitch_generator.stitch_operations import remove_duplicates
+from stitch_generator.subdivision import regular
+from stitch_generator.subdivision import subdivide_by_number
+from stitch_generator.subdivision import (
     pattern_from_spaces,
     subdivision_by_pattern,
 )
-from stitch_generator.subdivision.subdivision_modifiers import (
+from stitch_generator.subdivision import (
     alternate_direction,
     add_end,
     add_start,

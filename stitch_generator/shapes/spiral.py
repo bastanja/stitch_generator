@@ -1,8 +1,8 @@
 from typing import Sequence, Tuple
 
-from stitch_generator.framework.types import Function2D
-from stitch_generator.functions.function_modifiers import repeat, mix
-from stitch_generator.functions.functions_1d import linear_interpolation
+from stitch_generator.framework import Function2D
+from stitch_generator.functions import repeat, mix
+from stitch_generator.functions import linear_interpolation
 from .circle import circle_shape, circle_direction
 
 

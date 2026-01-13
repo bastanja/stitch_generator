@@ -1,7 +1,7 @@
 import numpy as np
 
-from stitch_generator.functions.functions_1d import linear_interpolation
-from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
+from stitch_generator.functions import linear_interpolation
+from stitch_generator.subdivision import subdivide_by_number
 
 
 def width_to_level(widths: np.ndarray, level_spacing: float):

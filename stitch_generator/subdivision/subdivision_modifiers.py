@@ -2,9 +2,9 @@ import itertools
 
 import numpy as np
 
-from stitch_generator.framework.types import SubdivisionFunction
-from stitch_generator.functions.ensure_shape import ensure_1d_shape
-from stitch_generator.functions.function_modifiers import compose
+from stitch_generator.framework import SubdivisionFunction
+from stitch_generator.functions import ensure_1d_shape
+from stitch_generator.functions import compose
 
 
 def alternate_direction(subdivision_function: SubdivisionFunction):

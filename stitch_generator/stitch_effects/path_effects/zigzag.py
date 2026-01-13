@@ -1,15 +1,15 @@
 import numpy as np
 
-from stitch_generator.framework.path import Path
-from stitch_generator.framework.stitch_effect import StitchEffect
-from stitch_generator.framework.types import (
+from stitch_generator.framework import Path
+from stitch_generator.framework import StitchEffect
+from stitch_generator.framework import (
     Function2D,
     SubdivisionFunction,
     Coordinates,
 )
-from stitch_generator.functions.estimate_length import estimate_length
-from stitch_generator.helpers.path_operations import get_boundaries
-from stitch_generator.subdivision.subdivide_by_length import regular
+from stitch_generator.functions import estimate_length
+from stitch_generator.helpers import get_boundaries
+from stitch_generator.subdivision import regular
 
 
 def zigzag(spacing_function: SubdivisionFunction) -> StitchEffect:
@@ -27,8 +27,8 @@ def zigzag(spacing_function: SubdivisionFunction) -> StitchEffect:
 
     Example:
         ```python
-        from stitch_generator.subdivision.subdivide_by_length import regular
-        from stitch_generator.stitch_effects.path_effects.zigzag import zigzag
+        from stitch_generator.subdivision import regular
+        from stitch_generator.stitch_effects.path_effects import zigzag
 
         effect = zigzag(spacing_function=regular(3))
         stitches = effect(path)
@@ -111,8 +111,8 @@ def double_zigzag(spacing_function: SubdivisionFunction) -> StitchEffect:
 
     Example:
         ```python
-        from stitch_generator.subdivision.subdivide_by_length import regular
-        from stitch_generator.stitch_effects.path_effects.zigzag import double_zigzag
+        from stitch_generator.subdivision import regular
+        from stitch_generator.stitch_effects.path_effects import double_zigzag
 
         effect = double_zigzag(spacing_function=regular(3))
         stitches = effect(path)

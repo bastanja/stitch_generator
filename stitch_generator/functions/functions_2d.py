@@ -3,7 +3,7 @@ import numpy as np
 
 from .ensure_shape import ensure_1d_shape
 from .functions_1d import constant
-from stitch_generator.framework.types import Function2D, Function1D
+from stitch_generator.framework import Function2D, Function1D
 
 
 def function_2d(fx: Function1D, fy: Function1D) -> Function2D:

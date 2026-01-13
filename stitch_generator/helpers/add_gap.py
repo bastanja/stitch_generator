@@ -1,8 +1,8 @@
-from stitch_generator.framework.path import Path
-from stitch_generator.framework.types import CoordinateFunction
-from stitch_generator.functions.estimate_length import estimate_length
-from stitch_generator.functions.function_modifiers import repeat, shift, compose
-from stitch_generator.functions.functions_1d import linear_interpolation
+from stitch_generator.framework import Path
+from stitch_generator.framework import CoordinateFunction
+from stitch_generator.functions import estimate_length
+from stitch_generator.functions import repeat, shift, compose
+from stitch_generator.functions import linear_interpolation
 from .path_operations import apply_modifier_to_path
 
 

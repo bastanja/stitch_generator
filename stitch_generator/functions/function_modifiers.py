@@ -2,9 +2,9 @@ from typing import Literal, Callable, Union, List
 
 import numpy as np
 
-from stitch_generator.framework.exceptions import InvalidParameterError
-from stitch_generator.framework.types import Function2D, Function1D, Array1D
-from stitch_generator.framework.validation import (
+from stitch_generator.framework import InvalidParameterError
+from stitch_generator.framework import Function2D, Function1D, Array1D
+from stitch_generator.framework import (
     DUPLICATE_THRESHOLD,
     validate_finite,
     validate_finite_array,

@@ -2,8 +2,8 @@ from typing import Sequence, Tuple
 
 import numpy as np
 
-from stitch_generator.framework.types import CoordinateFunction
-from stitch_generator.functions.ensure_shape import ensure_1d_shape
+from stitch_generator.framework import CoordinateFunction
+from stitch_generator.functions import ensure_1d_shape
 
 
 def bezier(control_points: Sequence) -> Tuple[CoordinateFunction, CoordinateFunction]:

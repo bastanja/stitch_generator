@@ -3,7 +3,7 @@ from typing import Tuple
 
 import numpy as np
 
-from stitch_generator.framework.types import CoordinateFunction, Function1D
+from stitch_generator.framework import CoordinateFunction, Function1D
 from .estimate_length import accumulate_lengths
 from .function_modifiers import compose
 
