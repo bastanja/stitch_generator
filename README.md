@@ -71,11 +71,15 @@ See [Paths](https://github.com/bastanja/stitch_generator/blob/main/doc/paths.md)
 create them. Example for creating a simple linear path:
 
 ```python
-from stitch_generator.shapes.line import line
-from stitch_generator.framework.path import Path
-from stitch_generator.functions.functions_1d import constant
+from stitch_generator.shapes import line
+from stitch_generator.framework import Path
+from stitch_generator.functions import constant
 
-path = Path(*line(origin=(-50, 0), to=(50, 0)), width=constant(15))
+path = Path(
+    *line(origin=(-50, 0), to=(50, 0)),
+    width=constant(15),
+    stroke_alignment=constant(0.5),
+)
 ```
 
 ## Using Stitch Effects
@@ -85,13 +89,17 @@ path = Path(*line(origin=(-50, 0), to=(50, 0)), width=constant(15))
 Example for using a stitch effect from the Stitch Generator collection
 
 ```python
-from stitch_generator.collection.stitch_effects.stitch_effects import stitch_effect_meander
-from stitch_generator.shapes.line import line
-from stitch_generator.framework.path import Path
-from stitch_generator.functions.functions_1d import constant
+from stitch_generator.collection.stitch_effects import stitch_effect_meander
+from stitch_generator.shapes import line
+from stitch_generator.framework import Path
+from stitch_generator.functions import constant
 
 # create a path
-path = Path(*line(origin=(-50, 0), to=(50, 0)), width=constant(15))
+path = Path(
+    *line(origin=(-50, 0), to=(50, 0)),
+    width=constant(15),
+    stroke_alignment=constant(0.5),
+)
 
 # apply the stitch effect
 stitches = stitch_effect_meander(path)
@@ -102,14 +110,18 @@ stitches = stitch_effect_meander(path)
 Example for using a custom stitch effect
 
 ```python
-from stitch_generator.stitch_effects.path_effects.satin import satin
-from stitch_generator.shapes.line import line
-from stitch_generator.framework.path import Path
-from stitch_generator.functions.functions_1d import constant
-from stitch_generator.subdivision.subdivide_by_length import regular
+from stitch_generator.stitch_effects.path_effects import satin
+from stitch_generator.shapes import line
+from stitch_generator.framework import Path
+from stitch_generator.functions import constant
+from stitch_generator.subdivision import regular
 
 # create a path
-path = Path(*line(origin=(-50, 0), to=(50, 0)), width=constant(15))
+path = Path(
+    *line(origin=(-50, 0), to=(50, 0)),
+    width=constant(15),
+    stroke_alignment=constant(0.5),
+)
 
 # create a satin stitch effect
 stitch_effect = satin(spacing_function=regular(2), line_subdivision=regular(4))
@@ -126,13 +138,17 @@ an overview over the available stitch effects.
 Example for using a decorative stitch from the Stitch Generator collection
 
 ```python
-from stitch_generator.collection.stitch_effects.decorative_stitches import arrow_chain
-from stitch_generator.shapes.line import line
-from stitch_generator.framework.path import Path
-from stitch_generator.functions.functions_1d import constant
+from stitch_generator.collection.stitch_effects import arrow_chain
+from stitch_generator.shapes import line
+from stitch_generator.framework import Path
+from stitch_generator.functions import constant
 
 # create a path
-path = Path(*line(origin=(-50, 0), to=(50, 0)), width=constant(15))
+path = Path(
+    *line(origin=(-50, 0), to=(50, 0)),
+    width=constant(15),
+    stroke_alignment=constant(0.5),
+)
 
 # create the stitch_effect
 stitch_effect = arrow_chain(arrow_width=8, arrow_length=2, arrow_spacing=2)

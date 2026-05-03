@@ -88,31 +88,34 @@ alignments 0.2 and 0.8
 
 # Creating a path
 
-To create a path, at least the shape and direction are needed. If the parameter width is skipped, a constant width of 1
-is used for the path. If the parameter stroke_alignment is skipped, a constant stroke alignment of 0.5 is used for the
-path.
+To create a path, shape, direction, width, and stroke_alignment are required.
 
 ## Create  straight line
 
 This creates a path from (-50, 0) to (50, 0) with a width of 10:
 
 ```python
-from stitch_generator.shapes.line import line
-from stitch_generator.framework.path import Path
-from stitch_generator.functions.functions_1d import constant
+from stitch_generator.shapes import line
+from stitch_generator.framework import Path
+from stitch_generator.functions import constant
 
 shape, direction = line(origin=(-50, 0), to=(50, 0))
 path = Path(shape=shape, direction=direction, width=constant(10), stroke_alignment=constant(0.5))
 ```
 
-Note: If the width and stroke alignment are not needed, it is also possible to construct a path directly with the output
-of the line function:
+It is also possible to construct a path directly with the output of the line
+function:
 
 ```python
-from stitch_generator.shapes.line import line
-from stitch_generator.framework.path import Path
+from stitch_generator.shapes import line
+from stitch_generator.framework import Path
+from stitch_generator.functions import constant
 
-path = Path(*line(origin=(-50, 0), to=(50, 0)))
+path = Path(
+    *line(origin=(-50, 0), to=(50, 0)),
+    width=constant(10),
+    stroke_alignment=constant(0.5),
+)
 ```
 
 ## Create a path from a Bézier curve
@@ -121,21 +124,26 @@ A path can be created from a Bézier curve. The Bézier curve can have three con
 control points for a cubic curve or more points.
 
 ```python
-from stitch_generator.shapes.bezier import bezier
-from stitch_generator.framework.path import Path
-from stitch_generator.functions.functions_1d import constant
+from stitch_generator.shapes import bezier
+from stitch_generator.framework import Path
+from stitch_generator.functions import constant
 
 control_points = [(-50, 0), (-20, 20), (20, -20), (50, 0)]
 shape, direction = bezier(control_points)
 path = Path(shape=shape, direction=direction, width=constant(10), stroke_alignment=constant(0.5))
 ```
 
-Or without width and stroke alignment:
+Or directly from the output of `bezier`:
 
 ```python
-from stitch_generator.shapes.bezier import bezier
-from stitch_generator.framework.path import Path
+from stitch_generator.shapes import bezier
+from stitch_generator.framework import Path
+from stitch_generator.functions import constant
 
 control_points = [(-50, 0), (-20, 20), (20, -20), (50, 0)]
-path = Path(*bezier(control_points))
+path = Path(
+    *bezier(control_points),
+    width=constant(10),
+    stroke_alignment=constant(0.5),
+)
 ```

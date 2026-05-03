@@ -34,7 +34,7 @@ A running stitch line along the left and right boundary of the Path, closed at b
 Example:
 
 ```python
-from stitch_generator.stitch_effects.path_effects.contour import contour
+from stitch_generator.stitch_effects.path_effects import contour
 
 effect = contour(stitch_length=3)
 stitches = effect(path)
@@ -49,8 +49,8 @@ A continuous line going back and forth between the left and right boundary of th
 Example:
 
 ```python
-from stitch_generator.collection.functions.functions_1d import linear_0_1
-from stitch_generator.stitch_effects.path_effects.lattice import lattice
+from stitch_generator.collection.functions import linear_0_1
+from stitch_generator.stitch_effects.path_effects import lattice
 
 effect = lattice(strands=7, pattern_f=linear_0_1, pattern_length=20)
 stitches = effect(path)
@@ -61,8 +61,8 @@ stitches = effect(path)
 Example:
 
 ```python
-from stitch_generator.functions.functions_1d import square
-from stitch_generator.stitch_effects.path_effects.lattice import lattice
+from stitch_generator.functions import square
+from stitch_generator.stitch_effects.path_effects import lattice
 
 effect = lattice(strands=3, pattern_f=square, pattern_length=30)
 stitches = effect(path)
@@ -86,8 +86,8 @@ A line that meanders back and forth between the left and right boundary of the P
 Example:
 
 ```python
-from stitch_generator.subdivision.subdivide_by_length import regular
-from stitch_generator.stitch_effects.path_effects.meander import meander
+from stitch_generator.subdivision import regular
+from stitch_generator.stitch_effects.path_effects import meander
 
 effect = meander(spacing_function=regular(3), line_subdivision=regular(3))
 stitches = effect(path)
@@ -98,8 +98,8 @@ stitches = effect(path)
 Example:
 
 ```python
-from stitch_generator.subdivision.subdivide_by_length import regular
-from stitch_generator.stitch_effects.path_effects.meander import meander
+from stitch_generator.subdivision import regular
+from stitch_generator.stitch_effects.path_effects import meander
 
 effect = meander(spacing_function=regular(2),
                  line_subdivision=regular(3),
@@ -112,10 +112,10 @@ stitches = effect(path)
 Example:
 
 ```python
-from stitch_generator.collection.subdivision.tatami import tatami_3_1
-from stitch_generator.subdivision.subdivide_by_length import regular
-from stitch_generator.subdivision.subdivision_modifiers import alternate_direction, add_start, add_end
-from stitch_generator.stitch_effects.path_effects.meander import meander
+from stitch_generator.collection.subdivision import tatami_3_1
+from stitch_generator.subdivision import regular
+from stitch_generator.subdivision import alternate_direction, add_start, add_end
+from stitch_generator.stitch_effects.path_effects import meander
 
 line_subdivision = alternate_direction(add_start(add_end(tatami_3_1(segment_length=3))))
 effect = meander(spacing_function=regular(2), line_subdivision=line_subdivision)
@@ -128,9 +128,9 @@ stitches = effect(path)
 Example:
 
 ```python
-from stitch_generator.subdivision.subdivide_by_length import regular
-from stitch_generator.subdivision.subdivide_by_pattern import subdivision_by_pattern
-from stitch_generator.stitch_effects.path_effects.meander import meander
+from stitch_generator.subdivision import regular
+from stitch_generator.subdivision import subdivision_by_pattern
+from stitch_generator.stitch_effects.path_effects import meander
 
 spacing_function = subdivision_by_pattern(pattern=(0, 0.7), pattern_length=5, alignment=0.5,
                                           offset=0)
@@ -148,10 +148,10 @@ function.
 Example:
 
 ```python
-from stitch_generator.collection.subdivision.tatami import tatami
-from stitch_generator.subdivision.subdivide_by_length import regular
-from stitch_generator.subdivision.subdivision_modifiers import alternate_direction, add_start
-from stitch_generator.stitch_effects.path_effects.satin import satin
+from stitch_generator.collection.subdivision import tatami
+from stitch_generator.subdivision import regular
+from stitch_generator.subdivision import alternate_direction, add_start
+from stitch_generator.stitch_effects.path_effects import satin
 
 line_subdivision = add_start(alternate_direction(
     tatami(segment_length=3, steps=5, repetitions=1, minimal_segment_size=2)))
@@ -171,9 +171,9 @@ A zigzag line along the Path with random offsets to the side to simulate a hand-
 Example:
 
 ```python
-from stitch_generator.collection.subdivision.tatami import tatami_3_1
-from stitch_generator.subdivision.subdivision_modifiers import alternate_direction, add_start, add_end
-from stitch_generator.stitch_effects.path_effects.scribble import scribble
+from stitch_generator.collection.subdivision import tatami_3_1
+from stitch_generator.subdivision import alternate_direction, add_start, add_end
+from stitch_generator.stitch_effects.path_effects import scribble
 
 line_subdivision = alternate_direction(add_start(add_end(tatami_3_1(segment_length=3))))
 effect = scribble(repetitions=4, line_subdivision=line_subdivision, noise_scale=0.25)
@@ -185,9 +185,9 @@ stitches = effect(path)
 Example:
 
 ```python
-from stitch_generator.collection.subdivision.tatami import tatami_3_1
-from stitch_generator.subdivision.subdivision_modifiers import alternate_direction
-from stitch_generator.stitch_effects.path_effects.scribble import scribble
+from stitch_generator.collection.subdivision import tatami_3_1
+from stitch_generator.subdivision import alternate_direction
+from stitch_generator.stitch_effects.path_effects import scribble
 
 line_subdivision = alternate_direction(tatami_3_1(segment_length=3))
 effect = scribble(repetitions=10, line_subdivision=line_subdivision)
@@ -203,9 +203,9 @@ A zigzag line along the path with intermediate stitches based on a subdivision f
 Example:
 
 ```python
-from stitch_generator.subdivision.subdivide_by_length import regular
-from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
-from stitch_generator.stitch_effects.path_effects.stripes import stripes
+from stitch_generator.subdivision import regular
+from stitch_generator.subdivision import subdivide_by_number
+from stitch_generator.stitch_effects.path_effects import stripes
 
 effect = stripes(steps=subdivide_by_number(6), line_subdivision=regular(3))
 stitches = effect(path)
@@ -218,9 +218,9 @@ stitches = effect(path)
 Example:
 
 ```python
-from stitch_generator.subdivision.subdivide_by_length import regular
-from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
-from stitch_generator.stitch_effects.path_effects.stripes import parallel_stripes
+from stitch_generator.subdivision import regular
+from stitch_generator.subdivision import subdivide_by_number
+from stitch_generator.stitch_effects.path_effects import parallel_stripes
 
 effect = parallel_stripes(steps=subdivide_by_number(3), line_subdivision=regular(3))
 stitches = effect(path)
@@ -231,9 +231,9 @@ stitches = effect(path)
 Example:
 
 ```python
-from stitch_generator.subdivision.subdivide_by_length import regular
-from stitch_generator.subdivision.subdivide_by_pattern import pattern_from_spaces
-from stitch_generator.stitch_effects.path_effects.stripes import parallel_stripes
+from stitch_generator.subdivision import regular
+from stitch_generator.subdivision import pattern_from_spaces
+from stitch_generator.stitch_effects.path_effects import parallel_stripes
 
 steps = pattern_from_spaces((1, 2, 1, 2, 1), with_start=True, with_end=True)
 effect = parallel_stripes(steps=steps, line_subdivision=regular(3))
@@ -253,8 +253,8 @@ motif_length and the length of the path define how often the motif is repeated a
 Example:
 
 ```python
-from stitch_generator.collection.motifs.square_spiral import square_spiral
-from stitch_generator.stitch_effects.path_effects.tile_motif import tile_motif
+from stitch_generator.collection.motifs import square_spiral
+from stitch_generator.stitch_effects.path_effects import tile_motif
 
 # create motif for tiling
 spiral_level = 5
@@ -274,10 +274,10 @@ Example:
 
 ```python
 import numpy as np
-from stitch_generator.collection.motifs.collection import zigzag_rectangle
-from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
-from stitch_generator.shapes.line import line_shape
-from stitch_generator.stitch_effects.path_effects.tile_motif import tile_motif
+from stitch_generator.collection.motifs import zigzag_rectangle
+from stitch_generator.subdivision import subdivide_by_number
+from stitch_generator.shapes import line_shape
+from stitch_generator.stitch_effects.path_effects import tile_motif
 
 # create motif for tiling
 motif_translation = (0.5, 0.5)  # move it into the range [0,1] in x and y direction
@@ -306,9 +306,9 @@ such a Path.
 Example:
 
 ```python
-from stitch_generator.framework.path import get_inset_path
-from stitch_generator.subdivision.subdivide_by_length import regular
-from stitch_generator.stitch_effects.path_effects.variable_underlay import variable_underlay
+from stitch_generator.helpers import get_inset_path
+from stitch_generator.subdivision import regular
+from stitch_generator.stitch_effects.path_effects import variable_underlay
 
 path = get_inset_path(path, inset=1)
 effect = variable_underlay(stroke_spacing=3, line_subdivision=regular(3))
@@ -326,8 +326,8 @@ stitches.
 Example:
 
 ```python
-from stitch_generator.subdivision.subdivide_by_length import regular
-from stitch_generator.stitch_effects.path_effects.zigzag import zigzag
+from stitch_generator.subdivision import regular
+from stitch_generator.stitch_effects.path_effects import zigzag
 
 effect = zigzag(spacing_function=regular(3))
 stitches = effect(path)
@@ -340,8 +340,8 @@ stitches = effect(path)
 Example:
 
 ```python
-from stitch_generator.subdivision.subdivide_by_length import regular
-from stitch_generator.stitch_effects.path_effects.zigzag import double_zigzag
+from stitch_generator.subdivision import regular
+from stitch_generator.stitch_effects.path_effects import double_zigzag
 
 effect = double_zigzag(spacing_function=regular(3))
 stitches = effect(path)
@@ -383,10 +383,10 @@ Example:
 
 ```python
 import numpy as np
-from stitch_generator.functions.functions_1d import constant
-from stitch_generator.functions.motif_generators import repeat_motif_mirrored
-from stitch_generator.subdivision.subdivide_by_length import regular
-from stitch_generator.stitch_effects.shape_effects.motif_chain import motif_chain
+from stitch_generator.functions import constant
+from stitch_generator.functions import repeat_motif_mirrored
+from stitch_generator.subdivision import regular
+from stitch_generator.stitch_effects.shape_effects import motif_chain
 
 arrow = np.array(((-3, -2), (0, 0), (3, -2)))
 motif_generator = repeat_motif_mirrored(arrow)
@@ -402,10 +402,10 @@ Example:
 
 ```python
 import numpy as np
-from stitch_generator.functions.functions_1d import constant
-from stitch_generator.functions.motif_generators import repeat_motif_mirrored
-from stitch_generator.subdivision.subdivide_by_length import regular
-from stitch_generator.stitch_effects.shape_effects.motif_chain import motif_chain
+from stitch_generator.functions import constant
+from stitch_generator.functions import repeat_motif_mirrored
+from stitch_generator.subdivision import regular
+from stitch_generator.stitch_effects.shape_effects import motif_chain
 
 length = 7
 half_width = 2
@@ -425,9 +425,9 @@ Example:
 ```python
 import itertools
 import numpy as np
-from stitch_generator.functions.functions_1d import constant
-from stitch_generator.subdivision.subdivide_by_pattern import pattern_from_spaces, subdivision_by_pattern
-from stitch_generator.stitch_effects.shape_effects.motif_chain import motif_chain
+from stitch_generator.functions import constant
+from stitch_generator.subdivision import pattern_from_spaces, subdivision_by_pattern
+from stitch_generator.stitch_effects.shape_effects import motif_chain
 
 # create line motif
 motif = np.array(((0, 0), (6, 0), (0, 0)))
@@ -460,10 +460,10 @@ Example:
 ```python
 import itertools
 import numpy as np
-from stitch_generator.subdivision.subdivide_by_length import regular
-from stitch_generator.subdivision.subdivide_by_pattern import pattern_from_spaces, subdivision_by_pattern
-from stitch_generator.subdivision.subdivision_modifiers import free_start, free_end
-from stitch_generator.stitch_effects.shape_effects.motif_to_points import motif_to_points
+from stitch_generator.subdivision import regular
+from stitch_generator.subdivision import pattern_from_spaces, subdivision_by_pattern
+from stitch_generator.subdivision import free_start, free_end
+from stitch_generator.stitch_effects.shape_effects import motif_to_points
 
 # create arrow motif
 motif = np.array(((0, 0.0), (3, -3), (0, 0), (-3, -3), (0, 0)))
@@ -500,12 +500,12 @@ Example:
 
 ```python
 import itertools
-from stitch_generator.functions.function_modifiers import repeat
-from stitch_generator.subdivision.subdivide_by_length import regular
-from stitch_generator.subdivision.subdivide_by_number import subdivide_by_number
-from stitch_generator.subdivision.subdivision_modifiers import free_end, free_start
-from stitch_generator.shapes.circle import circle
-from stitch_generator.stitch_effects.shape_effects.motif_to_segments import motif_to_segments
+from stitch_generator.functions import repeat
+from stitch_generator.subdivision import regular
+from stitch_generator.subdivision import subdivide_by_number
+from stitch_generator.subdivision import free_end, free_start
+from stitch_generator.shapes import circle
+from stitch_generator.stitch_effects.shape_effects import motif_to_segments
 
 motif = repeat(0.5, circle(radius=7))(subdivide_by_number(8))
 motif_placement = free_start(10, free_end(10, regular(25)))
@@ -524,7 +524,7 @@ A running stitch along the shape of the path.
 Example:
 
 ```python
-from stitch_generator.stitch_effects.shape_effects.running_stitch import running_stitch
+from stitch_generator.stitch_effects.shape_effects import running_stitch
 
 effect = running_stitch(stitch_length=3)
 stitches = effect(path)
@@ -544,8 +544,8 @@ the width_profile is 1, the running stitch has the highest number of repetitions
 Example:
 
 ```python
-from stitch_generator.functions.functions_1d import arc
-from stitch_generator.stitch_effects.shape_effects.variable_running_stitch import variable_running_stitch
+from stitch_generator.functions import arc
+from stitch_generator.stitch_effects.shape_effects import variable_running_stitch
 
 effect = variable_running_stitch(stitch_length=3, width_profile=arc, min_strokes=1, max_strokes=7,
                                  stroke_spacing=0.3)

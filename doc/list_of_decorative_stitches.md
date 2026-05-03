@@ -19,7 +19,7 @@
 Example:
 
 ```python
-from stitch_generator.collection.stitch_effects.decorative_stitches import alternating_triangles
+from stitch_generator.collection.stitch_effects import alternating_triangles
 
 effect = alternating_triangles(spacing=3, line_length=4, width=5, repetitions=3)
 stitches = effect(path)
@@ -32,7 +32,7 @@ stitches = effect(path)
 Example:
 
 ```python
-from stitch_generator.collection.stitch_effects.decorative_stitches import arrow_chain
+from stitch_generator.collection.stitch_effects import arrow_chain
 
 effect = arrow_chain(arrow_width=5, arrow_length=2, arrow_spacing=3)
 stitches = effect(path)
@@ -45,7 +45,7 @@ stitches = effect(path)
 Example:
 
 ```python
-from stitch_generator.collection.stitch_effects.decorative_stitches import chevron_stitch
+from stitch_generator.collection.stitch_effects import chevron_stitch
 
 effect = chevron_stitch(spacing=6, line_length=3, width=5, repetitions=5)
 stitches = effect(path)
@@ -58,7 +58,7 @@ stitches = effect(path)
 Example:
 
 ```python
-from stitch_generator.collection.stitch_effects.decorative_stitches import cretan_stitch
+from stitch_generator.collection.stitch_effects import cretan_stitch
 
 effect = cretan_stitch(spacing=6, stitch_width=0.1, stitch_length=3, repetitions=4, zigzag_width=2)
 stitches = effect(path)
@@ -69,7 +69,7 @@ stitches = effect(path)
 Example:
 
 ```python
-from stitch_generator.collection.stitch_effects.decorative_stitches import cretan_stitch
+from stitch_generator.collection.stitch_effects import cretan_stitch
 
 effect = cretan_stitch(spacing=6, stitch_width=0.1, stitch_length=3.5, repetitions=4)
 stitches = effect(path)
@@ -82,7 +82,7 @@ stitches = effect(path)
 Example:
 
 ```python
-from stitch_generator.collection.stitch_effects.decorative_stitches import e_stitch
+from stitch_generator.collection.stitch_effects import e_stitch
 
 effect = e_stitch(spacing=3, line_length=4, stitch_length=10, angle=0)
 stitches = effect(path)
@@ -93,7 +93,7 @@ stitches = effect(path)
 Example:
 
 ```python
-from stitch_generator.collection.stitch_effects.decorative_stitches import e_stitch
+from stitch_generator.collection.stitch_effects import e_stitch
 
 effect = e_stitch(spacing=3, line_length=4, stitch_length=10, angle=45)
 stitches = effect(path)
@@ -106,7 +106,7 @@ stitches = effect(path)
 Example:
 
 ```python
-from stitch_generator.collection.stitch_effects.decorative_stitches import feather_stitch
+from stitch_generator.collection.stitch_effects import feather_stitch
 
 effect = feather_stitch(spacing=3, stitch_width=0, stitch_length=3.5, repetitions=2)
 stitches = effect(path)
@@ -119,7 +119,7 @@ stitches = effect(path)
 Example:
 
 ```python
-from stitch_generator.collection.stitch_effects.decorative_stitches import overlock_stitch
+from stitch_generator.collection.stitch_effects import overlock_stitch
 
 effect = overlock_stitch(length=3, width=5)
 stitches = effect(path)
@@ -132,7 +132,7 @@ stitches = effect(path)
 Example:
 
 ```python
-from stitch_generator.collection.stitch_effects.decorative_stitches import rhomb_motif_stitch
+from stitch_generator.collection.stitch_effects import rhomb_motif_stitch
 
 effect = rhomb_motif_stitch(spacing=3, width=6, length=5)
 stitches = effect(path)
@@ -145,7 +145,7 @@ stitches = effect(path)
 Example:
 
 ```python
-from stitch_generator.collection.stitch_effects.decorative_stitches import stem_stitch
+from stitch_generator.collection.stitch_effects import stem_stitch
 
 effect = stem_stitch(spacing=3, stitch_width=0.6, stitch_length=5, repetitions=5, angle=25)
 stitches = effect(path)
@@ -156,7 +156,7 @@ stitches = effect(path)
 Example:
 
 ```python
-from stitch_generator.collection.stitch_effects.decorative_stitches import stem_stitch
+from stitch_generator.collection.stitch_effects import stem_stitch
 
 effect = stem_stitch(spacing=3, stitch_width=5, stitch_length=4, repetitions=5, angle=0)
 stitches = effect(path)
@@ -169,7 +169,7 @@ stitches = effect(path)
 Example:
 
 ```python
-from stitch_generator.collection.stitch_effects.decorative_stitches import three_arrows
+from stitch_generator.collection.stitch_effects import three_arrows
 
 effect = three_arrows(arrow_spacing=2, group_spacing=20, start_end_spacing=10, stitch_length=3)
 stitches = effect(path)
@@ -182,7 +182,7 @@ stitches = effect(path)
 Example:
 
 ```python
-from stitch_generator.collection.stitch_effects.decorative_stitches import x_motif_stitch
+from stitch_generator.collection.stitch_effects import x_motif_stitch
 
 effect = x_motif_stitch(spacing=3, width=6, length=5)
 stitches = effect(path)

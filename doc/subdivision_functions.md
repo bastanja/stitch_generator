@@ -9,7 +9,7 @@ of a fixed length.
 For example, the subdivision_by_length distributes the values evenly over the full length:
 
 ```python
-from stitch_generator.subdivision.subdivide_by_length import subdivision_by_length
+from stitch_generator.subdivision import subdivision_by_length
 
 # create a subdivision function that subdivides into segments of length 2
 subdivision = subdivision_by_length(segment_length=2)
