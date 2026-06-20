@@ -9,6 +9,7 @@ from stitch_generator.functions import square
 from stitch_generator.helpers import get_inset_path
 from stitch_generator.shapes import line_shape
 from stitch_generator.stitch_effects.path_effects import contour
+from stitch_generator.stitch_effects.path_effects import double_satin
 from stitch_generator.stitch_effects.path_effects import lattice
 from stitch_generator.stitch_effects.path_effects import meander
 from stitch_generator.stitch_effects.path_effects import satin
@@ -45,6 +46,7 @@ def stitch_effect_collection():
     yield stitch_effect_meander_pattern
     yield stitch_effect_meander_spacing_pattern
     yield stitch_effect_satin
+    yield stitch_effect_double_satin
     yield stitch_effect_scribble
     yield stitch_effect_scribble_dense
     yield stitch_effect_stripes
@@ -111,6 +113,11 @@ def stitch_effect_satin(path):
         )
     )
     effect = satin(spacing_function=regular(2), line_subdivision=line_subdivision)
+    return effect(path)
+
+
+def stitch_effect_double_satin(path):
+    effect = double_satin(spacing_function=regular(3), line_subdivision=regular(3))
     return effect(path)
 
 

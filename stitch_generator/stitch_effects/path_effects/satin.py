@@ -70,6 +70,7 @@ def double_satin_along(
     spacing_function: SubdivisionFunction,
     line_subdivision: SubdivisionFunction,
 ) -> Array2D:
+    path_length = estimate_length(path.shape)
     return double_satin_between(
         *get_boundaries(path),
         spacing_function=spacing_function,
