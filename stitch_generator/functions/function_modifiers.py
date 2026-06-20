@@ -30,8 +30,10 @@ def reflect(function):
 
     Example:
         >>> f = reflect(lambda v: v)
-        >>> f(0.3)  # Returns 0.3
+        >>> f(0.3)
+        np.float64(0.30000000000000004)
         >>> f(1.3)  # Returns 0.7 (reflected)
+        np.float64(0.7)
     """
 
     def f(v):
@@ -57,8 +59,11 @@ def wrap(function):
     Example:
         >>> f = wrap(lambda v: v)
         >>> f(0.3)  # Returns 0.3
-        >>> f(1.3)  # Returns 0.3 (wrapped)
-        >>> f(2.7)  # Returns 0.7 (wrapped)
+        0.3
+        >>> f(1.3)  # Returns ~0.3 (wrapped)
+        0.30000000000000004
+        >>> f(2.7)  # Returns ~0.7 (wrapped)
+        0.7000000000000002
     """
     return lambda v: function(v % 1)
 
@@ -80,8 +85,11 @@ def clamp(function):
     Example:
         >>> f = clamp(lambda v: v)
         >>> f(0.3)   # Returns 0.3
+        array(0.3)
         >>> f(-0.5)  # Returns 0.0 (clamped)
+        array(0.)
         >>> f(1.5)   # Returns 1.0 (clamped)
+        array(1.)
     """
 
     def f(v):
@@ -116,9 +124,11 @@ def repeat(r: float, function, mode: Literal["", "reflect", "wrap", "clamp"] = "
         InvalidParameterError: If r is NaN/Inf.
 
     Example:
-        >>> f = repeat(2, lambda v: v)
+        >>> f = repeat(2, lambda v: v, mode="wrap")
         >>> f(0.25)  # Evaluates original function at 0.5
+        np.float64(0.5)
         >>> f(0.75)  # Evaluates original function at 1.5 (wrapped to 0.5)
+        np.float64(0.5)
     """
 
     validate_finite(r, "Repeat count r")
@@ -149,6 +159,7 @@ def scale(s: float, function):
     Example:
         >>> f = scale(2.0, lambda v: v)
         >>> f(0.5)  # Returns 1.0 (0.5 * 2.0)
+        1.0
     """
     return lambda v: function(v) * s
 
@@ -170,7 +181,9 @@ def shift(amount: float, function):
     Example:
         >>> f = shift(0.2, lambda v: v)
         >>> f(0.3)  # Evaluates original function at 0.5 (0.3 + 0.2)
+        0.5
         >>> f(0.0)  # Evaluates original function at 0.2
+        0.2
     """
     return lambda v: function(v + amount)
 
@@ -194,6 +207,7 @@ def compose(f1, f2):
         >>> f2 = lambda v: v + 1
         >>> composed = compose(f1, f2)
         >>> composed(3)  # Returns 7 (f2(f1(3)) = f2(6) = 7)
+        7
     """
     return lambda v: f2(f1(v))
 
@@ -218,6 +232,7 @@ def add_functions(f1, f2):
         >>> f2 = lambda v: v * 2
         >>> added = add_functions(f1, f2)
         >>> added(0.5)  # Returns 1.5 (0.5 + 1.0)
+        array(1.5)
     """
     return _binary_operation(lambda a, b: a + b, f1, f2)
 
@@ -241,6 +256,7 @@ def subtract_functions(f1, f2):
         >>> f2 = lambda v: v
         >>> subtracted = subtract_functions(f1, f2)
         >>> subtracted(0.5)  # Returns 0.5 (1.0 - 0.5)
+        array(0.5)
     """
     return _binary_operation(lambda a, b: a - b, f1, f2)
 
@@ -264,6 +280,7 @@ def multiply_functions(f1, f2):
         >>> f2 = lambda v: v * 2
         >>> multiplied = multiply_functions(f1, f2)
         >>> multiplied(0.5)  # Returns 0.5 (0.5 * 1.0)
+        array(0.5)
     """
     return _binary_operation(lambda a, b: a * b, f1, f2)
 
@@ -289,6 +306,7 @@ def divide_functions(f1, f2):
         >>> f2 = lambda v: v + 0.1  # Never zero
         >>> divided = divide_functions(f1, f2)
         >>> divided(0.5)  # Returns approximately 1.67 (1.0 / 0.6)
+        array(1.66666667)
     """
 
     def f(a, b):
@@ -315,7 +333,9 @@ def inverse(function):
         >>> f = lambda v: v
         >>> inverted = inverse(f)
         >>> inverted(0.2)  # Returns 0.8 (evaluates f at 1 - 0.2 = 0.8)
+        0.8
         >>> inverted(0.8)  # Returns 0.2 (evaluates f at 1 - 0.8 = 0.2)
+        0.19999999999999996
     """
     return lambda v: function(1 - v)
 
@@ -347,6 +367,7 @@ def mix(f1, f2, factor: Function1D):
         >>> factor = lambda v: v  # Interpolate from f1 to f2
         >>> mixed = mix(f1, f2, factor)
         >>> mixed(0.5)  # Returns 0.75 (0.5 * 0.5 + 1.0 * 0.5)
+        array(0.75)
     """
     one_minus_factor = subtract_functions(
         lambda v: np.ones_like(np.array(v), dtype=float), factor
@@ -408,6 +429,7 @@ def max_functions(f1, f2):
         >>> f2 = lambda v: 1 - v
         >>> max_func = max_functions(f1, f2)
         >>> max_func(0.3)  # Returns 0.7 (max(0.3, 0.7))
+        np.float64(0.7)
     """
     return lambda v: np.maximum(f1(v), f2(v))
 
@@ -432,6 +454,7 @@ def min_functions(f1, f2):
         >>> f2 = lambda v: 1 - v
         >>> min_func = min_functions(f1, f2)
         >>> min_func(0.3)  # Returns 0.3 (min(0.3, 0.7))
+        np.float64(0.3)
     """
     return lambda v: np.minimum(f1(v), f2(v))
 
@@ -460,9 +483,13 @@ def split(function, offsets: Union[List[float], Array1D]):
         >>> f = lambda v: v
         >>> segments = split(f, [0.25, 0.75])
         >>> len(segments)  # Returns 3
+        3
         >>> segments[0](0.5)  # Evaluates f at 0.125 (first quarter)
+        np.float64(0.125)
         >>> segments[1](0.5)  # Evaluates f at 0.5 (middle half)
+        np.float64(0.5)
         >>> segments[2](0.5)  # Evaluates f at 0.875 (last quarter)
+        np.float64(0.875)
     """
     try:
         offsets = offsets.tolist()  # convert np.ndarray to list

@@ -31,8 +31,10 @@ def line(
 
     Example:
         >>> shape, direction = line(origin=(0, 0), to=(100, 0))
-        >>> shape(0)  # Returns array([[0., 0.]])
-        >>> shape(1)  # Returns array([[100., 0.]])
+        >>> shape(0)
+        array([[0., 0.]])
+        >>> shape(1)
+        array([[100., 0.]])
     """
     shape = line_shape(origin=origin, to=to)
     direction = line_direction(origin=origin, to=to)

@@ -29,7 +29,10 @@ def validate_finite(value: Union[float, int], param_name: str = "parameter") -> 
 
     Example:
         >>> validate_finite(5.0, "repeat_count")
-        >>> validate_finite(np.inf, "repeat_count")  # Raises InvalidParameterError
+        >>> validate_finite(np.inf, "repeat_count")
+        Traceback (most recent call last):
+        ...
+        stitch_generator.framework.exceptions.InvalidParameterError
     """
     if np.isnan(value) or np.isinf(value):
         raise InvalidParameterError(
@@ -51,7 +54,10 @@ def validate_finite_array(
 
     Example:
         >>> validate_finite_array([1.0, 2.0, 3.0], "offsets")
-        >>> validate_finite_array([1.0, np.nan], "offsets")  # Raises InvalidParameterError
+        >>> validate_finite_array([1.0, np.nan], "offsets")
+        Traceback (most recent call last):
+        ...
+        stitch_generator.framework.exceptions.InvalidParameterError
     """
     values_array = np.asarray(values)
     if np.any(np.isnan(values_array)) or np.any(np.isinf(values_array)):
@@ -79,7 +85,10 @@ def validate_range(
 
     Example:
         >>> validate_range(0.5, 0.0, 1.0, "alignment")
-        >>> validate_range(1.5, 0.0, 1.0, "alignment")  # Raises InvalidParameterError
+        >>> validate_range(1.5, 0.0, 1.0, "alignment")
+        Traceback (most recent call last):
+        ...
+        stitch_generator.framework.exceptions.InvalidParameterError
     """
     if inclusive:
         if not (min_val <= value <= max_val):
@@ -114,7 +123,10 @@ def validate_range_array(
 
     Example:
         >>> validate_range_array([0.0, 0.5, 1.0], 0.0, 1.0, "offsets")
-        >>> validate_range_array([0.0, 1.5], 0.0, 1.0, "offsets")  # Raises InvalidParameterError
+        >>> validate_range_array([0.0, 1.5], 0.0, 1.0, "offsets")
+        Traceback (most recent call last):
+        ...
+        stitch_generator.framework.exceptions.InvalidParameterError
     """
     values_array = np.asarray(values)
     if inclusive:
@@ -145,7 +157,10 @@ def validate_non_negative(
 
     Example:
         >>> validate_non_negative(5.0, "width")
-        >>> validate_non_negative(-1.0, "width")  # Raises InvalidParameterError
+        >>> validate_non_negative(-1.0, "width")
+        Traceback (most recent call last):
+        ...
+        stitch_generator.framework.exceptions.InvalidParameterError
     """
     if allow_zero:
         if value < 0:
@@ -176,7 +191,10 @@ def validate_array_length(
 
     Example:
         >>> validate_array_length([1, 2, 3], 2, "control_points")
-        >>> validate_array_length([1], 2, "control_points")  # Raises InsufficientDataError
+        >>> validate_array_length([1], 2, "control_points")
+        Traceback (most recent call last):
+        ...
+        stitch_generator.framework.exceptions.InsufficientDataError
         >>> validate_array_length([1, 2], 2, "control_points", exact_length=2)
     """
     length = len(array)
@@ -209,7 +227,10 @@ def validate_no_duplicates(
 
     Example:
         >>> validate_no_duplicates([0.0, 0.5, 1.0], "offsets")
-        >>> validate_no_duplicates([0.0, 0.0, 1.0], "offsets")  # Raises InvalidParameterError
+        >>> validate_no_duplicates([0.0, 0.0, 1.0], "offsets")
+        Traceback (most recent call last):
+        ...
+        stitch_generator.framework.exceptions.InvalidParameterError
     """
     if len(values) <= 1:
         return  # No duplicates possible
@@ -239,7 +260,10 @@ def validate_sorted(
 
     Example:
         >>> validate_sorted([0.0, 0.5, 1.0], "offsets")
-        >>> validate_sorted([0.5, 0.0, 1.0], "offsets")  # Raises InvalidParameterError
+        >>> validate_sorted([0.5, 0.0, 1.0], "offsets")
+        Traceback (most recent call last):
+        ...
+        stitch_generator.framework.exceptions.InvalidParameterError
     """
     values_array = np.asarray(values)
     if strict:
@@ -268,7 +292,10 @@ def validate_unit_range(value: float, param_name: str = "parameter") -> None:
 
     Example:
         >>> validate_unit_range(0.5, "alignment")
-        >>> validate_unit_range(1.5, "alignment")  # Raises InvalidParameterError
+        >>> validate_unit_range(1.5, "alignment")
+        Traceback (most recent call last):
+        ...
+        stitch_generator.framework.exceptions.InvalidParameterError
     """
     validate_range(value, 0.0, 1.0, param_name)
 
@@ -289,6 +316,9 @@ def validate_unit_range_array(
 
     Example:
         >>> validate_unit_range_array([0.0, 0.5, 1.0], "offsets")
-        >>> validate_unit_range_array([0.0, 1.5], "offsets")  # Raises InvalidParameterError
+        >>> validate_unit_range_array([0.0, 1.5], "offsets")
+        Traceback (most recent call last):
+        ...
+        stitch_generator.framework.exceptions.InvalidParameterError
     """
     validate_range_array(values, 0.0, 1.0, param_name)

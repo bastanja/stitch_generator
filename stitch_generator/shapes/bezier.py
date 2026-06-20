@@ -29,8 +29,10 @@ def bezier(control_points: Sequence) -> Tuple[CoordinateFunction, CoordinateFunc
         >>> # Cubic Bézier curve (2D)
         >>> points = [(0, 0), (25, 50), (75, -50), (100, 0)]
         >>> shape, direction = bezier(points)
-        >>> shape(0)  # Returns array([[0., 0.]])
-        >>> shape(1)  # Returns array([[100., 0.]])
+        >>> shape(0)
+         array([[0., 0.]])
+        >>> shape(1)
+        array([[100., 0.]])
     """
     return bezier_shape(control_points), bezier_direction(control_points)
 
