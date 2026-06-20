@@ -141,7 +141,7 @@ def fix_distribution(
     # 0 for values lower than 0,
     # 1 for values above 1 and
     # smootherstep(t) for all values t between 0 and 1
-    spread_distribution = repeat(r=1, function=smootherstep, mode="nearest")
+    spread_distribution = repeat(r=1, function=smootherstep, mode="clamp")
 
     # combine the range mapping and the spreading of the distribution
     distribution_modification = compose(map_range, spread_distribution)

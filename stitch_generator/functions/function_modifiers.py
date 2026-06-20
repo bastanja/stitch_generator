@@ -127,7 +127,7 @@ def repeat(r: float, function, mode: Literal["", "reflect", "wrap", "clamp"] = "
         function = reflect(function)
     if mode == "wrap":
         function = wrap(function)
-    if mode == "nearest":
+    if mode == "clamp":
         function = clamp(function)
     return lambda v: function(np.asarray(v) * r)
 
