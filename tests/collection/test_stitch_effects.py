@@ -56,13 +56,13 @@ def test_stitch_effect(path, effect):
     # assert len(stitches) == len(without_duplicates) # ToDo: not fulfilled by all stitch effects
 
 
-def in_rectangle(points, left: float, top: float, right: float, bottom: float):
+def in_rectangle(points, left: float, top: float, right: float, bottom: float, tolerance: float = 1e-9):
     points_x = points[:, 0]
     points_y = points[:, 1]
-    left_outside = points_x < left
-    top_outside = points_y < top
-    right_outside = points_x > right
-    bottom_outside = points_y > bottom
+    left_outside = points_x < left - tolerance
+    top_outside = points_y < top - tolerance
+    right_outside = points_x > right + tolerance
+    bottom_outside = points_y > bottom + tolerance
     any_outside = np.logical_or(
         np.logical_or(left_outside, right_outside),
         np.logical_or(top_outside, bottom_outside),
