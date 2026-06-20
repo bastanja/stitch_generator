@@ -8,3 +8,4 @@ venv*/*
 .coverage
 htmlcov
 .vscode
+.DS_Store
