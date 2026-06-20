@@ -63,7 +63,7 @@ def contour_between(boundary_left, boundary_right, stitch_length: float) -> Coor
     Returns:
         Coordinates representing the contour stitches connecting the boundaries.
     """
-    running_stitch = partial[Coordinates](
+    running_stitch = partial(
         running_stitch_on_shape, stitch_length=stitch_length, include_endpoint=False
     )
 
