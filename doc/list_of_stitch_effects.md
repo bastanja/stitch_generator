@@ -19,6 +19,7 @@ Path effects use the width and alignment of the path. Stitches lie between the b
 | [Lattice](#lattice)                     | ![](images/small_stitch_effect_lattice_linear.svg) <br/> ![](images/small_stitch_effect_lattice_peaks.svg)                                                                                                                          |
 | [Meander](#meander)                     | ![](images/small_stitch_effect_meander.svg) <br/> ![](images/small_stitch_effect_meander_join_ends.svg) <br/> ![](images/small_stitch_effect_meander_pattern.svg) <br/> ![](images/small_stitch_effect_meander_spacing_pattern.svg) |
 | [Satin](#satin)                         | ![](images/small_stitch_effect_satin.svg)                                                                                                                                                                                           |
+| [Double Satin](#double-satin)           | ![](images/small_stitch_effect_double_satin.svg)                                                                                                                                                                                    |
 | [Scribble](#scribble)                   | ![](images/small_stitch_effect_scribble.svg) <br/> ![](images/small_stitch_effect_scribble_dense.svg)                                                                                                                               |
 | [Stripes](#stripes)                     | ![](images/small_stitch_effect_stripes.svg)                                                                                                                                                                                         |
 | [Parallel Stripes](#parallel-stripes)   | ![](images/small_stitch_effect_parallel_stripes.svg) <br/> ![](images/small_stitch_effect_parallel_stripes_pattern.svg)                                                                                                             |
@@ -163,6 +164,24 @@ stitches = effect(path)
 ```
 
 ![StitchEffect Satin](images/stitch_effect_satin.svg)
+
+## Double Satin
+
+A zigzag line between the left and right boundary of the path with intermediate stitches based on a subdivision
+function.
+
+Example:
+
+```python
+from stitch_generator.subdivision import regular
+from stitch_generator.stitch_effects.path_effects import double_satin
+
+effect = double_satin(spacing_function=regular(3), line_subdivision=regular(3))
+
+stitches = effect(path)
+```
+
+![StitchEffect Double_Satin](images/stitch_effect_double_satin.svg)
 
 ## Scribble
 
