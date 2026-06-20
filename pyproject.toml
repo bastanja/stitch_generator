@@ -25,3 +25,6 @@ test = [
 
 [project.urls]
 "Homepage" = "https://github.com/bastanja/stitch_generator"
+
+[tool.pytest.ini_options]
+doctest_optionflags = ["NORMALIZE_WHITESPACE", "ELLIPSIS", "IGNORE_EXCEPTION_DETAIL"]
