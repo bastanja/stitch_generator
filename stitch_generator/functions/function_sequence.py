@@ -72,7 +72,7 @@ def _get_lengths(functions, lengths):
     if not lengths:
         try:
             lengths = [estimate_length(f) for f in functions]
-        except np.AxisError:
+        except Exception:
             lengths = [1] * len(functions)
 
     lengths = np.cumsum(lengths).astype(float)
