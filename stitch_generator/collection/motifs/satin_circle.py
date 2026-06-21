@@ -178,7 +178,7 @@ def _satin_ellipse(
     if return_to_start:
         # add line to the end of the outer shape and inverse the outer path in order to stitch it backwards
         stitches.append(outer_path.shape(subdivide_by_length(height, stitch_length)))
-        outer_path = outer_path.inverse()
+        outer_path = apply_modifier_to_path(outer_path, inverse)
     else:
         # add the first point of the outer path
         stitches.append(outer_path.shape(0))
