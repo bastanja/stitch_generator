@@ -4,8 +4,7 @@ import numpy as np
 from scipy.interpolate import interp1d
 
 from stitch_generator.framework import CoordinateFunction
-from stitch_generator.functions import ensure_2d_shape
-from stitch_generator.functions import constant_direction
+from stitch_generator.functions import constant_direction, ensure_2d_shape
 
 
 def line(

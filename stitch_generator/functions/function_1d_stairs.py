@@ -2,11 +2,7 @@ import itertools
 
 from .function_modifiers import compose
 from .function_sequence import function_sequence
-from .functions_1d import (
-    constant,
-    linear_interpolation,
-    smootherstep,
-)
+from .functions_1d import constant, linear_interpolation, smootherstep
 
 
 def stairs(values, ascend_ratio):

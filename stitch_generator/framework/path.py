@@ -1,4 +1,4 @@
-from .types import Function1D, CoordinateFunction
+from .types import CoordinateFunction, Function1D
 
 
 class Path:

@@ -22,6 +22,7 @@ from .types import (
     SubdivisionFunction,
 )
 from .validation import (
+    DUPLICATE_THRESHOLD,
     validate_array_length,
     validate_finite,
     validate_finite_array,
@@ -32,7 +33,6 @@ from .validation import (
     validate_sorted,
     validate_unit_range,
     validate_unit_range_array,
-    DUPLICATE_THRESHOLD,
 )
 
 __all__ = [

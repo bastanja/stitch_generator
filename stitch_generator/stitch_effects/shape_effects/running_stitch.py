@@ -1,7 +1,6 @@
-from stitch_generator.framework import StitchEffect, CoordinateFunction, Coordinates
+from stitch_generator.framework import CoordinateFunction, Coordinates, StitchEffect
 from stitch_generator.functions import estimate_length
-from stitch_generator.subdivision import remove_end
-from stitch_generator.subdivision import subdivision_by_length
+from stitch_generator.subdivision import remove_end, subdivision_by_length
 
 
 def running_stitch(stitch_length: float, include_endpoint: bool = True) -> StitchEffect:

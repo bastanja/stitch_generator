@@ -3,8 +3,7 @@ import itertools
 import numpy as np
 
 from stitch_generator.framework import SubdivisionFunction
-from stitch_generator.functions import ensure_1d_shape
-from stitch_generator.functions import compose
+from stitch_generator.functions import compose, ensure_1d_shape
 
 
 def alternate_direction(subdivision_function: SubdivisionFunction):

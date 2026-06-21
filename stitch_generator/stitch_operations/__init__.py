@@ -5,9 +5,9 @@ from .remove_duplicates import remove_duplicates
 from .repeat_stitches import repeat_stitches
 from .roll import roll
 from .rotate import (
+    rotate_90,
     rotate_180,
     rotate_270,
-    rotate_90,
     rotate_by_degrees,
     rotate_by_radians,
     rotate_by_sin_cos,

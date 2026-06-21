@@ -1,17 +1,15 @@
-from stitch_generator.functions import stairs
 from stitch_generator.functions import (
-    subtract_functions,
-    repeat,
-    compose,
-)
-from stitch_generator.functions import (
-    constant,
-    linear_interpolation,
     arc,
     circular_arc,
-    sinus,
+    compose,
+    constant,
     cubic_interpolation,
+    linear_interpolation,
+    repeat,
+    sinus,
     smoothstep,
+    stairs,
+    subtract_functions,
 )
 from stitch_generator.subdivision import subdivide_by_number
 

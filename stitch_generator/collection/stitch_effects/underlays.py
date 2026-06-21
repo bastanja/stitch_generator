@@ -1,25 +1,20 @@
 import numpy as np
 
-from ..subdivision.tatami import tatami_3_1
-from stitch_generator.framework import Path
-from stitch_generator.helpers import (
-    get_inset_path,
-    inset_sides,
-    path_is_circular,
+from stitch_generator.framework import Array2D, Path, StitchEffect
+from stitch_generator.helpers import get_inset_path, inset_sides, path_is_circular
+from stitch_generator.stitch_effects.path_effects import (
+    contour_along,
+    double_satin_along,
+    variable_underlay_along,
 )
-from stitch_generator.framework import StitchEffect
-from stitch_generator.framework import Array2D
-from stitch_generator.subdivision import regular
 from stitch_generator.subdivision import (
     add_start,
     alternate_direction,
+    regular,
     remove_end,
 )
-from stitch_generator.stitch_effects.path_effects import contour_along
-from stitch_generator.stitch_effects.path_effects import double_satin_along
-from stitch_generator.stitch_effects.path_effects import (
-    variable_underlay_along,
-)
+
+from ..subdivision.tatami import tatami_3_1
 
 
 def underlay_contour_zigzag(

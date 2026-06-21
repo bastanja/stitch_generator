@@ -1,12 +1,11 @@
 import numpy as np
 
-from stitch_generator.framework import Path
-from stitch_generator.framework import StitchEffect
-from stitch_generator.framework import Array2D, Coordinates
+from stitch_generator.framework import Array2D, Coordinates, Path, StitchEffect
 from stitch_generator.functions import estimate_length
-from ..utilities.motif_to_path import motif_to_path
 from stitch_generator.stitch_operations import tile_x
 from stitch_generator.subdivision import subdivide_by_number
+
+from ..utilities.motif_to_path import motif_to_path
 
 
 def tile_motif(motif: Array2D, motif_length: float) -> StitchEffect:

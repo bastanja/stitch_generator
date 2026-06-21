@@ -1,40 +1,37 @@
 import numpy as np
 
+from stitch_generator.functions import compose, square
+from stitch_generator.helpers import get_inset_path
+from stitch_generator.shapes import line_shape
+from stitch_generator.stitch_effects.path_effects import (
+    contour,
+    double_satin,
+    double_zigzag,
+    lattice,
+    meander,
+    parallel_stripes,
+    satin,
+    scribble,
+    stripes,
+    tile_motif,
+    variable_underlay,
+    zigzag,
+)
+from stitch_generator.stitch_operations import remove_duplicates
+from stitch_generator.subdivision import (
+    add_end,
+    add_start,
+    alternate_direction,
+    pattern_from_spaces,
+    regular,
+    subdivide_by_number,
+    subdivision_by_pattern,
+)
+
 from ..functions.functions_1d import linear_0_1
 from ..motifs.collection import zigzag_rectangle
 from ..motifs.square_spiral import square_spiral
-from ..subdivision.tatami import tatami_3_1, tatami
-from stitch_generator.functions import compose
-from stitch_generator.functions import square
-from stitch_generator.helpers import get_inset_path
-from stitch_generator.shapes import line_shape
-from stitch_generator.stitch_effects.path_effects import contour
-from stitch_generator.stitch_effects.path_effects import double_satin
-from stitch_generator.stitch_effects.path_effects import lattice
-from stitch_generator.stitch_effects.path_effects import meander
-from stitch_generator.stitch_effects.path_effects import satin
-from stitch_generator.stitch_effects.path_effects import scribble
-from stitch_generator.stitch_effects.path_effects import (
-    stripes,
-    parallel_stripes,
-)
-from stitch_generator.stitch_effects.path_effects import tile_motif
-from stitch_generator.stitch_effects.path_effects import (
-    variable_underlay,
-)
-from stitch_generator.stitch_effects.path_effects import zigzag, double_zigzag
-from stitch_generator.stitch_operations import remove_duplicates
-from stitch_generator.subdivision import regular
-from stitch_generator.subdivision import subdivide_by_number
-from stitch_generator.subdivision import (
-    pattern_from_spaces,
-    subdivision_by_pattern,
-)
-from stitch_generator.subdivision import (
-    alternate_direction,
-    add_end,
-    add_start,
-)
+from ..subdivision.tatami import tatami, tatami_3_1
 
 
 def stitch_effect_collection():

@@ -1,9 +1,9 @@
 from typing import Sequence, Tuple
 
 from stitch_generator.framework import Function2D
-from stitch_generator.functions import repeat, mix
-from stitch_generator.functions import linear_interpolation
-from .circle import circle_shape, circle_direction
+from stitch_generator.functions import linear_interpolation, mix, repeat
+
+from .circle import circle_direction, circle_shape
 
 
 def spiral(

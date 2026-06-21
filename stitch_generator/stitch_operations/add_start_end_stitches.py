@@ -1,6 +1,7 @@
 import numpy as np
 
 from stitch_generator.framework import Array2D
+
 from .repeat_stitches import repeat_stitches
 
 

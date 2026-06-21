@@ -1,11 +1,9 @@
-from stitch_generator.framework import Path
-from stitch_generator.framework import StitchEffect
-from stitch_generator.framework import Coordinates, Function1D
-from stitch_generator.functions import estimate_length
+from stitch_generator.framework import Coordinates, Function1D, Path, StitchEffect
 from stitch_generator.functions import (
     add_functions,
-    repeat,
+    estimate_length,
     multiply_functions,
+    repeat,
 )
 from stitch_generator.helpers import get_boundaries, path_is_circular
 from stitch_generator.subdivision import subdivision_by_number

@@ -4,24 +4,23 @@ from typing import List, Tuple
 
 import numpy as np
 
-from stitch_generator.framework import Path
-from stitch_generator.framework import Function1D, CoordinateFunction, Function2D
-from stitch_generator.functions import arc_length_mapping
-from stitch_generator.functions import estimate_length
+from stitch_generator.framework import CoordinateFunction, Function1D, Function2D, Path
 from stitch_generator.functions import (
-    split,
+    add_functions,
+    arc_length_mapping,
+    compose,
+    constant,
+    divide_functions,
+    estimate_length,
     inverse,
+    max_functions,
     mix,
     multiply_functions,
-    subtract_functions,
-    add_functions,
     repeat,
     shift,
-    max_functions,
-    divide_functions,
-    compose,
+    split,
+    subtract_functions,
 )
-from stitch_generator.functions import constant
 
 
 def default_width_and_alignment_path(shape: Function2D, direction: Function2D) -> Path:

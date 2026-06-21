@@ -1,15 +1,15 @@
 from functools import partial
 
+from stitch_generator.framework import Function1D, SubdivisionFunction
+from stitch_generator.functions import arc, repeat
+from stitch_generator.subdivision import (
+    cycle_alignments,
+    subdivide_by_fixed_length,
+    subdivide_by_number,
+)
+
 from ..functions.functions_1d import linear_0_1, positive_sine
 from .subdivision_with_varying_offset import to_range
-from stitch_generator.framework import Function1D, SubdivisionFunction
-from stitch_generator.functions import repeat
-from stitch_generator.functions import arc
-from stitch_generator.subdivision import (
-    subdivide_by_fixed_length,
-)
-from stitch_generator.subdivision import subdivide_by_number
-from stitch_generator.subdivision import cycle_alignments
 
 
 def subdivision_with_wave_alignment(

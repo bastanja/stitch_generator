@@ -1,46 +1,46 @@
 import numpy as np
 
-from ..motifs.collection import (
-    zigzag_rectangle,
-    zigzag_motif,
-    rhomb_motif,
-    x_motif,
-    line_motif,
-    overlock_stitch_motif,
-)
-from stitch_generator.framework import Path
-from stitch_generator.framework import StitchEffect
-from stitch_generator.functions import estimate_length
-from stitch_generator.functions import mix, inverse
-from stitch_generator.functions import constant
+from stitch_generator.framework import Path, StitchEffect
 from stitch_generator.functions import (
+    constant,
+    estimate_length,
+    inverse,
+    mix,
     repeat_motif,
     repeat_motif_mirrored,
 )
 from stitch_generator.helpers import get_boundaries
 from stitch_generator.shapes import line_shape
 from stitch_generator.stitch_effects.path_effects import tile_motif
-from stitch_generator.stitch_effects.shape_effects import motif_chain
 from stitch_generator.stitch_effects.shape_effects import (
+    motif_chain,
     motif_to_points,
-)
-from stitch_generator.stitch_effects.shape_effects import (
     motif_to_segments,
 )
-from stitch_generator.stitch_operations import repeat_stitches
-from stitch_generator.stitch_operations import rotate_by_degrees, rotate_270
-from stitch_generator.subdivision import (
-    subdivision_by_length,
-    subdivision_by_length_with_offset,
-    regular,
-    subdivide_by_length,
+from stitch_generator.stitch_operations import (
+    repeat_stitches,
+    rotate_270,
+    rotate_by_degrees,
 )
 from stitch_generator.subdivision import (
-    remove_end,
     add_end,
     add_start,
     free_end,
     free_start,
+    regular,
+    remove_end,
+    subdivide_by_length,
+    subdivision_by_length,
+    subdivision_by_length_with_offset,
+)
+
+from ..motifs.collection import (
+    line_motif,
+    overlock_stitch_motif,
+    rhomb_motif,
+    x_motif,
+    zigzag_motif,
+    zigzag_rectangle,
 )
 
 

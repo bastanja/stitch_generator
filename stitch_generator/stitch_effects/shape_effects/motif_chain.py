@@ -1,15 +1,16 @@
 import numpy as np
 
-from stitch_generator.framework import StitchEffect, Coordinates
 from stitch_generator.framework import (
-    SubdivisionFunction,
+    Coordinates,
     Function1D,
     Function2D,
+    StitchEffect,
+    SubdivisionFunction,
 )
-from stitch_generator.functions import ensure_1d_shape
-from stitch_generator.functions import estimate_length
-from ..utilities import place_motif_at
+from stitch_generator.functions import ensure_1d_shape, estimate_length
 from stitch_generator.stitch_operations import rotate_by_degrees
+
+from ..utilities import place_motif_at
 
 
 def motif_chain(

@@ -1,17 +1,22 @@
 import numpy as np
 
-from stitch_generator.framework import Array2D, Function2D, Function1D
-from stitch_generator.framework import Path
-from stitch_generator.framework import StitchEffect
-from stitch_generator.functions import constant, linear_interpolation
-from stitch_generator.functions import estimate_length
-from stitch_generator.functions import mix
-from stitch_generator.subdivision import subdivide_by_length
-from ..utilities.motif_to_path import motif_to_path
-from ..utilities.range_tree import (
-    make_range_tree,
-    tree_to_indices_and_offsets,
+from stitch_generator.framework import (
+    Array2D,
+    Function1D,
+    Function2D,
+    Path,
+    StitchEffect,
 )
+from stitch_generator.functions import (
+    constant,
+    estimate_length,
+    linear_interpolation,
+    mix,
+)
+from stitch_generator.subdivision import subdivide_by_length
+
+from ..utilities.motif_to_path import motif_to_path
+from ..utilities.range_tree import make_range_tree, tree_to_indices_and_offsets
 
 
 def variable_running_stitch(

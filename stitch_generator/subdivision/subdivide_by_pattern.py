@@ -4,9 +4,7 @@ from typing import List
 import numpy as np
 
 from .alignment_to_offset import alignment_to_offset
-from .subdivide_by_fixed_length import (
-    subdivide_by_fixed_length,
-)
+from .subdivide_by_fixed_length import subdivide_by_fixed_length
 from .subdivide_by_number import subdivide_by_number
 
 

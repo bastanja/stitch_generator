@@ -4,13 +4,11 @@ import numpy as np
 
 from stitch_generator.framework import SubdivisionFunction
 from stitch_generator.subdivision import (
-    subdivide_by_fixed_length,
-)
-from stitch_generator.subdivision import subdivide_by_number
-from stitch_generator.subdivision import (
-    free_start,
-    free_end,
     cycle_offsets,
+    free_end,
+    free_start,
+    subdivide_by_fixed_length,
+    subdivide_by_number,
 )
 
 

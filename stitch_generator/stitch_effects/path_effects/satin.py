@@ -1,17 +1,17 @@
 import numpy as np
 
-from stitch_generator.framework import Path
-from stitch_generator.framework import StitchEffect
-from stitch_generator.framework import Array2D
-from stitch_generator.framework import Function2D, SubdivisionFunction
-from stitch_generator.functions import estimate_length
-from stitch_generator.helpers import get_boundaries
-from ..path_effects.zigzag import (
-    zigzag_between,
-    double_zigzag_between,
+from stitch_generator.framework import (
+    Array2D,
+    Function2D,
+    Path,
+    StitchEffect,
+    SubdivisionFunction,
 )
-from stitch_generator.helpers import subdivide_line
+from stitch_generator.functions import estimate_length
+from stitch_generator.helpers import get_boundaries, subdivide_line
 from stitch_generator.subdivision import regular
+
+from ..path_effects.zigzag import double_zigzag_between, zigzag_between
 
 
 def satin(

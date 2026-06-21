@@ -2,17 +2,22 @@ import itertools
 
 import numpy as np
 
-from stitch_generator.framework import StitchEffect, Coordinates
-from stitch_generator.framework import SubdivisionFunction, Function2D
+from stitch_generator.framework import (
+    Coordinates,
+    Function2D,
+    StitchEffect,
+    SubdivisionFunction,
+)
 from stitch_generator.functions import estimate_length
 from stitch_generator.subdivision import (
-    free_start,
     free_end,
-    remove_start,
+    free_start,
     remove_end,
+    remove_start,
+    subdivide_between,
+    subdivide_by_number,
 )
-from stitch_generator.subdivision import subdivide_between
-from stitch_generator.subdivision import subdivide_by_number
+
 from ..utilities import place_motif_between
 
 

@@ -1,9 +1,10 @@
-from scipy.interpolate import interp1d
 from typing import Tuple
 
 import numpy as np
+from scipy.interpolate import interp1d
 
 from stitch_generator.framework import CoordinateFunction, Function1D
+
 from .estimate_length import accumulate_lengths
 from .function_modifiers import compose
 

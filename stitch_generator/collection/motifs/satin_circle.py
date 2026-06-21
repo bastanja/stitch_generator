@@ -1,26 +1,23 @@
 from typing import Tuple
 
-from ..functions.functions_1d import half_circle
-from ..stitch_effects.underlays import underlay_contour_zigzag
-from ..subdivision.tatami import tatami_3_1
 from stitch_generator.framework import Path
-from stitch_generator.functions import scale
-from stitch_generator.functions import constant
+from stitch_generator.functions import constant, inverse, scale
+from stitch_generator.helpers import apply_modifier_to_path
 from stitch_generator.shapes import line
-from stitch_generator.stitch_effects.path_effects import meander
-from stitch_generator.stitch_effects.path_effects import zigzag, double_zigzag
-from stitch_generator.stitch_operations import connect
-from stitch_generator.stitch_operations import rotate_90
-from stitch_generator.subdivision import (
-    subdivide_by_length,
-    subdivision_by_length_with_offset,
-    regular,
-)
+from stitch_generator.stitch_effects.path_effects import double_zigzag, meander, zigzag
+from stitch_generator.stitch_operations import connect, rotate_90
 from stitch_generator.subdivision import (
     add_end,
     add_start,
     alternate_direction,
+    regular,
+    subdivide_by_length,
+    subdivision_by_length_with_offset,
 )
+
+from ..functions.functions_1d import half_circle
+from ..stitch_effects.underlays import underlay_contour_zigzag
+from ..subdivision.tatami import tatami_3_1
 
 
 def satin_ellipse(

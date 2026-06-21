@@ -1,17 +1,12 @@
+from stitch_generator.subdivision import alternate_direction, free_end, free_start
+
 from .subdivision_with_varying_offset import (
-    subdivision_with_triangle_offset,
     subdivision_with_arc_offset,
+    subdivision_with_triangle_offset,
     subdivision_with_wave_offset,
 )
-from .subdivison_with_varying_alignment import (
-    subdivision_with_triangle_alignment,
-)
+from .subdivison_with_varying_alignment import subdivision_with_triangle_alignment
 from .tatami import tatami_3_1, tatami_4_2
-from stitch_generator.subdivision import (
-    free_start,
-    free_end,
-    alternate_direction,
-)
 
 
 def free_start_end(subdivision_function):

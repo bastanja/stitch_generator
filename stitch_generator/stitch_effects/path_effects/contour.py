@@ -2,15 +2,12 @@ from functools import partial
 
 import numpy as np
 
-from stitch_generator.framework import Path
-from stitch_generator.framework import StitchEffect
-from stitch_generator.framework import Coordinates
+from stitch_generator.framework import Coordinates, Path, StitchEffect
 from stitch_generator.functions import inverse
 from stitch_generator.helpers import get_boundaries
 from stitch_generator.shapes import line_shape
-from ..shape_effects.running_stitch import (
-    running_stitch_on_shape,
-)
+
+from ..shape_effects.running_stitch import running_stitch_on_shape
 
 
 def contour(stitch_length: float) -> StitchEffect:

@@ -1,11 +1,19 @@
 import numpy as np
 
-from stitch_generator.framework import Path
-from stitch_generator.framework import StitchEffect
-from stitch_generator.framework import SubdivisionFunction, CoordinateFunction
-from stitch_generator.functions import estimate_length
-from stitch_generator.functions import repeat, mix, shift
-from stitch_generator.functions import noise, fix_distribution
+from stitch_generator.framework import (
+    CoordinateFunction,
+    Path,
+    StitchEffect,
+    SubdivisionFunction,
+)
+from stitch_generator.functions import (
+    estimate_length,
+    fix_distribution,
+    mix,
+    noise,
+    repeat,
+    shift,
+)
 from stitch_generator.helpers import get_boundaries, path_is_circular
 from stitch_generator.subdivision import remove_end
 

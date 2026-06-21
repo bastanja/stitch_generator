@@ -1,11 +1,15 @@
 from typing import Callable
 
 import numpy as np
-from scipy.interpolate import interp1d, PchipInterpolator
+from scipy.interpolate import PchipInterpolator, interp1d
 
-from stitch_generator.framework import InsufficientDataError
-from stitch_generator.framework import Array1D, Function1D, Parameters
-from stitch_generator.framework import validate_array_length
+from stitch_generator.framework import (
+    Array1D,
+    Function1D,
+    InsufficientDataError,
+    Parameters,
+    validate_array_length,
+)
 
 
 def function_1d(f: Callable[..., float]) -> Function1D:

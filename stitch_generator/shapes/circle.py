@@ -1,8 +1,8 @@
 from typing import Sequence, Tuple
 
 from stitch_generator.framework import Function2D
-from stitch_generator.functions import cosinus, sinus
-from stitch_generator.functions import function_2d
+from stitch_generator.functions import cosinus, function_2d, sinus
+
 from .ellipse import ellipse_shape
 
 

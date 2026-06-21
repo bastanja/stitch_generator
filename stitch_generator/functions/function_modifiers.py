@@ -1,16 +1,19 @@
-from typing import Literal, Callable, Union, List
+from typing import Callable, List, Literal, Union
 
 import numpy as np
 
-from stitch_generator.framework import InvalidParameterError
-from stitch_generator.framework import Function2D, Function1D, Array1D
 from stitch_generator.framework import (
     DUPLICATE_THRESHOLD,
+    Array1D,
+    Function1D,
+    Function2D,
+    InvalidParameterError,
     validate_finite,
     validate_finite_array,
     validate_no_duplicates,
     validate_unit_range_array,
 )
+
 from .ensure_shape import ensure_1d_shape
 
 

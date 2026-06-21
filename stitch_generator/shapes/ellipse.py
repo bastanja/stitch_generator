@@ -1,9 +1,14 @@
 from typing import Sequence, Tuple
 
 from stitch_generator.framework import Function2D
-from stitch_generator.functions import scale, add_functions
-from stitch_generator.functions import cosinus, sinus, constant
-from stitch_generator.functions import function_2d
+from stitch_generator.functions import (
+    add_functions,
+    constant,
+    cosinus,
+    function_2d,
+    scale,
+    sinus,
+)
 
 
 def ellipse(

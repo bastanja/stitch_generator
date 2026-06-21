@@ -1,11 +1,11 @@
 import numpy as np
 
-from stitch_generator.framework import Path
-from stitch_generator.framework import StitchEffect
 from stitch_generator.framework import (
-    Function2D,
-    SubdivisionFunction,
     Coordinates,
+    Function2D,
+    Path,
+    StitchEffect,
+    SubdivisionFunction,
 )
 from stitch_generator.functions import estimate_length
 from stitch_generator.helpers import get_boundaries

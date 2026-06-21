@@ -1,14 +1,14 @@
 from functools import partial
 
-from ..functions.functions_1d import linear_0_1
 from stitch_generator.framework import Function1D, SubdivisionFunction
-from stitch_generator.functions import repeat, compose
-from stitch_generator.functions import sinus, arc, linear_interpolation
+from stitch_generator.functions import arc, compose, linear_interpolation, repeat, sinus
 from stitch_generator.subdivision import (
+    cycle_offsets,
     subdivide_by_fixed_length,
+    subdivide_by_number,
 )
-from stitch_generator.subdivision import subdivide_by_number
-from stitch_generator.subdivision import cycle_offsets
+
+from ..functions.functions_1d import linear_0_1
 
 
 def subdivision_with_wave_offset(

@@ -1,9 +1,11 @@
 import math
+
 import numpy as np
+
+from stitch_generator.framework import Function1D, Function2D
 
 from .ensure_shape import ensure_1d_shape
 from .functions_1d import constant
-from stitch_generator.framework import Function2D, Function1D
 
 
 def function_2d(fx: Function1D, fy: Function1D) -> Function2D:

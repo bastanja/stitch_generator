@@ -1,16 +1,14 @@
 import numpy as np
 
-from stitch_generator.framework import Path
-from stitch_generator.framework import StitchEffect
 from stitch_generator.framework import (
-    Coordinates,
-    SubdivisionFunction,
     CoordinateFunction,
+    Coordinates,
+    Path,
+    StitchEffect,
+    SubdivisionFunction,
 )
-from stitch_generator.functions import ensure_2d_shape
-from stitch_generator.functions import estimate_length
-from stitch_generator.helpers import get_boundaries
-from stitch_generator.helpers import subdivide_line
+from stitch_generator.functions import ensure_2d_shape, estimate_length
+from stitch_generator.helpers import get_boundaries, subdivide_line
 from stitch_generator.subdivision import regular
 
 

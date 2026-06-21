@@ -2,12 +2,9 @@ import numpy as np
 from scipy.interpolate import interp1d
 
 from stitch_generator.framework import SubdivisionFunction
-from stitch_generator.functions import ensure_2d_shape
-from stitch_generator.functions import accumulate_lengths
-from .subdivide_by_length import (
-    subdivide_by_length,
-    subdivision_by_length,
-)
+from stitch_generator.functions import accumulate_lengths, ensure_2d_shape
+
+from .subdivide_by_length import subdivide_by_length, subdivision_by_length
 
 
 def polyline(points, smooth: bool = False):

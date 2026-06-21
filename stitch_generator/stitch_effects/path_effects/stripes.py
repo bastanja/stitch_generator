@@ -2,18 +2,20 @@ import itertools
 
 import numpy as np
 
-from stitch_generator.framework import Path
-from stitch_generator.framework import StitchEffect
-from stitch_generator.framework import SubdivisionFunction, Array1D
-from stitch_generator.functions import estimate_length
-from stitch_generator.functions import stairs
-from stitch_generator.functions import repeat, mix, inverse
-from stitch_generator.functions import constant
+from stitch_generator.framework import Array1D, Path, StitchEffect, SubdivisionFunction
+from stitch_generator.functions import (
+    constant,
+    estimate_length,
+    inverse,
+    mix,
+    repeat,
+    stairs,
+)
 from stitch_generator.helpers import get_boundaries, path_is_circular
-from stitch_generator.subdivision import subdivide_by_number
 from stitch_generator.subdivision import (
-    remove_end,
     alternate_direction,
+    remove_end,
+    subdivide_by_number,
 )
 
 

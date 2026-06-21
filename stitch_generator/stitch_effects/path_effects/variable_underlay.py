@@ -1,29 +1,30 @@
 import numpy as np
 
-from stitch_generator.framework import Path
-from stitch_generator.framework import StitchEffect
 from stitch_generator.framework import (
-    Function1D,
-    SubdivisionFunction,
     Coordinates,
+    Function1D,
+    Path,
+    StitchEffect,
+    SubdivisionFunction,
 )
-from stitch_generator.functions import estimate_length
 from stitch_generator.functions import (
-    multiply_functions,
     add_functions,
-    subtract_functions,
+    constant,
+    estimate_length,
     inverse,
+    linear_interpolation,
+    multiply_functions,
     scale,
+    subtract_functions,
 )
-from stitch_generator.functions import constant, linear_interpolation
 from stitch_generator.helpers import get_boundaries, split_path
+from stitch_generator.subdivision import remove_end, subdivide_by_number
+
 from ..utilities.range_tree import (
-    width_to_level,
     make_range_tree,
     tree_to_indices_and_offsets_basic,
+    width_to_level,
 )
-from stitch_generator.subdivision import subdivide_by_number
-from stitch_generator.subdivision import remove_end
 
 
 def variable_underlay(

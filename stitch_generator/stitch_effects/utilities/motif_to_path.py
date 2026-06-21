@@ -1,5 +1,4 @@
-from stitch_generator.framework import Path
-from stitch_generator.framework import Array2D
+from stitch_generator.framework import Array2D, Path
 
 
 def motif_to_path(motif: Array2D, path: Path):

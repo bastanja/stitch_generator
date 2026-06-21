@@ -8,10 +8,7 @@ from typing import Union
 
 import numpy as np
 
-from .exceptions import (
-    InsufficientDataError,
-    InvalidParameterError,
-)
+from .exceptions import InsufficientDataError, InvalidParameterError
 
 # Constants for validation thresholds
 DUPLICATE_THRESHOLD = 1e-10  # Threshold for considering values as duplicates
