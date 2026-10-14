@@ -6,8 +6,6 @@ from stitch_generator.framework import (
     DUPLICATE_THRESHOLD,
     Array1D,
     Function1D,
-    Function2D,
-    InvalidParameterError,
     validate_finite,
     validate_finite_array,
     validate_no_duplicates,
@@ -404,7 +402,7 @@ def _binary_operation(operation: Callable, f1, f2):
         result = operation(v1.T, v2.T).T
         try:
             # if possible, return a result that has the same shape as the parameter v
-            result.shape = original_shape
+            result = result.reshape(original_shape)
         except ValueError:
             pass
         return result
