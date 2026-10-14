@@ -4,6 +4,7 @@
 
 ### Breaking changes
 
+- Python 3.10 or newer is required. Support for Python 3.7, 3.8 and 3.9 was dropped.
 - `Path` no longer exposes member methods such as `split`, `inverse`, `apply_modifier`, `length`, and `is_circular`.
 - `Path(...)` now requires explicit `width` and `stroke_alignment` arguments (default values were removed).
 - Several function modifiers were renamed (see table below).
