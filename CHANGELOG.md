@@ -7,6 +7,8 @@
 - `Path` no longer exposes member methods such as `split`, `inverse`, `apply_modifier`, `length`, and `is_circular`.
 - `Path(...)` now requires explicit `width` and `stroke_alignment` arguments (default values were removed).
 - Several function modifiers were renamed (see table below).
+- The `noise` package is now an optional dependency. Install it with `pip install stitch_generator[noise]` to use the
+  noise functions (`noise`, `noise_vectors`, `noise_field`) and the `scribble` stitch effect.
 
 ### Module interface exports
 

@@ -187,6 +187,8 @@ stitches = effect(path)
 
 A zigzag line along the Path with random offsets to the side to simulate a hand-drawn scribble line.
 
+Requires the optional `noise` package (`pip install stitch_generator[noise]`).
+
 Example:
 
 ```python
