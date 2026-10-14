@@ -523,10 +523,10 @@ from stitch_generator.functions import repeat
 from stitch_generator.subdivision import regular
 from stitch_generator.subdivision import subdivide_by_number
 from stitch_generator.subdivision import free_end, free_start
-from stitch_generator.shapes import circle
+from stitch_generator.shapes import circle_shape
 from stitch_generator.stitch_effects.shape_effects import motif_to_segments
 
-motif = repeat(0.5, circle(radius=7))(subdivide_by_number(8))
+motif = repeat(0.5, circle_shape(radius=7))(subdivide_by_number(8))
 motif_placement = free_start(10, free_end(10, regular(25)))
 effect = motif_to_segments(motif_placement=motif_placement, line_subdivision=regular(3),
                            motif_generator=itertools.repeat(motif), motif_length=14)
