@@ -1,5 +1,4 @@
 import numpy as np
-from noise import pnoise2
 from scipy.interpolate import interp1d
 
 from stitch_generator.framework import Array2D, Function1D, Function2D
@@ -153,6 +152,14 @@ def fix_distribution(
 
 
 def _noise_2d_texture_space(positions_texture_space: Array2D, octaves: int):
+    try:
+        from noise import pnoise2
+    except ImportError as e:
+        raise ImportError(
+            "Noise functions require the optional 'noise' package. "
+            "Install it with: pip install stitch_generator[noise]"
+        ) from e
+
     return np.array(
         [pnoise2(x=p[0], y=p[1], octaves=octaves) for p in positions_texture_space]
     )

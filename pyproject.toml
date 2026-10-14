@@ -15,12 +15,14 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 requires-python = ">=3.8"
-dependencies = ["scipy", "numpy", "noise"]
+dependencies = ["scipy", "numpy"]
 
 [project.optional-dependencies]
+noise = ["noise"]
 test = [
   "pytest",
   "coverage",
+  "noise",
 ]
 
 [project.urls]

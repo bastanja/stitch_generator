@@ -64,6 +64,16 @@ Alternatively, Stitch Generator can be installed from a local git checkout:
 > pip install .
 ```
 
+### Optional dependencies
+
+The noise functions (`noise`, `noise_vectors`, `noise_field`) and the scribble stitch effect use the
+[noise](https://pypi.org/project/noise/) package. It is not installed by default, because it has to be compiled from
+source and requires a C compiler. To install it along with Stitch Generator, use:
+
+```
+> pip install stitch_generator[noise]
+```
+
 ## Creating Paths
 
 In order to use stitch effects, you first need to create a path.
