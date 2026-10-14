@@ -5,7 +5,7 @@ import pytest
 from stitch_generator.collection.stitch_effects.decorative_stitches import (
     decorative_stitches_collection,
 )
-from stitch_generator.framework.path import Path
+from stitch_generator.framework import Path
 from stitch_generator.functions.functions_1d import constant
 from stitch_generator.shapes.bezier import bezier
 from stitch_generator.shapes.line import line

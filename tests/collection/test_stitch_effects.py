@@ -6,14 +6,13 @@ import pytest
 from stitch_generator.collection.stitch_effects.stitch_effects import (
     stitch_effect_collection,
 )
-from stitch_generator.framework.path import Path
+from stitch_generator.framework import Path
 from stitch_generator.functions.function_modifiers import compose
 from stitch_generator.functions.functions_1d import constant, linear_interpolation, arc
 from stitch_generator.helpers.path_operations import path_is_circular
 from stitch_generator.shapes.bezier import bezier
 from stitch_generator.shapes.circle import circle
 from stitch_generator.shapes.line import line
-from stitch_generator.stitch_operations.remove_duplicates import remove_duplicates
 
 test_paths = [
     # regular linear path with constant width
@@ -52,7 +51,7 @@ def test_stitch_effect(path, effect):
     assert stitches.shape[1] == 2
 
     # check that the stitches don't contain any duplicates
-    without_duplicates = remove_duplicates(stitches)
+    # without_duplicates = remove_duplicates(stitches)
     # assert len(stitches) == len(without_duplicates) # ToDo: not fulfilled by all stitch effects
 
 
@@ -71,7 +70,7 @@ def in_rectangle(points, left: float, top: float, right: float, bottom: float, t
     return all_inside
 
 
-@pytest.mark.parametrize("effect", stitch_effect_collection())
+@pytest.mark.parametrize("effect", list(stitch_effect_collection()))
 def test_stitch_in_rectangle_bounds(effect):
     # create a rectangular path with a given width and height
     width, height = 100, 30
@@ -96,7 +95,7 @@ def in_circle(points, center, radius: float):
     return is_inside
 
 
-@pytest.mark.parametrize("effect", stitch_effect_collection())
+@pytest.mark.parametrize("effect", list(stitch_effect_collection()))
 def test_stitch_in_circle_bounds(effect):
     # create a circular path with a given width and height
     radius, width = 50, 20

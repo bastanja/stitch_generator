@@ -3,7 +3,6 @@ import itertools
 import numpy as np
 
 from stitch_generator.framework import (
-    Array2D,
     Coordinates,
     Function2D,
     StitchEffect,
