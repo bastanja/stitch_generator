@@ -97,7 +97,7 @@ def test_inverse():
         assert np.allclose(inv_f(v), f(inv_v))
 
 
-@pytest.mark.parametrize("f1, f2, factor", permutations(test_functions_positive, 3))
+@pytest.mark.parametrize("f1, f2, factor", list(permutations(test_functions_positive, 3)))
 def test_mix(f1, f2, factor):
     v = np.linspace(0, 1, 10)
 
@@ -112,7 +112,7 @@ def test_mix(f1, f2, factor):
     assert np.allclose(v_mixed, mixed(v))
 
 
-@pytest.mark.parametrize("f1, f2", permutations(test_functions, 2))
+@pytest.mark.parametrize("f1, f2", list(permutations(test_functions, 2)))
 def test_add(f1, f2):
     float_values = (0.0, 0.3, 0.5, 1.0)
 
@@ -123,7 +123,7 @@ def test_add(f1, f2):
     assert np.allclose(added(values), (f1(values).T + f2(values).T).T)
 
 
-@pytest.mark.parametrize("f1, f2", permutations(test_functions, 2))
+@pytest.mark.parametrize("f1, f2", list(permutations(test_functions, 2)))
 def test_multiply(f1, f2):
     float_values = (0.0, 0.3, 0.5, 1.0)
 

@@ -6,7 +6,6 @@ from scipy.interpolate import PchipInterpolator, interp1d
 from stitch_generator.framework import (
     Array1D,
     Function1D,
-    InsufficientDataError,
     Parameters,
     validate_array_length,
 )

@@ -2,7 +2,6 @@ import numpy as np
 import pytest
 from pytest import approx
 
-from stitch_generator.functions.function_1d_stairs import stairs
 from stitch_generator.functions.functions_1d import (
     linear_interpolation,
     constant,

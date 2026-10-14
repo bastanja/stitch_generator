@@ -19,7 +19,6 @@ def position_not_zero(shape) -> bool:
     "width, height, corner_radius", [(5, 5, 1), (5, 0, 1), (2.2, 4.4, 0), (5, 5, 10)]
 )
 def test_simple_rounded_rect(width, height, corner_radius):
-    radii = [(corner_radius, corner_radius) for _ in range(4)]
     shape, direction = simple_rounded_rect(
         width=width, height=height, corner_radius=corner_radius
     )

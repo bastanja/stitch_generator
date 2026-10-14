@@ -2,7 +2,7 @@ import itertools
 
 import numpy as np
 
-from stitch_generator.framework.path import Path
+from stitch_generator.framework import Path
 from stitch_generator.functions.functions_1d import constant
 from stitch_generator.shapes.line import line
 from stitch_generator.stitch_effects.shape_effects.motif_to_segments import (
