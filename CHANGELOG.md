@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.1 (unreleased)
+
+### Fixes
+
+- `path_from_boundaries` returned a path whose left and right sides were swapped. The path's direction now matches the
+  `left` and `right` arguments, so `get_boundaries` returns the original boundaries.
+
 ## 1.0.0 (2026-10-14)
 
 ### Breaking changes

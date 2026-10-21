@@ -112,7 +112,7 @@ def path_from_boundaries(
         return np.linalg.norm(delta, axis=1)
 
     def direction(t):
-        return divide_functions(subtract_functions(right, left), width)(t)
+        return divide_functions(subtract_functions(left, right), width)(t)
 
     return Path(
         shape=position, direction=direction, width=width, stroke_alignment=alignment
