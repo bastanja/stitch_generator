@@ -4,8 +4,8 @@ import numpy as np
 import pytest
 from pytest import approx
 
-from stitch_generator.collection.functions.functions_1d import linear_0_1
-from stitch_generator.functions.function_modifiers import (
+from stitch_generator.collection.functions import linear_0_1
+from stitch_generator.functions import (
     repeat,
     reflect,
     wrap,
@@ -16,9 +16,12 @@ from stitch_generator.functions.function_modifiers import (
     add_functions,
     multiply_functions,
     split,
+    smootherstep,
+    arc,
+    square,
+    sinus,
 )
-from stitch_generator.functions.functions_1d import smootherstep, arc, square, sinus
-from stitch_generator.shapes.bezier import bezier_shape
+from stitch_generator.shapes import bezier_shape
 from tests.functions.functions import all_functions
 
 offsets = [t / 10 for t in range(10)]
@@ -97,7 +100,9 @@ def test_inverse():
         assert np.allclose(inv_f(v), f(inv_v))
 
 
-@pytest.mark.parametrize("f1, f2, factor", list(permutations(test_functions_positive, 3)))
+@pytest.mark.parametrize(
+    "f1, f2, factor", list(permutations(test_functions_positive, 3))
+)
 def test_mix(f1, f2, factor):
     v = np.linspace(0, 1, 10)
 

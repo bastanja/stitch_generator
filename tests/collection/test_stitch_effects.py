@@ -55,7 +55,14 @@ def test_stitch_effect(path, effect):
     # assert len(stitches) == len(without_duplicates) # ToDo: not fulfilled by all stitch effects
 
 
-def in_rectangle(points, left: float, top: float, right: float, bottom: float, tolerance: float = 1e-9):
+def in_rectangle(
+    points,
+    left: float,
+    top: float,
+    right: float,
+    bottom: float,
+    tolerance: float = 1e-9,
+):
     points_x = points[:, 0]
     points_y = points[:, 1]
     left_outside = points_x < left - tolerance
