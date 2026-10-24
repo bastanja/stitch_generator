@@ -18,11 +18,11 @@ requires-python = ">=3.10"
 dependencies = ["scipy", "numpy"]
 
 [project.optional-dependencies]
-noise = ["noise"]
+# kept empty for compatibility, noise is now built in
+noise = []
 test = [
   "pytest",
   "coverage",
-  "noise",
 ]
 
 [project.urls]
