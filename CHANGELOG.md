@@ -2,6 +2,13 @@
 
 ## 1.0.1 (unreleased)
 
+### Changes
+
+- The dependency on the `noise` package was removed. The noise functions (`noise`, `noise_vectors`, `noise_field`)
+  and the `scribble` stitch effect now use a built-in numpy implementation of Perlin noise, so no C compiler is needed
+  anymore. It produces the same values as before (up to float precision). The `stitch_generator[noise]` extra still
+  exists, but is empty.
+
 ### Fixes
 
 - `path_from_boundaries` returned a path whose left and right sides were swapped. The path's direction now matches the
