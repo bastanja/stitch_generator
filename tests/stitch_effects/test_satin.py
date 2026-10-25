@@ -41,5 +41,5 @@ def test_satin_has_no_duplicate_stitches():
 def test_satin_with_fewer_than_two_values():
     path = line_path(origin=(10, 0), to=(40, 0), width=6)
     for spacing_function in (lambda _: np.array([]), lambda _: np.array([0.5])):
-        assert len(satin(spacing_function, regular(3))(path)) > 0
-        assert len(double_satin(spacing_function, regular(3))(path)) > 0
+        assert len(satin(spacing_function, regular(3))(path)) >= 2
+        assert len(double_satin(spacing_function, regular(3))(path)) >= 2

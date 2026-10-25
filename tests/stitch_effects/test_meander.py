@@ -22,7 +22,7 @@ def test_meander_without_values():
     path = line_path(origin=(10, 0), to=(40, 0), width=6)
     stitches = meander(lambda _: np.array([]), regular(3))(path)
     assert stitches.ndim == 2
-    assert len(stitches) > 0
+    assert len(stitches) >= 2
 
 
 def test_meander_with_single_value():
@@ -40,4 +40,4 @@ def test_meander_on_short_path():
     )
     stitches = meander(spacing_function, regular(3))(path)
     assert stitches.ndim == 2
-    assert len(stitches) > 0
+    assert len(stitches) >= 2
