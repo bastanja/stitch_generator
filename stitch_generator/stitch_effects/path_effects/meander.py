@@ -179,16 +179,19 @@ def _meander(
     """
     t = spacing_function(length)
 
-    values_left_even = boundary_left(t[0::2])
-    values_right_even = boundary_right(t[0::2])
-    values_right_odd = boundary_right(t[1::2])
-    values_left_odd = boundary_left(t[1::2])
+    # without any values, meander once at the start and once at the end
+    if len(t) == 0:
+        t = np.array([0.0, 1.0])
 
-    stitches = np.zeros((len(t) * 2, len(values_left_even[0])))
+    # evaluate the boundaries once at all values, then distribute them
+    values_left = boundary_left(t)
+    values_right = boundary_right(t)
 
-    stitches[0::4] = values_left_even
-    stitches[1::4] = values_right_even
-    stitches[2::4] = values_right_odd
-    stitches[3::4] = values_left_odd
+    stitches = np.zeros((len(t) * 2, values_left.shape[1]))
+
+    stitches[0::4] = values_left[0::2]
+    stitches[1::4] = values_right[0::2]
+    stitches[2::4] = values_right[1::2]
+    stitches[3::4] = values_left[1::2]
 
     return stitches
