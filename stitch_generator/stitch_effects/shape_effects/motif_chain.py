@@ -9,6 +9,7 @@ from stitch_generator.framework import (
 )
 from stitch_generator.functions import ensure_1d_shape, estimate_length
 from stitch_generator.stitch_operations import rotate_by_degrees
+from stitch_generator.subdivision import subdivide_by_number
 
 from ..utilities import place_motif_at
 
@@ -104,6 +105,10 @@ def motif_chain_on_shape(
     total_length = estimate_length(shape)
 
     motif_locations = motif_placement(total_length)
+
+    # if there are no motifs, return start and end point
+    if len(motif_locations) == 0:
+        return shape(subdivide_by_number(1))
 
     rotation = _rotate_degrees(direction, motif_rotation_degrees)
     motifs = [

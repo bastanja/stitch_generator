@@ -28,6 +28,9 @@
   stitches of effects using these functions, e.g. `satin_circle` and some decorative stitches.
 - `zigzag`, `double_zigzag`, `satin` and `double_satin` failed when the spacing function returned fewer than two
   values. They now zigzag once from the start to the end of the path.
+- `tile_motif` returned no stitches for paths shorter than half the motif length. It now places at least one motif.
+- `motif_chain` failed when no motif positions were placed on the path.
+- `motif_to_segments` failed for empty motifs or when a motif's start and end point coincide.
 
 ## 1.0.0 (2026-10-14)
 
