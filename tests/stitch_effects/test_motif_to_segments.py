@@ -2,9 +2,6 @@ import itertools
 
 import numpy as np
 
-from stitch_generator.framework import Path
-from stitch_generator.functions.functions_1d import constant
-from stitch_generator.shapes.line import line
 from stitch_generator.stitch_effects.shape_effects.motif_to_segments import (
     motif_to_segments,
 )
@@ -13,19 +10,10 @@ from stitch_generator.subdivision.subdivide_by_fixed_length import (
 )
 from stitch_generator.subdivision.subdivide_by_length import regular
 from stitch_generator.subdivision.subdivision_modifiers import remove_end, remove_start
+from tests.paths import line_path
 
 v_motif = ((-1, 0), (0, 1), (1, 0))
 v_motif_array = np.array(v_motif)
-
-
-def line_path(origin, to) -> Path:
-    shape, direction = line(origin, to)
-    return Path(
-        shape=shape,
-        direction=direction,
-        width=constant(1),
-        stroke_alignment=constant(0.5),
-    )
 
 
 def do_test(motif_placement, line_subdivision, motif_length, line_length):
