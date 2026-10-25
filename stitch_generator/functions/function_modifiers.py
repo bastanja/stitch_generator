@@ -400,11 +400,13 @@ def _binary_operation(operation: Callable, f1, f2):
         v1 = f1(v)
         v2 = f2(v)
         result = operation(v1.T, v2.T).T
-        try:
-            # if possible, return a result that has the same shape as the parameter v
-            result = result.reshape(original_shape)
-        except ValueError:
-            pass
+        # for 1D functions, return a result that has the same shape as the parameter v;
+        # results of 2D and 3D functions keep their shape, also for empty parameters
+        if result.ndim == 1:
+            try:
+                result = result.reshape(original_shape)
+            except ValueError:
+                pass
         return result
 
     return f

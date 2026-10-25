@@ -96,7 +96,8 @@ def de_casteljau(
         The points on the curve at the requested offsets
     """
     if len(parameters) == 0:
-        return None, None
+        empty = np.zeros((0, control_points.shape[1]))
+        return empty, empty.copy()
     interpolated_points = control_points
     parameters = np.atleast_2d(ensure_1d_shape(parameters)).T
     while len(interpolated_points) > 1:
