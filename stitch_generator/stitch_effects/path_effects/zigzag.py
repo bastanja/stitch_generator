@@ -90,8 +90,9 @@ def zigzag_between(
         Coordinates representing the zigzag stitches.
     """
     p = spacing_function(length)
+    # with fewer than two values, zigzag once from the start to the end
     if len(p) < 2:
-        p = boundary_left(0)
+        p = np.array([0.0, 1.0])
     stitches = boundary_left(p)
     stitches[1::2] = boundary_right(p[1::2])
     return stitches

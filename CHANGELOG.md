@@ -24,6 +24,8 @@
   shifted whenever the total length was not a multiple of the segment length (e.g. not centered for `offset=0.5`), and
   for lengths shorter than the segment length they were placed beyond the end (greater than 1). This changes the
   stitches of effects using these functions, e.g. `satin_circle` and some decorative stitches.
+- `zigzag`, `double_zigzag`, `satin` and `double_satin` failed when the spacing function returned fewer than two
+  values. They now zigzag once from the start to the end of the path.
 
 ## 1.0.0 (2026-10-14)
 
