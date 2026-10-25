@@ -94,8 +94,8 @@ def meander_along(
 
 
 def meander_between(
-    boundary_left,
-    boundary_right,
+    boundary_left: CoordinateFunction,
+    boundary_right: CoordinateFunction,
     spacing_function: SubdivisionFunction,
     line_subdivision: SubdivisionFunction,
     length: float,
@@ -125,7 +125,7 @@ def meander_between(
     return _connect_parts(parts, join_ends)
 
 
-def _connect_parts(parts, join_ends: bool):
+def _connect_parts(parts, join_ends: bool) -> Coordinates:
     """Connects meander line parts together.
 
     Args:

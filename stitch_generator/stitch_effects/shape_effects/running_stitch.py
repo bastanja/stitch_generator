@@ -18,7 +18,7 @@ def running_stitch(stitch_length: float, include_endpoint: bool = True) -> Stitc
 
     Example:
         ```python
-        from stitch_generator.stitch_effects.running_stitch import running_stitch
+        from stitch_generator.stitch_effects.shape_effects import running_stitch
 
         effect = running_stitch(stitch_length=3)
         stitches = effect(path)

@@ -2,6 +2,7 @@ import numpy as np
 
 from stitch_generator.framework import (
     CoordinateFunction,
+    Coordinates,
     Path,
     StitchEffect,
     SubdivisionFunction,
@@ -64,7 +65,7 @@ def scribble_along(
     line_subdivision: SubdivisionFunction,
     noise_scale: float,
     noise_offset: float,
-):
+) -> Coordinates:
     """Creates scribble stitches along a path.
 
     Args:
@@ -99,7 +100,7 @@ def scribble_between(
     noise_scale: float,
     noise_offset: float,
     repetition_mode: str,
-):
+) -> Coordinates:
     """Creates scribble stitches between two boundaries.
 
     Args:
