@@ -90,30 +90,41 @@ def variable_running_stitch_on_shape(
     max_strokes: int,
     stroke_spacing: float = 0.2,
 ) -> Array2D:
-    total_length = estimate_length(shape)
+    # stitch positions along the path, evenly spaced by stitch_length; sample the
+    # length densely enough to handle wiggly shapes
+    total_length = estimate_length(shape, number_of_samples=1000)
     t = subdivide_by_length(total_length=total_length, segment_length=stitch_length)
 
+    # width of each stitch segment, using the smaller width of both of its end points
     widths = width_profile(t)
     widths = np.minimum(widths[0:-1], widths[1:])
 
+    # level of each segment: level l means the segment is stitched 2 * l + 1 times
     levels = width_to_level(widths, min_strokes, max_strokes)
 
+    # stitch route going back and forth: for each stitch the index into t and the
+    # offset (in levels) sideways from the first stroke
     width_level_tree = make_range_tree(levels)
     indices, offsets = tree_to_indices_and_offsets(width_level_tree)
 
-    motif = np.vstack((indices, offsets)).astype(float).T
+    motif = np.column_stack((indices, offsets)).astype(float)
 
-    max_level = _to_level_rounding_up(max_strokes)
+    min_level = _min_level_for(min_strokes)
+    max_level = _max_level_for(max_strokes)
 
+    # convert to motif coordinates: indices to positions along the path in [0, 1], and
+    # offsets to the range [0, 1] across the path, where 1 is the maximum level
     motif[:, 0] /= float(len(widths))
     if max_level > 0:
         motif[:, 1] /= max_level
 
-    min_level = _to_level_rounding_down(min_strokes)
-    max_level = _to_level_rounding_up(max_strokes)
+    # The strokes of a segment occupy offsets from 0 to its level, so they need to be
+    # shifted sideways to stay centered on the shape: by half of min_level at width 0
+    # and by half of max_level at width 1 (as fractions of max_level).
     min_alignment = (min_level / max_level if max_level > 0 else 0) * 0.5
     alignment = mix(constant(min_alignment), constant(0.5), factor=width_profile)
 
+    # the path is as wide as all strokes at the maximum level next to each other
     path = Path(
         shape=shape,
         direction=direction,
@@ -140,13 +151,12 @@ def width_to_level(width, min_strokes: int, max_strokes: int):
     """
 
     # clamp width between 0 and 1
-    width[width < 0] = 0
-    width[width > 1] = 1
+    width = np.clip(width, 0, 1)
 
     # Scale width to the range between the minimum level and one above the maximum level
     # Add one to maximum, because we round down to the lower integer value
-    max_level = _to_level_rounding_up(max_strokes)
-    to_level = linear_interpolation(_to_level_rounding_down(min_strokes), max_level + 1)
+    max_level = _max_level_for(max_strokes)
+    to_level = linear_interpolation(_min_level_for(min_strokes), max_level + 1)
 
     # round level down to integer value
     level = to_level(width)
@@ -158,9 +168,16 @@ def width_to_level(width, min_strokes: int, max_strokes: int):
     return level
 
 
-def _to_level_rounding_down(strokes: int):
+# A level l corresponds to 2 * l + 1 strokes, as each level adds one back-and-forth pass.
+# For even numbers of strokes there is no exact level, so the level is chosen to keep
+# the stroke count within the requested range.
+
+
+def _min_level_for(strokes: int):
+    # lowest level with at least `strokes` strokes, e.g. 1 -> 0, 2 -> 1, 3 -> 1
     return int(strokes / 2)
 
 
-def _to_level_rounding_up(strokes: int):
+def _max_level_for(strokes: int):
+    # highest level with at most `strokes` strokes, e.g. 1 -> 0, 2 -> 0, 3 -> 1
     return int((strokes - 1) / 2)
