@@ -15,6 +15,8 @@
   resulting stitches are unchanged.
 - `satin` and `double_satin` no longer stitch each zigzag corner twice. The stitch path is unchanged, but the
   resulting stitches contain fewer points.
+- `variable_running_stitch` clamps the width profile to [0, 1] for the sideways alignment of the strokes, as it already
+  did for the number of strokes. This only changes the stitches for width profiles with values outside [0, 1].
 
 ### Fixes
 
