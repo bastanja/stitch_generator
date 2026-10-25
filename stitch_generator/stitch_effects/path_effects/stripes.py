@@ -2,7 +2,14 @@ import itertools
 
 import numpy as np
 
-from stitch_generator.framework import Array1D, Path, StitchEffect, SubdivisionFunction
+from stitch_generator.framework import (
+    Array1D,
+    CoordinateFunction,
+    Coordinates,
+    Path,
+    StitchEffect,
+    SubdivisionFunction,
+)
 from stitch_generator.functions import (
     constant,
     estimate_length,
@@ -29,9 +36,8 @@ def stripes(
 
     Args:
         steps: Array of step values (between 0 and 1) that define the stripe positions.
-        line_subdivision: Function that subdivides each zigzag line segment to create
-            intermediate stitches.
-        step_ratio: Relatvie length of the step transitions along the path. Defaults to 0.1.
+        line_subdivision: Function that subdivides each stripe line to create stitches.
+        step_ratio: Relative length of the step transitions along the path. Defaults to 0.1.
 
     Returns:
         A StitchEffect function that takes a Path and returns Coordinates.
@@ -58,9 +64,8 @@ def simple_stripes(
 
     Args:
         repetitions: Number of stripe repetitions.
-        line_subdivision: Function that subdivides each zigzag line segment to create
-            intermediate stitches.
-        step_ratio: Ratio for the step transitions. Defaults to 0.1.
+        line_subdivision: Function that subdivides each stripe line to create stitches.
+        step_ratio: Relative length of the step transitions along the path. Defaults to 0.1.
 
     Returns:
         A StitchEffect function that takes a Path and returns Coordinates.
@@ -75,15 +80,14 @@ def simple_stripes(
 
 def stripes_along(
     path: Path, steps: Array1D, line_subdivision: SubdivisionFunction, step_ratio: float
-):
+) -> Coordinates:
     """Creates stripes stitches along a path.
 
     Args:
         path: The path to create stripes stitches along.
         steps: Array of step values (between 0 and 1) that define the stripe positions.
-        line_subdivision: Function that subdivides each zigzag line segment to create
-            intermediate stitches.
-        step_ratio: Ratio for the step transitions.
+        line_subdivision: Function that subdivides each stripe line to create stitches.
+        step_ratio: Relative length of the step transitions along the path.
 
     Returns:
         Coordinates representing the stripes stitches.
@@ -100,24 +104,23 @@ def stripes_along(
 
 
 def stripes_between(
-    boundary_left,
-    boundary_right,
+    boundary_left: CoordinateFunction,
+    boundary_right: CoordinateFunction,
     steps: Array1D,
     line_subdivision: SubdivisionFunction,
     length: float,
     step_ratio: float,
     circular: bool,
-):
+) -> Coordinates:
     """Creates stripes stitches between two boundaries.
 
     Args:
         boundary_left: Function representing the left boundary of the path.
         boundary_right: Function representing the right boundary of the path.
         steps: Array of step values (between 0 and 1) that define the stripe positions.
-        line_subdivision: Function that subdivides each zigzag line segment to create
-            intermediate stitches.
+        line_subdivision: Function that subdivides each stripe line to create stitches.
         length: The length of the path.
-        step_ratio: Ratio for the step transitions.
+        step_ratio: Relative length of the step transitions along the path.
         circular: Whether the path is circular.
 
     Returns:
@@ -176,7 +179,7 @@ def parallel_stripes(
 
 def parallel_stripes_along(
     path: Path, steps: Array1D, line_subdivision: SubdivisionFunction
-):
+) -> Coordinates:
     """Creates parallel stripes stitches along a path.
 
     Args:
@@ -197,12 +200,12 @@ def parallel_stripes_along(
 
 
 def parallel_stripes_between(
-    boundary_left,
-    boundary_right,
+    boundary_left: CoordinateFunction,
+    boundary_right: CoordinateFunction,
     length: float,
     steps: Array1D,
     line_subdivision: SubdivisionFunction,
-):
+) -> Coordinates:
     """Creates parallel stripes stitches between two boundaries.
 
     Args:

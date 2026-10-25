@@ -2,7 +2,12 @@ from functools import partial
 
 import numpy as np
 
-from stitch_generator.framework import Coordinates, Path, StitchEffect
+from stitch_generator.framework import (
+    CoordinateFunction,
+    Coordinates,
+    Path,
+    StitchEffect,
+)
 from stitch_generator.functions import inverse
 from stitch_generator.helpers import get_boundaries
 from stitch_generator.shapes import line_shape
@@ -33,7 +38,7 @@ def contour(stitch_length: float) -> StitchEffect:
 
 
 def contour_along(path: Path, stitch_length: float) -> Coordinates:
-    """Creates a countour along the left and right boundary of the Path, closed at both ends.
+    """Creates a contour along the left and right boundary of the Path, closed at both ends.
 
     Args:
         path: The path to create contour stitches along.
@@ -46,7 +51,11 @@ def contour_along(path: Path, stitch_length: float) -> Coordinates:
     return contour_between(left, right, stitch_length=stitch_length)
 
 
-def contour_between(boundary_left, boundary_right, stitch_length: float) -> Coordinates:
+def contour_between(
+    boundary_left: CoordinateFunction,
+    boundary_right: CoordinateFunction,
+    stitch_length: float,
+) -> Coordinates:
     """Creates a contour along two boundaries, closed at both ends.
 
     Contour goes along the left boundary, connects the end of the left to the end of the right
