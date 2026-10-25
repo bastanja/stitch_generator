@@ -31,4 +31,4 @@ def test_zigzag_with_fewer_than_two_values():
         # zigzag once from the start on the left to the end on the right
         assert np.allclose(stitches, ((10, -3), (40, 3)))
 
-        assert len(double_zigzag(spacing_function)(path)) > 0
+        assert len(double_zigzag(spacing_function)(path)) >= 2
