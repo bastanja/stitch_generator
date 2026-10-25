@@ -13,6 +13,8 @@
   accurate for wiggly shapes. This can slightly change the number of stitches.
 - `variable_underlay` is faster, especially for paths whose width changes often (about 7 to 14 times faster). The
   resulting stitches are unchanged.
+- `satin` and `double_satin` no longer stitch each zigzag corner twice. The stitch path is unchanged, but the
+  resulting stitches contain fewer points.
 
 ### Fixes
 
