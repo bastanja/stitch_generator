@@ -63,8 +63,8 @@ def tile_motif_along(path: Path, motif: Array2D, motif_length: float) -> Coordin
     if np.isclose(path_length, 0):
         return path.shape(subdivide_by_number(1))
 
-    # check how many repetitions of the motif fit on the path
-    repetitions = int(round(path_length / motif_length))
+    # check how many repetitions of the motif fit on the path, but place at least one
+    repetitions = max(1, int(round(path_length / motif_length)))
 
     # repeat the motif
     motif_tiled = tile_x(motif=motif, spacing=1, repetitions=repetitions)

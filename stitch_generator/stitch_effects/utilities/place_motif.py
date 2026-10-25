@@ -15,11 +15,12 @@ def place_motif_at(position, direction, scale, motif, include_endpoint=False):
 
 
 def place_motif_between(p1, p2, motif, include_endpoint=False, width_scale=None):
+    # return p1 as 2D array, so it can be concatenated with other stitches
     if len(motif) == 0:
-        return p1
+        return np.atleast_2d(p1)
 
     if np.allclose(p1, p2):
-        return p1
+        return np.atleast_2d(p1)
 
     motif = _normalize_motif(motif)
     delta = p2 - p1

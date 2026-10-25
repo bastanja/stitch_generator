@@ -55,3 +55,16 @@ def test_motif_to_segments():
         motif_length=2,
         line_length=11,
     )
+
+
+def test_motif_to_segments_with_empty_motif():
+    effect = motif_to_segments(
+        motif_placement=regular(10),
+        line_subdivision=regular(3),
+        motif_generator=itertools.repeat(np.zeros((0, 2))),
+        motif_length=4,
+    )
+    stitches = effect(line_path(origin=(10, 0), to=(40, 0)))
+    assert stitches.ndim == 2
+    assert np.allclose(stitches[0], (10, 0))
+    assert np.allclose(stitches[-1], (40, 0))
