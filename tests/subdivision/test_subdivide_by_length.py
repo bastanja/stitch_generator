@@ -75,10 +75,10 @@ def test_subdivide_by_length_with_offset():
     expected_values = np.array((0.2, 1.2, 2.2)) / 3
     assert np.allclose(values, expected_values)
 
-    # segment length longer than total length
+    # segment length longer than total length: a single segment spanning the whole length
     subdivision = subdivision_by_length_with_offset(segment_length=10, offset=0.1)
     values = subdivision(5)
-    expected_values = np.array((1)) / 5
+    expected_values = np.array((0.1,))
     assert np.allclose(values, expected_values)
 
 
