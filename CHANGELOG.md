@@ -8,6 +8,11 @@
   and the `scribble` stitch effect now use a built-in numpy implementation of Perlin noise, so no C compiler is needed
   anymore. It produces the same values as before (up to float precision). The `stitch_generator[noise]` extra still
   exists, but is empty.
+- `variable_running_stitch` is faster, especially for width profiles with many changes (up to about 15 times faster
+  for noisy profiles). It now samples the shape more densely to estimate its length, so the stitch length is more
+  accurate for wiggly shapes. This can slightly change the number of stitches.
+- `variable_underlay` is faster, especially for paths whose width changes often (about 7 to 14 times faster). The
+  resulting stitches are unchanged.
 
 ### Fixes
 
