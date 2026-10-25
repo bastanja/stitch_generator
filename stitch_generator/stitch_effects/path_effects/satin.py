@@ -9,7 +9,7 @@ from stitch_generator.framework import (
 )
 from stitch_generator.functions import estimate_length
 from stitch_generator.helpers import get_boundaries, subdivide_line
-from stitch_generator.subdivision import regular
+from stitch_generator.subdivision import regular, remove_end
 
 from ..path_effects.zigzag import double_zigzag_between, zigzag_between
 
@@ -52,9 +52,7 @@ def satin_between(
     length: float,
 ) -> Array2D:
     points = zigzag_between(boundary_left, boundary_right, spacing_function, length)
-    connection = [subdivide_line(*p, line_subdivision) for p in zip(points, points[1:])]
-    connection = connection + [[points[-1]]]
-    return np.concatenate(connection)
+    return _connect_points(points, line_subdivision)
 
 
 def double_satin(
@@ -89,8 +87,12 @@ def double_satin_between(
     points = double_zigzag_between(
         boundary_left, boundary_right, spacing_function, length
     )
-    connection = [
-        subdivide_line(*p, line_subdivision)
-        for p in zip(points, np.roll(points, -1, 0))
-    ]
-    return np.concatenate(connection)
+    # double_zigzag_between already ends at its start point
+    return _connect_points(points, line_subdivision)
+
+
+def _connect_points(points, line_subdivision: SubdivisionFunction) -> Array2D:
+    # each line leaves out its end point, as it is the start point of the next line
+    line_subdivision = remove_end(line_subdivision)
+    connection = [subdivide_line(*p, line_subdivision) for p in zip(points, points[1:])]
+    return np.concatenate(connection + [points[-1:]])
