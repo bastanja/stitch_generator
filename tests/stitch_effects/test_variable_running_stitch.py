@@ -1,21 +1,10 @@
 import numpy as np
 
-from stitch_generator.framework import Path
 from stitch_generator.functions.functions_1d import constant
-from stitch_generator.shapes.line import line
 from stitch_generator.stitch_effects.shape_effects.variable_running_stitch import (
     variable_running_stitch,
 )
-
-
-def line_path(origin, to) -> Path:
-    shape, direction = line(origin, to)
-    return Path(
-        shape=shape,
-        direction=direction,
-        width=constant(1),
-        stroke_alignment=constant(0.5),
-    )
+from tests.paths import line_path
 
 
 def do_test(width):

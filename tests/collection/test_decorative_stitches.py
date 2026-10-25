@@ -5,23 +5,12 @@ import pytest
 from stitch_generator.collection.stitch_effects.decorative_stitches import (
     decorative_stitches_collection,
 )
-from stitch_generator.framework import Path
-from stitch_generator.functions.functions_1d import constant
-from stitch_generator.shapes.bezier import bezier
-from stitch_generator.shapes.line import line
 from stitch_generator.stitch_operations.remove_duplicates import remove_duplicates
+from tests.paths import bezier_path, line_path
 
 test_paths = [
-    Path(
-        *line(origin=(0, 0), to=(100, 0)),
-        width=constant(1),
-        stroke_alignment=constant(0.5),
-    ),
-    Path(
-        *bezier(control_points=((0, 0), (50, 50), (100, 0))),
-        width=constant(1),
-        stroke_alignment=constant(0.5),
-    ),
+    line_path(origin=(0, 0), to=(100, 0)),
+    bezier_path(control_points=((0, 0), (50, 50), (100, 0))),
 ]
 
 test_values = list(product(test_paths, decorative_stitches_collection()))

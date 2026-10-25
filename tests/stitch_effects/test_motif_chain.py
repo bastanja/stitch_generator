@@ -2,22 +2,11 @@ import itertools
 
 import numpy as np
 
-from stitch_generator.framework import Path
 from stitch_generator.functions.functions_1d import constant
-from stitch_generator.shapes.line import line
 from stitch_generator.stitch_effects.shape_effects.motif_chain import motif_chain
+from tests.paths import line_path
 
 v_motif = ((-1, 0), (0, 1), (1, 0))
-
-
-def line_path(origin, to) -> Path:
-    shape, direction = line(origin, to)
-    return Path(
-        shape=shape,
-        direction=direction,
-        width=constant(1),
-        stroke_alignment=constant(0.5),
-    )
 
 
 def test_motif_chain_without_motif_locations():

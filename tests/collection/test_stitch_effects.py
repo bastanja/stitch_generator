@@ -7,34 +7,20 @@ from stitch_generator.collection.stitch_effects.stitch_effects import (
     stitch_effect_collection,
 )
 from stitch_generator.framework import Path
-from stitch_generator.functions.function_modifiers import compose
-from stitch_generator.functions.functions_1d import constant, linear_interpolation, arc
+from stitch_generator.functions.functions_1d import constant
 from stitch_generator.helpers.path_operations import path_is_circular
-from stitch_generator.shapes.bezier import bezier
 from stitch_generator.shapes.circle import circle
-from stitch_generator.shapes.line import line
+from tests.paths import line_path, tapered_bezier_path
 
 test_paths = [
     # regular linear path with constant width
-    Path(
-        *line(origin=(0, 0), to=(100, 0)),
-        width=constant(10),
-        stroke_alignment=constant(0.5),
-    ),
+    line_path(origin=(0, 0), to=(100, 0), width=10),
     # path with bezier shape and a width of zero at the start and end
-    Path(
-        *bezier(control_points=((0, 0), (50, 50), (100, 0))),
-        width=compose(arc, linear_interpolation(0, 15)),
-        stroke_alignment=constant(0.5),
-    ),
+    tapered_bezier_path(control_points=((0, 0), (50, 50), (100, 0)), max_width=15),
     # circular path
     Path(*circle(radius=30), width=constant(5), stroke_alignment=constant(0.5)),
     # path with zero length
-    Path(
-        *line(origin=(0, 0), to=(0, 0)),
-        width=constant(10),
-        stroke_alignment=constant(0.5),
-    ),
+    line_path(origin=(0, 0), to=(0, 0), width=10),
 ]
 
 test_values = list(product(test_paths, stitch_effect_collection()))
@@ -81,11 +67,7 @@ def in_rectangle(
 def test_stitch_in_rectangle_bounds(effect):
     # create a rectangular path with a given width and height
     width, height = 100, 30
-    path = Path(
-        *line(origin=(0, height / 2), to=(width, height / 2)),
-        width=constant(height),
-        stroke_alignment=constant(0.5),
-    )
+    path = line_path(origin=(0, height / 2), to=(width, height / 2), width=height)
 
     # apply the stitch effect
     stitches = effect(path)
