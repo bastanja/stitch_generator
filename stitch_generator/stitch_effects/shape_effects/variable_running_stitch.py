@@ -8,6 +8,7 @@ from stitch_generator.framework import (
     StitchEffect,
 )
 from stitch_generator.functions import (
+    compose,
     constant,
     estimate_length,
     linear_interpolation,
@@ -120,9 +121,11 @@ def variable_running_stitch_on_shape(
 
     # The strokes of a segment occupy offsets from 0 to its level, so they need to be
     # shifted sideways to stay centered on the shape: by half of min_level at width 0
-    # and by half of max_level at width 1 (as fractions of max_level).
+    # and by half of max_level at width 1 (as fractions of max_level). The width is
+    # clamped to [0, 1] like in width_to_level.
     min_alignment = (min_level / max_level if max_level > 0 else 0) * 0.5
-    alignment = mix(constant(min_alignment), constant(0.5), factor=width_profile)
+    clamped_width = compose(width_profile, lambda w: np.clip(w, 0, 1))
+    alignment = mix(constant(min_alignment), constant(0.5), factor=clamped_width)
 
     # the path is as wide as all strokes at the maximum level next to each other
     path = Path(
