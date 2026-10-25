@@ -19,6 +19,11 @@
 - `path_from_boundaries` returned a path whose left and right sides were swapped. The path's direction now matches the
   `left` and `right` arguments, so `get_boundaries` returns the original boundaries.
 - `meander` failed when the spacing function returned no value or a single value, e.g. on short paths.
+- `subdivide_by_length_with_offset` and `subdivision_by_length_with_offset` scaled the offset by the requested segment
+  length instead of the actual spacing of the values, which is rounded to fit the total length. The values were
+  shifted whenever the total length was not a multiple of the segment length (e.g. not centered for `offset=0.5`), and
+  for lengths shorter than the segment length they were placed beyond the end (greater than 1). This changes the
+  stitches of effects using these functions, e.g. `satin_circle` and some decorative stitches.
 
 ## 1.0.0 (2026-10-14)
 

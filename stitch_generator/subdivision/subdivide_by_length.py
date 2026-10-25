@@ -29,16 +29,13 @@ def subdivision_by_length(segment_length: float) -> SubdivisionFunction:
 def subdivide_by_length_with_offset(
     total_length: float, segment_length: float, offset: float
 ) -> Array1D:
-    segment_to_length = segment_length / total_length if total_length > 0 else 0
-    offset = (offset % 1) * segment_to_length
+    values = subdivide_by_length(
+        total_length=total_length, segment_length=segment_length
+    )[:-1]
 
-    values = (
-        subdivide_by_length(total_length=total_length, segment_length=segment_length)[
-            :-1
-        ]
-        + offset
-    )
-    return values
+    # shift by a fraction of the actual spacing, which subdivide_by_length rounds so that
+    # the segments fit the total length
+    return values + (offset % 1) / len(values)
 
 
 def subdivision_by_length_with_offset(
