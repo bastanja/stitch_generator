@@ -469,16 +469,23 @@ def split(function, offsets: Union[List[float], Array1D]):
 
     Args:
         function: A function to split. Should be defined in [0, 1].
-        offsets: A list or array of split points in [0, 1]. The offsets should
-            be sorted and unique. The function will be split at these points.
+        offsets: A list or array of split points in [0, 1]. The offsets must
+            be unique. The function will be split at these points.
 
     Returns:
         A list of functions, one for each segment. The number of returned
         functions is len(offsets) + 1. Each function operates on [0, 1] and
         represents the corresponding segment of the original function.
 
+        Each segment runs from one offset to the next, with 0 added before the first
+        and 1 after the last offset. Offsets are usually sorted in ascending order. If
+        an offset is larger than the following one, the segment between them runs
+        backward, i.e. it is the reversed section of the original function. For
+        example, `split(f, [0.75, 0.25])[1]` evaluates f from 0.75 down to 0.25.
+
     Raises:
-        InvalidParameterError: If offsets are not in [0, 1], not sorted, or contain duplicates.
+        InvalidParameterError: If offsets are not finite, not in [0, 1], or contain
+            duplicates.
 
     Example:
         >>> f = lambda v: v
