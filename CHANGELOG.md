@@ -33,6 +33,10 @@
 - `tile_motif` returned no stitches for paths shorter than half the motif length. It now places at least one motif.
 - `motif_chain` failed when no motif positions were placed on the path.
 - `motif_to_segments` failed for empty motifs or when a motif's start and end point coincide.
+- Function modifiers that combine two functions (`add_functions`, `subtract_functions`, `multiply_functions`,
+  `divide_functions`, `min_functions`, `max_functions`, `mix`) returned a one-dimensional array instead of shape
+  `(0, 2)` or `(0, 3)` when evaluated with no parameters. Bézier shapes returned `None` or failed in this case. This
+  also affected shapes and paths built from them, e.g. spirals and path boundaries.
 
 ## 1.0.0 (2026-10-14)
 
