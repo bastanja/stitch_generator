@@ -8,11 +8,10 @@ from stitch_generator.framework import (
     Path,
     StitchEffect,
 )
-from stitch_generator.functions import inverse
+from stitch_generator.functions import estimate_length, inverse
 from stitch_generator.helpers import get_boundaries
 from stitch_generator.shapes import line_shape
-
-from ..shape_effects.running_stitch import running_stitch_on_shape
+from stitch_generator.subdivision import remove_end, subdivision_by_length
 
 
 def contour(stitch_length: float) -> StitchEffect:
@@ -69,9 +68,12 @@ def contour_between(
     Returns:
         Coordinates representing the contour stitches connecting the boundaries.
     """
-    running_stitch = partial(
-        running_stitch_on_shape, stitch_length=stitch_length, include_endpoint=False
-    )
+
+    def running_stitch(shape):
+        total_length = estimate_length(shape)
+        subdivision = remove_end(subdivision_by_length(segment_length=stitch_length))
+        offsets = subdivision(total_length)
+        return shape(offsets)
 
     left_0, right_0 = boundary_left(0), boundary_right(0)
     left_1, right_1 = boundary_left(1), boundary_right(1)
